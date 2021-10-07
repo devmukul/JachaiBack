@@ -3,13 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/rounded_button_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/background_green_dot.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/favourite_checkbox.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_border.xml" value="0.14270833333333333" />
-        <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.12107396149949341" />
+        <entry key="app/src/main/res/drawable/rounded_border_red.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/rounded_button_red.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/layout/bottom_total_price.xml" value="0.10003206886557338" />
+        <entry key="app/src/main/res/layout/cart_fragment.xml" value="0.3442907868016922" />
+        <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.10587992258369923" />
+        <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.10235507246376811" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
-        <entry key="app/src/main/res/layout/shop_list_fragment.xml" value="0.32981930129396053" />
+        <entry key="app/src/main/res/layout/rounded_button_red.xml" value="0.17481884057971014" />
+        <entry key="app/src/main/res/layout/shop_list_fragment.xml" value="0.14447191272908635" />
         <entry key="app/src/main/res/layout/toolbar_app.xml" value="0.12974989152083405" />
       </map>
     </option>
@@ -19,5 +26,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.14447191272908635" />
+      </ProjectState>
+    </option>
   </component>
 </project>

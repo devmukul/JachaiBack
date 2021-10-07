@@ -14,7 +14,8 @@
         android:layout_marginTop="36dp"
         android:gravity="center"
         android:padding="15dp"
-        android:text="By proceeding, you ensure that you have read and agreed to the terms\n &amp; conditions on JaChai Blog and Facebook page."
+        android:text="By proceeding, you ensure that you have read and agreed to the terms &amp; conditions on JaChai Blog and Facebook page."
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
