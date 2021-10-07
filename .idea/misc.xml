@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/background_green_dot.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/favourite_checkbox.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_border.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.12107396149949341" />
+        <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.10235507246376811" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
+        <entry key="app/src/main/res/layout/shop_list_fragment.xml" value="0.32981930129396053" />
+        <entry key="app/src/main/res/layout/toolbar_app.xml" value="0.12974989152083405" />
       </map>
     </option>
   </component>
