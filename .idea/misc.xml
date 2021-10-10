@@ -4,20 +4,29 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/rounded_button_red.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/background_gray_dot.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/background_green_dot.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/drawable/background_rgray_dot.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_curve_gray.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_curve_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/favourite_checkbox.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_border.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/drawable/ic_status_default.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_border_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_button_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/bottom_total_price.xml" value="0.19188016022527357" />
         <entry key="app/src/main/res/layout/cart_fragment.xml" value="0.3442907868016922" />
+        <entry key="app/src/main/res/layout/cart_item_row.xml" value="1.0453172205438066" />
         <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.13209580078895622" />
         <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.45641646489104115" />
         <entry key="app/src/main/res/layout/checkout_order_row.xml" value="0.47181881227196076" />
         <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.10235507246376811" />
+        <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.17074275362318841" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
+        <entry key="app/src/main/res/layout/order_details_fragment.xml" value="0.42985611510791366" />
+        <entry key="app/src/main/res/layout/order_details_row.xml" value="0.45696969696969697" />
+        <entry key="app/src/main/res/layout/order_fragment.xml" value="0.43254845811769865" />
+        <entry key="app/src/main/res/layout/order_status_row.xml" value="3.958626819017759" />
         <entry key="app/src/main/res/layout/rounded_button_red.xml" value="0.17481884057971014" />
         <entry key="app/src/main/res/layout/shop_list_fragment.xml" value="0.14447191272908635" />
         <entry key="app/src/main/res/layout/toolbar_app.xml" value="0.12974989152083405" />

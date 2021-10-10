@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.order.OrderDetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="16dp"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/sample_restaurant" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/restraurant_name"
+                style="@style/heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="KFC Banani"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cardView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/restraurant_subtitle"
+                style="@style/sub_heading"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:text="Thai Bangla Chinese"
+                android:textColor="#787878"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/restraurant_name"
+                app:layout_constraintTop_toBottomOf="@+id/restraurant_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/orderIdNameTextView"
+                style="@style/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Order"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/orderIDTextView"
+                style="@style/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="DHA-09876543210"
+                android:textColor="@color/dark_sky_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/orderIdNameTextView"
+                app:layout_constraintStart_toEndOf="@+id/orderIdNameTextView"
+                app:layout_constraintTop_toTopOf="@+id/orderIdNameTextView" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/orderTimeTextView"
+                style="@style/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="11:59 PM, 15 July"
+                app:layout_constraintBottom_toBottomOf="@+id/orderIdNameTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/orderIdNameTextView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/orderTimeLineRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/orderIdNameTextView"
+                tools:listitem="@layout/order_status_row" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/items3"
+            style="@style/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="DELIVERY MAN"
+            android:textColor="#BDBDBD "
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/items3">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView1"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/image1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/sample2" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Jack Han"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/cardView1"
+                app:layout_constraintTop_toTopOf="@+id/cardView1" />
+
+            <TextView
+                style="@style/sub_heading"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="+880 1837226676"
+                android:textColor="#787878"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/items"
+            style="@style/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="DELIVERY ADDRESS"
+            android:textColor="#BDBDBD "
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout7" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_location"
+            app:layout_constraintStart_toStartOf="@+id/items"
+            app:layout_constraintTop_toBottomOf="@+id/items" />
+
+        <TextView
+            android:id="@+id/delivery_address"
+            style="@style/heading"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:text="House #62, Road No #21 \nbanani, Dhaka"
+            android:textColor="#393E46"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView8"
+            app:layout_constraintTop_toTopOf="@+id/imageView8" />
+
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="71dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/box_curve_gray"
+            android:ems="10"
+            android:gravity="start|top"
+            android:padding="10dp"
+            android:text="ADDITIONAL COMMENTS"
+            android:textColor="#BDBDBD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView8"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conlay_orders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/box_curve_red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/comment">
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                android:text="Cash Payment"
+                android:textColor="#3A494E"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/textView11"
+                style="@style/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="ORDER DETAILS"
+                android:textColor="#BDBDBD "
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/textView10"
+                app:layout_constraintStart_toStartOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                tools:itemCount="2"
+                tools:listitem="@layout/checkout_order_row" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/dash_with_gap"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+            <TextView
+                android:id="@+id/tvsub"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="2dp"
+                android:text="Sub Total"
+                android:textColor="#3A494E"
+                android:textSize="12sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toStartOf="@+id/recyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/line" />
+
+            <TextView
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="1dp"
+                android:padding="2dp"
+                android:text="৳"
+                android:textColor="#CD113B"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/item_cost"
+                app:layout_constraintEnd_toStartOf="@+id/item_cost"
+                app:layout_constraintTop_toTopOf="@+id/item_cost" />
+
+            <TextView
+                android:id="@+id/item_cost"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="205.00"
+                android:textColor="#CD113B"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvsub"
+                app:layout_constraintEnd_toEndOf="@+id/line"
+                app:layout_constraintTop_toTopOf="@+id/tvsub" />
+
+            <TextView
+                android:id="@+id/delivery_charge"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="60.00"
+                android:textColor="#636262"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvdelivery"
+                app:layout_constraintEnd_toEndOf="@+id/item_cost"
+                app:layout_constraintTop_toTopOf="@+id/tvdelivery" />
+
+            <TextView
+                android:id="@+id/tvdelivery"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="2dp"
+                android:text="Delivery Charge"
+                android:textColor="#636262"
+                android:textSize="12sp"
+
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/tvsub"
+                app:layout_constraintTop_toBottomOf="@+id/tvsub" />
+
+            <TextView
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="1dp"
+                android:padding="2dp"
+                android:text="৳"
+                android:textColor="#636262"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/delivery_charge"
+                app:layout_constraintEnd_toStartOf="@+id/delivery_charge"
+                app:layout_constraintTop_toTopOf="@+id/delivery_charge" />
+
+            <TextView
+                android:id="@+id/vat"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="60.00"
+                android:textColor="#636262"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvdelivery2"
+                app:layout_constraintEnd_toEndOf="@+id/delivery_charge"
+                app:layout_constraintTop_toTopOf="@+id/tvdelivery2" />
+
+            <TextView
+                android:id="@+id/tvdelivery2"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="2dp"
+                android:text="VAT +SD  (If Applicable)"
+                android:textColor="#636262"
+
+                android:textSize="12sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/tvsub"
+                app:layout_constraintTop_toBottomOf="@+id/tvdelivery" />
+
+            <TextView
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="1dp"
+                android:padding="2dp"
+                android:text="৳"
+                android:textColor="#636262"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/vat"
+                app:layout_constraintEnd_toStartOf="@+id/vat"
+                app:layout_constraintTop_toTopOf="@+id/vat" />
+
+            <TextView
+                android:id="@+id/total_discount"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="60.00"
+                android:textColor="#CD113B"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvdiscount"
+                app:layout_constraintEnd_toEndOf="@+id/delivery_charge"
+                app:layout_constraintTop_toTopOf="@+id/tvdiscount" />
+
+            <TextView
+                android:id="@+id/tvdiscount"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="2dp"
+                android:text="Discount"
+
+                android:textColor="#636262"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/tvsub"
+                app:layout_constraintTop_toBottomOf="@+id/tvdelivery2" />
+
+            <TextView
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="1dp"
+                android:padding="2dp"
+                android:text="৳"
+                android:textColor="#CD113B"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/total_discount"
+                app:layout_constraintEnd_toStartOf="@+id/total_discount"
+                app:layout_constraintTop_toTopOf="@+id/total_discount" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/dash_with_gap"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/tvdiscount" />
+
+            <View
+                android:id="@+id/line4"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/dash_with_gap"
+                app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/recyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+            <TextView
+                android:id="@+id/tvtotal"
+                style="@style/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="2dp"
+                android:text="TOTAL  (incl. VAT)"
+                android:textColor="#3A494E"
+                android:textSize="14sp"
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/line2"
+                app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+            <TextView
+                android:id="@+id/item_grand_total"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="205.00"
+                android:textColor="#CD113B"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tvtotal"
+                app:layout_constraintEnd_toEndOf="@+id/line2"
+                app:layout_constraintTop_toTopOf="@+id/tvtotal" />
+
+            <TextView
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="1dp"
+                android:padding="2dp"
+                android:text="৳"
+                android:textColor="#CD113B"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/item_grand_total"
+                app:layout_constraintEnd_toStartOf="@+id/item_grand_total"
+                app:layout_constraintTop_toTopOf="@+id/item_grand_total" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/call_customer"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="5dp"
+
+            android:drawableLeft="@drawable/ic_phone_call"
+            android:drawablePadding="15dp"
+            android:text="CALL CUSTOMER CARE"
+            android:textColor="#CD113B"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/order_again"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/conlay_orders"
+            app:strokeColor="#C4C4C4" />
+
+        <Button
+            android:id="@+id/order_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="16dp"
+            android:text="ORDER AGAIN"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/call_customer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/call_customer"
+            app:layout_constraintTop_toTopOf="@+id/call_customer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

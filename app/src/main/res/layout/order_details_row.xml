@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        app:cardCornerRadius="100dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/sample_restaurant" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/item_image"
+        style="@style/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="KFC"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView" />
+
+    <TextView
+        android:id="@+id/oder_delivery_time"
+        style="@style/sub_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:22pm"
+        android:textColor="#B1B0B0"
+        app:layout_constraintStart_toStartOf="@+id/item_image"
+        app:layout_constraintTop_toBottomOf="@+id/item_image" />
+
+    <TextView
+        android:id="@+id/delivery_status"
+        style="@style/sub_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="Delivered"
+        android:textColor="#B1B0B0"
+        app:layout_constraintStart_toStartOf="@+id/oder_delivery_time"
+        app:layout_constraintTop_toBottomOf="@+id/oder_delivery_time" />
+
+    <TextView
+        android:id="@+id/textView15"
+        style="@style/sub_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:drawableLeft="@drawable/background_gray_dot"
+        android:drawablePadding="10dp"
+        android:text="Order Id :"
+        android:textColor="#B1B0B0"
+        app:drawableTint="#B1B0B0"
+        app:layout_constraintBottom_toBottomOf="@+id/oder_delivery_time"
+        app:layout_constraintStart_toEndOf="@+id/oder_delivery_time"
+        app:layout_constraintTop_toTopOf="@+id/oder_delivery_time" />
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/sub_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/background_gray_dot"
+        android:drawablePadding="10dp"
+        android:text="05 September 2021"
+        android:textColor="#B1B0B0"
+        app:drawableTint="#B1B0B0"
+        app:layout_constraintBottom_toBottomOf="@+id/delivery_status"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="@+id/delivery_status" />
+
+    <TextView
+        android:id="@+id/orderID"
+        style="@style/sub_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" DHA10240"
+        android:textColor="#B1B0B0"
+        app:layout_constraintBottom_toBottomOf="@+id/textView15"
+        app:layout_constraintStart_toEndOf="@+id/textView15"
+        app:layout_constraintTop_toTopOf="@+id/textView15" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:tint="#979797"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
+        app:srcCompat="@drawable/ic_chevron_right_black" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="#F3F3F3"
+        app:layout_constraintEnd_toEndOf="@+id/imageView10"
+        app:layout_constraintStart_toStartOf="@+id/delivery_status"
+        app:layout_constraintTop_toBottomOf="@+id/delivery_status" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
