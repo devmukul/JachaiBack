@@ -5,14 +5,17 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/rounded_button_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/background_green_dot.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/drawable/box_curve_gray.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/box_curve_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/favourite_checkbox.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_border.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/rounded_border_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_button_red.xml" value="0.26510416666666664" />
-        <entry key="app/src/main/res/layout/bottom_total_price.xml" value="0.10003206886557338" />
+        <entry key="app/src/main/res/layout/bottom_total_price.xml" value="0.19188016022527357" />
         <entry key="app/src/main/res/layout/cart_fragment.xml" value="0.3442907868016922" />
-        <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.10587992258369923" />
-        <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.13209580078895622" />
+        <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.45641646489104115" />
+        <entry key="app/src/main/res/layout/checkout_order_row.xml" value="0.47181881227196076" />
         <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.10235507246376811" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
         <entry key="app/src/main/res/layout/rounded_button_red.xml" value="0.17481884057971014" />
