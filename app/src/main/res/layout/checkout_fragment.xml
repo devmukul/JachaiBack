@@ -533,6 +533,19 @@
                     app:layout_constraintTop_toTopOf="@+id/item_grand_total" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/edit_address"
+                style="@style/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Edit Address"
+                android:textColor="#CD113B"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/items"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/items" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
