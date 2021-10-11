@@ -50,10 +50,10 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
             Context.MODE_PRIVATE
         )
 
-        mStompClient = Stomp.over(
-            Stomp.ConnectionProvider.OKHTTP,
-            ApiConstants.JACHAI_BASE_URL_WEBSOCKET
-        )
+//        mStompClient = Stomp.over(
+//            Stomp.ConnectionProvider.OKHTTP,
+//            ApiConstants.JACHAI_BASE_URL_WEBSOCKET
+//        )
 
         setupLogger()
 
