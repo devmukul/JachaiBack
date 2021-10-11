@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Jachai Mart</string>
+
+    <string name="app_name_short"><font color="#CD113B">Ja</font>Chai</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -12,11 +14,31 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="hot_deals">Hot Deals</string>
-
-
     <string name="location_permission_denied">Location Permission Denied</string>
     <string name="fetching_device_location">Fetching Device Location..</string>
     <string name="networkError">Oh! You are not connected to a wifi or cellular data network. Please connect and try again</string>
 
     <string name="phone_call_permission_denied">Phone Call Permission Denied</string>
+    <string name="mobile_number">Mobile Number</string>
+
+    <string name="please_enter_your_phone_number">Please enter your valid phone number.</string>
+    <string name="please_enter_your_phone_number_correctly">Please enter your phone number correctly.</string>
+    <string name="phone">Please enter phone number.</string>
+    <string name="text_something_went_wrong">Something went wrong</string>
+    <string name="provide_name">Please enter your name.</string>
+
+    <string name="step_1_of_2">Step 1 of 2</string>
+
+    <string name="signin_agreement_message">By selecting Continue, I agree to the \n <a href="https://www.jachai.com/terms-and-conditions/">Terms of Service
+    </a> and <a href="https://www.jachai.com/privacy-policy">Privacy Policy</a>.
+    </string>
+    <string name="home">Home</string>
+    <string name="work">Work</string>
+    <string name="where_to_go">Where to go?</string>
+    <string name="cancel_ride">Cancel Ride</string>
+    <string name="add_or_change">Add or change</string>
+    <string name="accepted_message">Please meet with your driver at pickup point</string>
+    <string name="picked_message">Towards Destination</string>
+    <string name="drop_off_message">Towards Destination</string>
+
 </resources>

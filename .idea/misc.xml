@@ -9,9 +9,13 @@
         <entry key="app/src/main/res/drawable/background_rgray_dot.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_curve_gray.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_curve_red.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/box_top_curve.xml" value="0.2015625" />
+        <entry key="app/src/main/res/drawable/edittext_bottom_border.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/favourite_checkbox.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_border.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/drawable/ic_login_page.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/ic_status_default.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/rectangle_with_gray_border.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/rounded_border_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_button_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/bottom_total_price.xml" value="0.19188016022527357" />
@@ -23,16 +27,22 @@
         <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.10235507246376811" />
         <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.17074275362318841" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
+        <entry key="app/src/main/res/layout/ic_back.xml" value="0.33645833333333336" />
+        <entry key="app/src/main/res/layout/login_fragment.xml" value="0.33645833333333336" />
+        <entry key="app/src/main/res/layout/name_update_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/order_details_fragment.xml" value="0.42985611510791366" />
         <entry key="app/src/main/res/layout/order_details_row.xml" value="0.45696969696969697" />
         <entry key="app/src/main/res/layout/order_fragment.xml" value="0.43254845811769865" />
         <entry key="app/src/main/res/layout/order_status_row.xml" value="3.958626819017759" />
         <entry key="app/src/main/res/layout/rounded_button_red.xml" value="0.17481884057971014" />
         <entry key="app/src/main/res/layout/shop_list_fragment.xml" value="0.14447191272908635" />
+        <entry key="app/src/main/res/layout/splash_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/toolbar_app.xml" value="0.12974989152083405" />
+        <entry key="app/src/main/res/layout/verify_code_fragment.xml" value="0.33645833333333336" />
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

@@ -24,9 +24,11 @@ object ApiConstants {
 //    const val JACHAI_BASE_URL_FARE = BuildConfig.BASE_URL_JACHAI_FARE
 
 
-    const val LOGIN_BASE = "driver/login"
-    const val SIGNUP_BASE = "driver/register"
+    const val LOGIN_BASE = "user/login"
+    //const val SIGNUP_BASE = "driver/register"
     const val OTP_REQUEST_BASE = "otp/send"
+    const val NAME_UPDATE_REQUEST_BASE = "user/update-name"
+    const val USER_INFO_REQUEST_BASE = "user"
 
     const val CAR_REG_BASE = "car/info"
     const val DRIVER_DOC_STATUS_BASE = "driver/info"
