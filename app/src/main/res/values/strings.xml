@@ -12,4 +12,11 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="hot_deals">Hot Deals</string>
+
+
+    <string name="location_permission_denied">Location Permission Denied</string>
+    <string name="fetching_device_location">Fetching Device Location..</string>
+    <string name="networkError">Oh! You are not connected to a wifi or cellular data network. Please connect and try again</string>
+
+    <string name="phone_call_permission_denied">Phone Call Permission Denied</string>
 </resources>

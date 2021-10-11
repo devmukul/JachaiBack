@@ -1,32 +1,25 @@
 package com.jachai.jachaimart.ui.cart
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.databinding.CartFragmentBinding
+import com.jachai.jachaimart.ui.base.BaseFragment
 
-class CartFragment : Fragment() {
+class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment) {
 
     companion object {
         fun newInstance() = CartFragment()
     }
 
-    private lateinit var viewModel: CartViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.cart_fragment, container, false)
+    private val viewModel: CartViewModel by viewModels()
+
+    override fun initView() {
+        TODO("Not yet implemented")
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun subscribeObservers() {
+        TODO("Not yet implemented")
     }
 
 }
