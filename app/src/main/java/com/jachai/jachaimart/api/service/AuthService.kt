@@ -1,4 +1,4 @@
-package com.jachai.jachaimart.service
+package com.jachai.jachaimart.api.service
 
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.utils.constant.ApiConstants

@@ -4,6 +4,7 @@ package com.jachai.jachaimart.api.service
 import com.jachai.jachaimart.model.response.home.BannerResponse
 import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.model.response.home.RestaurantNearMeResponse
+import com.jachai.jachaimart.model.shop.ShopDetailsResponse
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import retrofit2.Call
 import retrofit2.http.GET
@@ -27,5 +28,8 @@ interface FoodService {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): Call<RestaurantNearMeResponse>
+
+    @GET(ApiConstants.PRODUCT_BY_CAT_BASE)
+    fun getShopDetails(@Query("shopId") shopId: String): Call<ShopDetailsResponse>
 
 }
