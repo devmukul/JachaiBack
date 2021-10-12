@@ -3,13 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/splashFragment2">
 
+    <fragment
+        android:id="@+id/splashFragment2"
+        android:name="com.jachai.jachaimart.ui.initial.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/splash_fragment">
+        <action
+            android:id="@+id/splash_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/splash_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.jachai.jachaimart.ui.auth.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/login_to_verifyCode"
+            app:destination="@id/verifyCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyCodeFragment"
+        android:name="com.jachai.jachaimart.ui.auth.VerifyCodeFragment"
+        android:label="verify_code_fragment"
+        tools:layout="@layout/verify_code_fragment">
+        <argument
+            android:name="mobile_number"
+            app:argType="string" />
+        <action
+            android:id="@+id/verifyCode_to_nameUpdate"
+            app:destination="@id/nameUpdateFragment" />
+        <action
+            android:id="@+id/verifyCode_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/nameUpdateFragment"
+        android:name="com.jachai.jachaimart.ui.auth.NameUpdateFragment"
+        android:label="NameUpdateFragment"
+        tools:layout="@layout/name_update_fragment">
+        <action
+            android:id="@+id/nameUpdate_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <fragment
         android:id="@+id/nav_home"
         android:name="com.jachai.jachaimart.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/nav_home_to_shop"
+            app:destination="@id/shopFragment" />
+    </fragment>
     <fragment
         android:id="@+id/shopFragment"
         android:name="com.jachai.jachaimart.ui.shop.ShopFragment"
