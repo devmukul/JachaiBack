@@ -1,4 +1,4 @@
-package com.jachai.user.model.response
+package com.jachai.jachaimart.model.response
 
 
 import com.google.gson.annotations.SerializedName

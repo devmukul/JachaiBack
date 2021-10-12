@@ -1,8 +1,7 @@
 package com.jachai.jachaimart.service
 
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.utils.constant.ApiConstants
-import com.jachai.user.model.response.GenericResponse
-import com.jachai.user.model.response.auth.login.LoginRequest
 import com.jachai.user.model.response.auth.otp.OtpRequest
 import com.jachai.user.model.response.auth.otp.UpdateNameRequest
 import com.jachai.user.model.response.auth.signup.AuthRequest

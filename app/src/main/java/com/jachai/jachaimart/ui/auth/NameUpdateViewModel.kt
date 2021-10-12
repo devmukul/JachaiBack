@@ -8,10 +8,10 @@ import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
-import com.jachai.user.model.response.GenericResponse
 import com.jachai.user.model.response.auth.otp.UpdateNameRequest
 import retrofit2.Call
 import retrofit2.Callback
