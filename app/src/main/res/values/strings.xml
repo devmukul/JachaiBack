@@ -19,4 +19,5 @@
     <string name="networkError">Oh! You are not connected to a wifi or cellular data network. Please connect and try again</string>
 
     <string name="phone_call_permission_denied">Phone Call Permission Denied</string>
+    <string name="home_category_title">Eat what makes you happy!</string>
 </resources>

@@ -1,19 +1,108 @@
 package com.jachai.jachaimart.ui.home
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentHomeBinding
 import com.jachai.jachaimart.ui.base.BaseFragment
+import com.jachai.jachaimart.ui.home.adapters.BannerAdapter
+import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
+import com.jachai.jachaimart.ui.home.adapters.DetailsShopRecyclerAdapter
+import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var bannerAdapter: BannerAdapter
+    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var shopRecyclerAdapter: ShopRecyclerAdapter
+    private lateinit var detailsShopRecyclerAdapter: DetailsShopRecyclerAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        subscribeObservers()
+    }
+
     override fun initView() {
+        viewModel.requestForBanners()
+        viewModel.requestForCategories()
+        viewModel.requestForRestaurantAroundYou(
+            23.737209579805366,
+            90.43048604373678
+
+        )
+//        fetchCurrentLocation { location: CurrentLocation? ->
+//
+//        }
+
+
+        binding.apply {
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                bannerAdapter =
+                    BannerAdapter(requireContext(), emptyList())
+                adapter = bannerAdapter
+            }
+
+
+            include4.categoryTitle.text = getString(R.string.home_category_title)
+            include4.recyclerView.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                categoryAdapter =
+                    CategoryAdapter(requireContext(), emptyList())
+                adapter = categoryAdapter
+            }
+
+            include2.categoryShopTitle.text = "Your Restaurants"
+            include2.recyclerView.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                shopRecyclerAdapter =
+                    ShopRecyclerAdapter(requireContext(), emptyList())
+                adapter = shopRecyclerAdapter
+            }
+
+
+            title.text = "Restaurants around you"
+            recyclerView2.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                detailsShopRecyclerAdapter =
+                    DetailsShopRecyclerAdapter(requireContext(), emptyList())
+                adapter = detailsShopRecyclerAdapter
+            }
+
+
+        }
+
+
     }
 
     override fun subscribeObservers() {
+
+        viewModel.successBannerResponseLiveData.observe(viewLifecycleOwner) {
+            bannerAdapter.setList(it?.banners)
+            bannerAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.successCategoryResponseLiveData.observe(viewLifecycleOwner) {
+            categoryAdapter.setList(it?.categories)
+            categoryAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.successRestaurantAroundYouResponseLiveData.observe(viewLifecycleOwner) {
+            shopRecyclerAdapter.setList(it?.shops)
+            shopRecyclerAdapter.notifyDataSetChanged()
+
+            binding.title.text = "${it?.shops?.size} Restaurants around you"
+            detailsShopRecyclerAdapter.setList(it?.shops)
+            detailsShopRecyclerAdapter.notifyDataSetChanged()
+
+
+        }
     }
 
 

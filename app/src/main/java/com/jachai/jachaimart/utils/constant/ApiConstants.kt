@@ -25,12 +25,16 @@ object ApiConstants {
 
 
     const val LOGIN_BASE = "driver/login"
-    const val SIGNUP_BASE = "driver/register"
-    const val OTP_REQUEST_BASE = "otp/send"
 
-    const val CAR_REG_BASE = "car/info"
-    const val DRIVER_DOC_STATUS_BASE = "driver/info"
-    const val DRIVER_DOC_UPLOAD_BASE = "documents"
+    //banner
+    const val BANNER_BASE = "banner"
+    const val CATEGORY_BASE = "category/type"
+
+    //shop
+    const val SHOP_BASE = "shop"
+    const val SHOP_NEAREST_BASE = "shop/nearest"
+    const val SHOP_BY_CATEGORY_BASE = "shop/by-category"
+
 
     // Credential Manager
     const val RC_SAVE = 1000

@@ -1,13 +1,159 @@
 package com.jachai.jachaimart.ui.home
 
-import androidx.lifecycle.LiveData
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.jachai.jachai_driver.utils.JachaiLog
+import com.jachai.jachai_driver.utils.isConnectionAvailable
+import com.jachai.jachai_driver.utils.showShortToast
+import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.R
+import com.jachai.jachaimart.model.response.home.BannerResponse
+import com.jachai.jachaimart.model.response.home.CategoryResponse
+import com.jachai.jachaimart.model.response.home.RestaurantNearMeResponse
+import com.jachai.jachaimart.ui.base.BaseViewModel
+import com.jachai.jachaimart.utils.RetrofitConfig
+import com.jachai.jachaimart.utils.constant.CommonConstants
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class HomeViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+class HomeViewModel(application: Application) : BaseViewModel(application) {
+    companion object {
+        val TAG = HomeViewModel::class.java
     }
-    val text: LiveData<String> = _text
+
+    private val foodService = RetrofitConfig.foodService
+
+    private var bannerCall: Call<BannerResponse>? = null
+    private var categoryCall: Call<CategoryResponse>? = null
+    private var restaurantAroundYouCall: Call<RestaurantNearMeResponse>? = null
+
+    var successBannerResponseLiveData = MutableLiveData<BannerResponse?>()
+    var successCategoryResponseLiveData = MutableLiveData<CategoryResponse?>()
+    var successRestaurantAroundYouResponseLiveData = MutableLiveData<RestaurantNearMeResponse?>()
+    var errorResponseLiveData = MutableLiveData<String?>()
+
+
+    fun requestForBanners() {
+        try {
+            if (bannerCall != null) {
+                return
+            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+                return
+            }
+
+            bannerCall = foodService.getAllHomeBanners(CommonConstants.DEFAULT_TYPE)
+
+            bannerCall?.enqueue(object : Callback<BannerResponse> {
+                override fun onResponse(
+                    call: Call<BannerResponse>,
+                    response: Response<BannerResponse>
+                ) {
+                    bannerCall = null
+                    successBannerResponseLiveData.postValue(response.body())
+                    JachaiLog.d(HomeViewModel.TAG, response.body().toString())
+
+                }
+
+                override fun onFailure(call: Call<BannerResponse>, t: Throwable) {
+                    bannerCall = null
+                    errorResponseLiveData.value = "failed"
+                    JachaiLog.d(HomeViewModel.TAG, errorResponseLiveData.value.toString())
+
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+        }
+
+    }
+
+
+    fun requestForCategories() {
+        try {
+            if (categoryCall != null) {
+                return
+            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+                return
+            }
+
+            categoryCall = foodService.getAllCategories(CommonConstants.DEFAULT_TYPE)
+
+            categoryCall?.enqueue(object : Callback<CategoryResponse> {
+                override fun onResponse(
+                    call: Call<CategoryResponse>,
+                    response: Response<CategoryResponse>
+                ) {
+                    categoryCall = null
+                    successCategoryResponseLiveData.postValue(response.body())
+                    JachaiLog.d(HomeViewModel.TAG, response.body().toString())
+
+                }
+
+                override fun onFailure(call: Call<CategoryResponse>, t: Throwable) {
+                    categoryCall = null
+                    errorResponseLiveData.value = "failed"
+                    JachaiLog.d(HomeViewModel.TAG, errorResponseLiveData.value.toString())
+
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+        }
+
+    }
+
+
+    fun requestForRestaurantAroundYou(latitude: Double?, longitude: Double?) {
+        try {
+            if (restaurantAroundYouCall != null) {
+                return
+            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+                return
+            }
+
+
+            restaurantAroundYouCall = foodService.getRestaurantAroundMe(
+                CommonConstants.DEFAULT_TYPE,
+                latitude = latitude.toString(),
+                longitude = longitude.toString(),
+                0,
+                20
+
+            )
+
+            restaurantAroundYouCall?.enqueue(object : Callback<RestaurantNearMeResponse> {
+                override fun onResponse(
+                    call: Call<RestaurantNearMeResponse>,
+                    response: Response<RestaurantNearMeResponse>
+                ) {
+                    restaurantAroundYouCall = null
+                    successRestaurantAroundYouResponseLiveData.postValue(response.body())
+                    JachaiLog.d(HomeViewModel.TAG, response.body().toString())
+
+                }
+
+                override fun onFailure(call: Call<RestaurantNearMeResponse>, t: Throwable) {
+                    restaurantAroundYouCall = null
+                    errorResponseLiveData.value = "failed"
+                    JachaiLog.d(HomeViewModel.TAG, errorResponseLiveData.value.toString())
+
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+        }
+
+    }
+
+
 }
