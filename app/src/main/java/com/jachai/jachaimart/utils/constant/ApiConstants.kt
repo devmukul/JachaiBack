@@ -30,6 +30,8 @@ object ApiConstants {
     const val NAME_UPDATE_REQUEST_BASE = "user/update-name"
     const val USER_INFO_REQUEST_BASE = "user"
 
+    const val PRODUCT_BY_CAT_BASE = "api/v1/product/product-category"
+
     const val CAR_REG_BASE = "car/info"
     const val DRIVER_DOC_STATUS_BASE = "driver/info"
     const val DRIVER_DOC_UPLOAD_BASE = "documents"

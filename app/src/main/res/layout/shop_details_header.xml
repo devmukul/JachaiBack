@@ -47,7 +47,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -172,31 +173,39 @@
             app:layout_constraintStart_toEndOf="@+id/fabCategory"
             app:layout_constraintTop_toTopOf="@+id/fabCategory" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabCategory2"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@color/background_light_gray"
-            android:backgroundTint="@color/background_light_gray"
-            android:src="@drawable/ic_progress"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabCustomSize="25dp"
+            android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="10dp"
-            app:tint="#3C8DAD"
-            tools:layout_editor_absoluteX="141dp" />
+            app:layout_constraintStart_toEndOf="@+id/rate"
+            app:layout_constraintEnd_toStartOf="@+id/fabCategory3"
+            android:gravity="center_vertical"
+            android:id="@+id/timeLayout">
 
-        <TextView
-            android:id="@+id/rate2"
-            style="@style/heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="30-40 mnts"
-            app:layout_constraintBottom_toBottomOf="@+id/fabCategory2"
-            app:layout_constraintStart_toEndOf="@+id/fabCategory2"
-            app:layout_constraintTop_toTopOf="@+id/fabCategory2" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabCategory2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/background_light_gray"
+                android:backgroundTint="@color/background_light_gray"
+                android:src="@drawable/ic_progress"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:fabCustomSize="25dp"
+                app:maxImageSize="10dp"
+                app:tint="#3C8DAD"
+                tools:layout_editor_absoluteX="141dp" />
+
+            <TextView
+                android:id="@+id/rate2"
+                style="@style/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30-40 mnts"/>
+
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabCategory3"
@@ -208,8 +217,9 @@
             app:borderWidth="0dp"
             app:elevation="0dp"
             app:fabCustomSize="25dp"
-            app:layout_constraintBottom_toBottomOf="@+id/fabCategory2"
-            app:layout_constraintTop_toTopOf="@+id/fabCategory2"
+            app:layout_constraintBottom_toBottomOf="@+id/timeLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/rate3"
             app:maxImageSize="10dp"
             app:tint="#14876A"
             tools:layout_editor_absoluteX="304dp" />
@@ -222,8 +232,8 @@
             android:text="BTD 45"
             app:layout_constraintBottom_toBottomOf="@+id/fabCategory3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/fabCategory3"
-            app:layout_constraintTop_toTopOf="@+id/fabCategory3" />
+            app:layout_constraintTop_toTopOf="@+id/fabCategory3"
+            android:layout_marginEnd="16dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
