@@ -10,11 +10,11 @@ import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
-import com.jachai.user.model.response.GenericResponse
 import com.jachai.user.model.response.auth.otp.OtpRequest
 import com.jachai.user.model.response.auth.signup.AuthRequest
 import com.jachai.user.model.response.auth.signup.AuthResponse
