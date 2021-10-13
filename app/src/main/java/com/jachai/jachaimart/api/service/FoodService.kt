@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.api.service
 
 
+import com.jachai.jachaimart.model.response.category.ShopByCategoryResponse
 import com.jachai.jachaimart.model.response.home.BannerResponse
 import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.model.response.home.RestaurantNearMeResponse
@@ -32,4 +33,11 @@ interface FoodService {
     @GET(ApiConstants.PRODUCT_BY_CAT_BASE)
     fun getShopDetails(@Query("shopId") shopId: String): Call<ShopDetailsResponse>
 
+
+    @GET(ApiConstants.SHOP_BY_CATEGORY_BASE)
+    fun getAllShopsByCategory(
+        @Query("categoryId") categoryId: String,
+        @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String
+    ): Call<ShopByCategoryResponse>
 }

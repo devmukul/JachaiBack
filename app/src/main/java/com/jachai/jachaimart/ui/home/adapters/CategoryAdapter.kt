@@ -14,7 +14,9 @@ import com.jachai.jachaimart.model.response.home.CategoriesItem
 
 class CategoryAdapter(
     private val context: Context,
-    private var list: List<CategoriesItem?>
+    private var list: List<CategoriesItem?>,
+    private val interaction: Interaction?
+
 ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.image)
@@ -39,6 +41,10 @@ class CategoryAdapter(
 
             holder.name.text = data.title
         }
+
+        holder.itemView.setOnClickListener {
+            data?.let { it1 -> interaction?.onCategoryItemSelected(position, it1) }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -50,4 +56,9 @@ class CategoryAdapter(
             this.list = categoryList
         }
     }
+
+    interface Interaction {
+        fun onCategoryItemSelected(position: Int, item: CategoriesItem?)
+    }
+
 }

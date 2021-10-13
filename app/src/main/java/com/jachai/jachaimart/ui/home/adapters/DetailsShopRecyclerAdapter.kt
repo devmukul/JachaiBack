@@ -14,7 +14,8 @@ import com.jachai.jachaimart.model.response.home.ShopsItem
 
 class DetailsShopRecyclerAdapter(
     private val context: Context,
-    private var list: List<ShopsItem?>
+    private var list: List<ShopsItem?>,
+    private val interaction: ShopRecyclerAdapter.Interaction?
 ) : RecyclerView.Adapter<DetailsShopRecyclerAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.banner)
@@ -40,6 +41,10 @@ class DetailsShopRecyclerAdapter(
 
             holder.name.text = data.name
         }
+        holder.itemView.setOnClickListener {
+            data?.let { it -> interaction?.onShopItemSelected(position, it) }
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -51,4 +56,5 @@ class DetailsShopRecyclerAdapter(
             this.list = shopList
         }
     }
+
 }
