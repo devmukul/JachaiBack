@@ -27,6 +27,8 @@
         android:layout_marginTop="9dp"
         android:layout_marginEnd="5dp"
         android:text="Testy Treat, Dhanmondi"
+        android:textSize="13sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/banner" />
@@ -34,7 +36,7 @@
     <TextView
         android:id="@+id/subtitle"
         style="@style/sub_heading"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="2dp"
@@ -42,6 +44,7 @@
         android:layout_marginBottom="8dp"
         android:text="Desert, Fast food, Cakes &amp; Bekery.."
         android:textColor="#787878"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,16 +3,17 @@ package com.jachai.jachaimart.ui.shop
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.ShopFragmentBinding
+import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.shop.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.shop.adapter.CategoryAdapter
 
-class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment){
+class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
 
     companion object {
         fun newInstance() = ShopFragment()
@@ -20,10 +21,17 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment){
 
     private val viewModel: ShopViewModel by viewModels()
 
+    private val args: ShopFragmentArgs by navArgs()
+
+    private lateinit var shopItem: ShopsItem
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.successResponseLiveData.observe(viewLifecycleOwner,{
+        shopItem = args.shopItem
+
+
+        viewModel.successResponseLiveData.observe(viewLifecycleOwner, {
             initTabLayout(it!!.products)
             initRecycler(it.products)
             initMediator(it.products)
@@ -39,7 +47,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment){
     override fun onResume() {
         super.onResume()
         initView()
-        viewModel.getDriverDocStatus("615fc648cd54a0170cc0c226")
+        viewModel.getDriverDocStatus(shopId = shopItem.id.toString())
     }
 
     override fun subscribeObservers() {

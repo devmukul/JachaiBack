@@ -3,17 +3,22 @@ package com.jachai.jachaimart.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentHomeBinding
+import com.jachai.jachaimart.model.response.home.CategoriesItem
+import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.home.adapters.BannerAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.home.adapters.DetailsShopRecyclerAdapter
 import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
+    CategoryAdapter.Interaction, ShopRecyclerAdapter.Interaction {
 
     private val viewModel: HomeViewModel by viewModels()
 
@@ -22,10 +27,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private lateinit var shopRecyclerAdapter: ShopRecyclerAdapter
     private lateinit var detailsShopRecyclerAdapter: DetailsShopRecyclerAdapter
 
+    private lateinit var navController: NavController
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
         subscribeObservers()
+        navController = Navigation.findNavController(binding.root)
+
+
     }
 
     override fun initView() {
@@ -54,7 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             include4.recyclerView.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 categoryAdapter =
-                    CategoryAdapter(requireContext(), emptyList())
+                    CategoryAdapter(requireContext(), emptyList(), this@HomeFragment)
                 adapter = categoryAdapter
             }
 
@@ -62,7 +72,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             include2.recyclerView.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 shopRecyclerAdapter =
-                    ShopRecyclerAdapter(requireContext(), emptyList())
+                    ShopRecyclerAdapter(requireContext(), emptyList(),this@HomeFragment)
                 adapter = shopRecyclerAdapter
             }
 
@@ -71,7 +81,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             recyclerView2.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 detailsShopRecyclerAdapter =
-                    DetailsShopRecyclerAdapter(requireContext(), emptyList())
+                    DetailsShopRecyclerAdapter(requireContext(), emptyList(), this@HomeFragment)
                 adapter = detailsShopRecyclerAdapter
             }
 
@@ -101,8 +111,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             detailsShopRecyclerAdapter.setList(it?.shops)
             detailsShopRecyclerAdapter.notifyDataSetChanged()
 
-
         }
+    }
+
+    override fun onCategoryItemSelected(position: Int, item: CategoriesItem?) {
+
+        val action = HomeFragmentDirections.actionNavHomeToShopListFragment()
+        action.categoryId = item?.id.toString()
+        action.categoryName = item?.title.toString()
+        navController.navigate(action)
+    }
+
+    override fun onShopItemSelected(position: Int, item: ShopsItem) {
+        val action = HomeFragmentDirections.actionNavHomeToShopFragment(item)
+        navController.navigate(action)
     }
 
 
