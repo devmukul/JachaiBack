@@ -52,9 +52,9 @@
     </fragment>
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.jachai.jachaimart.ui.shop.ShopFragment"
+        android:name="com.jachai.jachaimart.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/shop_fragment" >
+        tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_nav_home_to_shopListFragment"
             app:destination="@id/shopListFragment" >

@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmadhamwi.tabsync.TabbedListMediator
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.appbar.AppBarLayout
 import com.jachai.jachai_driver.utils.Utils
 import com.jachai.jachaimart.R
@@ -34,16 +36,14 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initView()
-        viewModel.getDriverDocStatus("615fc648cd54a0170cc0c226")
         shopItem = args.shopItem
+        initView()
+        viewModel.getDriverDocStatus(shopItem.id!!)
 
         viewModel.successResponseLiveData.observe(viewLifecycleOwner, {
             initTabLayout(it!!.products)
             initRecycler(it.products)
             initMediator(it.products)
-
         })
 
         isExpanded = true
@@ -67,7 +67,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
                     binding.infoIcon.visibility = View.GONE
                     binding.toolbar.setBackgroundColor(Color.WHITE)
                    // binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-                    binding.toolbar.setTitle("Test")
+                    binding.toolbar.setTitle(shopItem.name)
                     if (getBaseActivity() != null && getBaseActivity()!!.window != null) requireActivity().window.statusBarColor =
                         Color.WHITE
                 } else {
@@ -84,8 +84,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             getBaseActivity()!!.window.decorView.systemUiVisibility = 0
                             getBaseActivity()!!.window.statusBarColor = Color.TRANSPARENT
-                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) getBaseActivity()!!.window.statusBarColor =
-                            Color.WHITE
+                        } else getBaseActivity()!!.window.statusBarColor = Color.WHITE
                     }
                 }
             }
@@ -104,6 +103,19 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
 
     override fun initView() {
         binding.apply {
+            Glide.with(requireContext())
+                .load(shopItem.banner)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(coverImage)
+
+            Glide.with(requireContext())
+                .load(shopItem.logo)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(logo)
+
+            resName.text = shopItem.name
+
+
         }
     }
 
