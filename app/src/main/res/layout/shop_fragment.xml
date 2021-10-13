@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <androidx.constraintlayout.widget.ConstraintLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout  xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,26 +14,194 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
 
-        <include
-            android:id="@+id/include4"
-            layout="@layout/shop_details_header"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include6" />
+            android:background="#fff"
+            android:fitsSystemWindows="true"
+            app:contentInsetStartWithNavigation="0dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include4"
-            android:layout_marginTop="8dp">
+            <com.jachai.jachaimart.views.FixCollapsingToolbarLayout
+                android:id="@+id/collapsingToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:elevation="0dp"
+                android:fitsSystemWindows="true"
+                android:gravity="top"
+                android:padding="0dp"
+                app:contentScrim="@color/white"
+                app:layout_scrollFlags="enterAlwaysCollapsed|scroll|exitUntilCollapsed|snap"
+                app:scrimAnimationDuration="0"
+                app:statusBarScrim="@color/white"
+                app:titleEnabled="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:background="#fff"
+                    android:fitsSystemWindows="true"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:background="#fff">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/coverHolder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="40dp">
+
+                            <ImageView
+                                android:id="@+id/coverImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:adjustViewBounds="true"
+                                android:foreground="@drawable/statusbar_actiobar_gradient"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/sample_banner"
+                                android:transitionName="banner_transition"
+                                app:layout_constraintDimensionRatio="H,5:2"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <View
+                                android:id="@+id/overlayBanner"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:background="@drawable/bg_restaurant_cover_overlay"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="@id/coverImage"
+                                app:layout_constraintEnd_toEndOf="@id/coverImage"
+                                app:layout_constraintStart_toStartOf="@id/coverImage"
+                                app:layout_constraintTop_toTopOf="@id/coverImage" />
+
+                            <TextView
+                                android:id="@+id/txtClose"
+                                android:layout_width="wrap_content"
+                                android:layout_height="26dp"
+                                android:background="@drawable/bg_badge_not_available_round"
+                                android:drawableLeft="@drawable/ic_clock_small"
+                                android:drawablePadding="5dp"
+                                android:paddingStart="10dp"
+                                android:paddingTop="5dp"
+                                android:paddingEnd="10dp"
+                                android:paddingBottom="6dp"
+                                android:textColor="#fff"
+                                android:textSize="12sp"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="@string/restaurant_closed" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:id="@+id/logo"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="16dp"
+                            android:src="@drawable/ic_frame_1"
+                            app:civ_border_color="#E6E8EB"
+                            app:civ_border_width="1dp" />
+
+                        <View
+                            android:id="@+id/overlayLogo"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="16dp"
+                            android:background="@drawable/bg_overlay_circle"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="@id/logo"
+                            app:layout_constraintEnd_toEndOf="@id/logo"
+                            app:layout_constraintStart_toStartOf="@id/logo"
+                            app:layout_constraintTop_toTopOf="@id/logo" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/orderStatusLinearLayout"
+                            android:layout_width="72dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/layout_bg"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:weightSum="4"
+                            android:layout_gravity="bottom|end"
+                            android:layout_marginRight="16dp">
+
+
+                            <CheckBox
+                                android:id="@+id/checkBox"
+                                style="@style/title"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_margin="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/favourite_checkbox"
+                                android:button="@null" />
+
+                            <TextView
+                                android:id="@+id/statusTextView"
+                                style="@style/sub_heading"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"
+                                android:gravity="center_vertical"
+                                android:text="Follow"
+                                android:textSize="10sp" />
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </FrameLayout>
+
+                    <include
+                        android:id="@+id/include4"
+                        layout="@layout/shop_details_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/include6"
+                        android:layout_marginHorizontal="16dp"/>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="@android:color/transparent"
+                    android:elevation="0dp"
+                    android:paddingRight="5dp"
+                    app:contentInsetStartWithNavigation="0dp"
+                    app:elevation="0dp"
+                    app:layout_collapseMode="pin"
+                    app:title="">
+
+                    <ImageView
+                        android:id="@+id/infoIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="11dp"
+                        android:src="@drawable/ic_info_white_background" />
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.jachai.jachaimart.views.FixCollapsingToolbarLayout>
+
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
@@ -46,6 +214,20 @@
                 app:tabIndicatorAnimationMode="elastic"
                 app:tabMode="scrollable" />
 
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="60dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_marginTop="8dp">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="0dp"
@@ -56,7 +238,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tabLayout"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/shop_category_row" />
 
             <View
@@ -77,5 +259,5 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -42,4 +42,5 @@
     <string name="drop_off_message">Towards Destination</string>
 
     <string name="home_category_title">Eat what makes you happy!</string>
+    <string name="restaurant_closed">Restaurant Closed!</string>
 </resources>

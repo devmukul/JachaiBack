@@ -40,7 +40,7 @@ object ApiConstants {
     const val SHOP_NEAREST_BASE = "shop/nearest"
     const val SHOP_BY_CATEGORY_BASE = "shop/by-category"
 
-    const val PRODUCT_BY_CAT_BASE = "api/v1/product/product-category"
+    const val PRODUCT_BY_CAT_BASE = "product/product-category"
 
     const val CAR_REG_BASE = "car/info"
     const val DRIVER_DOC_STATUS_BASE = "driver/info"

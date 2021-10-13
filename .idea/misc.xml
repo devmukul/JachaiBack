@@ -3,21 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/drawable-v24/rounded_button_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/background_gray_dot.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/background_green_dot.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/background_rgray_dot.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/bg_badge_not_available_round.xml" value="0.35260416666666666" />
+        <entry key="app/src/main/res/drawable/bg_overlay_circle.xml" value="0.3385416666666667" />
         <entry key="app/src/main/res/drawable/box_curve_gray.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_curve_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_top_curve.xml" value="0.2015625" />
         <entry key="app/src/main/res/drawable/edittext_bottom_border.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/favourite_checkbox.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_border.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/drawable/ic_info_white_background.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/ic_login_page.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/ic_status_default.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rectangle_with_gray_border.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/rounded_border_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_button_red.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/statusbar_actiobar_gradient.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/layout/bottom_total_price.xml" value="0.19188016022527357" />
         <entry key="app/src/main/res/layout/cart_fragment.xml" value="0.3442907868016922" />
         <entry key="app/src/main/res/layout/cart_item_row.xml" value="1.0453172205438066" />
@@ -40,6 +45,7 @@
         <entry key="app/src/main/res/layout/shop_category_row.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/shop_details_header.xml" value="0.5366906474820143" />
         <entry key="app/src/main/res/layout/shop_fragment.xml" value="0.33645833333333336" />
+        <entry key="app/src/main/res/layout/shop_header.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/shop_list_fragment.xml" value="0.14447191272908635" />
         <entry key="app/src/main/res/layout/splash_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/toolbar_app.xml" value="0.12974989152083405" />
