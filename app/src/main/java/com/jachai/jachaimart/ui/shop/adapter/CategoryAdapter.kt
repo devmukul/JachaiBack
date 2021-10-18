@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.shop.Product
+import com.jachai.jachaimart.model.shop.ProductX
 
 class CategoryAdapter (
     private val context: Context,
-    private val listOfCategories: List<Product>
+    private val listOfCategories: List<Product>,
+    private val interaction: Interaction?
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -22,7 +24,7 @@ class CategoryAdapter (
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.bind(listOfCategories[position])
+        holder.bind(listOfCategories[position], interaction)
     }
 
     override fun getItemCount(): Int {
@@ -33,11 +35,15 @@ class CategoryAdapter (
         private val view: View
     ) : RecyclerView.ViewHolder(view) {
 
-        fun bind(category: Product) {
+        fun bind(category: Product, interaction: Interaction?) {
             view.findViewById<TextView>(R.id.textView3).text = category.category
             val rv =  view.findViewById<RecyclerView>(R.id.foodList)
             rv.layoutManager = LinearLayoutManager(view.context)
-            rv.adapter = FoodItemAdapter(view.context, category.products)
+            rv.adapter = FoodItemAdapter(view.context, category.products, interaction = interaction)
         }
     }
+    interface Interaction {
+        fun onProductItemSelected(position: Int, item: ProductX)
+    }
+
 }

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import androidx.multidex.MultiDexApplication
+import com.jachai.jachaimart.database.AppDatabase
 import com.jachai.jachaimart.manager.smshelper.AppSignatureHelper
 import com.jachai.jachaimart.utils.HttpLogger
 import com.jachai.jachaimart.utils.HttpStatusCode
@@ -26,7 +27,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
-import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
 import java.util.concurrent.TimeUnit
 
@@ -49,6 +49,9 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
             SharedPreferenceConstants.TAG_JACHAI,
             Context.MODE_PRIVATE
         )
+
+        //Database
+        mDatabase = AppDatabase.getAppDatabase(this)
 
 //        mStompClient = Stomp.over(
 //            Stomp.ConnectionProvider.OKHTTP,
@@ -89,6 +92,10 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
 
         lateinit var mStompClient: StompClient
             private set
+
+        lateinit var mDatabase: AppDatabase
+            private set
+
 
         var compositeDisposable: CompositeDisposable? = null
 

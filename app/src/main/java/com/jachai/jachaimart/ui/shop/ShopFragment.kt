@@ -1,5 +1,6 @@
 package com.jachai.jachaimart.ui.shop
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
@@ -13,14 +14,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.appbar.AppBarLayout
 import com.jachai.jachai_driver.utils.Utils
+import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.ShopFragmentBinding
 import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.shop.Product
+import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.shop.adapter.CategoryAdapter
 
-class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
+class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
+    CategoryAdapter.Interaction {
 
     companion object {
         fun newInstance() = ShopFragment()
@@ -66,7 +70,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
                         true
                     binding.infoIcon.visibility = View.GONE
                     binding.toolbar.setBackgroundColor(Color.WHITE)
-                   // binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+                    // binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
                     binding.toolbar.setTitle(shopItem.name)
                     if (getBaseActivity() != null && getBaseActivity()!!.window != null) requireActivity().window.statusBarColor =
                         Color.WHITE
@@ -138,7 +142,8 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
 
     private fun initRecycler(categories: List<Product>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = CategoryAdapter(requireContext(), categories)
+        binding.recyclerView.adapter =
+            CategoryAdapter(requireContext(), categories, this@ShopFragment)
     }
 
     private fun initMediator(categories: List<Product>) {
@@ -147,5 +152,36 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment) {
             binding.tabLayout,
             categories.indices.toList()
         ).attach()
+    }
+
+    override fun onProductItemSelected(position: Int, item: ProductX) {
+        if (shopItem.id?.let {
+                JachaiFoodApplication.mDatabase.daoAccess().isInsertionApplicable(shopID = it)
+            } == true) {
+            viewModel.saveProduct(item, 1, shopItem, true)
+
+        } else {
+            alertDialog(item)
+        }
+
+
+    }
+
+    private fun alertDialog(product: ProductX) {
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(false)
+        builder.setTitle(getString(R.string.app_name_short) + " alert")
+        builder.setMessage("Do have already selected products from a different restaurant. if you continue, your cart and selection will be removed")
+
+        builder.setPositiveButton("Continue") { dialog, which ->
+            viewModel.saveProduct(product, 1, shopItem, false)
+        }
+
+        builder.setNegativeButton("Close") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
+
+
     }
 }
