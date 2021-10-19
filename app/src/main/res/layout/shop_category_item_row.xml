@@ -72,11 +72,10 @@
         android:layout_marginTop="53dp"
         android:background="@drawable/box_curve_red"
         android:drawableRight="@drawable/ic_baseline_add"
-        android:fontFamily="@font/uni_neue_regular"
         android:gravity="center"
         android:text="ADD"
         android:textColor="@color/red"
-        android:textSize="9sp"
+        style="@style/sub_heading"
         app:layout_constraintEnd_toEndOf="@+id/foodImage"
         app:layout_constraintStart_toStartOf="@+id/foodImage"
         app:layout_constraintTop_toTopOf="@+id/foodImage" />

@@ -4,16 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.shop.ProductX
 
-class FoodItemAdapter (
+class FoodItemAdapter(
     private val context: Context,
-    private var items: List<ProductX>
+    private var items: List<ProductX>,
+    private val interaction: CategoryAdapter.Interaction?
 ) :
     RecyclerView.Adapter<FoodItemAdapter.ItemViewHolder>() {
 
@@ -25,6 +25,9 @@ class FoodItemAdapter (
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(items[position])
+        holder.itemView.setOnClickListener {
+            interaction?.onProductItemSelected(position, item = items[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -37,9 +40,14 @@ class FoodItemAdapter (
         fun bind(item: ProductX) {
             view.findViewById<TextView>(R.id.head).text = item.name
             view.findViewById<TextView>(R.id.subhead).text = item.name
-            view.findViewById<TextView>(R.id.cost).text = item.variations.get(0).price.mrp.toString()
+            view.findViewById<TextView>(R.id.cost).text =
+                item.variations.get(0).price.mrp.toString()
 
             Glide.with(view.context).load(item.productImage).into(view.findViewById(R.id.foodImage))
+
         }
     }
+
+
+
 }

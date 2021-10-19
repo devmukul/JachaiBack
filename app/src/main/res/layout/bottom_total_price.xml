@@ -36,14 +36,16 @@
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="32dp"
+            android:layout_width="16dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/checkout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/total_count"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/checkout"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_cart" />
 
         <TextView
@@ -51,11 +53,12 @@
             style="@style/heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="3"
-            android:textColor="#FFFFFF"
-            app:layout_constraintStart_toEndOf="@+id/imageView6"
-            app:layout_constraintTop_toTopOf="@+id/imageView6" />
+            android:layout_marginStart="8dp"
+            android:text="0"
+            android:textColor="#D9FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/total_count"
+            app:layout_constraintStart_toEndOf="@+id/total_count"
+            app:layout_constraintTop_toTopOf="@+id/total_count" />
 
         <TextView
             android:id="@+id/items"
@@ -64,7 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:text="items"
-            android:textColor="#FFFFFF"
+            android:textColor="#D9FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/item_count"
             app:layout_constraintEnd_toStartOf="@+id/checkout"
             app:layout_constraintStart_toEndOf="@+id/item_count"
             app:layout_constraintTop_toTopOf="@+id/item_count" />
@@ -72,26 +76,29 @@
         <TextView
             android:id="@+id/total_count"
             style="@style/heading"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3500.00"
+            android:layout_marginStart="16dp"
+            android:text="0.00"
             android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toStartOf="@+id/checkout"
-            app:layout_constraintStart_toStartOf="@+id/item_count"
-            app:layout_constraintTop_toBottomOf="@+id/items" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
         <TextView
             android:id="@+id/checkout"
             style="@style/heading"
-            android:layout_width="0dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:text="CHECKOUT"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/imageView6" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

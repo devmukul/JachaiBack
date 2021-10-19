@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 object CommonConstants {
 
     const val DEFAULT_TYPE = "JC_FOOD"
+    const val DATABASE_NAME = "JC_FOOD.db"
     val DEFAULT_GSON = GsonBuilder().serializeNulls().create()!!
     val HIDE_NON_EXPOSED_GSON = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()!!
     val DEFAULT_NON_NULL_GSON = Gson()
