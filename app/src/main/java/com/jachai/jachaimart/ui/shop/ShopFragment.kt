@@ -7,6 +7,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmadhamwi.tabsync.TabbedListMediator
@@ -21,6 +23,7 @@ import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.shop.Product
 import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.ui.base.BaseFragment
+import com.jachai.jachaimart.ui.home.HomeFragmentDirections
 import com.jachai.jachaimart.ui.shop.adapter.CategoryAdapter
 
 class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
@@ -42,7 +45,9 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         super.onViewCreated(view, savedInstanceState)
         shopItem = args.shopItem
         initView()
+        subscribeObservers()
         viewModel.getDriverDocStatus(shopItem.id!!)
+        viewModel.checkCartStatus()
 
         viewModel.successResponseLiveData.observe(viewLifecycleOwner, {
             initTabLayout(it!!.products)
@@ -119,6 +124,12 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
 
             resName.text = shopItem.name
 
+            cartBottom.checkout.setOnClickListener {
+                val action = ShopFragmentDirections.actionShopFragmentToCartFragment()
+                findNavController().navigate(action)
+
+            }
+
 
         }
     }
@@ -129,6 +140,21 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
     }
 
     override fun subscribeObservers() {
+        viewModel.successAddToCartData.observe(viewLifecycleOwner) {
+            if (it == true) {
+                binding.apply {
+                    cartBottom.conLayout.visibility = View.VISIBLE
+                    cartBottom.itemCount.text =
+                        JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
+                            .toString()
+                    cartBottom.totalCount.text =
+                        JachaiFoodApplication.mDatabase.daoAccess().totalCost().toString()
+
+                }
+            }else{
+                binding.cartBottom.conLayout.visibility = View.GONE
+            }
+        }
     }
 
     private fun initTabLayout(categories: List<Product>) {

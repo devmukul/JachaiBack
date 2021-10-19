@@ -54,10 +54,10 @@
         android:id="@+id/nav_home"
         android:name="com.jachai.jachaimart.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_shopListFragment"
-            app:destination="@id/shopListFragment" >
+            app:destination="@id/shopListFragment">
             <argument
                 android:name="categoryId"
                 android:defaultValue="na" />
@@ -73,27 +73,49 @@
         android:id="@+id/shopFragment"
         android:name="com.jachai.jachaimart.ui.shop.ShopFragment"
         android:label="shop_fragment"
-        tools:layout="@layout/shop_fragment" >
+        tools:layout="@layout/shop_fragment">
         <argument
             android:name="shopItem"
             app:argType="com.jachai.jachaimart.model.response.home.ShopsItem" />
+
     </fragment>
+    <action
+        android:id="@+id/action_shopFragment_to_cartFragment"
+        app:destination="@id/cartFragment" />
     <fragment
-        tools:layout="@layout/shop_list_fragment"
         android:id="@+id/shopListFragment"
         android:name="com.jachai.jachaimart.ui.shop.shop_list.ShopListFragment"
-        android:label="ShopListFragment" >
+        android:label="ShopListFragment"
+        tools:layout="@layout/shop_list_fragment">
         <argument
             android:name="categoryId"
-            app:argType="string"
-            android:defaultValue="na" />
+            android:defaultValue="na"
+            app:argType="string" />
         <argument
             android:name="categoryName"
-            app:argType="string"
-            android:defaultValue="na" />
+            android:defaultValue="na"
+            app:argType="string" />
         <action
             android:id="@+id/action_shopListFragment_to_shopFragment"
             app:destination="@id/shopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.jachai.jachaimart.ui.cart.CartFragment"
+        android:label="CartFragment"
+        tools:layout="@layout/cart_fragment" >
+        <action
+            android:id="@+id/action_cartFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.jachai.jachaimart.ui.checkout.CheckoutFragment"
+        android:label="CheckoutFragment" >
+        <argument
+            android:name="addNote"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

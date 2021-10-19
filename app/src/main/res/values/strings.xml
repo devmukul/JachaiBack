@@ -43,4 +43,5 @@
 
     <string name="home_category_title">Eat what makes you happy!</string>
     <string name="restaurant_closed">Restaurant Closed!</string>
+    <string name="place_order">Place Order</string>
 </resources>

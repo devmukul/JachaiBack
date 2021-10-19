@@ -11,13 +11,14 @@ interface IDaoAccess {
     fun insertProductOrder(productOrder: ProductOrder)
 
     @Transaction
-    fun insertOrder(productOrder: ProductOrder, isFromSameShop: Boolean) {
+    fun insertOrder(productOrder: ProductOrder, isFromSameShop: Boolean): Boolean {
         if (isFromSameShop) {
             insertProductOrder(productOrder)
         } else {
             clearOrderTable()
             insertProductOrder(productOrder)
         }
+        return true
     }
 
     @Query("DELETE FROM ProductOrder")
@@ -45,5 +46,15 @@ interface IDaoAccess {
         }
         return isSameShopID
     }
+
+    @Query("SELECT SUM(price * quantity) FROM ProductOrder")
+    fun totalCost(): Double
+
+    @Query("UPDATE ProductOrder SET quantity = :itemQty WHERE product = :id ;")
+    fun updateProductQuantity(itemQty: Int, id: String)
+
+    @Query("DELETE FROM ProductOrder where product in (:id)")
+    fun deleteCartProducts(id: List<String>)
+
 
 }

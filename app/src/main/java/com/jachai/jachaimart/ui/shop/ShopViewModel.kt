@@ -19,6 +19,7 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
     private var shopDetailsCall: Call<ShopDetailsResponse>? = null
     private val foodService = RetrofitConfig.foodService
     var successResponseLiveData = MutableLiveData<ShopDetailsResponse?>()
+    var successAddToCartData = MutableLiveData<Boolean?>()
 
     fun getDriverDocStatus(shopId: String) {
         if (shopDetailsCall != null) {
@@ -52,6 +53,8 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
         productOrder.quantity = quantity.toInt()
         productOrder.shopId = shopItem.id!!
         productOrder.shopName = shopItem.name
+        productOrder.shopSubtitle = "na"
+        productOrder.shopImage = shopItem.logo
         productOrder.image = item.productImage
         productOrder.isChecked = false
         productOrder.isPopular = item.isPopular
@@ -66,9 +69,20 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
             productOrder.discountedPrice = 0.toString()
         }
 
-        JachaiFoodApplication.mDatabase.daoAccess().insertOrder(productOrder,isFromSameShop)
+        successAddToCartData.postValue(
+            JachaiFoodApplication.mDatabase.daoAccess().insertOrder(productOrder, isFromSameShop)
+        )
 
 
+    }
+
+
+    fun checkCartStatus() {
+        if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() > 0) {
+            successAddToCartData.postValue(true)
+        } else {
+            successAddToCartData.postValue(true)
+        }
     }
 
 
