@@ -16,7 +16,7 @@ class NameUpdateFragment  : BaseFragment<NameUpdateFragmentBinding>(R.layout.nam
         fun newInstance() = NameUpdateFragment()
     }
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel:  NameUpdateViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,7 +41,7 @@ class NameUpdateFragment  : BaseFragment<NameUpdateFragmentBinding>(R.layout.nam
             submitButton.setOnClickListener {
                 if (isFromValidationSuccess()) {
                     showLoader()
-                    viewModel.registerMobileNumber(binding.fullName.text.toString())
+                    viewModel.registerName(binding.fullName.text.toString())
                 }
             }
         }
