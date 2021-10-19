@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:fadingEdgeLength="0dp">
+
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:id="@+id/appBar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#fff">-->
+
+<!--&lt;!&ndash;            <com.google.android.material.appbar.CollapsingToolbarLayout&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/collapsingToolbar"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="#fff"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:fadingEdgeLength="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:fitsSystemWindows="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:contentScrim="?attr/colorPrimary"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:layout_scrollFlags="scroll"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:titleEnabled="false">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <androidx.appcompat.widget.Toolbar&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/toolbar"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="56dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:background="#fff"&ndash;&gt;-->
+<!--&lt;!&ndash;                    app:navigationIcon="@drawable/ic_arrow_back">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:layout_marginEnd="40dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:clickable="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:focusable="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                        android:orientation="horizontal">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:ellipsize="end"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:maxLines="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:singleLine="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:text="@string/deliver_to"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textColor="#1D2531"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textSize="17sp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/tvAddress"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_marginStart="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:ellipsize="end"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:maxLength="16"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:maxLines="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:singleLine="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:text="@string/loading_address"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textColor="@color/colorAccent"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textSize="16sp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textStyle="bold" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                    </LinearLayout>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                </androidx.appcompat.widget.Toolbar>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </com.google.android.material.appbar.CollapsingToolbarLayout>&ndash;&gt;-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/brd_search_home_light"-->
+<!--                android:focusableInTouchMode="true"-->
+<!--                android:gravity="center_vertical">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/icSearch"-->
+<!--                    android:layout_width="20dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:layout_marginStart="15dp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:srcCompat="@drawable/ic_search"-->
+<!--                    app:tint="#646b71" />-->
+
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/etSearchShops"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:paddingStart="15dp"-->
+<!--                    android:background="@null"-->
+<!--                    android:hint="Search restaurant, foods..."-->
+<!--                    android:imeOptions="actionSearch"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:textSize="15sp" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/clearSearch"-->
+<!--                    android:layout_width="20dp"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    android:layout_marginEnd="15dp"-->
+<!--                    app:tint="#333"-->
+<!--                    android:visibility="invisible"-->
+<!--                    app:srcCompat="@drawable/ic_close" />-->
+
+<!--            </LinearLayout>-->
+
+
+<!--&lt;!&ndash;            <com.google.android.material.tabs.TabLayout&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/tabLayout"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="250dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="56dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="#fff"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:fitsSystemWindows="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                app:tabTextAppearance="@style/TabTextAppearance">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <com.google.android.material.tabs.TabItem&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/btnRestaurant"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:text="@string/restaurants" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <com.google.android.material.tabs.TabItem&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:id="@+id/btnFood"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:text="@string/foods" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </com.google.android.material.tabs.TabLayout>&ndash;&gt;-->
+
+
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--            android:id="@+id/swipeRefresh"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recyclerView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:clipToPadding="false"-->
+<!--                android:orientation="vertical"-->
+<!--                android:paddingTop="15dp"-->
+<!--                android:paddingBottom="25dp"-->
+<!--                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
+
+
+<!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
