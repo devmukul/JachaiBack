@@ -42,6 +42,10 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         viewModel.geOrderList()
         updateBottomCart(0.0)
         binding.apply {
+            toolbarMain.back.setOnClickListener {
+                onBackPressed()
+            }
+
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 checkoutAdapter = CheckoutAdapter(requireContext(), emptyList())

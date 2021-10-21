@@ -40,6 +40,11 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     override fun initView() {
 
         binding.apply {
+            toolbarMain.back.setOnClickListener {
+                onBackPressed()
+            }
+
+
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 cartAdapter = CartAdapter(requireContext(), emptyList(), this@CartFragment)
