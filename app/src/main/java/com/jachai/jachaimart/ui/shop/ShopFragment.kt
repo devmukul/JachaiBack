@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +22,6 @@ import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.shop.Product
 import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.ui.base.BaseFragment
-import com.jachai.jachaimart.ui.home.HomeFragmentDirections
 import com.jachai.jachaimart.ui.shop.adapter.CategoryAdapter
 
 class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
@@ -40,6 +38,9 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
     private val args: ShopFragmentArgs by navArgs()
 
     private lateinit var shopItem: ShopsItem
+
+    private lateinit var categoryAdapter: CategoryAdapter
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -129,6 +130,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
                 findNavController().navigate(action)
 
             }
+            initRecycler(emptyList())
 
 
         }
@@ -143,6 +145,9 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         viewModel.successAddToCartData.observe(viewLifecycleOwner) {
             if (it == true) {
                 binding.apply {
+                    categoryAdapter.notifyDataSetChanged()
+
+                    cartBottom.checkout.text = "ViEW CART"
                     cartBottom.conLayout.visibility = View.VISIBLE
                     cartBottom.itemCount.text =
                         JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
@@ -151,7 +156,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
                         JachaiFoodApplication.mDatabase.daoAccess().totalCost().toString()
 
                 }
-            }else{
+            } else {
                 binding.cartBottom.conLayout.visibility = View.GONE
             }
         }
@@ -168,8 +173,9 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
 
     private fun initRecycler(categories: List<Product>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter =
-            CategoryAdapter(requireContext(), categories, this@ShopFragment)
+        categoryAdapter = CategoryAdapter(requireContext(), categories, this@ShopFragment)
+        binding.recyclerView.adapter = categoryAdapter
+
     }
 
     private fun initMediator(categories: List<Product>) {

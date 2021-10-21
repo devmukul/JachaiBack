@@ -17,15 +17,7 @@ object SocketConstants {
     const val RIDER_TRIP_COMPLETED_SEND = "/app/call/completed"
 
 
-    //Status
-    const val RIDER_TRIP_REQUESTED = "REQUESTED"
-    const val RIDER_TRIP_ACCEPTED = "ACCEPTED"
-    const val RIDER_TRIP_PICKED = "PICKED"
-    const val RIDER_TRIP_DROP_OFF = "DROP_OFF"
-    const val RIDER_TRIP_COMPLETED = "COMPLETED"
-    const val RIDER_TRIP_CANCELED = "CANCELED"
-    const val USER_TRIP_CANCELED = "USER_CANCELED"
-    const val RIDER_TRIP_STATUS_ONLINE = "ONLINE"
+
 
 
 

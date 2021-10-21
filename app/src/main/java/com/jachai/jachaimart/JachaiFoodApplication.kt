@@ -149,6 +149,11 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
             .build()
+        val ORDER_RETROFIT = Retrofit.Builder()
+            .baseUrl(ApiConstants.JACHAI_BASE_URL_ORDER)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
+            .build()
 
 
         fun getAppContext(): JachaiFoodApplication {

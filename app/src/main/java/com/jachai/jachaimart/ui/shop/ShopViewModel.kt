@@ -81,7 +81,7 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
         if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() > 0) {
             successAddToCartData.postValue(true)
         } else {
-            successAddToCartData.postValue(true)
+            successAddToCartData.postValue(false)
         }
     }
 
