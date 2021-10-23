@@ -29,6 +29,7 @@ import com.jachai.jachaimart.model.shop.Product
 import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.shop.adapter.CategoryAdapter
+import kotlin.math.ceil
 
 
 class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
@@ -131,12 +132,24 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
                 .into(logo)
 
             resName.text = shopItem.name
+            subtitle.text = shopItem.description
 
             cartBottom.checkout.setOnClickListener {
                 val action = ShopFragmentDirections.actionShopFragmentToCartFragment()
                 findNavController().navigate(action)
 
             }
+            val charge = shopItem.deliveryCharge?.toDouble()?.let { ceil(it) }
+            deliveryCharge.text = charge.toString()
+            val time = shopItem.timeRemaining?.toInt() ?: 0
+            val requiredTime = time + 5
+            timeNeeded.text = "$time - $requiredTime mins"
+            rate.text = shopItem.rating?.toDouble().toString()
+
+
+
+
+
             initRecycler(emptyList())
 
 
