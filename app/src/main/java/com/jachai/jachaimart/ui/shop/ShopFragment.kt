@@ -1,13 +1,16 @@
 package com.jachai.jachaimart.ui.shop
 
+
 import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,8 @@ import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.Utils
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
@@ -23,8 +28,8 @@ import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.shop.Product
 import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.ui.base.BaseFragment
-import com.jachai.jachaimart.ui.home.HomeFragmentDirections
 import com.jachai.jachaimart.ui.shop.adapter.CategoryAdapter
+
 
 class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
     CategoryAdapter.Interaction {
@@ -40,6 +45,9 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
     private val args: ShopFragmentArgs by navArgs()
 
     private lateinit var shopItem: ShopsItem
+
+    private lateinit var categoryAdapter: CategoryAdapter
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -129,6 +137,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
                 findNavController().navigate(action)
 
             }
+            initRecycler(emptyList())
 
 
         }
@@ -143,6 +152,9 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         viewModel.successAddToCartData.observe(viewLifecycleOwner) {
             if (it == true) {
                 binding.apply {
+                    categoryAdapter.notifyDataSetChanged()
+
+                    cartBottom.checkout.text = "ViEW CART"
                     cartBottom.conLayout.visibility = View.VISIBLE
                     cartBottom.itemCount.text =
                         JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
@@ -151,7 +163,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
                         JachaiFoodApplication.mDatabase.daoAccess().totalCost().toString()
 
                 }
-            }else{
+            } else {
                 binding.cartBottom.conLayout.visibility = View.GONE
             }
         }
@@ -171,8 +183,9 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
 
     private fun initRecycler(categories: List<Product>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter =
-            CategoryAdapter(requireContext(), categories, this@ShopFragment)
+        categoryAdapter = CategoryAdapter(requireContext(), categories, this@ShopFragment)
+        binding.recyclerView.adapter = categoryAdapter
+
     }
 
     private fun initMediator(categories: List<Product>) {
@@ -187,7 +200,8 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         if (shopItem.id?.let {
                 JachaiFoodApplication.mDatabase.daoAccess().isInsertionApplicable(shopID = it)
             } == true) {
-            viewModel.saveProduct(item, 1, shopItem, true)
+//            viewModel.saveProduct(item, 1, shopItem, true)
+            showBottomSheetDialog(item, shopItem, true)
 
         } else {
             alertDialog(item)
@@ -203,13 +217,81 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         builder.setMessage("Do have already selected products from a different restaurant. if you continue, your cart and selection will be removed")
 
         builder.setPositiveButton("Continue") { dialog, which ->
-            viewModel.saveProduct(product, 1, shopItem, false)
+//            viewModel.saveProduct(product, 1, shopItem, false)
+
+            showBottomSheetDialog(product, shopItem, false)
         }
 
         builder.setNegativeButton("Close") { dialog, which ->
             dialog.dismiss()
         }
         builder.show()
+    }
+
+    private fun showBottomSheetDialog(
+        item: ProductX,
+        shopItem: ShopsItem,
+        isFromSameShop: Boolean
+    ) {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.bottom_add_to_cart)
+
+        val image = bottomSheetDialog.findViewById<ImageView>(R.id.product_image)
+        val productName = bottomSheetDialog.findViewById<TextView>(R.id.productName)
+        val productPrice = bottomSheetDialog.findViewById<TextView>(R.id.item_cost)
+        val addToCart = bottomSheetDialog.findViewById<Button>(R.id.addToCart)
+
+        image?.let {
+            Glide.with(requireContext())
+                .load(item.productImage)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(it)
+        }
+        productName?.text = item.name
+
+        productPrice?.text = item.variations[0].price.mrp.toString()
+        var quantity = 1
+        val add = bottomSheetDialog.findViewById<ImageView>(R.id.ivAdd)
+        val sub = bottomSheetDialog.findViewById<ImageView>(R.id.ic_sub)
+        val productCount = bottomSheetDialog.findViewById<TextView>(R.id.ic_count)
+        productCount?.text = 1.toString()
+
+        bottomSheetDialog.show()
+
+        add?.setOnClickListener {
+            val count = productCount?.text.toString().toInt()
+            val addCount = count + 1
+            val price = item.variations[0].price.mrp * addCount
+            quantity = addCount
+            productCount?.text = addCount.toString()
+            productPrice?.text = price.toString()
+
+        }
+
+
+        sub?.setOnClickListener {
+            val count = productCount?.text.toString().toInt()
+            val addCount = count - 1
+            val finalCount = if (addCount <= 0) {
+                1
+            } else {
+                addCount
+            }
+            val price = item.variations[0].price.mrp * finalCount
+            quantity = finalCount
+            productCount?.text = finalCount.toString()
+            productPrice?.text = price.toString()
+
+
+        }
+
+
+
+        addToCart?.setOnClickListener {
+            JachaiLog.d("SHOP", quantity.toString())
+            viewModel.saveProduct(item, quantity, shopItem, isFromSameShop)
+            bottomSheetDialog.dismiss()
+        }
 
 
     }

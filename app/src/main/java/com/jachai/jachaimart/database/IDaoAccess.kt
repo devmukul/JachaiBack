@@ -56,5 +56,12 @@ interface IDaoAccess {
     @Query("DELETE FROM ProductOrder where product in (:id)")
     fun deleteCartProducts(id: List<String>)
 
+    @Query("SELECT SUM(price * quantity) FROM ProductOrder")
+    fun getProductOrderSubtotal(): Double
+
+    @Query("SELECT quantity FROM ProductOrder WHERE product =:id")
+    fun getOrderCount(id: String): Int
+
+
 
 }

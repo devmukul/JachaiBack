@@ -40,6 +40,11 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     override fun initView() {
 
         binding.apply {
+            toolbarMain.back.setOnClickListener {
+                onBackPressed()
+            }
+
+
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 cartAdapter = CartAdapter(requireContext(), emptyList(), this@CartFragment)
@@ -51,7 +56,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
                 navController.popBackStack()
             }
 
-            bottomSheet.checkout.setOnClickListener {
+            checkout.setOnClickListener {
 //                navController.navigate(R.id.action_cartFragment_to_checkoutFragment)
 
                 val action =
@@ -86,7 +91,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             } else {
                 cartAdapter.setList(it)
                 cartAdapter.notifyDataSetChanged()
-                updateBottomCart()
+                updateCostCalculation()
             }
         }
 
@@ -108,17 +113,48 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
     }
 
-    private fun updateBottomCart() {
+    private fun updateBottomCart(grandTotal: Double) {
         binding.apply {
 
-            bottomSheet.itemCount.text =
+
+            itemCount.text =
                 JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
                     .toString()
-            bottomSheet.totalCount.text =
+            totalCount.text = if (grandTotal == 0.0) {
                 JachaiFoodApplication.mDatabase.daoAccess().totalCost().toString()
+            } else {
+                grandTotal.toString()
+            }
+
 
         }
 
+    }
+
+    private fun updateCostCalculation() {
+        binding.apply {
+            val dao = JachaiFoodApplication.mDatabase.daoAccess()
+
+            val subtotal = dao.getProductOrderSubtotal()
+            val deliveryCost = 20.0
+            val vatSdPercent = 10.0
+            val vatSd = (subtotal * vatSdPercent) / 100
+            val discount = 20.0
+            val total = subtotal + deliveryCost + vatSd
+            val grandTotal = total - discount
+
+
+            itemCost.text = subtotal.toString()
+            totalDiscount.text = "-$discount"
+            vat.text = vatSd.toString()
+
+
+            deliveryCharge.text = 60.0.toString()
+
+            updateBottomCart(grandTotal)
+
+
+        }
     }
 
 }

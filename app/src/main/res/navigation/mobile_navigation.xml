@@ -77,11 +77,12 @@
         <argument
             android:name="shopItem"
             app:argType="com.jachai.jachaimart.model.response.home.ShopsItem" />
+        <action
+            android:id="@+id/action_shopFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
 
     </fragment>
-    <action
-        android:id="@+id/action_shopFragment_to_cartFragment"
-        app:destination="@id/cartFragment" />
+
     <fragment
         android:id="@+id/shopListFragment"
         android:name="com.jachai.jachaimart.ui.shop.shop_list.ShopListFragment"
@@ -110,12 +111,34 @@
     </fragment>
     <fragment
         android:id="@+id/checkoutFragment"
+        tools:layout="@layout/checkout_fragment"
         android:name="com.jachai.jachaimart.ui.checkout.CheckoutFragment"
         android:label="CheckoutFragment" >
         <argument
             android:name="addNote"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_onGoingOrderFragment"
+            app:destination="@id/onGoingOrderFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.jachai.jachaimart.ui.order.OrderDetailsFragment"
+        android:label="order_details_fragment"
+        tools:layout="@layout/order_details_fragment" />
+    <fragment
+        android:id="@+id/onGoingOrderFragment"
+        android:name="com.jachai.jachaimart.ui.order.OnGoingOrderFragment"
+        android:label="on_going_order_fragment"
+        tools:layout="@layout/on_going_order_fragment" >
+        <argument
+            android:name="orderID"
+            app:argType="string"
+            android:defaultValue="na" />
     </fragment>
 
 </navigation>

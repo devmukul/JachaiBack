@@ -18,6 +18,7 @@ object ApiConstants {
     //const val JACHAI_BASE_URL = BuildConfig.BASE_URL_IPAY
     const val JACHAI_BASE_URL_AUTH = BuildConfig.BASE_URL_JACHAI_AUTH
     const val JACHAI_BASE_URL_FOOD = BuildConfig.BASE_URL_JACHAI_FOOD
+    const val JACHAI_BASE_URL_ORDER = BuildConfig.BASE_URL_JACHAI_ORDER
 //    const val JACHAI_BASE_URL_DRIVER = BuildConfig.BASE_URL_JACHAI_DRIVER
 //    const val JACHAI_BASE_URL_WEBSOCKET = BuildConfig.BASE_URL_JACHAI_WEBSOCKET
 //    const val JACHAI_MAP_KEY = BuildConfig.BASE_URL_JACHAI_MAPKEY
@@ -25,10 +26,16 @@ object ApiConstants {
 
 
     const val LOGIN_BASE = "user/login"
+
     //const val SIGNUP_BASE = "driver/register"
     const val OTP_REQUEST_BASE = "otp/send"
     const val NAME_UPDATE_REQUEST_BASE = "user/update-name"
     const val USER_INFO_REQUEST_BASE = "user"
+
+
+    //orders
+    const val ORDER_REQUEST_BASE = "order"
+    const val ORDER_DETAILS_BASE = "order/details-by-user"
 
 
     //banner
@@ -52,6 +59,16 @@ object ApiConstants {
     const val PHONE_PICKER_REQUEST = 1002
 
     const val CURRENT_TRIP_BASE = "driver/current-trip"
+
+
+    //status
+    const val ORDER_INITIATED = "INITIATED"
+    const val ORDER_ACCEPTED_BY_DELIVERY_MAN = "ACCEPTED_BY_DELIVERY_MAN"
+    const val ORDER_PROCESSING = "PROCESSING"
+    const val ORDER_READY_TO_PICKUP = "READY_TO_PICKUP"
+    const val ORDER_PICKED = "PICKED"
+    const val ORDER_DELIVERED = "DELIVERED"
+    const val ORDER_COMPLETED = "COMPLETED"
 
 
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="6dp"
+    android:layout_marginTop="5dp"
     android:paddingBottom="6dp">
 
     <TextView
@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="Vitamin C 500 mg Along with Zinc 10 mg"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,6 +68,7 @@
 
     <TextView
         android:id="@+id/add2"
+        style="@style/sub_heading"
         android:layout_width="56dp"
         android:layout_height="20dp"
         android:layout_marginTop="53dp"
@@ -75,9 +77,23 @@
         android:gravity="center"
         android:text="ADD"
         android:textColor="@color/red"
-        style="@style/sub_heading"
         app:layout_constraintEnd_toEndOf="@+id/foodImage"
         app:layout_constraintStart_toStartOf="@+id/foodImage"
+        app:layout_constraintTop_toTopOf="@+id/foodImage" />
+
+    <TextView
+        android:id="@+id/count"
+        style="@style/sub_heading"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/background_red_dot"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toTopOf="@+id/foodImage"
+        app:layout_constraintEnd_toEndOf="@+id/foodImage"
+        app:layout_constraintStart_toEndOf="@+id/foodImage"
         app:layout_constraintTop_toTopOf="@+id/foodImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
