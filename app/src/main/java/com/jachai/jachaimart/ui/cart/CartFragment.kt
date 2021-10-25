@@ -52,7 +52,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             }
 
             bottomSheet.checkout.setOnClickListener {
-                navController.navigate(R.id.action_cartFragment_to_checkoutFragment)
+//                navController.navigate(R.id.action_cartFragment_to_checkoutFragment)
 
                 val action =
                     CartFragmentDirections.actionCartFragmentToCheckoutFragment(comment.text.toString())

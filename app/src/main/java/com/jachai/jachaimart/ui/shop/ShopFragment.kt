@@ -158,6 +158,9 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
     }
 
     private fun initTabLayout(categories: List<Product>) {
+
+        binding.tabLayout.removeAllTabs()
+
         for (category in categories) {
             binding.apply {
                 tabLayout.addTab(tabLayout.newTab().setText(category.category))
