@@ -1,32 +1,32 @@
 package com.jachai.jachaimart.ui.groceries
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
+import com.jachai.jachaimart.ui.base.BaseFragment
 
-class GroceriesShopFragment : Fragment() {
+class GroceriesShopFragment :
+    BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment) {
 
     companion object {
         fun newInstance() = GroceriesShopFragment()
     }
 
-    private lateinit var viewModel: GroceriesShopViewModel
+    private val viewModel: GroceriesShopViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.groceries_shop_fragment, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(GroceriesShopViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun initView() {
+
     }
+
+    override fun subscribeObservers() {
+
+    }
+
 
 }
