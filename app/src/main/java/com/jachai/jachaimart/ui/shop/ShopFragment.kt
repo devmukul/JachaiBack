@@ -60,8 +60,8 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
 
         viewModel.successResponseLiveData.observe(viewLifecycleOwner, {
             initTabLayout(it!!.products)
-            initRecycler(it.products)
-            initMediator(it.products)
+            initRecycler(it!!.products)
+            initMediator(it!!.products)
         })
 
         isExpanded = true
@@ -199,11 +199,16 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
     }
 
     private fun initMediator(categories: List<Product>) {
-        TabbedListMediator(
-            binding.recyclerView,
-            binding.tabLayout,
-            categories.indices.toList()
-        ).attach()
+
+        categories.indices.let {
+            if (binding.tabLayout.tabCount > 0) {
+                TabbedListMediator(
+                    binding.recyclerView,
+                    binding.tabLayout,
+                    it.toList()
+                ).attach()
+            }
+        }
     }
 
     override fun onProductItemSelected(position: Int, item: ProductX) {
