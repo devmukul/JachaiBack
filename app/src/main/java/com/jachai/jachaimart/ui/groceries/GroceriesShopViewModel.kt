@@ -1,7 +1,31 @@
 package com.jachai.jachaimart.ui.groceries
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import com.jachai.jachaimart.ui.base.BaseViewModel
+import com.jachai.jachaimart.ui.home.HomeViewModel
 
-class GroceriesShopViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class GroceriesShopViewModel(application: Application) : BaseViewModel(application) {
+
+    companion object {
+        val TAG = GroceriesShopViewModel::class.java
+    }
+
+    fun requestForBanners(){
+
+    }
+
+    fun requestForShopCategories(){
+
+    }
+
+    fun requestForShopCategoryWithRelatedProduct(){
+
+    }
+
+
+
+
+
+
+
 }

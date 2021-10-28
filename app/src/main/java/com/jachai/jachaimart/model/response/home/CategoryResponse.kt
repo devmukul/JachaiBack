@@ -32,17 +32,23 @@ data class CategoriesItem(
     @field:SerializedName("description")
     val description: String? = null,
 
-    @field:SerializedName("id")
-    val id: String? = null,
-
-    @field:SerializedName("position")
-    val position: Int? = null,
-
     @field:SerializedName("type")
     val type: String? = null,
 
     @field:SerializedName("title")
     val title: String? = null,
+
+    @field:SerializedName("createdAt")
+    val createdAt: String? = null,
+
+    @field:SerializedName("deleted")
+    val deleted: Boolean? = null,
+
+    @field:SerializedName("id")
+    val id: String? = null,
+
+    @field:SerializedName("position")
+    val position: Int? = null,
 
     @field:SerializedName("keyword")
     val keyword: String? = null,
@@ -51,5 +57,8 @@ data class CategoriesItem(
     val slug: String? = null,
 
     @field:SerializedName("status")
-    val status: String? = null
+    val status: String? = null,
+
+    @field:SerializedName("updatedAt")
+    val updatedAt: String? = null
 ) : Parcelable
