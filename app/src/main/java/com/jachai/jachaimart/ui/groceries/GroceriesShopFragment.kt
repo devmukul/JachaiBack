@@ -16,6 +16,7 @@ import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
+import com.jachai.jachaimart.ui.shop.shop_list.ShopListFragmentDirections
 
 class GroceriesShopFragment :
     BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment),
@@ -95,15 +96,26 @@ class GroceriesShopFragment :
     }
 
     override fun onCategoryItemSelected(position: Int, item: CategoriesItem?) {
-
+        val action =
+            GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceryCategoryDetailsFragment()
+        action.categoryId = item?.id
+        navController.navigate(action)
     }
 
-    override fun onCategoryItemSelected(catWithRelatedProduct: CatWithRelatedProduct?) {
-        TODO("Not yet implemented")
+    override fun onCategoryViewAllSelected(catWithRelatedProduct: CatWithRelatedProduct?) {
+        val action =
+            GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceryCategoryDetailsFragment()
+        action.categoryId = catWithRelatedProduct?.category
+        navController.navigate(action)
+
+
     }
 
     override fun onCategoryProductSelected(product: Product?) {
-        TODO("Not yet implemented")
+        val action =
+            GroceriesShopFragmentDirections.actionGroceriesShopFragmentToProductDetailsFragment()
+        action.productId = product?.id
+        navController.navigate(action)
     }
 
 

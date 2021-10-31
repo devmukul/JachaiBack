@@ -162,11 +162,33 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="na" />
+        <action
+            android:id="@+id/action_groceriesShopFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_groceriesShopFragment_to_groceryCategoryDetailsFragment"
+            app:destination="@id/groceryCategoryDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.jachai.jachaimart.ui.product.ProductDetailsFragment"
         android:label="ProductDetailsFragment"
-        tools:layout="@layout/product_details_fragment"/>
+        tools:layout="@layout/product_details_fragment">
+        <argument
+            android:name="product_id"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="na" />
+    </fragment>
+    <fragment
+        android:id="@+id/groceryCategoryDetailsFragment"
+        android:name="com.jachai.jachaimart.ui.groceries.category_details.GroceryCategoryDetailsFragment"
+        android:label="grocery_category_details_fragment"
+        tools:layout="@layout/grocery_category_details_fragment" >
+        <argument android:name="categoryId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="na" />
+    </fragment>
 
 </navigation>
