@@ -40,4 +40,11 @@ interface FoodService {
         @Query("latitude") latitude: String,
         @Query("longitude") longitude: String
     ): Call<ShopByCategoryResponse>
+
+    @GET(ApiConstants.SHOP_BY_CATEGORY_BASE)
+    fun searchRestaurant(
+        @Query("categoryId") categoryId: String,
+        @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String
+    ): Call<ShopByCategoryResponse>
 }
