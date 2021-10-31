@@ -72,7 +72,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
             include2.recyclerView.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 shopRecyclerAdapter =
-                    ShopRecyclerAdapter(requireContext(), emptyList(),this@HomeFragment)
+                    ShopRecyclerAdapter(requireContext(), emptyList(), this@HomeFragment)
                 adapter = shopRecyclerAdapter
             }
 
@@ -107,7 +107,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
             shopRecyclerAdapter.setList(it?.shops)
             shopRecyclerAdapter.notifyDataSetChanged()
 
-            binding.title.text = "${it?.shops?.size} Restaurants around you"
+            val count = if (it?.shops?.size == null) {
+                0
+            } else {
+                it.shops.size
+            }
+            binding.title.text = "$count Restaurants around you"
             detailsShopRecyclerAdapter.setList(it?.shops)
             detailsShopRecyclerAdapter.notifyDataSetChanged()
 

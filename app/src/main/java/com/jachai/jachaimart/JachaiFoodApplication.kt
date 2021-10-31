@@ -144,8 +144,8 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
             .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
             .build()
 
-        val FOOD_RETROFIT = Retrofit.Builder()
-            .baseUrl(ApiConstants.JACHAI_BASE_URL_FOOD)
+        val CATELOGREADER_RETROFIT = Retrofit.Builder()
+            .baseUrl(ApiConstants.JACHAI_BASE_URL_CATELOGREADER)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
             .build()

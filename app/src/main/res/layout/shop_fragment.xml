@@ -187,11 +187,11 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:text="Madchef Restuarent Dhanmondi, Dhaka"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="Madchef Restuarent Dhanmondi, Dhaka" />
 
                             <TextView
                                 android:id="@+id/subtitle"
@@ -200,10 +200,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="8dp"
-                                android:text="Desert, Fast food, Cakes &amp; Bekery.."
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/resName" />
+                                app:layout_constraintTop_toBottomOf="@+id/resName"
+                                tools:text="Desert, Fast food, Cakes &amp; Bekery.." />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -363,11 +363,11 @@
                                     tools:layout_editor_absoluteX="141dp" />
 
                                 <TextView
-                                    android:id="@+id/rate2"
+                                    android:id="@+id/timeNeeded"
                                     style="@style/heading"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="30-40 mnts" />
+                                    android:text="30-40 mins" />
 
                             </LinearLayout>
 
@@ -382,19 +382,19 @@
                                 app:elevation="0dp"
                                 app:fabCustomSize="25dp"
                                 app:layout_constraintBottom_toBottomOf="@+id/timeLayout"
-                                app:layout_constraintEnd_toStartOf="@+id/rate3"
+                                app:layout_constraintEnd_toStartOf="@+id/deliveryCharge"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:maxImageSize="10dp"
                                 app:tint="#14876A"
                                 tools:layout_editor_absoluteX="304dp" />
 
                             <TextView
-                                android:id="@+id/rate3"
+                                android:id="@+id/deliveryCharge"
                                 style="@style/heading"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"
-                                android:text="BTD 45"
+                                android:text="BTD 0"
                                 app:layout_constraintBottom_toBottomOf="@+id/fabCategory3"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="@+id/fabCategory3" />
@@ -513,15 +513,8 @@
             layout="@layout/checkout_botttom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
-
-<!--        <include-->
-<!--            android:id="@+id/addToCartBottom"-->
-<!--            layout="@layout/bottom_add_to_cart"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:behavior_hideable="true"-->
-<!--            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />-->
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

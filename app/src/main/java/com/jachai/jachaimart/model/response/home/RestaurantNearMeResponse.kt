@@ -38,23 +38,41 @@ data class RestaurantNearMeResponse(
 @Parcelize
 data class ShopsItem(
 
+	@field:SerializedName("rating")
+	val rating: Int? = null,
+
+	@field:SerializedName("description")
+	val description: String? = null,
+
+	@field:SerializedName("banner")
+	val banner: String? = null,
+
+	@field:SerializedName("timeRemaining")
+	val timeRemaining: Int? = null,
+
+	@field:SerializedName("deliveryCharge")
+	val deliveryCharge: Double? = null,
+
+	@field:SerializedName("type")
+	val type: String? = null,
+
+	@field:SerializedName("isFreeDelivery")
+	val isFreeDelivery: Boolean? = null,
+
 	@field:SerializedName("name")
 	val name: String? = null,
 
 	@field:SerializedName("logo")
 	val logo: String? = null,
 
-	@field:SerializedName("banner")
-	val banner: String? = null,
+	@field:SerializedName("numberOfRating")
+	val numberOfRating: Int? = null,
 
 	@field:SerializedName("location")
 	val location: Location? = null,
 
 	@field:SerializedName("id")
 	val id: String? = null,
-
-	@field:SerializedName("type")
-	val type: String? = null,
 
 	@field:SerializedName("slug")
 	val slug: String? = null,

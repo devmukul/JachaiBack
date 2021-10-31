@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.checkout.CheckoutFragment">
+        tools:context=".ui.cart.CartFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -40,10 +40,9 @@
 
                         <include
                             android:id="@+id/toolbarMain"
-                            layout="@layout/toolbar_app"
+                            layout="@layout/toolbar_cart"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -64,77 +63,106 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
-
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/recyclerViewLabel"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+                    android:layout_height="match_parent">
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toEndOf="@+id/cod"
-                        app:layout_constraintStart_toStartOf="@+id/cod"
-                        app:layout_constraintTop_toBottomOf="@+id/cod">
+                        android:id="@+id/constraintLayout5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:layout_marginStart="16dp"
+                            app:cardCornerRadius="100dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <ImageView
+                                android:id="@+id/image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:srcCompat="@drawable/sample_restaurant" />
+                        </androidx.cardview.widget.CardView>
 
                         <TextView
-                            android:id="@+id/textView5"
+                            android:id="@+id/restraurant_name"
                             style="@style/heading"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="5dp"
-                            android:text="VOUCHER:"
-                            android:textColor="@color/red"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="8dp"
+                            android:text="KFC Banani"
                             android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textView6"
+                            app:layout_constraintStart_toEndOf="@+id/cardView"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/voucherCode"
-                            style="@style/heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="2dp"
-                            android:text="KFC200"
-                            android:textColor="@color/red"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-                            app:layout_constraintStart_toEndOf="@+id/textView5"
-                            app:layout_constraintTop_toTopOf="@+id/textView5" />
-
-                        <TextView
-                            android:id="@+id/voucherDetails"
+                            android:id="@+id/restraurant_subtitle"
                             style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10% OFF"
-                            android:textColor="@color/red"
-                            app:layout_constraintStart_toStartOf="@+id/textView5"
-                            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="4dp"
+                            android:text="Thai Bangla Chinese"
+                            android:textColor="#787878"
+                            android:textSize="10sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/cardView"
+                            app:layout_constraintEnd_toStartOf="@+id/textView6"
+                            app:layout_constraintStart_toStartOf="@+id/restraurant_name"
+                            app:layout_constraintTop_toBottomOf="@+id/restraurant_name" />
 
                         <TextView
-                            android:id="@+id/add"
-                            android:layout_width="70dp"
-                            android:layout_height="25dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="8dp"
-                            android:background="@drawable/box_curve_red"
-                            android:fontFamily="@font/uni_neue_regular"
-                            android:gravity="center"
-                            android:text="Applied"
-                            android:textColor="@color/red"
-                            android:textSize="9sp"
+                            android:id="@+id/textView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_rectangle_dash_gap"
+                            android:drawableLeft="@drawable/ic_add"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="ADD MORE ITEMS"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="24dp"
+                        android:background="#D8D8D8"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/items"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/cart_item_row" />
 
                     <TextView
                         android:id="@+id/items"
@@ -142,422 +170,332 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="32dp"
-                        android:text="DELIVERY ADDRESS"
+                        android:layout_marginTop="24dp"
+                        android:text="ITEMS"
                         android:textColor="#BDBDBD "
                         android:textSize="12sp"
                         android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+
+                    <TextView
+                        android:id="@+id/additional_item"
+                        style="@style/heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:text="ADDITIONAL COMMENTS"
+                        android:textColor="#BDBDBD "
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvdiscount" />
+
+                    <EditText
+                        android:id="@+id/comment"
+                        android:layout_width="0dp"
+                        android:layout_height="71dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/box_curve_gray"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/additional_item"
+                        app:layout_constraintTop_toBottomOf="@+id/additional_item" />
+
+
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/dash_with_gap"
+                        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+                        app:layout_constraintStart_toStartOf="@+id/recyclerView"
+                        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+                    <TextView
+                        android:id="@+id/tvsub"
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:padding="2dp"
+                        android:text="Sub Total"
+                        android:textColor="#3A494E"
+                        android:textSize="12sp"
+
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/recyclerView"
+                        app:layout_constraintTop_toBottomOf="@+id/line" />
+
+                    <TextView
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:padding="2dp"
+                        android:text="৳"
+                        android:textColor="#CD113B"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/item_cost"
+                        app:layout_constraintEnd_toStartOf="@+id/item_cost"
+                        app:layout_constraintTop_toTopOf="@+id/item_cost" />
+
+                    <TextView
+                        android:id="@+id/item_cost"
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:padding="2dp"
+                        android:text="205.00"
+                        android:textColor="#CD113B"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvsub"
+                        app:layout_constraintEnd_toEndOf="@+id/line"
+                        app:layout_constraintTop_toTopOf="@+id/tvsub" />
+
+                    <TextView
+                        android:id="@+id/delivery_charge"
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="60.00"
+                        android:textColor="#636262"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvdelivery"
+                        app:layout_constraintEnd_toEndOf="@+id/item_cost"
+                        app:layout_constraintTop_toTopOf="@+id/tvdelivery" />
+
+                    <TextView
+                        android:id="@+id/tvdelivery"
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="2dp"
+                        android:text="Delivery Charge"
+                        android:textColor="#636262"
+                        android:textSize="12sp"
+
+                        android:textStyle="normal"
+                        app:layout_constraintStart_toStartOf="@+id/tvsub"
+                        app:layout_constraintTop_toBottomOf="@+id/tvsub" />
+
+                    <TextView
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:padding="2dp"
+                        android:text="৳"
+                        android:textColor="#636262"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/delivery_charge"
+                        app:layout_constraintEnd_toStartOf="@+id/delivery_charge"
+                        app:layout_constraintTop_toTopOf="@+id/delivery_charge" />
+
+                    <TextView
+                        android:id="@+id/vat"
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="60.00"
+                        android:textColor="#636262"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvdelivery2"
+                        app:layout_constraintEnd_toEndOf="@+id/delivery_charge"
+                        app:layout_constraintTop_toTopOf="@+id/tvdelivery2" />
+
+                    <TextView
+                        android:id="@+id/tvdelivery2"
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="2dp"
+                        android:text="VAT +SD  (If Applicable)"
+                        android:textColor="#636262"
+
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        app:layout_constraintStart_toStartOf="@+id/tvsub"
+                        app:layout_constraintTop_toBottomOf="@+id/tvdelivery" />
+
+                    <TextView
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:padding="2dp"
+                        android:text="৳"
+                        android:textColor="#636262"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/vat"
+                        app:layout_constraintEnd_toStartOf="@+id/vat"
+                        app:layout_constraintTop_toTopOf="@+id/vat" />
+
+                    <TextView
+                        android:id="@+id/total_discount"
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="60.00"
+                        android:textColor="#CD113B"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvdiscount"
+                        app:layout_constraintEnd_toEndOf="@+id/delivery_charge"
+                        app:layout_constraintTop_toTopOf="@+id/tvdiscount" />
+
+                    <TextView
+                        android:id="@+id/tvdiscount"
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:padding="2dp"
+                        android:text="Discount"
+
+                        android:textColor="#636262"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        app:layout_constraintStart_toStartOf="@+id/tvsub"
+                        app:layout_constraintTop_toBottomOf="@+id/tvdelivery2" />
+
+                    <TextView
+                        style="@style/sub_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="1dp"
+                        android:padding="2dp"
+                        android:text="৳"
+                        android:textColor="#CD113B"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/total_discount"
+                        app:layout_constraintEnd_toStartOf="@+id/total_discount"
+                        app:layout_constraintTop_toTopOf="@+id/total_discount" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+<!--
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:background="#FFFBFB"
+                    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        style="@style/sub_heading"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:text="By proceeding, you ensure that you have read and agreed to the terms &amp; conditions on JaChai Blog and Facebook page."
+                        android:textSize="13sp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_location"
-                        app:layout_constraintStart_toStartOf="@+id/items"
-                        app:layout_constraintTop_toBottomOf="@+id/items" />
-
-                    <TextView
-                        android:id="@+id/delivery_address"
-                        style="@style/heading"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="20dp"
-                        android:gravity="center_vertical"
-                        android:text="House #62, Road No #21 \nbanani, Dhaka"
-                        android:textColor="#393E46"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView8"
-                        app:layout_constraintTop_toTopOf="@+id/imageView8" />
-
-                    <TextView
-                        android:id="@+id/items2"
-                        style="@style/heading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
-                        android:text="DELIVERY TIME"
-                        android:textColor="#BDBDBD "
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/imageView8"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
-
-                    <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:src="@drawable/ic_location"
-                        app:layout_constraintStart_toStartOf="@+id/items2"
-                        app:layout_constraintTop_toBottomOf="@+id/items2" />
-
-                    <TextView
-                        android:id="@+id/delivery_time"
-                        style="@style/heading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="Now"
-                        android:textColor="#393E46"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-                        app:layout_constraintStart_toEndOf="@+id/imageView9"
-                        app:layout_constraintTop_toTopOf="@+id/imageView9" />
-
-                    <TextView
-                        android:id="@+id/textView12"
-                        style="@style/heading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
-                        android:text="PAYMENT METHOD"
-                        android:textColor="#BDBDBD "
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/imageView9"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView9" />
-
-                    <TextView
-                        android:id="@+id/cod"
-                        style="@style/title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/rounded_border_red"
-                        android:drawableLeft="@drawable/ic_cash_on_delivery"
-                        android:drawablePadding="10dp"
-                        android:gravity="center_vertical"
-                        android:paddingStart="10dp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="10dp"
-                        android:paddingBottom="12dp"
-                        android:text="Cash on Delivery"
-                        android:textColor="@color/red"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/textView12"
-                        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_checkout"
                         android:layout_width="0dp"
-                        android:layout_height="305dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/box_curve_gray"
+                        android:layout_marginBottom="10dp"
+                        android:background="#CD113B"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
-                        <TextView
-                            android:id="@+id/textView10"
-                            style="@style/heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="16dp"
+                            android:layout_height="14dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
-                            android:text="Cash Payment"
-                            android:textColor="#3A494E"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView11"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/textView11" />
-
-                        <TextView
-                            android:id="@+id/textView11"
-                            style="@style/heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:text="ORDER DETAILS"
-                            android:textColor="#BDBDBD "
-                            android:textSize="12sp"
-                            android:textStyle="bold"
+                            android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/total_count"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintEnd_toEndOf="@+id/textView10"
-                            app:layout_constraintStart_toStartOf="@+id/textView11"
-                            app:layout_constraintTop_toBottomOf="@+id/textView11"
-                            tools:itemCount="1"
-                            tools:listitem="@layout/checkout_order_row" />
-
-                        <View
-                            android:id="@+id/line"
-                            android:layout_width="0dp"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/dash_with_gap"
-                            app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-                            app:layout_constraintStart_toStartOf="@+id/recyclerView"
-                            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_cart" />
 
                         <TextView
-                            android:id="@+id/tvsub"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:padding="2dp"
-                            android:text="Sub Total"
-                            android:textColor="#3A494E"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-
-                            app:layout_constraintStart_toStartOf="@+id/recyclerView"
-                            app:layout_constraintTop_toBottomOf="@+id/line" />
-
-                        <TextView
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="1dp"
-                            android:padding="2dp"
-                            android:text="৳"
-                            android:textColor="#CD113B"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/item_cost"
-                            app:layout_constraintEnd_toStartOf="@+id/item_cost"
-                            app:layout_constraintTop_toTopOf="@+id/item_cost" />
-
-                        <TextView
-                            android:id="@+id/item_cost"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:text="205.00"
-                            android:textColor="#CD113B"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvsub"
-                            app:layout_constraintEnd_toEndOf="@+id/line"
-                            app:layout_constraintTop_toTopOf="@+id/tvsub" />
-
-                        <TextView
-                            android:id="@+id/delivery_charge"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:text="60.00"
-                            android:textColor="#636262"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvdelivery"
-                            app:layout_constraintEnd_toEndOf="@+id/item_cost"
-                            app:layout_constraintTop_toTopOf="@+id/tvdelivery" />
-
-                        <TextView
-                            android:id="@+id/tvdelivery"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:padding="2dp"
-                            android:text="Delivery Charge"
-                            android:textColor="#636262"
-                            android:textSize="12sp"
-
-                            android:textStyle="normal"
-                            app:layout_constraintStart_toStartOf="@+id/tvsub"
-                            app:layout_constraintTop_toBottomOf="@+id/tvsub" />
-
-                        <TextView
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="1dp"
-                            android:padding="2dp"
-                            android:text="৳"
-                            android:textColor="#636262"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/delivery_charge"
-                            app:layout_constraintEnd_toStartOf="@+id/delivery_charge"
-                            app:layout_constraintTop_toTopOf="@+id/delivery_charge" />
-
-                        <TextView
-                            android:id="@+id/vat"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:text="60.00"
-                            android:textColor="#636262"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvdelivery2"
-                            app:layout_constraintEnd_toEndOf="@+id/delivery_charge"
-                            app:layout_constraintTop_toTopOf="@+id/tvdelivery2" />
-
-                        <TextView
-                            android:id="@+id/tvdelivery2"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:padding="2dp"
-                            android:text="VAT +SD  (If Applicable)"
-                            android:textColor="#636262"
-
-                            android:textSize="12sp"
-                            android:textStyle="normal"
-                            app:layout_constraintStart_toStartOf="@+id/tvsub"
-                            app:layout_constraintTop_toBottomOf="@+id/tvdelivery" />
-
-                        <TextView
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="1dp"
-                            android:padding="2dp"
-                            android:text="৳"
-                            android:textColor="#636262"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/vat"
-                            app:layout_constraintEnd_toStartOf="@+id/vat"
-                            app:layout_constraintTop_toTopOf="@+id/vat" />
-
-                        <TextView
-                            android:id="@+id/total_discount"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:text="60.00"
-                            android:textColor="#CD113B"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvdiscount"
-                            app:layout_constraintEnd_toEndOf="@+id/delivery_charge"
-                            app:layout_constraintTop_toTopOf="@+id/tvdiscount" />
-
-                        <TextView
-                            android:id="@+id/tvdiscount"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:padding="2dp"
-                            android:text="Discount"
-
-                            android:textColor="#636262"
-                            android:textSize="12sp"
-                            android:textStyle="normal"
-                            app:layout_constraintStart_toStartOf="@+id/tvsub"
-                            app:layout_constraintTop_toBottomOf="@+id/tvdelivery2" />
-
-                        <TextView
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="1dp"
-                            android:padding="2dp"
-                            android:text="৳"
-                            android:textColor="#CD113B"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/total_discount"
-                            app:layout_constraintEnd_toStartOf="@+id/total_discount"
-                            app:layout_constraintTop_toTopOf="@+id/total_discount" />
-
-                        <View
-                            android:id="@+id/line2"
-                            android:layout_width="0dp"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/dash_with_gap"
-                            app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-                            app:layout_constraintStart_toStartOf="@+id/recyclerView"
-                            app:layout_constraintTop_toBottomOf="@+id/tvdiscount" />
-
-                        <View
-                            android:id="@+id/line4"
-                            android:layout_width="0dp"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="1dp"
-                            android:background="@drawable/dash_with_gap"
-                            app:layout_constraintEnd_toEndOf="@+id/recyclerView"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/recyclerView"
-                            app:layout_constraintTop_toBottomOf="@+id/line2" />
-
-                        <TextView
-                            android:id="@+id/tvtotal"
+                            android:id="@+id/item_count"
                             style="@style/heading"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:padding="2dp"
-                            android:text="TOTAL  (incl. VAT)"
-                            android:textColor="#3A494E"
-                            android:textSize="14sp"
-
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@+id/line2"
-                            app:layout_constraintTop_toBottomOf="@+id/line2" />
+                            android:layout_marginStart="8dp"
+                            android:text="0"
+                            android:textColor="#D9FFFFFF"
+                            app:layout_constraintBottom_toBottomOf="@+id/total_count"
+                            app:layout_constraintStart_toEndOf="@+id/total_count"
+                            app:layout_constraintTop_toTopOf="@+id/total_count" />
 
                         <TextView
-                            android:id="@+id/item_grand_total"
-                            style="@style/sub_heading"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/items1"
+                            style="@style/heading"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="2dp"
-                            android:text="205.00"
-                            android:textColor="#CD113B"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvtotal"
-                            app:layout_constraintEnd_toEndOf="@+id/line2"
-                            app:layout_constraintTop_toTopOf="@+id/tvtotal" />
+                            android:layout_marginStart="3dp"
+                            android:text="items"
+                            android:textColor="#D9FFFFFF"
+                            app:layout_constraintBottom_toBottomOf="@+id/item_count"
+                            app:layout_constraintEnd_toStartOf="@+id/checkout"
+                            app:layout_constraintStart_toEndOf="@+id/item_count"
+                            app:layout_constraintTop_toTopOf="@+id/item_count" />
 
                         <TextView
-                            style="@style/sub_heading"
+                            android:id="@+id/total_count"
+                            style="@style/heading"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="1dp"
-                            android:padding="2dp"
-                            android:text="৳"
-                            android:textColor="#CD113B"
+                            android:layout_marginStart="16dp"
+                            android:text="0.00"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                            app:layout_constraintStart_toEndOf="@+id/imageView6"
+                            app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+                        <TextView
+                            android:id="@+id/checkout"
+                            style="@style/heading"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="32dp"
+                            android:text="CHECKOUT"
+                            android:textColor="#FFFFFF"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/item_grand_total"
-                            app:layout_constraintEnd_toStartOf="@+id/item_grand_total"
-                            app:layout_constraintTop_toTopOf="@+id/item_grand_total" />
-
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/imageView6" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/edit_address"
-                        style="@style/heading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="Edit Address"
-                        android:textColor="#CD113B"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/items"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/items" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <include
-                    android:id="@+id/bottomSheet"
-                    layout="@layout/bottom_total_price"
-                    app:behavior_hideable="false"
-                    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
-
+                -->
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </FrameLayout>
 </layout>

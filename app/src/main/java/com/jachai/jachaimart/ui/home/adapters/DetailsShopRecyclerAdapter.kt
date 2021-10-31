@@ -20,7 +20,10 @@ class DetailsShopRecyclerAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = view.findViewById(R.id.banner)
         val name: TextView = view.findViewById(R.id.resName)
-        val subTitle: TextView = view.findViewById(R.id.resName)
+        val subTitle: TextView = view.findViewById(R.id.subtitle)
+        val shopRating: TextView = view.findViewById(R.id.shop_rating_text)
+        val discount: TextView = view.findViewById(R.id.discount)
+        val duration: TextView = view.findViewById(R.id.duration)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,6 +43,9 @@ class DetailsShopRecyclerAdapter(
                 .into(holder.image)
 
             holder.name.text = data.name
+            holder.subTitle.text = data.description
+            holder.shopRating.text = data.rating?.toDouble().toString()
+            holder.duration.text = "${data.timeRemaining?.toInt().toString()} min"
         }
         holder.itemView.setOnClickListener {
             data?.let { it -> interaction?.onShopItemSelected(position, it) }

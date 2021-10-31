@@ -16,6 +16,12 @@
         <action
             android:id="@+id/splash_to_nav_home"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_splashFragment2_to_groceriesShopFragment"
+            app:destination="@id/groceriesShopFragment" />
+        <action
+            android:id="@+id/action_splashFragment2_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -140,5 +146,21 @@
             app:argType="string"
             android:defaultValue="na" />
     </fragment>
+    <fragment
+        android:id="@+id/groceriesShopFragment"
+        android:name="com.jachai.jachaimart.ui.groceries.GroceriesShopFragment"
+        android:label="GroceriesShopFragment"
+        tools:layout="@layout/groceries_shop_fragment">
+        <argument
+            android:name="shopID"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="na" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.jachai.jachaimart.ui.product.ProductDetailsFragment"
+        android:label="ProductDetailsFragment"
+        tools:layout="@layout/product_details_fragment"/>
 
 </navigation>

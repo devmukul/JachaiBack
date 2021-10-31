@@ -1,32 +1,32 @@
 package com.jachai.jachaimart.ui.order
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.databinding.OrderFragmentBinding
+import com.jachai.jachaimart.ui.base.BaseFragment
 
-class OrderFragment : Fragment() {
+class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment) {
 
     companion object {
         fun newInstance() = OrderFragment()
     }
 
-    private lateinit var viewModel: OrderViewModel
+    private val viewModel: OrderViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.order_fragment, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        subscribeObservers()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun initView() {
+
+    }
+
+    override fun subscribeObservers() {
+
     }
 
 }

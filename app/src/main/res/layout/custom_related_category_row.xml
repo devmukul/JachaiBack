@@ -27,13 +27,13 @@
                 android:layout_width="88dp"
                 android:layout_height="73dp"
                 android:layout_marginBottom="8dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 app:layout_constraintBottom_toTopOf="@+id/name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/sample" />
+                app:srcCompat="@drawable/category_image" />
 
             <TextView
                 android:id="@+id/name"
