@@ -6,13 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.request.FProductsItem
 import com.jachai.jachaimart.utils.Converters
 import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
 
 
 @Database(
-    entities = [ProductOrder::class],
-    version = 1,
+    entities = [
+        ProductOrder::class,
+        FProductsItem::class],
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

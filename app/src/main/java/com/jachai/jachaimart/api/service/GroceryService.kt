@@ -1,16 +1,17 @@
 package com.jachai.jachaimart.api.service
 
 
-import com.jachai.jachaimart.model.response.category.ShopByCategoryResponse
+import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.home.BannerResponse
 import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.model.response.home.RestaurantNearMeResponse
+import com.jachai.jachaimart.model.response.product.FavouriteProductResponse
 import com.jachai.jachaimart.model.response.product.ProductDetailsResponse
 import com.jachai.jachaimart.model.shop.ShopDetailsResponse
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface GroceryService {
 
@@ -40,6 +41,7 @@ interface GroceryService {
 
     @GET(ApiConstants.PRODUCT_DETAILS_BASE)
     fun getProductDetails(@Query("slug") slug: String): Call<ProductDetailsResponse>
+
 
 
 }

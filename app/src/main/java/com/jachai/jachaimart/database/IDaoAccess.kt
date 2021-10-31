@@ -3,6 +3,7 @@ package com.jachai.jachaimart.database
 import androidx.annotation.Keep
 import androidx.room.*
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.request.FProductsItem
 
 @Keep
 @Dao
@@ -62,6 +63,8 @@ interface IDaoAccess {
     @Query("SELECT quantity FROM ProductOrder WHERE product =:id")
     fun getOrderCount(id: String): Int
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFavouriteProduct(fProductsItem: List<FProductsItem>)
 
 
 }

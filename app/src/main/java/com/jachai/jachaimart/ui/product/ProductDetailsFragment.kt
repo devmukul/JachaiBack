@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachaimart.JachaiFoodApplication
@@ -23,15 +25,25 @@ class ProductDetailsFragment :
 
     private lateinit var productSlug: String
 
+    private lateinit var navController: NavController
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        productSlug = "E7LVSmBUi3MangoJelly"
+        navController = Navigation.findNavController(view)
+        productSlug = "47ZhCb5xmLMolaFish2"
         initView()
         subscribeObservers()
     }
 
     override fun initView() {
         viewModel.requestForProductDetails(productSlug)
+
+        binding.back.setOnClickListener {
+            navController.popBackStack()
+
+        }
+
+
 
 
     }
@@ -128,7 +140,6 @@ class ProductDetailsFragment :
             addToCart.setOnClickListener {
                 JachaiLog.d("SHOP", quantity.toString())
                 product?.let { it1 ->
-
 
                     if (product.shop?.id?.let {
                             JachaiFoodApplication.mDatabase.daoAccess()

@@ -24,8 +24,11 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
         viewModel.liveData.observe( viewLifecycleOwner, {
 
+
             when(it) {
-                "seccess" -> view.findNavController().navigate(R.id.splash_to_nav_home)
+//                "seccess" -> view.findNavController().navigate(R.id.splash_to_nav_home)
+//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_productDetailsFragment)
+                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
                 "login" -> view.findNavController().navigate(R.id.splash_to_login)
             }
         })

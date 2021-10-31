@@ -63,7 +63,7 @@
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="android:fontFamily">@font/uni_neue_regular</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">#3A494E</item>
         <item name="android:editTextColor">#787878</item>
         <item name="android:textColorHint">#787878</item>
