@@ -6,14 +6,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.jachai.jachaimart.JachaiFoodApplication
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
-import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
+import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.ui.base.BaseFragment
+import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
+import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 
 class GroceriesShopFragment :
-    BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment) {
+    BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment),
+    CategoryAdapter.Interaction, CategoryWithProductAdapter.Interaction {
 
     companion object {
         fun newInstance() = GroceriesShopFragment()
@@ -21,6 +27,8 @@ class GroceriesShopFragment :
 
     private val viewModel: GroceriesShopViewModel by viewModels()
 
+    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
     private lateinit var navController: NavController
     private val args: GroceriesShopFragmentArgs by navArgs()
 
@@ -30,26 +38,72 @@ class GroceriesShopFragment :
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 //        shopID = args.shopID.toString()
-        shopID = "E7LVSmBUi3MangoJelly"
+        shopID = "617e4b8f5097d45c3f896d0b"
 
         initView()
         subscribeObservers()
-
-
 
 
     }
 
     override fun initView() {
         viewModel.requestAllFavouriteProduct()
-        binding.toolbarMain.back.setOnClickListener {
-            navController.popBackStack()
+        viewModel.requestForShopCategories(shopID)
+
+
+
+
+        binding.apply {
+
+            toolbarMain.back.setOnClickListener {
+                navController.popBackStack()
+            }
+            rvCategories1.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                categoryAdapter =
+                    CategoryAdapter(requireContext(), emptyList(), this@GroceriesShopFragment)
+                adapter = categoryAdapter
+            }
+            rvCategories.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                categoryWithProductAdapter =
+                    CategoryWithProductAdapter(
+                        requireContext(),
+                        emptyList(),
+                        this@GroceriesShopFragment
+                    )
+                adapter = categoryWithProductAdapter
+            }
+
+
         }
 
     }
 
     override fun subscribeObservers() {
+        viewModel.successCategoryResponseLiveData.observe(viewLifecycleOwner) {
+            categoryAdapter.setList(it?.categories)
+            categoryAdapter.notifyDataSetChanged()
+            viewModel.requestForShopCategoryWithRelatedProduct(it?.categories, shopID)
+        }
 
+        viewModel.successCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {
+            categoryWithProductAdapter.setList(it?.catWithRelatedProducts)
+            categoryWithProductAdapter.notifyDataSetChanged()
+        }
+
+    }
+
+    override fun onCategoryItemSelected(position: Int, item: CategoriesItem?) {
+
+    }
+
+    override fun onCategoryItemSelected(catWithRelatedProduct: CatWithRelatedProduct?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onCategoryProductSelected(product: Product?) {
+        TODO("Not yet implemented")
     }
 
 
