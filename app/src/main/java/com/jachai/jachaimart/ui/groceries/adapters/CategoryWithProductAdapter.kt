@@ -28,7 +28,7 @@ class CategoryWithProductAdapter(
             binding.apply {
                 header.text = data?.category ?: "Category"
                 header.setOnClickListener {
-                    interaction?.onCategoryItemSelected(data)
+                    interaction?.onCategoryViewAllSelected(data)
                 }
                 rvItems.apply {
                     layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -81,7 +81,7 @@ class CategoryWithProductAdapter(
     }
 
     interface Interaction {
-        fun onCategoryItemSelected(catWithRelatedProduct: CatWithRelatedProduct?)
+        fun onCategoryViewAllSelected(catWithRelatedProduct: CatWithRelatedProduct?)
         fun onCategoryProductSelected(product: Product?)
     }
 

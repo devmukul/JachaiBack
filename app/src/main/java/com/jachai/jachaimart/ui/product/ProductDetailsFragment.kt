@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachaimart.JachaiFoodApplication
@@ -27,10 +28,12 @@ class ProductDetailsFragment :
 
     private lateinit var navController: NavController
 
+    private val args: ProductDetailsFragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        productSlug = "47ZhCb5xmLMolaFish2"
+        productSlug = productSlug
         initView()
         subscribeObservers()
     }
