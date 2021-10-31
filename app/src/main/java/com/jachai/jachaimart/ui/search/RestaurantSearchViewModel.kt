@@ -34,29 +34,29 @@ class RestaurantSearchViewModel  (application: Application) : BaseViewModel(appl
         shopList.clear()
     }
 
-    fun searchRestaurant() {
-        if (isAllDataFetched()) return
-
-        appRepository.searchDoctors(
-            pageCount,
-            searchText,
-            object : ResponseListener<CommonSuccessResponse<List<DoctorDetailsDto>>, String> {
-                override fun success(response: CommonSuccessResponse<List<DoctorDetailsDto>>) {
-                    response.data?.let {
-                        doctorList.addAll(doctorDetailsMapper.mapToEntityList(it))
-                        _totalDataCount = response.meta?.count ?: 0
-                        doctorResponse.value = doctorList
-                        updatePageCount()
-                        return
-                    }
-                    doctorResponse.value = doctorList
-                }
-
-                override fun error(error: String) {
-                    doctorErr.value = error
-                }
-            })
-    }
+//    fun searchRestaurant() {
+//        if (isAllDataFetched()) return
+//
+//        appRepository.searchDoctors(
+//            pageCount,
+//            searchText,
+//            object : ResponseListener<CommonSuccessResponse<List<DoctorDetailsDto>>, String> {
+//                override fun success(response: CommonSuccessResponse<List<DoctorDetailsDto>>) {
+//                    response.data?.let {
+//                        doctorList.addAll(doctorDetailsMapper.mapToEntityList(it))
+//                        _totalDataCount = response.meta?.count ?: 0
+//                        doctorResponse.value = doctorList
+//                        updatePageCount()
+//                        return
+//                    }
+//                    doctorResponse.value = doctorList
+//                }
+//
+//                override fun error(error: String) {
+//                    doctorErr.value = error
+//                }
+//            })
+//    }
 
     private fun isAllDataFetched(): Boolean {
         return if (isRestaurantListShowing) pageCount > 1 && shopList.size == _totalDataCount

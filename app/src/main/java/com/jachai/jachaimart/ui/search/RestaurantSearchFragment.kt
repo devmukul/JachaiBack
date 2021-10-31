@@ -108,7 +108,7 @@ class RestaurantSearchFragment : BaseFragment<FragmentRestaurantSearchBinding>(R
             isDocListShowing?.let { isRestaurantListShowing = it }
             clear()
             enableLoading()
-            searchDoctorOrCategory()
+            //searchDoctorOrCategory()
         }
     }
 

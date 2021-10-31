@@ -52,7 +52,7 @@ class VerifyCodeFragment : BaseFragment<VerifyCodeFragmentBinding>(R.layout.veri
             SharedPreferenceUtil.setName(it.name)
             SharedPreferenceUtil.setMobileNo(it.mobileNumber)
             view.findNavController()
-                .navigate(R.id.verifyCode_to_nav_home)
+                .navigate(R.id.verifyCode_to_groceriesShop)
         }
 
         viewModel.createdResponseLiveData.observe(viewLifecycleOwner) {

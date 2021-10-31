@@ -27,7 +27,7 @@ class NameUpdateFragment  : BaseFragment<NameUpdateFragmentBinding>(R.layout.nam
         viewModel.successResponseLiveData.observe(viewLifecycleOwner, { _ ->
             dismissLoader()
             view.findNavController()
-                .navigate(R.id.nameUpdate_to_nav_home)
+                .navigate(R.id.nameUpdate_to_groceriesShop)
         })
         viewModel.errorResponseLiveData.observe(viewLifecycleOwner, { message ->
             dismissLoader()
