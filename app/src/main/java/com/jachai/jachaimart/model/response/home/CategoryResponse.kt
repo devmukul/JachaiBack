@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class CategoryResponse(
 
     @field:SerializedName("categories")
-    val categories: List<CategoriesItem?>? = null,
+    val categories: List<CategoriesItem>? = null,
 
     @field:SerializedName("message")
     val message: String? = null,

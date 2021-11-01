@@ -21,7 +21,7 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
     var successResponseLiveData = MutableLiveData<ShopDetailsResponse?>()
     var successAddToCartData = MutableLiveData<Boolean?>()
 
-    fun getDriverDocStatus(shopId: String) {
+    fun getShopDetails(shopId: String) {
         if (shopDetailsCall != null) {
             return
         } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
@@ -75,7 +75,6 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
 
 
     }
-
 
     fun checkCartStatus() {
         if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() > 0) {

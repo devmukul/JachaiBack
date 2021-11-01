@@ -42,11 +42,8 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
     private val viewModel: ShopViewModel by viewModels()
 
     private var isExpanded = true
-
     private val args: ShopFragmentArgs by navArgs()
-
     private lateinit var shopItem: ShopsItem
-
     private lateinit var categoryAdapter: CategoryAdapter
 
 
@@ -55,7 +52,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         shopItem = args.shopItem
         initView()
         subscribeObservers()
-        viewModel.getDriverDocStatus(shopItem.id!!)
+        viewModel.getShopDetails(shopItem.id!!)
         viewModel.checkCartStatus()
 
         viewModel.successResponseLiveData.observe(viewLifecycleOwner, {

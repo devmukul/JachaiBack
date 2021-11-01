@@ -182,13 +182,17 @@
     </fragment>
     <fragment
         android:id="@+id/groceryCategoryDetailsFragment"
-        android:name="com.jachai.jachaimart.ui.groceries.category_details.GroceryCategoryDetailsFragment"
+        android:name="com.jachai.jachaimart.ui.groceries.category_details.CategoryFragment"
         android:label="grocery_category_details_fragment"
         tools:layout="@layout/grocery_category_details_fragment" >
         <argument android:name="categoryId"
             app:argType="string"
             app:nullable="true"
             android:defaultValue="na" />
+        <argument android:name="categoryList"
+            app:argType="com.jachai.jachaimart.model.response.home.CategoryResponse"
+            app:nullable="true"
+            android:defaultValue="@null"/>
     </fragment>
 
 </navigation>

@@ -6,6 +6,7 @@ import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsRespo
 import com.jachai.jachaimart.model.response.home.BannerResponse
 import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.model.response.home.RestaurantNearMeResponse
+import com.jachai.jachaimart.model.response.product.CategoryDetailsResponse
 import com.jachai.jachaimart.model.response.product.ProductDetailsResponse
 import com.jachai.jachaimart.model.shop.ShopDetailsResponse
 import com.jachai.jachaimart.utils.constant.ApiConstants
@@ -37,16 +38,17 @@ interface GroceryService {
     @GET(ApiConstants.PRODUCT_BY_CAT_BASE)
     fun getShopDetails(@Query("shopId") shopId: String): Call<ShopDetailsResponse>
 
-
     @GET(ApiConstants.SHOP_CATEGORIES_BASE)
     fun getShopCategories(@Query("shopId") shopId: String): Call<CategoryResponse>
 
     @GET(ApiConstants.PRODUCT_DETAILS_BASE)
     fun getProductDetails(@Query("slug") slug: String): Call<ProductDetailsResponse>
 
-
     @POST(ApiConstants.CATEGORY_WITH_PRODUCTS_BASE)
     fun getProductsWithCategory(@Body categoryWithProductRequest: CategoryWithProductRequest): Call<CatWithRelatedProductsResponse>
+
+    @GET(ApiConstants.SHOP_CATEGORIES_DETAILS_BASE)
+    fun getShopCategoriesDetails(@Query("shopId") shopId: String, @Query("categoryId") categoryId: String): Call<CategoryDetailsResponse>
 
 
 }

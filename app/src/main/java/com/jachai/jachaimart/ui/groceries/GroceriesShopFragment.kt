@@ -13,6 +13,7 @@ import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.model.response.category.Product
 import com.jachai.jachaimart.model.response.home.CategoriesItem
+import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
@@ -32,6 +33,8 @@ class GroceriesShopFragment :
     private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
     private lateinit var navController: NavController
     private val args: GroceriesShopFragmentArgs by navArgs()
+
+    private lateinit var categoryResponse: CategoryResponse
 
     private lateinit var shopID: String
 
@@ -83,6 +86,7 @@ class GroceriesShopFragment :
 
     override fun subscribeObservers() {
         viewModel.successCategoryResponseLiveData.observe(viewLifecycleOwner) {
+            categoryResponse = it!!
             categoryAdapter.setList(it?.categories)
             categoryAdapter.notifyDataSetChanged()
             viewModel.requestForShopCategoryWithRelatedProduct(it?.categories, shopID)
@@ -99,6 +103,7 @@ class GroceriesShopFragment :
         val action =
             GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceryCategoryDetailsFragment()
         action.categoryId = item?.id
+        action.categoryList = categoryResponse
         navController.navigate(action)
     }
 
@@ -106,6 +111,7 @@ class GroceriesShopFragment :
         val action =
             GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceryCategoryDetailsFragment()
         action.categoryId = catWithRelatedProduct?.category
+        action.categoryList = categoryResponse
         navController.navigate(action)
 
 
