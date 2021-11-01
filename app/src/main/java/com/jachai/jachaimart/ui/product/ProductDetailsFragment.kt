@@ -33,7 +33,7 @@ class ProductDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        productSlug = productSlug
+        productSlug = args.productId.toString()
         initView()
         subscribeObservers()
     }
@@ -41,13 +41,27 @@ class ProductDetailsFragment :
     override fun initView() {
         viewModel.requestForProductDetails(productSlug)
 
-        binding.back.setOnClickListener {
-            navController.popBackStack()
+        binding.apply {
 
+            back.setOnClickListener {
+                navController.popBackStack()
+            }
+
+            frameLay.setOnClickListener {
+
+                val action =
+                    if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
+                        ProductDetailsFragmentDirections.actionProductDetailsFragmentToEmptyCartFragment()
+                    } else {
+                        ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartFragment()
+                    }
+                navController.navigate(action)
+            }
         }
+    }
 
-
-
+    override fun onResume() {
+        super.onResume()
 
     }
 
@@ -62,6 +76,15 @@ class ProductDetailsFragment :
             })
 
         viewModel.successAddToCartData.observe(viewLifecycleOwner, {
+            if (it == true) {
+                binding.apply {
+                    cartBadge.text =
+                        JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
+                            .toString()
+
+
+                }
+            }
 
         })
 

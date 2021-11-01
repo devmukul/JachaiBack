@@ -41,10 +41,11 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
         binding.apply {
             toolbarMain.back.setOnClickListener {
-                onBackPressed()
+                navController.popBackStack()
             }
 
 
+            checkout.text = getString(R.string.checkout_order)
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 cartAdapter = CartAdapter(requireContext(), emptyList(), this@CartFragment)

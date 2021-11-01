@@ -8,16 +8,16 @@ import kotlinx.android.parcel.Parcelize
 data class OrderResponse(
 
 	@field:SerializedName("total")
-	val total: Int? = null,
+	val total: Double? = null,
 
 	@field:SerializedName("orderId")
 	val orderId: String? = null,
 
 	@field:SerializedName("totalPaid")
-	val totalPaid: Int? = null,
+	val totalPaid: Double? = null,
 
 	@field:SerializedName("subtotal")
-	val subtotal: Int? = null,
+	val subtotal: Double? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

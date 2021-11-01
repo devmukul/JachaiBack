@@ -44,10 +44,10 @@ data class CreatedBy(
 data class Price(
 
 	@field:SerializedName("discountedPrice")
-	val discountedPrice: Int? = null,
+	val discountedPrice: Double? = null,
 
 	@field:SerializedName("mrp")
-	val mrp: Int? = null
+	val mrp: Double? = null
 ) : Parcelable
 
 @Parcelize
@@ -66,7 +66,7 @@ data class Order(
 	val statusLogs: List<StatusLogsItem?>? = null,
 
 	@field:SerializedName("totalPaid")
-	val totalPaid: Int? = null,
+	val totalPaid: Double? = null,
 
 	@field:SerializedName("orderNote")
 	val orderNote: String? = null,
@@ -81,7 +81,7 @@ data class Order(
 	val deliveryCharge: Int? = null,
 
 	@field:SerializedName("subTotal")
-	val subTotal: Int? = null,
+	val subTotal: Double? = null,
 
 	@field:SerializedName("deliveryManId")
 	val deliveryManId: String? = null,
@@ -90,7 +90,7 @@ data class Order(
 	val products: List<ProductsItem?>? = null,
 
 	@field:SerializedName("total")
-	val total: Int? = null,
+	val total: Double? = null,
 
 	@field:SerializedName("orderedBy")
 	val orderedBy: String? = null,

@@ -31,6 +31,9 @@ class RelatedProductAdapter(
                     productTitle.text = data.name
                     productPrice.text = data.variations[0].price.mrp.toString()
                     productPreviousPrice.text = data.variations[0].price.discountedPrice.toString()
+                    binding.root.setOnClickListener {
+                        interaction?.onProductSelected(data)
+                    }
 
                 }
             }

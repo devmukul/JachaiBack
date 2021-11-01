@@ -12,6 +12,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:fitsSystemWindows="true"
             android:theme="@style/Theme.JachaiMart">
 
@@ -24,14 +25,6 @@
                 app:contentScrim="@color/white"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
-                <!--            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"-->
-                <!--            <include-->
-                <!--                android:id="@+id/toolbarSearchContainer"-->
-                <!--                layout="@layout/label_toolbar"-->
-                <!--                android:layout_height="192dp"-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                app:layout_collapseMode="parallax" />-->
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -41,6 +34,7 @@
                         android:id="@+id/image"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
+                        android:layout_marginTop="?attr/actionBarSize"
                         android:minHeight="315dp"
                         android:src="@drawable/sample_grocery_1"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,7 +70,8 @@
                             android:layout_height="30dp"
                             android:layout_marginStart="14dp"
                             android:background="?selectableItemBackground"
-                            android:src="@drawable/ic_back_with_icon"
+                            android:src="@drawable/ic_back"
+                            android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -86,19 +81,45 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_marginEnd="14dp"
-                            android:src="@drawable/ic_delivery_man"
+                            android:src="@drawable/ic_close"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:id="@+id/cart"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginEnd="12dp"
-                            android:src="@drawable/ic_cart"
+                        <FrameLayout
+                            android:id="@+id/frame_lay"
+                            style="?attr/actionButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:focusable="true"
+                            app:layout_constraintBottom_toBottomOf="@+id/options"
                             app:layout_constraintEnd_toStartOf="@+id/options"
-                            app:layout_constraintTop_toTopOf="@+id/options" />
+                            app:layout_constraintTop_toTopOf="@+id/options">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_cart_bucket" />
+
+                            <TextView
+                                android:id="@+id/cart_badge"
+                                android:layout_width="14dp"
+                                android:layout_height="14dp"
+                                android:layout_gravity="right|end|top"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="-4dp"
+                                android:layout_marginRight="-4dp"
+                                android:background="@drawable/background_dark_red_dot"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@android:color/white"
+                                android:textSize="10sp" />
+
+                        </FrameLayout>
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
