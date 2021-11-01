@@ -21,7 +21,8 @@ class CategoryWithProductAdapter(
     class ViewHolder(
         private var binding: GroceriesShopCategoryRowBinding, private var interaction: Interaction?
     ) :
-        RecyclerView.ViewHolder(binding.root), RelatedProductAdapter.Interaction {
+        RecyclerView.ViewHolder(binding.root),
+        RelatedProductAdapter.Interaction {
 
 
         fun bind(context: Context, data: CatWithRelatedProduct?) {

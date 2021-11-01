@@ -8,6 +8,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
@@ -17,7 +18,6 @@ import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
-import com.jachai.jachaimart.ui.shop.shop_list.ShopListFragmentDirections
 
 class GroceriesShopFragment :
     BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment),
@@ -62,6 +62,17 @@ class GroceriesShopFragment :
             toolbarMain.back.setOnClickListener {
                 navController.popBackStack()
             }
+
+            toolbarMain.frameLay.setOnClickListener {
+                val action =
+                    if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
+                        GroceriesShopFragmentDirections.actionGroceriesShopFragmentToEmptyCartFragment()
+                    } else {
+                        GroceriesShopFragmentDirections.actionGroceriesShopFragmentToCartFragment()
+                    }
+                navController.navigate(action)
+            }
+
             rvCategories1.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 categoryAdapter =
@@ -69,7 +80,7 @@ class GroceriesShopFragment :
                 adapter = categoryAdapter
             }
             rvCategories.apply {
-                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 categoryWithProductAdapter =
                     CategoryWithProductAdapter(
                         requireContext(),
@@ -120,7 +131,7 @@ class GroceriesShopFragment :
     override fun onCategoryProductSelected(product: Product?) {
         val action =
             GroceriesShopFragmentDirections.actionGroceriesShopFragmentToProductDetailsFragment()
-        action.productId = product?.id
+        action.productId = product?.slug
         navController.navigate(action)
     }
 

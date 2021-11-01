@@ -43,7 +43,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         updateBottomCart(0.0)
         binding.apply {
             toolbarMain.back.setOnClickListener {
-                onBackPressed()
+                navController.popBackStack()
             }
 
             recyclerView.apply {
@@ -62,7 +62,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             }
 
             checkout.setOnClickListener {
-                JachaiLog.d(TAG, "CLICKED")
+
 
 //                fetchCurrentLocation { location: CurrentLocation? ->
 //                    location?.let { it ->
