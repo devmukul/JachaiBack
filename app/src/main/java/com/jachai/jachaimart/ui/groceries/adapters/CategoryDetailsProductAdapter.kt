@@ -3,14 +3,16 @@ package com.jachai.jachaimart.ui.groceries.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jachai.jachaimart.databinding.CategoryDetailsProductRowBinding
 import com.jachai.jachaimart.databinding.GroceriesShopCategoryRowBinding
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.model.response.category.Product
-import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter.ViewHolder
+import com.jachai.jachaimart.ui.groceries.adapters.CategoryDetailsProductAdapter.ViewHolder
 
-class CategoryWithProductAdapter(
+class CategoryDetailsProductAdapter(
     private val context: Context,
     private var list: List<CatWithRelatedProduct?>,
     private val interaction: Interaction?
@@ -18,23 +20,23 @@ class CategoryWithProductAdapter(
 
 
     class ViewHolder(
-        private var binding: GroceriesShopCategoryRowBinding, private var interaction: Interaction?
+        private var binding: CategoryDetailsProductRowBinding, private var interaction: Interaction?
     ) :
         RecyclerView.ViewHolder(binding.root),
-        RelatedProductAdapter.Interaction {
+        CategotyProductAdapter.Interaction {
 
 
         fun bind(context: Context, data: CatWithRelatedProduct?) {
             binding.apply {
-                header.text = data?.category ?: "Category"
+                categoryName.text = data?.category ?: "Category"
                 header.setOnClickListener {
                     interaction?.onCategoryViewAllSelected(data)
                 }
                 rvItems.apply {
-                    layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                    layoutManager = GridLayoutManager(context, 2)
 
                     adapter = data?.let {
-                        RelatedProductAdapter(
+                        CategotyProductAdapter(
                             context,
                             it.products,
                             interaction = this@ViewHolder
@@ -57,7 +59,7 @@ class CategoryWithProductAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            GroceriesShopCategoryRowBinding.inflate(
+            CategoryDetailsProductRowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

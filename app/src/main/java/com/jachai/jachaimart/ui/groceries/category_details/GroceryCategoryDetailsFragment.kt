@@ -13,18 +13,24 @@ import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import android.R.attr.defaultValue
-
-
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
+import com.jachai.jachaimart.ui.groceries.adapters.CategoryDetailsProductAdapter
 
 
 class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragmentBinding>(R.layout.grocery_category_details_fragment),
-    CategoryWithProductAdapter.Interaction {
+    CategoryDetailsProductAdapter.Interaction {
 
     companion object {
         private const val CATEGORY_TITLE_KEY = "FRAGMENT_TITLE"
         private const val CATEGORY_ID_KEY = "CATEGORY_ID_KEY"
+        private lateinit var navController1: NavController
 
-        fun newInstance(categoryTitle: String, categoryId: String): GroceryCategoryDetailsFragment {
+        fun newInstance(categoryTitle: String, categoryId: String, navController: NavController): GroceryCategoryDetailsFragment {
+            navController1 = navController
             val categorizedNewsFragment = GroceryCategoryDetailsFragment()
             val bundle = Bundle()
             bundle.putString(CATEGORY_TITLE_KEY, categoryTitle)
@@ -35,17 +41,20 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
     }
 
     private val viewModel: GroceryCategoryDetailsViewModel by viewModels()
-    private lateinit var productAdapter: CategoryWithProductAdapter
+    private lateinit var productAdapter: CategoryDetailsProductAdapter
     private var categoryId:String? = ""
+
+    //private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         categoryId = this.arguments?.getString(CATEGORY_ID_KEY,"")
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //navController = Navigation.findNavController(view)
         initView()
         subscribeObservers()
 
@@ -98,7 +107,13 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
 
         for (category in categories) {
             binding.apply {
-                tabLayout.addTab(tabLayout.newTab().setText(category.category))
+                val tab = tabLayout.newTab()
+                tab.setCustomView(R.layout.custom_related_category_row)
+                val view = tab.customView
+                val title = view!!.findViewById<TextView>(R.id.name)
+                val image = view.findViewById<ImageView>(R.id.image)
+                title.text = category.category
+                tabLayout.addTab(tab)
             }
 
         }
@@ -106,7 +121,7 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
 
     private fun initRecycler(categories: List<CatWithRelatedProduct>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        productAdapter = CategoryWithProductAdapter(requireContext(), categories, this)
+        productAdapter = CategoryDetailsProductAdapter(requireContext(), categories, this)
         binding.recyclerView.adapter = productAdapter
 
     }
@@ -129,6 +144,10 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
     }
 
     override fun onCategoryProductSelected(product: com.jachai.jachaimart.model.response.category.Product?) {
-        TODO("Not yet implemented")
+
+        val action =
+            CategoryFragmentDirections.categoryDetailsToProductDetails()
+        action.productId = product?.slug
+        navController1.navigate(action)
     }
 }

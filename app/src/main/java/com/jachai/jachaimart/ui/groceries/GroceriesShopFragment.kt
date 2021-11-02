@@ -59,6 +59,11 @@ class GroceriesShopFragment :
 
         binding.apply {
 
+            searchBar.root.setOnClickListener {
+                val action =  GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceriesSearchFragment()
+                navController.navigate(action)
+            }
+
             toolbarMain.back.setOnClickListener {
                 navController.popBackStack()
             }
@@ -72,6 +77,9 @@ class GroceriesShopFragment :
                     }
                 navController.navigate(action)
             }
+
+
+
 
             rvCategories1.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)

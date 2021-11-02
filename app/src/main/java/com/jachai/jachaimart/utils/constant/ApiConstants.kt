@@ -56,6 +56,7 @@ object ApiConstants {
     const val PRODUCT_DETAILS_BASE = "product/details"
     const val CATEGORY_WITH_PRODUCTS_BASE = "product/products-by-shop_and-categories"
     const val FAVOURITE_PRODUCT_BASE = "favorite-product"
+    const val SEARCH_PRODUCT_BASE = "product/search"
 
 
     const val CAR_REG_BASE = "car/info"

@@ -57,8 +57,8 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
 
         viewModel.successResponseLiveData.observe(viewLifecycleOwner, {
             initTabLayout(it!!.products)
-            initRecycler(it!!.products)
-            initMediator(it!!.products)
+            initRecycler(it.products)
+            initMediator(it.products)
         })
 
         isExpanded = true

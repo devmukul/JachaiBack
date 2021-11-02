@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentRestaurantSearchBinding
 import com.jachai.jachaimart.model.response.home.ShopsItem
@@ -17,7 +18,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class RestaurantSearchFragment : BaseFragment<FragmentRestaurantSearchBinding>(R.layout.fragment_restaurant_search), ShopRecyclerAdapter.Interaction {
+class GroceriesSearchFragment : BaseFragment<FragmentRestaurantSearchBinding>(R.layout.fragment_restaurant_search), ShopRecyclerAdapter.Interaction {
 
     companion object {
         fun newInstance() = GroceriesSearchFragment()
@@ -94,7 +95,7 @@ class RestaurantSearchFragment : BaseFragment<FragmentRestaurantSearchBinding>(R
             isDocListShowing?.let { isRestaurantListShowing = it }
             clear()
             enableLoading()
-            //searchDoctorOrCategory()
+            searchGrocery("potato")
         }
     }
 
