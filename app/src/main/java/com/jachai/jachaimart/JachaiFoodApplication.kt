@@ -6,12 +6,15 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import androidx.multidex.MultiDexApplication
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.net.PlacesClient
 import com.jachai.jachaimart.database.AppDatabase
 import com.jachai.jachaimart.manager.smshelper.AppSignatureHelper
 import com.jachai.jachaimart.utils.HttpLogger
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.ApiConstants
+import com.jachai.jachaimart.utils.constant.ApiConstants.JACHAI_MAP_KEY
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 import com.orhanobut.logger.AndroidLogAdapter
@@ -37,6 +40,7 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
         super.onCreate()
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        Places.initialize(applicationContext, JACHAI_MAP_KEY)
 
         val appSignature = AppSignatureHelper(this)
         Log.v("AppSignature>> ", appSignature.appSignatures.toString())
@@ -57,6 +61,7 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
 //            Stomp.ConnectionProvider.OKHTTP,
 //            ApiConstants.JACHAI_BASE_URL_WEBSOCKET
 //        )
+        placesClient = Places.createClient(this)
 
         setupLogger()
 
@@ -96,6 +101,8 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
         lateinit var mDatabase: AppDatabase
             private set
 
+        lateinit var placesClient: PlacesClient
+            private set
 
         var compositeDisposable: CompositeDisposable? = null
 

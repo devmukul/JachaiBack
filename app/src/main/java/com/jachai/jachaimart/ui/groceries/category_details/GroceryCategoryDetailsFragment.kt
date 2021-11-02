@@ -44,17 +44,14 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
     private lateinit var productAdapter: CategoryDetailsProductAdapter
     private var categoryId:String? = ""
 
-    //private lateinit var navController: NavController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         categoryId = this.arguments?.getString(CATEGORY_ID_KEY,"")
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //navController = Navigation.findNavController(view)
         initView()
         subscribeObservers()
 

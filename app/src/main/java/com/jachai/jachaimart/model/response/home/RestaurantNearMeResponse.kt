@@ -2,6 +2,7 @@ package com.jachai.jachaimart.model.response.home
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.jachai.jachaimart.model.response.product.Location
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -81,18 +82,4 @@ data class ShopsItem(
 	val status: String? = null
 ) : Parcelable
 
-@Parcelize
-data class Location(
 
-	@field:SerializedName("x")
-	val X: Double? = null,
-
-	@field:SerializedName("coordinates")
-	val coordinates: List<Double?>? = null,
-
-	@field:SerializedName("y")
-	val Y: Double? = null,
-
-	@field:SerializedName("type")
-	val type: String? = null
-) : Parcelable

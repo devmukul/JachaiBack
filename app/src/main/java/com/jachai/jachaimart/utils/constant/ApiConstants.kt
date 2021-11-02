@@ -21,7 +21,7 @@ object ApiConstants {
     const val JACHAI_BASE_URL_ORDER = BuildConfig.BASE_URL_JACHAI_ORDER
 //    const val JACHAI_BASE_URL_DRIVER = BuildConfig.BASE_URL_JACHAI_DRIVER
 //    const val JACHAI_BASE_URL_WEBSOCKET = BuildConfig.BASE_URL_JACHAI_WEBSOCKET
-//    const val JACHAI_MAP_KEY = BuildConfig.BASE_URL_JACHAI_MAPKEY
+    const val JACHAI_MAP_KEY = BuildConfig.BASE_URL_JACHAI_MAPKEY
 //    const val JACHAI_BASE_URL_FARE = BuildConfig.BASE_URL_JACHAI_FARE
 
 

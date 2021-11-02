@@ -61,7 +61,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                 }
             }
 
-            checkout.setOnClickListener {
+            clCheckout.setOnClickListener {
 
 
 //                fetchCurrentLocation { location: CurrentLocation? ->

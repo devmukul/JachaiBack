@@ -2,12 +2,9 @@ package com.jachai.jachaimart.ui.search
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
-import kotlinx.coroutines.Job
 import retrofit2.Call
 
 class RestaurantSearchViewModel  (application: Application) : BaseViewModel(application) {

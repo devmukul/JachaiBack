@@ -57,7 +57,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
                 navController.popBackStack()
             }
 
-            checkout.setOnClickListener {
+            clCheckout.setOnClickListener {
 //                navController.navigate(R.id.action_cartFragment_to_checkoutFragment)
 
                 val action =
