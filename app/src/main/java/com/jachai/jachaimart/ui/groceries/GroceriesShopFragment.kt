@@ -1,5 +1,6 @@
 package com.jachai.jachaimart.ui.groceries
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -18,6 +19,7 @@ import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
+import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
 class GroceriesShopFragment :
     BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment),
@@ -42,11 +44,34 @@ class GroceriesShopFragment :
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 //        shopID = args.shopID.toString()
-        shopID = "617e4b8f5097d45c3f896d0b"
+         if (SharedPreferenceUtil.getJCShopId() == null){
+            showNoShopFoundAlert()
+        }else{
+             shopID = SharedPreferenceUtil.getJCShopId().toString()
+             initView()
+             subscribeObservers()
+        }
 
-        initView()
-        subscribeObservers()
 
+
+
+    }
+
+    private fun showNoShopFoundAlert() {
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(false)
+        builder.setTitle(getString(R.string.app_name_short) + " alert")
+        builder.setMessage("Sorry !! Shop is not available at your location right now. We are coming soon. Thanks")
+
+//        builder.setPositiveButton("Continue") { _, _ ->
+//
+//
+//        }
+
+        builder.setNegativeButton("Close") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
 
     }
 
@@ -121,7 +146,7 @@ class GroceriesShopFragment :
     override fun onCategoryViewAllSelected(catWithRelatedProduct: CatWithRelatedProduct?) {
         val action =
             GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceryCategoryDetailsFragment()
-        action.categoryId = catWithRelatedProduct?.category
+        action.categoryId = catWithRelatedProduct?.categoryId
         action.categoryList = categoryResponse
         navController.navigate(action)
 

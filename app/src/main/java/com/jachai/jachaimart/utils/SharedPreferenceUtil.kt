@@ -41,6 +41,14 @@ object SharedPreferenceUtil {
             putString(SharedPreferenceConstants.DRIVER_ID_KEY, name)
         }
     }
+    fun getJCShopId() =
+        preferences.getString(SharedPreferenceConstants.JC_SHOP_ID_KEY, null)
+
+    fun setJCShopId(name: String?) {
+        preferences.edit {
+            putString(SharedPreferenceConstants.JC_SHOP_ID_KEY, name)
+        }
+    }
 
     fun getMobileNo() =
         preferences.getString(SharedPreferenceConstants.DRIVER_MOBILE_KEY, "")

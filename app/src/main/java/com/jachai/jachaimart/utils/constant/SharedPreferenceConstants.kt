@@ -10,5 +10,8 @@ object SharedPreferenceConstants {
     const val DRIVER_MOBILE_KEY = "driver_mobile"
 
 
+    const val JC_SHOP_ID_KEY = "jc_shop_id"
+
+
     const val TAG_JACHAI = "jachai_preference_v1"
 }

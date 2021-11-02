@@ -129,6 +129,6 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
     }
 
     override fun onCategoryProductSelected(product: com.jachai.jachaimart.model.response.category.Product?) {
-        TODO("Not yet implemented")
+
     }
 }

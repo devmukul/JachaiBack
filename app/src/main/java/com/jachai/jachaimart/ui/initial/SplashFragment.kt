@@ -48,8 +48,11 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
         super.onResume()
         if(SharedPreferenceUtil.isTokenAvailable()){
             viewModel.getUserInfo()
+
         }else{
             viewModel.initSplashScreen()
+
         }
+        viewModel.getNearestJCShop()
     }
 }
