@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jachai.jachai_driver.utils.showLongToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
@@ -44,15 +45,13 @@ class GroceriesShopFragment :
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 //        shopID = args.shopID.toString()
-         if (SharedPreferenceUtil.getJCShopId() == null){
+        if (SharedPreferenceUtil.getJCShopId() == null) {
             showNoShopFoundAlert()
-        }else{
-             shopID = SharedPreferenceUtil.getJCShopId().toString()
-             initView()
-             subscribeObservers()
+        } else {
+            shopID = SharedPreferenceUtil.getJCShopId().toString()
+            initView()
+            subscribeObservers()
         }
-
-
 
 
     }
@@ -126,6 +125,11 @@ class GroceriesShopFragment :
             categoryAdapter.setList(it?.categories)
             categoryAdapter.notifyDataSetChanged()
             viewModel.requestForShopCategoryWithRelatedProduct(it?.categories, shopID)
+
+            if (it.categories?.isEmpty() == true) {
+                showLongToast("No Product found. Empty Shop.")
+
+            }
         }
 
         viewModel.successCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {

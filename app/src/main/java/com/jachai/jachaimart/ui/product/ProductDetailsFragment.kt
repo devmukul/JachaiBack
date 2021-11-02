@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.JachaiLog
+import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.ProductDetailsFragmentBinding
@@ -81,6 +82,8 @@ class ProductDetailsFragment :
                     cartBadge.text =
                         JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
                             .toString()
+
+                    showShortToast("Product Added")
 
 
                 }

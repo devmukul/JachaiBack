@@ -6,13 +6,14 @@ import androidx.fragment.app.viewModels
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OrderFragmentBinding
 import com.jachai.jachaimart.ui.base.BaseFragment
+import com.jachai.jachaimart.utils.RetrofitConfig
 
 class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment) {
 
     companion object {
         fun newInstance() = OrderFragment()
     }
-
+    private val orderService = RetrofitConfig.orderService
     private val viewModel: OrderViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

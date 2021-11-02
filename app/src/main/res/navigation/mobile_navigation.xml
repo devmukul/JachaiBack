@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_splashFragment2_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_splashFragment2_to_selectUserLocationFragment"
+            app:destination="@id/selectUserLocationFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -211,5 +214,20 @@
         android:id="@+id/emptyCartFragment"
         android:name="com.jachai.jachaimart.ui.cart.EmptyCartFragment"
         android:label="EmptyCartFragment" />
+    <fragment
+        android:id="@+id/userMapsFragment"
+        android:name="com.jachai.jachaimart.ui.userlocation.UserMapsFragment"
+        android:label="fragment_user_maps"
+        tools:layout="@layout/fragment_user_maps" />
+    <fragment
+        android:id="@+id/selectUserLocationFragment"
+        android:name="com.jachai.jachaimart.ui.userlocation.SelectUserLocationFragment"
+        android:label="SelectUserLocationFragment" >
+        <action
+            android:id="@+id/action_selectUserLocationFragment_to_userMapsFragment"
+            app:destination="@id/userMapsFragment"
+            app:popUpTo="@id/selectUserLocationFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

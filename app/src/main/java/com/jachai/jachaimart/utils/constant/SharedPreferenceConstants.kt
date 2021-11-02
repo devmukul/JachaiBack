@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.utils.constant
 
 object SharedPreferenceConstants {
+
     const val OTP_REQUEST_TIME_KEY ="otp_request_time_key"
     const val AUTH_TOKEN_KEY = "auth_token"
     const val AUTH_TOKEN_KEY_WITHOUT_BEARER = "auth_token_without_bearer"
@@ -11,6 +12,7 @@ object SharedPreferenceConstants {
 
 
     const val JC_SHOP_ID_KEY = "jc_shop_id"
+    const val USER_LOCATION_KEY = "user_location"
 
 
     const val TAG_JACHAI = "jachai_preference_v1"
