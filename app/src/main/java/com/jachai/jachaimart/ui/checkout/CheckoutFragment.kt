@@ -64,20 +64,20 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             clCheckout.setOnClickListener {
 
 
-//                fetchCurrentLocation { location: CurrentLocation? ->
-//                    location?.let { it ->
-//                        JachaiLog.d(TAG,location.address)
-//
-//
-//                    }
-//                }
+                fetchCurrentLocation { location: CurrentLocation? ->
+                    location?.let { it ->
+                        JachaiLog.d(TAG,location.address)
+                        viewModel.placeOrder(additionalComment, location)
 
-                val location = CurrentLocation(
-                    23.737209579805366,
-                    90.43048604373678, "NA"
-                )
+                    }
+                }
 
-                viewModel.placeOrder(additionalComment, location)
+//                val location = CurrentLocation(
+//                    23.737209579805366,
+//                    90.43048604373678, "NA"
+//                )
+
+
                 showLoader()
             }
         }

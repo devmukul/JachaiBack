@@ -82,6 +82,15 @@ class GroceriesShopFragment :
 
 
         binding.apply {
+            fetchCurrentLocation {
+                toolbarMain.title.text = "Current Location"
+                toolbarMain.locationAddress.text = it?.address ?: "n/a"
+            }
+
+            toolbarMain.clHome.setOnClickListener {
+
+            }
+
 
             searchBar.root.setOnClickListener {
                 val action =  GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceriesSearchFragment()

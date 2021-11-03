@@ -27,6 +27,7 @@ class OnGoingOrderFragment :
     private val args: OnGoingOrderFragmentArgs by navArgs()
     private val viewModel: OnGoingOrderViewModel by viewModels()
 
+
     private lateinit var orderId: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,6 +46,12 @@ class OnGoingOrderFragment :
     }
 
     override fun initView() {
+        binding.toolbarMain.back.setOnClickListener {
+            val action =
+                OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToGroceriesShopFragment()
+            navController.navigate(action)
+        }
+
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             orderDetailsAdapter = OrderDetailsAdapter(requireContext(), emptyList())

@@ -7,7 +7,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
@@ -31,9 +30,8 @@ class SelectUserLocationViewModel : ViewModel() {
                 FindAutocompletePredictionsRequest.builder()
                     // Call either setLocationBias() OR setLocationRestriction().
                     //.setLocationRestriction(bounds)
-                    .setOrigin(LatLng(23.7276, 90.4102264))
+                    .setOrigin(LatLng(23.7276442, 90.4083781))
                     .setCountries("BD")
-                    .setTypeFilter(TypeFilter.ADDRESS)
                     .setSessionToken(token)
                     .setQuery(query)
                     .build()

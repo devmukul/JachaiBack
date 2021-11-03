@@ -54,11 +54,15 @@ class ShopListFragment : BaseFragment<ShopListFragmentBinding>(R.layout.shop_lis
     }
 
     override fun initView() {
-        viewModel.requestForShopsByCategories(
-            categoryId,
-            23.737209579805366,
-            90.43048604373678
-        )
+
+        fetchCurrentLocation {
+            viewModel.requestForShopsByCategories(
+                categoryId,
+                it?.latitude,
+                it?.longitude
+            )
+        }
+
         binding.apply {
 
             title.text = "Restaurants Delivering Your Food"

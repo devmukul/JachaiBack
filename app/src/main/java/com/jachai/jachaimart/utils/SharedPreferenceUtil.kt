@@ -75,4 +75,11 @@ object SharedPreferenceUtil {
             putString(SharedPreferenceConstants.USER_LOCATION_KEY, data)
         }
     }
+
+    fun getUserLocation() : LocationDetails{
+        val data = preferences.getString(SharedPreferenceConstants.USER_LOCATION_KEY, "")
+        return Gson().fromJson(data,LocationDetails::class.java)
+    }
+
+
 }

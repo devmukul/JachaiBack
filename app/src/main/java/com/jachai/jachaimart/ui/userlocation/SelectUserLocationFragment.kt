@@ -43,6 +43,10 @@ class SelectUserLocationFragment :
     override fun initView() {
         viewModel.findAddress(null)
 
+        binding.include.title.text = "Save Address"
+        binding.include.back.setOnClickListener {
+            navController.popBackStack()
+        }
         binding.etPickUpLocation.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -91,7 +95,10 @@ class SelectUserLocationFragment :
                     binding.etPickUpLocation.setText(it1.primaryAddress)
                     SharedPreferenceUtil.setUserLocation(it1)
                     //navigate
-                    val action = SelectUserLocationFragmentDirections.actionSelectUserLocationFragmentToUserMapsFragment()
+                    val action =
+                        SelectUserLocationFragmentDirections.actionSelectUserLocationFragmentToUserMapsFragment(
+                            it1
+                        )
                     navController.navigate(action)
 
                 }

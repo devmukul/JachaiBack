@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import bd.com.evaly.ehealth.models.common.CurrentLocation
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachaimart.JachaiFoodApplication
@@ -68,7 +69,7 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
         })
     }
 
-    fun getNearestJCShop() {
+    fun getNearestJCShop(location: CurrentLocation?) {
         try {
 
             if (nearestJCShopCall != null) {
@@ -79,14 +80,26 @@ class SplashViewModel(application: Application) : AndroidViewModel(application) 
                 return
             }
 
-            nearestJCShopCall = groceryService.getNearestJCShopAroundMe(
-                CommonConstants.JC_MART_TYPE,
-                23.76477215668654,
-                90.43168098056175,
-                0,
-                1
+//            nearestJCShopCall = location?.let {
+//                groceryService.getNearestJCShopAroundMe(
+//                    CommonConstants.JC_MART_TYPE,
+//                    it.latitude,
+//                    it.longitude,
+//                    0,
+//                    1
+//
+//                )
+//            }
+            nearestJCShopCall = location?.let {
+                groceryService.getNearestJCShopAroundMe(
+                    CommonConstants.JC_MART_TYPE,
+                    23.7639972,
+                    90.4328452,
+                    0,
+                    1
 
-            )
+                )
+            }
 
             nearestJCShopCall?.enqueue(object : Callback<NearestJCShopResponse> {
                 override fun onResponse(
