@@ -23,7 +23,7 @@
 
                 <include
                     android:id="@+id/toolbarMain"
-                    layout="@layout/toolbar_app"
+                    layout="@layout/toolbar_common"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="0dp"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="@+id/cod"
@@ -131,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:src="@drawable/ic_location"
+                    android:src="@drawable/ic_pin_gps"
                     app:layout_constraintStart_toStartOf="@+id/items"
                     app:layout_constraintTop_toBottomOf="@+id/items" />
 
@@ -142,7 +142,7 @@
                     android:layout_height="0dp"
                     android:layout_marginStart="20dp"
                     android:gravity="center_vertical"
-                    android:text="House #62, Road No #21 \nbanani, Dhaka"
+                    tools:text="House #62, Road No #21 \nbanani, Dhaka"
                     android:textColor="#393E46"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView8"
@@ -168,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:src="@drawable/ic_location"
+                    android:src="@drawable/ic_delivery_time"
                     app:layout_constraintStart_toStartOf="@+id/items2"
                     app:layout_constraintTop_toBottomOf="@+id/items2" />
 

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AddressResponse(
     @SerializedName("addresses")
-    var addresses: List<Address>,
+    var addresses: MutableList<Address>,
     @SerializedName("message")
     var message: String,
     @SerializedName("statusCode")

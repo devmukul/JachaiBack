@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.libraries.places.api.model.AutocompletePrediction
@@ -27,7 +28,7 @@ class SelectUserLocationFragment :
         fun newInstance() = SelectUserLocationFragment()
     }
 
-
+    private val args: SelectUserLocationFragmentArgs by navArgs()
     private lateinit var navController: NavController
     private lateinit var locationListAdapter: LocationListAdapter
 
@@ -99,6 +100,7 @@ class SelectUserLocationFragment :
                         SelectUserLocationFragmentDirections.actionSelectUserLocationFragmentToUserMapsFragment(
                             it1
                         )
+                    action.isFromFragment =  args.isFromFragment
                     navController.navigate(action)
 
                 }

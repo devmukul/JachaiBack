@@ -13,7 +13,6 @@ import com.jachai.jachaimart.databinding.AddressDetailsFragmentBinding
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.location.LocationDetails
 import com.jachai.jachaimart.ui.base.BaseFragment
-import com.jachai.jachaimart.utils.HttpStatusCode
 
 class AddressDetailsFragment :
     BaseFragment<AddressDetailsFragmentBinding>(R.layout.address_details_fragment) {
@@ -46,8 +45,8 @@ class AddressDetailsFragment :
             toolbarMain.back.setOnClickListener {
                 navController.popBackStack()
             }
-            tvAddress.text = locationDetails.fullAddress
 
+            tvAddress.text = locationDetails.fullAddress
 
             confrimButton.setOnClickListener {
                 val id = radioGroup.checkedRadioButtonId
@@ -71,11 +70,22 @@ class AddressDetailsFragment :
     }
 
     override fun subscribeObservers() {
-        viewModel.successResponseLiveData.observe(viewLifecycleOwner){
+        viewModel.successResponseLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
 
+
+            if (args.isFromFragment){
+                val action =
+                    AddressDetailsFragmentDirections.actionAddressDetailsFragmentToMyAddressListFragment()
+                navController.navigate(action)
+            }else{
+                val action =
+                    AddressDetailsFragmentDirections.actionAddressDetailsFragmentToGroceriesShopFragment()
+                navController.navigate(action)
+            }
+
         }
-        viewModel.errorResponseLiveData.observe(viewLifecycleOwner){
+        viewModel.errorResponseLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
             if (it != null) {
                 showLongToast(it)

@@ -72,12 +72,14 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
             searchLocation.setOnClickListener {
                 val action =
                     UserMapsFragmentDirections.actionUserMapsFragmentToSelectUserLocationFragment()
+                action.isFromFragment =  args.isFromFragment
                 navController.navigate(action)
 
             }
             confrimButton.setOnClickListener {
                 val action =UserMapsFragmentDirections.actionUserMapsFragmentToAddressDetailsFragment()
                 action.locationDetails = SharedPreferenceUtil.getUserLocation()
+                action.isFromFragment =  args.isFromFragment
                 navController.navigate(action)
 
             }

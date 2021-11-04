@@ -8,14 +8,13 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import bd.com.evaly.ehealth.models.common.CurrentLocation
-import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CheckoutFragmentBinding
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
+import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
 class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout_fragment) {
 
@@ -42,8 +41,19 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         viewModel.geOrderList()
         updateBottomCart(0.0)
         binding.apply {
+            toolbarMain.title.text = "Checkout"
             toolbarMain.back.setOnClickListener {
-                navController.popBackStack()
+                val action =
+                    CheckoutFragmentDirections.actionCheckoutFragmentToCartFragment()
+
+                navController.navigate(action)
+            }
+
+            editAddress.setOnClickListener {
+                val action =
+                    CheckoutFragmentDirections.actionCheckoutFragmentToMyAddressListFragment()
+
+                navController.navigate(action)
             }
 
             recyclerView.apply {
@@ -55,21 +65,16 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             updateCostCalculation()
 
             checkout.text = getString(R.string.place_order)
-            fetchCurrentLocation { location: CurrentLocation? ->
-                location?.let {
-                    deliveryAddress.text = it.address
-                }
-            }
+
 
             clCheckout.setOnClickListener {
 
 
-                fetchCurrentLocation { location: CurrentLocation? ->
-                    location?.let { it ->
-                        JachaiLog.d(TAG,location.address)
-                        viewModel.placeOrder(additionalComment, location)
-
-                    }
+                SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
+                    viewModel.placeOrder(
+                        SharedPreferenceUtil.getNotes().toString(),
+                        it1
+                    )
                 }
 
 //                val location = CurrentLocation(
@@ -82,6 +87,18 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             }
         }
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateDeliveryAddress()
+
+    }
+
+    private fun updateDeliveryAddress() {
+        binding.deliveryAddress.text = SharedPreferenceUtil.getDeliveryAddress()?.fullAddress
+            ?: SharedPreferenceUtil.getCurrentAddress().fullAddress
 
     }
 
