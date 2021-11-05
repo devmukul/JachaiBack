@@ -3,6 +3,7 @@ package com.jachai.jachaimart.ui.product
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ShareCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -58,6 +59,8 @@ class ProductDetailsFragment :
                     }
                 navController.navigate(action)
             }
+
+
         }
     }
 
@@ -135,6 +138,14 @@ class ProductDetailsFragment :
             rateText.text = count.toFloat().toString()
 
             ratingBar.rating = count.toFloat()
+
+            share.setOnClickListener {
+                ShareCompat.IntentBuilder.from(requireActivity())
+                    .setType("text/plain")
+                    .setChooserTitle("Share via")
+                    .setText("https://jachai.com/products/${product?.slug}")
+                    .startChooser()
+            }
 
 
             var quantity = 1
