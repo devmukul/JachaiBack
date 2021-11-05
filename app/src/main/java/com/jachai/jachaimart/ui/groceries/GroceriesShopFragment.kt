@@ -55,7 +55,6 @@ class GroceriesShopFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-//        shopID = args.shopID.toString()
 
         initView()
         subscribeObservers()
@@ -77,10 +76,7 @@ class GroceriesShopFragment :
 
     }
 
-    private fun updateView() {
-        shopID = SharedPreferenceUtil.getJCShopId().toString()
 
-    }
 
 
     override fun initView() {
@@ -91,7 +87,6 @@ class GroceriesShopFragment :
             viewModel.requestForShopCategories(shopID)
         }
         viewModel.requestAllFavouriteProduct()
-
         viewModel.requestAllAddress()
 
         binding.apply {
@@ -250,6 +245,13 @@ class GroceriesShopFragment :
         val addAddress = bottomSheetDialog?.findViewById<TextView>(R.id.addNewAddress)
         val confirm = bottomSheetDialog?.findViewById<Button>(R.id.confirm_button)
 
+        if (SharedPreferenceUtil.getDeliveryAddress() != null) {
+            for (i in item.indices) {
+                item[i].isSelected =
+                    SharedPreferenceUtil.getDeliveryAddress()?.id ?: 0 == item[i].id
+            }
+        }
+
 
 
         rvSavedAddress?.apply {
@@ -268,8 +270,8 @@ class GroceriesShopFragment :
             bottomSheetDialog.cancel()
 
             viewModel.successAddressResponseLiveData.value = null
-            val action =
-                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToUserMapsFragment(null)
+            val action = GroceriesShopFragmentDirections
+                .actionGroceriesShopFragmentToUserMapsFragment(null)
             navController.navigate(action)
 
         }

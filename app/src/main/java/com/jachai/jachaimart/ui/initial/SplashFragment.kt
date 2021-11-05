@@ -11,7 +11,7 @@ import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
-class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragment){
+class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragment) {
 
     companion object {
         fun newInstance() = SplashFragment()
@@ -24,13 +24,14 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
         initView()
 
 
-        viewModel.liveData.observe( viewLifecycleOwner, {
+        viewModel.liveData.observe(viewLifecycleOwner, {
 
 
-            when(it) {
+            when (it) {
 //                "seccess" -> view.findNavController().navigate(R.id.splash_to_nav_home)
 //                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_productDetailsFragment)
-                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
+                "seccess" -> view.findNavController()
+                    .navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
 //                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_userMapsFragment)
                 "login" -> view.findNavController().navigate(R.id.splash_to_login)
             }
@@ -49,10 +50,10 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
     override fun onResume() {
         super.onResume()
-        if(SharedPreferenceUtil.isTokenAvailable()){
+        if (SharedPreferenceUtil.isTokenAvailable()) {
             viewModel.getUserInfo()
 
-        }else{
+        } else {
             viewModel.initSplashScreen()
 
         }
@@ -74,9 +75,16 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
             SharedPreferenceUtil.saveCurrentAddress(address)
 
-            viewModel.getNearestJCShop(location)
+            if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
+                SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
+                    viewModel.getNearestJCShop(
+                        it1.location
+                    )
+                }
+            } else {
+                viewModel.getNearestJCShop(address.location)
+            }
         }
-
 
 
     }
