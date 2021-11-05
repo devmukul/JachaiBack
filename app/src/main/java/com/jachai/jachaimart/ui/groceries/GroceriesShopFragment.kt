@@ -122,7 +122,7 @@ class GroceriesShopFragment :
             }
 
             toolbarMain.back.setOnClickListener {
-                navController.popBackStack()
+
             }
 
             toolbarMain.frameLay.setOnClickListener {
@@ -337,5 +337,3 @@ class GroceriesShopFragment :
 
 
 }
-
-

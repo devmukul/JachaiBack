@@ -35,7 +35,9 @@
         <entry key="app/src/main/res/layout/bottom_total_price.xml" value="0.19188016022527357" />
         <entry key="app/src/main/res/layout/cart_fragment.xml" value="0.3442907868016922" />
         <entry key="app/src/main/res/layout/cart_item_row.xml" value="1.0453172205438066" />
+        <entry key="app/src/main/res/layout/category_details_product_row.xml" value="0.1403985507246377" />
         <entry key="app/src/main/res/layout/category_fragment.xml" value="0.1796875" />
+        <entry key="app/src/main/res/layout/category_product_row.xml" value="0.1403985507246377" />
         <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.13209580078895622" />
         <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.28797083839611176" />
         <entry key="app/src/main/res/layout/checkout_order_row.xml" value="0.47181881227196076" />
@@ -50,7 +52,7 @@
         <entry key="app/src/main/res/layout/fragment_restaurant_search.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_restaurent_search.xml" value="0.33061594202898553" />
         <entry key="app/src/main/res/layout/fragment_user_maps.xml" value="0.35198325617863757" />
-        <entry key="app/src/main/res/layout/groceries_shop_category_product_row.xml" value="0.1453804347826087" />
+        <entry key="app/src/main/res/layout/groceries_shop_category_product_row.xml" value="0.47065670647922964" />
         <entry key="app/src/main/res/layout/groceries_shop_fragment.xml" value="0.29347826086956524" />
         <entry key="app/src/main/res/layout/grocery_category_details_fragment.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/home_campaign_image_row.xml" value="0.3442028985507246" />
@@ -78,7 +80,7 @@
         <entry key="app/src/main/res/layout/splash_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/test.xml" value="0.33641170325781894" />
         <entry key="app/src/main/res/layout/toolbar_app.xml" value="0.12974989152083405" />
-        <entry key="app/src/main/res/layout/toolbar_cart.xml" value="0.14492753623188406" />
+        <entry key="app/src/main/res/layout/toolbar_cart.xml" value="0.6889798892838498" />
         <entry key="app/src/main/res/layout/toolbar_common.xml" value="0.49079754601226994" />
         <entry key="app/src/main/res/layout/toolbar_home.xml" value="0.4666185320137938" />
         <entry key="app/src/main/res/layout/toolbar_ongoing_order.xml" value="0.6136146969035841" />
