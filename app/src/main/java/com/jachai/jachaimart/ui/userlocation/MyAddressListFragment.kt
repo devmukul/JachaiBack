@@ -65,7 +65,7 @@ class MyAddressListFragment :
         viewModel.successAddressResponseLiveData.observe(viewLifecycleOwner) {
 
                 SharedPreferenceUtil.getCurrentAddress().let { it1 ->
-                    it?.addresses?.add(it1)
+                    it1?.let { it2 -> it?.addresses?.add(it2) }
                     if (it != null) {
                         showDataIntoList(it.addresses)
                     }

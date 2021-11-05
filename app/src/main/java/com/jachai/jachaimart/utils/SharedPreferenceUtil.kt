@@ -107,10 +107,10 @@ object SharedPreferenceUtil {
 
     fun getDeliveryAddress(): Address? {
         val data = preferences.getString(SharedPreferenceConstants.USER_ADDRESS_KEY, null)
-        if (data!= null){
-           return Gson().fromJson(data, Address::class.java)
+        return if (data!= null){
+            Gson().fromJson(data, Address::class.java)
         }else{
-            return null
+            null
         }
 
     }
@@ -122,9 +122,14 @@ object SharedPreferenceUtil {
         }
     }
 
-    fun getCurrentAddress(): Address {
+    fun getCurrentAddress(): Address? {
         val data = preferences.getString(SharedPreferenceConstants.USER_CURRENT_ADDRESS_KEY, null)
-        return Gson().fromJson(data, Address::class.java)
+
+        return if (data!= null) {
+            Gson().fromJson(data, Address::class.java)
+        }else{
+            null
+        }
     }
 
     fun saveNotes(note: String) {

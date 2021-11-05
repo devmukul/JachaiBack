@@ -56,13 +56,9 @@ class GroceriesShopFragment :
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 //        shopID = args.shopID.toString()
-        if (SharedPreferenceUtil.getJCShopId() == null) {
-            showNoShopFoundAlert()
-        } else {
-            shopID = SharedPreferenceUtil.getJCShopId().toString()
-            initView()
-            subscribeObservers()
-        }
+
+        initView()
+        subscribeObservers()
 
 
     }
@@ -73,10 +69,6 @@ class GroceriesShopFragment :
         builder.setTitle(getString(R.string.app_name_short) + " alert")
         builder.setMessage("Sorry !! Shop is not available at your location right now. We are coming soon. Thanks")
 
-//        builder.setPositiveButton("Continue") { _, _ ->
-//
-//
-//        }
 
         builder.setNegativeButton("Close") { dialog, which ->
             dialog.dismiss()
@@ -85,11 +77,22 @@ class GroceriesShopFragment :
 
     }
 
-    override fun initView() {
-        viewModel.requestAllFavouriteProduct()
-        viewModel.requestForShopCategories(shopID)
-        viewModel.requestAllAddress()
+    private fun updateView() {
+        shopID = SharedPreferenceUtil.getJCShopId().toString()
 
+    }
+
+
+    override fun initView() {
+        if (SharedPreferenceUtil.getJCShopId() == null) {
+            showNoShopFoundAlert()
+        } else {
+            shopID = SharedPreferenceUtil.getJCShopId().toString()
+            viewModel.requestForShopCategories(shopID)
+        }
+        viewModel.requestAllFavouriteProduct()
+
+        viewModel.requestAllAddress()
 
         binding.apply {
             fetchCurrentLocation {
@@ -164,15 +167,24 @@ class GroceriesShopFragment :
 
     override fun subscribeObservers() {
         viewModel.successCategoryResponseLiveData.observe(viewLifecycleOwner) {
-            categoryResponse = it!!
-            categoryAdapter.setList(it.categories)
-            categoryAdapter.notifyDataSetChanged()
-            viewModel.requestForShopCategoryWithRelatedProduct(it.categories, shopID)
+            if (it != null) {
 
-            if (it.categories?.isEmpty() == true) {
-                showLongToast("No Product found. Empty Shop.")
 
+                if (it.categories?.isEmpty() == false) {
+                    categoryResponse = it
+                    categoryAdapter.setList(it.categories)
+                    categoryAdapter.notifyDataSetChanged()
+                    viewModel.requestForShopCategoryWithRelatedProduct(it.categories, shopID)
+
+
+                } else {
+                    showLongToast("No Product found. Empty Shop.")
+                }
+            } else {
+//                showLongToast("No Product found. Empty Shop.")
             }
+
+
         }
 
         viewModel.successCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {
@@ -183,13 +195,19 @@ class GroceriesShopFragment :
         viewModel.successAddressResponseLiveData.observe(viewLifecycleOwner) {
             if (!SharedPreferenceUtil.isConfirmDeliveryAddress()) {
                 SharedPreferenceUtil.getCurrentAddress().let { it1 ->
-                    it?.addresses?.add(it1)
+                    it1?.let { it2 -> it?.addresses?.add(it2) }
                     if (it != null) {
                         showBottomSheetDialog(it.addresses)
                     }
                 }
             }
 
+        }
+        viewModel.successNearestJCShopUpdate.observe(viewLifecycleOwner) {
+            if (it == true) {
+                viewModel.successCategoryResponseLiveData.value = null
+            }
+            initView()
         }
 
 
@@ -262,6 +280,8 @@ class GroceriesShopFragment :
             viewModel.successAddressResponseLiveData.value = null
             SharedPreferenceUtil.setConfirmDeliveryAddress(true)
             initTopView()
+            SharedPreferenceUtil.getDeliveryAddress()
+                ?.let { it1 -> viewModel.getNearestJCShop(it1.location) }
         }
 
 

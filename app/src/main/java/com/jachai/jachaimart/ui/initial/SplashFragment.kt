@@ -6,6 +6,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.SplashFragmentBinding
+import com.jachai.jachaimart.model.response.address.Address
+import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
@@ -56,9 +58,26 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
         }
 
         fetchCurrentLocation {
-            location -> location
+            val mAddress = it?.address ?: "n/a"
+            val location = Location(it?.latitude, it?.longitude)
+
+            val address = Address(
+                mAddress,
+                "0",
+                location = location,
+                "Current Location",
+                "0",
+                mAddress,
+                mAddress,
+                true
+            )
+
+            SharedPreferenceUtil.saveCurrentAddress(address)
+
             viewModel.getNearestJCShop(location)
         }
+
+
 
     }
 }

@@ -98,7 +98,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
     private fun updateDeliveryAddress() {
         binding.deliveryAddress.text = SharedPreferenceUtil.getDeliveryAddress()?.fullAddress
-            ?: SharedPreferenceUtil.getCurrentAddress().fullAddress
+            ?: SharedPreferenceUtil.getCurrentAddress()?.fullAddress
 
     }
 
