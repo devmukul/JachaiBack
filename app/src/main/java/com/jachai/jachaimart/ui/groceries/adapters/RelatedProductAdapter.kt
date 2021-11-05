@@ -1,7 +1,9 @@
 package com.jachai.jachaimart.ui.groceries.adapters
 
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,19 +22,50 @@ class RelatedProductAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             context: Context,
-            data: Product?,
+            product: Product?,
             interaction: Interaction?
         ) {
             binding.apply {
-                if (data != null) {
+                if (product != null) {
                     Glide.with(context)
-                        .load(data.productImage)
+                        .load(product.productImage)
                         .into(productImage)
-                    productTitle.text = data.name
-                    productPrice.text = data.variations[0].price.mrp.toString()
-                    productPreviousPrice.text = data.variations[0].price.discountedPrice.toString()
+
+                    productTitle.text = product.name
+
+                    val mPrice = product.variations[0].price.mrp.toDouble()
+                    val mDiscountedPrice = product.variations[0].price.discountedPrice.toDouble()
+
+
+//                    productPrice.text = product.variations[0].price.mrp.toString()
+//
+//                    productPreviousPrice.text = product.variations[0].price.discountedPrice.toString()
+
+                    if (mDiscountedPrice != 0.0 && mDiscountedPrice < mPrice){
+                        productPrice.text = mDiscountedPrice.toFloat().toString()
+                        productPreviousPrice.text = mPrice.toFloat().toString()
+                        productPreviousPrice.paintFlags =  productPreviousPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    }else{
+                        productPrice.text = mPrice.toFloat().toString()
+                        productPreviousPrice.text = mDiscountedPrice.toFloat().toString()
+                        productPreviousPrice.visibility = View.GONE
+                    }
+
+                    if (product.variations[0].productDiscount.flat > 0 || product.variations[0].productDiscount.percentage > 0){
+                        if (product.variations[0].productDiscount.flat > 0){
+                            discountPrice.text = "Save ৳${product.variations[0].productDiscount.flat}"
+                        }else{
+                            if (product.variations[0].productDiscount?.percentage!! > 0){
+                                discountPrice.text = "Save ${product.variations[0]?.productDiscount?.percentage}%"
+                            }
+                        }
+
+                    }else{
+                        discountPrice.visibility = View.GONE
+                    }
+
                     binding.root.setOnClickListener {
-                        interaction?.onProductSelected(data)
+                        interaction?.onProductSelected(product)
                     }
 
                 }

@@ -117,11 +117,11 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
             itemCost.text = subtotal.toString()
             itemGrandTotal.text = grandTotal.toString()
-            totalDiscount.text = discount.toString()
+            totalDiscount.text = "-$discount"
             vat.text = vatSd.toString()
 
 
-            deliveryCharge.text = 60.toString()
+            deliveryCharge.text = "$deliveryCost"
 
             updateBottomCart(grandTotal)
 

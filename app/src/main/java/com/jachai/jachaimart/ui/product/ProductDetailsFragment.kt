@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.ui.product
 
 import android.app.AlertDialog
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ShareCompat
@@ -126,10 +127,32 @@ class ProductDetailsFragment :
             descriptionBody.text = product?.description
 
             val mPrice = product?.variations?.get(0)?.price?.mrp ?: 0
-            price.text = mPrice.toFloat().toString()
-
             val mDiscountedPrice = product?.variations?.get(0)?.price?.discountedPrice ?: 0
-            oldPrice.text = mDiscountedPrice.toFloat().toString()
+
+
+            if (mDiscountedPrice !=0  && mDiscountedPrice<mPrice){
+                price.text = mDiscountedPrice.toFloat().toString()
+                oldPrice.text = mPrice.toFloat().toString()
+                oldPrice.paintFlags =  oldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            }else{
+                price.text = mPrice.toFloat().toString()
+                oldPrice.text = mDiscountedPrice.toFloat().toString()
+                oldPrice.visibility = View.GONE
+            }
+
+            if (product?.variations?.get(0)?.productDiscount?.flat!! > 0 || product.variations[0]?.productDiscount?.percentage!! > 0){
+                if (product.variations[0]?.productDiscount?.flat!! > 0){
+                    discount.text = "Flat ${product.variations[0]?.productDiscount?.flat!!} BDT OFF"
+                }else{
+                    if (product.variations[0]?.productDiscount?.percentage!! > 0){
+                        discount.text = "${product.variations[0]?.productDiscount?.percentage}% OFF"
+                    }
+                }
+
+            }else{
+                discount.visibility = View.GONE
+            }
+
 
             val rateNumCount = product?.numberOfRating ?: 0
             rateCount.text = rateNumCount.toInt().toString()

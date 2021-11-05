@@ -159,7 +159,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             vat.text = vatSd.toString()
 
 
-            deliveryCharge.text = 60.0.toString()
+            deliveryCharge.text = "$deliveryCost"
 
             updateBottomCart(grandTotal)
 
