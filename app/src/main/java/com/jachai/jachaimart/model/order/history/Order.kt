@@ -1,41 +1,82 @@
 package com.jachai.jachaimart.model.order.history
 
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class Order(
-    @SerializedName("createdAt")
-    var createdAt: String,
-    @SerializedName("deliveryMan")
-    var deliveryMan: DeliveryMan,
-    @SerializedName("deliveryManId")
-    var deliveryManId: String,
-    @SerializedName("deliveryManLocation")
-    var deliveryManLocation: Any,
+@Entity(tableName = "Order")
+class Order {
+    @Expose
+    @PrimaryKey
+    @ColumnInfo(defaultValue = "")
     @SerializedName("orderId")
-    var orderId: String,
+    var orderId: String= ""
+
+    @SerializedName("createdAt")
+    @ColumnInfo(defaultValue = "")
+    var createdAt: String? = null
+
+    @SerializedName("deliveryMan")
+    @Ignore
+    var deliveryMan: DeliveryMan? = null
+
+    @SerializedName("deliveryManId")
+    @ColumnInfo(defaultValue = "")
+    var deliveryManId: String? = null
+
+    @SerializedName("deliveryManLocation")
+    @ColumnInfo(defaultValue = "")
+    var deliveryManLocation: String? = null
+
     @SerializedName("orderNote")
-    var orderNote: String,
+    @ColumnInfo(defaultValue = "")
+    var orderNote: String? = null
+
     @SerializedName("paymentMethod")
-    var paymentMethod: String,
+    @ColumnInfo(defaultValue = "")
+    var paymentMethod: String? = null
+
     @SerializedName("shippingLocation")
-    var shippingLocation: ShippingLocation,
+    @Ignore
+    var shippingLocation: ShippingLocation? = null
+
     @SerializedName("shop")
-    var shop: Shop,
+    @Ignore
+    var shop: Shop? = null
+
     @SerializedName("shopLocation")
-    var shopLocation: ShopLocation,
+    @Ignore
+    var shopLocation: ShopLocation? = null
+
     @SerializedName("status")
-    var status: String,
+    @ColumnInfo(defaultValue = "")
+    var status: String? = null
+
     @SerializedName("statusOfDeliveryMan")
-    var statusOfDeliveryMan: String,
+    @ColumnInfo(defaultValue = "")
+    var statusOfDeliveryMan: String? = null
+
     @SerializedName("statusOfMerchant")
-    var statusOfMerchant: String,
+    @ColumnInfo(defaultValue = "")
+    var statusOfMerchant: String? = null
+
     @SerializedName("subTotal")
-    var subTotal: Int,
+    @ColumnInfo(defaultValue = "")
+    var subTotal: Int? = null
+
     @SerializedName("tokenNumber")
-    var tokenNumber: Int,
+    @ColumnInfo(defaultValue = "")
+    var tokenNumber: Int? = null
+
     @SerializedName("total")
-    var total: Double,
+    @ColumnInfo(defaultValue = "")
+    var total: Double? = null
+
     @SerializedName("totalPaid")
-    var totalPaid: Int
-)
+    @ColumnInfo(defaultValue = "")
+    var totalPaid: Int? = null
+}

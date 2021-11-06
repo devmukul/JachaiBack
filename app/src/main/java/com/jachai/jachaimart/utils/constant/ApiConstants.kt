@@ -36,6 +36,7 @@ object ApiConstants {
     //orders
     const val ORDER_REQUEST_BASE = "order"
     const val ORDER_DETAILS_BASE = "order/details-by-user"
+    const val ORDER_LIST_BASE = "order/my-orders"
 
 
     //banner

@@ -28,11 +28,8 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
 
             when (it) {
-//                "seccess" -> view.findNavController().navigate(R.id.splash_to_nav_home)
-//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_productDetailsFragment)
-                "seccess" -> view.findNavController()
-                    .navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
-//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_userMapsFragment)
+//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
+                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_orderFragment)
                 "login" -> view.findNavController().navigate(R.id.splash_to_login)
             }
         })

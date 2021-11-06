@@ -1,13 +1,28 @@
 package com.jachai.jachaimart.model.order.history
 
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class DeliveryMan(
+@Entity(tableName = "DeliveryMan")
+class DeliveryMan {
+    @Expose
+    @PrimaryKey
+    @ColumnInfo(defaultValue = "")
+    var orderId: String= ""
+
     @SerializedName("id")
-    var id: String,
+    @ColumnInfo(defaultValue = "")
+    var id: String? = null
+
     @SerializedName("mobileNumber")
-    var mobileNumber: String,
+    @ColumnInfo(defaultValue = "")
+    var mobileNumber: String? = null
+
     @SerializedName("name")
-    var name: String
-)
+    @ColumnInfo(defaultValue = "")
+    var name: String? = null
+}

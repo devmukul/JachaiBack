@@ -6,6 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.order.history.DeliveryMan
+import com.jachai.jachaimart.model.order.history.Order
+import com.jachai.jachaimart.model.order.history.ShippingLocation
+import com.jachai.jachaimart.model.order.history.Shop
 import com.jachai.jachaimart.model.request.FProductsItem
 import com.jachai.jachaimart.utils.Converters
 import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
@@ -14,8 +18,13 @@ import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
 @Database(
     entities = [
         ProductOrder::class,
-        FProductsItem::class],
-    version = 2,
+        FProductsItem::class,
+        Order::class,
+        DeliveryMan::class,
+        ShippingLocation::class,
+        Shop::class
+    ],
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

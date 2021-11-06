@@ -1,11 +1,23 @@
 package com.jachai.jachaimart.model.order.history
 
-
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class ShopLocation(
+@Entity(tableName = "ShopLocation")
+class ShopLocation {
+    @Expose
+    @PrimaryKey
+    @ColumnInfo(defaultValue = "")
+    var shopId: String= ""
+
     @SerializedName("latitude")
-    var latitude: Double,
+    @ColumnInfo(defaultValue = "")
+    var latitude: Double? = null
+
     @SerializedName("longitude")
-    var longitude: Double
-)
+    @ColumnInfo(defaultValue = "")
+    var longitude: Double? = null
+}
