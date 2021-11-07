@@ -20,10 +20,10 @@ import kotlinx.coroutines.launch
 class RestaurantSearchFragment : BaseFragment<FragmentRestaurantSearchBinding>(R.layout.fragment_restaurant_search), ShopRecyclerAdapter.Interaction {
 
     companion object {
-        fun newInstance() = GroceriesSearchFragment()
+        fun newInstance() = RestaurantSearchFragment()
     }
 
-    private val viewModel: GroceriesSearchViewModel by viewModels()
+    private val viewModel: RestaurantSearchViewModel by viewModels()
     var isLoading = true
     var searchJob: Job? = null
 

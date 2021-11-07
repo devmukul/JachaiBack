@@ -104,6 +104,7 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
         lateinit var placesClient: PlacesClient
             private set
 
+
         var compositeDisposable: CompositeDisposable? = null
 
         var mRestPingDisposable: Disposable? = null

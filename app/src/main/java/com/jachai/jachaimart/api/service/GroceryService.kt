@@ -8,6 +8,8 @@ import com.jachai.jachaimart.model.response.home.BannerResponse
 import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.model.response.product.CategoryDetailsResponse
 import com.jachai.jachaimart.model.response.product.ProductDetailsResponse
+import com.jachai.jachaimart.model.response.search.PopularKeywordResponse
+import com.jachai.jachaimart.model.response.search.SearchKeywordResponse
 import com.jachai.jachaimart.model.response.search.SearchProductResponse
 import com.jachai.jachaimart.model.shop.ShopDetailsResponse
 import com.jachai.jachaimart.utils.constant.ApiConstants
@@ -59,11 +61,22 @@ interface GroceryService {
 
     @GET(ApiConstants.SEARCH_PRODUCT_BASE)
     fun searchProducts(
-        @Query("type") type: String,
-        @Query("key") latitude: String,
-        @Query("page") page: Int,
-        @Query("limit") limit: Int
+        @Query("key") key: String,
+        @Query("type") type: String = "JC_MART",
+        @Query("page") page: Int = 0,
+        @Query("limit") limit: Int = 20
     ): Call<SearchProductResponse>
+
+    @GET("search/suggestion")
+    fun searchKeyword(
+        @Query("key") key: String,
+        @Query("type") type: String = "JC_MART"
+    ): Call<SearchKeywordResponse>
+
+    @GET("search/popular")
+    fun searchPopularSearch(
+        @Query("type") type: String = "JC_MART"
+    ): Call<PopularKeywordResponse>
 
 
 }
