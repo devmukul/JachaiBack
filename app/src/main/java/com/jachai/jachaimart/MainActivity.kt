@@ -16,21 +16,22 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.jachai.jachai_driver.utils.JachaiLocationManager
 import com.jachai.jachaimart.databinding.ActivityMainBinding
+import com.jachai.jachaimart.ui.base.BaseActivity
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)  {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var locationManager: JachaiLocationManager
-    val channelId = UUID.randomUUID().toString()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        locationManager = JachaiLocationManager(this)
-        setContentView(binding.root)
+//    private lateinit var appBarConfiguration: AppBarConfiguration
+//    private lateinit var binding: ActivityMainBinding
+//    private lateinit var locationManager: JachaiLocationManager
+//    val channelId = UUID.randomUUID().toString()
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//        binding = ActivityMainBinding.inflate(layoutInflater)
+//        locationManager = JachaiLocationManager(this)
+//        setContentView(binding.root)
 
 //        val drawerLayout: DrawerLayout = binding.drawerLayout
 //        val navView: NavigationView = binding.navView
@@ -44,22 +45,38 @@ class MainActivity : AppCompatActivity() {
 //        )
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 //        navView.setupWithNavController(navController)
+//    }
+
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        menuInflater.inflate(R.menu.main, menu)
+//        return true
+//    }
+//
+//    override fun onSupportNavigateUp(): Boolean {
+//        val navController = findNavController(R.id.nav_host_fragment_content_main)
+//        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+//    }
+
+
+
+    override fun initView() {
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
+    override fun initToolbar() {
+
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    override fun subscribeObservers() {
+
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    open fun hasPermission(permission: String?): Boolean {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
-                checkSelfPermission(permission!!) == PackageManager.PERMISSION_GRANTED
+    override fun hideBottomNavigation() {
+
+    }
+
+    override fun showBottomNavigation() {
+
     }
 }

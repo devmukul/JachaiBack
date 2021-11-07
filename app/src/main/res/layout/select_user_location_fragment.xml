@@ -24,11 +24,10 @@ xmlns:tools="http://schemas.android.com/tools">
 
             <include
                 android:id="@+id/include"
-                layout="@layout/toolbar_app"
+                layout="@layout/toolbar_common"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="27dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +44,7 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/rounded_corner_back"
                 android:ems="10"
-                android:hint="Pickup"
+                android:hint="Delivery Location"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:padding="10dp"

@@ -13,7 +13,12 @@ object SharedPreferenceConstants {
 
     const val JC_SHOP_ID_KEY = "jc_shop_id"
     const val USER_LOCATION_KEY = "user_location"
+    const val JC_ADDRESS_KEY = "selected_address_position"
+    const val USER_ADDRESS_KEY = "delivery_address"
+    const val USER_CURRENT_ADDRESS_KEY = "current_address"
+    const val SAVE_NOTE_KEY = "order_note"
+    const val JC_IS_CONFIRM_KEY = "is_delivery_address_confirm"
 
 
-    const val TAG_JACHAI = "jachai_preference_v1"
+    const val TAG_JACHAI = "jachai_food_preference_v1"
 }

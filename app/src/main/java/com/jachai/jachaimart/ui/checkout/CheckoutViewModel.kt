@@ -14,6 +14,7 @@ import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.request.OrderRequest
 import com.jachai.jachaimart.model.request.ProductsItem
 import com.jachai.jachaimart.model.request.ShippingLocation
+import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
 import retrofit2.Call
@@ -31,7 +32,7 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
     private var orderCall: Call<OrderResponse>? = null
 
 
-    fun placeOrder(additionalComment: String, userLocation: CurrentLocation) {
+    fun placeOrder(additionalComment: String, deliveryAddress: Address) {
         var productOrderList: List<ProductOrder> = db.getProductOrders()
 
         var orderRequest = OrderRequest()
@@ -48,9 +49,9 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
         orderRequest.products = products
         orderRequest.orderNote = additionalComment
 
-        orderRequest.shippingAddress = userLocation.address
+        orderRequest.shippingAddress = deliveryAddress.fullAddress
         orderRequest.shippingLocation =
-            ShippingLocation(userLocation.latitude, userLocation.longitude)
+            ShippingLocation(deliveryAddress.location.latitude, deliveryAddress.location.longitude)
 
 
         try {

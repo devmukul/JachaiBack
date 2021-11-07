@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import bd.com.evaly.ehealth.models.common.CurrentLocation
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentHomeBinding
 import com.jachai.jachaimart.model.response.home.CategoriesItem
@@ -41,14 +42,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     override fun initView() {
         viewModel.requestForBanners()
         viewModel.requestForCategories()
-        viewModel.requestForRestaurantAroundYou(
-            23.737209579805366,
-            90.43048604373678
 
-        )
-//        fetchCurrentLocation { location: CurrentLocation? ->
-//
-//        }
+        fetchCurrentLocation { location: CurrentLocation? ->
+            if (location != null) {
+                viewModel.requestForRestaurantAroundYou(
+                    location.latitude,
+                    location.longitude
+
+                )
+            }
+        }
 
 
         binding.apply {

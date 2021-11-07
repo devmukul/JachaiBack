@@ -1,10 +1,7 @@
 package com.jachai.jachaimart.utils
 
 import com.jachai.jachaimart.JachaiFoodApplication
-import com.jachai.jachaimart.api.service.AuthService
-import com.jachai.jachaimart.api.service.FoodService
-import com.jachai.jachaimart.api.service.GroceryService
-import com.jachai.jachaimart.api.service.OrderService
+import com.jachai.jachaimart.api.service.*
 
 
 object RetrofitConfig {
@@ -13,5 +10,7 @@ object RetrofitConfig {
     val orderService = JachaiFoodApplication.ORDER_RETROFIT.create(OrderService::class.java)
     val groceryService =
         JachaiFoodApplication.CATELOGREADER_RETROFIT.create(GroceryService::class.java)
+    val driverService =
+        JachaiFoodApplication.DRIVER_RETROFIT.create(DriverService::class.java)
 
 }

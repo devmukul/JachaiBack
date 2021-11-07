@@ -6,10 +6,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.SplashFragmentBinding
+import com.jachai.jachaimart.model.response.address.Address
+import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
-class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragment){
+class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragment) {
 
     companion object {
         fun newInstance() = SplashFragment()
@@ -22,14 +24,15 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
         initView()
 
 
-        viewModel.liveData.observe( viewLifecycleOwner, {
+        viewModel.liveData.observe(viewLifecycleOwner, {
 
 
-            when(it) {
+            when (it) {
 //                "seccess" -> view.findNavController().navigate(R.id.splash_to_nav_home)
 //                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_productDetailsFragment)
-                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
-//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_selectUserLocationFragment)
+                "seccess" -> view.findNavController()
+                    .navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
+//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_userMapsFragment)
                 "login" -> view.findNavController().navigate(R.id.splash_to_login)
             }
         })
@@ -47,13 +50,42 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
     override fun onResume() {
         super.onResume()
-        if(SharedPreferenceUtil.isTokenAvailable()){
+        if (SharedPreferenceUtil.isTokenAvailable()) {
             viewModel.getUserInfo()
 
-        }else{
+        } else {
             viewModel.initSplashScreen()
 
         }
-        viewModel.getNearestJCShop()
+
+        fetchCurrentLocation {
+            val mAddress = it?.address ?: "n/a"
+            val location = Location(it?.latitude, it?.longitude)
+
+            val address = Address(
+                mAddress,
+                "0",
+                location = location,
+                "Current Location",
+                "0",
+                mAddress,
+                mAddress,
+                true
+            )
+
+            SharedPreferenceUtil.saveCurrentAddress(address)
+
+            if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
+                SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
+                    viewModel.getNearestJCShop(
+                        it1.location
+                    )
+                }
+            } else {
+                viewModel.getNearestJCShop(address.location)
+            }
+        }
+
+
     }
 }

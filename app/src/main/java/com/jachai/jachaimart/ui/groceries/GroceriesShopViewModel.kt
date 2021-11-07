@@ -9,6 +9,7 @@ import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.request.CategoryWithProductRequest
 import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsResponse
 import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.model.response.home.CategoryResponse
@@ -25,6 +26,9 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     companion object {
         val TAG = GroceriesShopViewModel::class.java
     }
+
+
+
 
     private var categoryCall: Call<CategoryResponse>? = null
     private var categoryWithProductCall: Call<CatWithRelatedProductsResponse>? = null
@@ -172,6 +176,8 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         }
 
     }
+
+
 
 
 }

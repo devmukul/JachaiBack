@@ -28,21 +28,21 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="?attr/actionBarSize"
                     app:layout_collapseMode="parallax">
 
                     <ImageView
                         android:id="@+id/image"
                         android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="?attr/actionBarSize"
-                        android:minHeight="315dp"
-                        android:src="@drawable/sample_grocery_1"
+                        android:layout_height="wrap_content"
+                        android:minHeight="295dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintDimensionRatio=""
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -50,7 +50,6 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:alpha="0.5"
                     android:contentInsetStart="0dp"
                     android:contentInsetLeft="0dp"
                     app:contentInsetLeft="0dp"
@@ -69,7 +68,6 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_marginStart="14dp"
-                            android:background="?selectableItemBackground"
                             android:src="@drawable/ic_back"
                             android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -162,7 +160,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
                         android:fontFamily="@font/uni_neue_regular"
-                        android:text="KTM Racing Bike"
+                        tools:text="KTM Racing Bike"
                         android:textColor="@color/black"
                         android:textIsSelectable="true"
                         android:textSize="20sp"
@@ -198,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/uni_neue_regular"
-                        android:text="BDT 9,837.00"
+                        android:text="BDT 0.00"
                         android:textColor="#393E46"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -211,7 +209,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/uni_neue_regular"
-                        android:text="BDT 680.00"
+                        android:text="BDT 0.00"
                         android:textColor="#979797"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@+id/price"
@@ -227,7 +225,7 @@
                         android:background="@drawable/box_curve_light_green"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:text="-15% Off"
+                        android:text="0% Off"
                         android:textColor="#14876A"
                         app:layout_constraintBottom_toBottomOf="@+id/oldPrice"
                         app:layout_constraintStart_toEndOf="@+id/oldPrice"
@@ -389,6 +387,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
                         android:layout_marginBottom="24dp"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/name"
@@ -466,6 +465,7 @@
                         android:layout_marginTop="8dp"
                         android:text="Variant"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="@+id/rate_text"
                         app:layout_constraintTop_toBottomOf="@+id/rate_text" />
 
@@ -474,6 +474,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/variants"
                         app:layout_constraintTop_toBottomOf="@+id/variants"

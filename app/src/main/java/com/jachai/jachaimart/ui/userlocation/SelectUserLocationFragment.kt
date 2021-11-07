@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.libraries.places.api.model.AutocompletePrediction
@@ -27,7 +28,7 @@ class SelectUserLocationFragment :
         fun newInstance() = SelectUserLocationFragment()
     }
 
-
+    private val args: SelectUserLocationFragmentArgs by navArgs()
     private lateinit var navController: NavController
     private lateinit var locationListAdapter: LocationListAdapter
 
@@ -43,6 +44,10 @@ class SelectUserLocationFragment :
     override fun initView() {
         viewModel.findAddress(null)
 
+        binding.include.title.text = "Save Address"
+        binding.include.back.setOnClickListener {
+            navController.popBackStack()
+        }
         binding.etPickUpLocation.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -91,7 +96,11 @@ class SelectUserLocationFragment :
                     binding.etPickUpLocation.setText(it1.primaryAddress)
                     SharedPreferenceUtil.setUserLocation(it1)
                     //navigate
-                    val action = SelectUserLocationFragmentDirections.actionSelectUserLocationFragmentToUserMapsFragment()
+                    val action =
+                        SelectUserLocationFragmentDirections.actionSelectUserLocationFragmentToUserMapsFragment(
+                            it1
+                        )
+                    action.isFromFragment =  args.isFromFragment
                     navController.navigate(action)
 
                 }

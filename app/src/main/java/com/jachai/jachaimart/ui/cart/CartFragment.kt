@@ -15,6 +15,7 @@ import com.jachai.jachaimart.databinding.CartFragmentBinding
 import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.cart.adapter.CartAdapter
+import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
 class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     CartAdapter.Interaction {
@@ -41,7 +42,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
         binding.apply {
             toolbarMain.back.setOnClickListener {
-                navController.popBackStack()
+                goToShop()
             }
 
 
@@ -54,20 +55,28 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
             toolbarMain.clearCart.setOnClickListener {
                 JachaiFoodApplication.mDatabase.daoAccess().clearOrderTable()
-                navController.popBackStack()
+                goToShop()
             }
 
             clCheckout.setOnClickListener {
 //                navController.navigate(R.id.action_cartFragment_to_checkoutFragment)
 
+                SharedPreferenceUtil.saveNotes(comment.text.toString())
+
                 val action =
-                    CartFragmentDirections.actionCartFragmentToCheckoutFragment(comment.text.toString())
+                    CartFragmentDirections.actionCartFragmentToCheckoutFragment(null)
                 navController.navigate(action)
             }
 
         }
 
 
+    }
+
+    private fun goToShop() {
+        val action =
+            CartFragmentDirections.actionCartFragmentToGroceriesShopFragment()
+        navController.navigate(action)
     }
 
     override fun subscribeObservers() {
@@ -150,7 +159,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             vat.text = vatSd.toString()
 
 
-            deliveryCharge.text = 60.0.toString()
+            deliveryCharge.text = "$deliveryCost"
 
             updateBottomCart(grandTotal)
 
