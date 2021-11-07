@@ -112,10 +112,7 @@ class GroceriesShopFragment :
             }
 
             initTopView()
-
-
-
-            searchBar.root.setOnClickListener {
+            etSearchShops.setOnClickListener {
                 val action =
                     GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceriesSearchFragment()
                 navController.navigate(action)

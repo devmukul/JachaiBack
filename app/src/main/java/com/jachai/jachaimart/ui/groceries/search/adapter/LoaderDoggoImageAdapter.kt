@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.ui.groceries.search.adapter.PopularTagAdapter
 
-class LoaderDoggoImageAdapter :
+class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
     PagingDataAdapter<Product, RecyclerView.ViewHolder>(REPO_COMPARATOR) {
 
     companion object {
@@ -26,7 +27,7 @@ class LoaderDoggoImageAdapter :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as? DoggoImageViewHolder)?.bind(data = getItem(position))
+        (holder as? DoggoImageViewHolder)?.bind(data = getItem(position), interaction)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -52,7 +53,8 @@ class LoaderDoggoImageAdapter :
         var productPrice: TextView = view.findViewById(R.id.product_price)
         var productPreviousPrice: TextView = view.findViewById(R.id.product_previous_price)
 
-        fun bind(data: Product?) {
+        fun bind(data: Product?,
+                 interaction: Interaction?) {
 
             if (data != null) {
                 Glide.with(itemView.context)
@@ -63,8 +65,16 @@ class LoaderDoggoImageAdapter :
                 productPreviousPrice.text = data.variations[0].price.discountedPrice.toString()
 
             }
+
+            itemView.setOnClickListener {
+                interaction?.onItemSelected(data)
+            }
         }
 
+    }
+
+    interface Interaction {
+        fun onItemSelected(product: Product?)
     }
 
 }

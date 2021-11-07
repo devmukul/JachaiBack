@@ -300,7 +300,15 @@
     <fragment
         android:id="@+id/groceriesSearchFragment"
         android:name="com.jachai.jachaimart.ui.search.GroceriesSearchFragment"
-        android:label="GroceriesSearchFragment" />
+        android:label="GroceriesSearchFragment" >
+        <action
+            android:id="@+id/action_groceriesSearchFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/groceriesShopFragment"/>
+
+    </fragment>
     <fragment
         android:id="@+id/addressDetailsFragment"
         android:name="com.jachai.jachaimart.ui.userlocation.AddressDetailsFragment"

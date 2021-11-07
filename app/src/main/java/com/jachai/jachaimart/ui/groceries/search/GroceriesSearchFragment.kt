@@ -38,15 +38,20 @@ import android.view.inputmethod.EditorInfo
 
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
 
 
 @ExperimentalPagingApi
 class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.layout.fragment_product_search),
-    ShopRecyclerAdapter.Interaction, PopularTagAdapter.Interaction, SearchSuggetionAdapter.Interaction {
+    ShopRecyclerAdapter.Interaction, PopularTagAdapter.Interaction, SearchSuggetionAdapter.Interaction, LoaderDoggoImageAdapter.Interaction {
 
     lateinit var loaderViewModel: GroceriesSearchViewModel
     lateinit var adapter: LoaderDoggoImageAdapter
     lateinit var loaderStateAdapter: LoaderStateAdapter
+    private lateinit var navController: NavController
 
     var isLoading = true
     var searchJob: Job? = null
@@ -55,6 +60,8 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         super.onViewCreated(view, savedInstanceState)
+
+        navController = Navigation.findNavController(view)
 
         initMembers()
         initView()
@@ -77,7 +84,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
 
     private fun initMembers() {
         loaderViewModel = defaultViewModelProviderFactory.create(GroceriesSearchViewModel::class.java)
-        adapter = LoaderDoggoImageAdapter()
+        adapter = LoaderDoggoImageAdapter(this)
         loaderStateAdapter = LoaderStateAdapter { adapter.retry() }
     }
 
@@ -203,5 +210,14 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
         loaderViewModel.apply {
             searchSuggetion(key)
         }
+    }
+
+    override fun onItemSelected(product: Product?) {
+        val action =
+            GroceriesSearchFragmentDirections.actionGroceriesSearchFragmentToProductDetailsFragment()
+
+        action.productId = product?.slug
+        navController.navigate(action)
+
     }
 }

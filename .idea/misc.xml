@@ -42,6 +42,7 @@
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.25" />
         <entry key="app/src/main/res/layout/custom_related_category_row.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/custom_search_result_row.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/layout/custom_shop_details_row.xml" value="0.5653798256537983" />
         <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.8747591522157996" />
         <entry key="app/src/main/res/layout/filter_and_sort_barlayout.xml" value="0.19375" />
