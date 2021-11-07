@@ -7,7 +7,7 @@ import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
-import com.jachai.jachaimart.model.order.OrderDetailsResponse
+import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig

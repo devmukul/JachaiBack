@@ -7,9 +7,9 @@ import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.request.CategoryWithProductRequest
 import com.jachai.jachaimart.model.request.FProductsItem
-import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsResponse
 import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.model.response.home.CategoryResponse
@@ -27,7 +27,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         val TAG = GroceriesShopViewModel::class.java
     }
 
-
+    var successOnGoingOrderFound = MutableLiveData<Int>()
 
 
     private var categoryCall: Call<CategoryResponse>? = null
@@ -177,7 +177,12 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
     }
 
-
+    fun getCurrentOrderStatus() {
+        val db = JachaiFoodApplication.mDatabase.daoAccess()
+        if (db.getOnGoingOrderCount() >0){
+            successOnGoingOrderFound.postValue(db.getOnGoingOrderCount())
+        }
+    }
 
 
 }

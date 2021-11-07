@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.databinding.CheckoutOrderRowBinding
-import com.jachai.jachaimart.model.order.ProductsItem
+import com.jachai.jachaimart.model.order.details.Product
 
 class OrderDetailsAdapter(
     private val context: Context,
-    private var list: List<ProductsItem?>
+    private var list: List<Product?>
 ) : RecyclerView.Adapter<OrderDetailsAdapter.ViewHolder>() {
     class ViewHolder(
         private var binding: CheckoutOrderRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(context: Context, data: ProductsItem?) {
+        fun bind(context: Context, data: Product?) {
             binding.itemQty.text = "${data?.quantity}x"
             val quantity = data?.quantity?.toInt()
             val price = data?.variation?.price?.mrp?.toDouble()
@@ -41,7 +41,7 @@ class OrderDetailsAdapter(
         return list.size
     }
 
-    fun setList(it: List<ProductsItem?>?) {
+    fun setList(it: List<Product?>?) {
         if (it != null) {
             this.list = it
         }
