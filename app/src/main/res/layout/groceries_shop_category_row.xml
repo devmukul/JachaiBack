@@ -6,8 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="12dp"
+        android:paddingBottom="20dp"
         android:background="#F8F8F8">
 
         <TextView
@@ -15,8 +14,6 @@
             style="@style/sub_heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="5dp"
             android:background="#FFFFFF"
             android:drawableRight="@drawable/ic_chevron_right_black"
             android:padding="12dp"
@@ -24,15 +21,17 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/header_color"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="16dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_items"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:clipToPadding="false"
+            android:paddingEnd="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +43,7 @@
             android:id="@+id/header_color"
             android:layout_width="3dp"
             android:layout_height="0dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="16dp"
             android:background="@drawable/left_top_bottom_curve_background"
             app:layout_constraintBottom_toBottomOf="@+id/header"
             app:layout_constraintStart_toStartOf="parent"

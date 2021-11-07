@@ -64,7 +64,6 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
     }
 
     private fun fetchDoggoImages(key: String) {
-        showLoader()
         binding.recyclerView.visibility = View.VISIBLE
         binding.popularSerachView.visibility = View.GONE
         binding.recentSerachView.visibility = View.GONE
@@ -72,7 +71,6 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
         lifecycleScope.launch {
             loaderViewModel.fetchDoggoImages(key).distinctUntilChanged().collectLatest {
                 adapter.submitData(it)
-                dismissLoader()
             }
         }
     }

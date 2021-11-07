@@ -45,7 +45,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:background="#F8F8F8"
                 android:fillViewport="true"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -58,9 +58,8 @@
                     layout="@layout/search_bar_main"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -69,40 +68,38 @@
                     android:id="@+id/recyclerView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/searchBar"
                     tools:itemCount="1"
-                    tools:listitem="@layout/grocery_shop_banner" />
+                    tools:listitem="@layout/grocery_shop_banner"
+                    android:layout_marginHorizontal="16dp"
+                    tools:visibility="gone"/>
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_categories1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:clipToPadding="false"
+                    android:paddingEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/recyclerView"
                     tools:itemCount="1"
-
                     tools:listitem="@layout/custom_related_category_row" />
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_categories"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_categories1"
                     tools:itemCount="2"

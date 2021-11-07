@@ -10,8 +10,10 @@
         <entry key="app/src/main/res/drawable/background_rgray_dot.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/bg_badge_not_available_round.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/bg_overlay_circle.xml" value="0.3385416666666667" />
+        <entry key="app/src/main/res/drawable/box_all_curve_red.xml" value="0.3861538461538462" />
         <entry key="app/src/main/res/drawable/box_curve_gray.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_curve_red.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/box_curve_white.xml" value="0.3861538461538462" />
         <entry key="app/src/main/res/drawable/box_top_curve.xml" value="0.2015625" />
         <entry key="app/src/main/res/drawable/brd_search_home_light.xml" value="0.3515625" />
         <entry key="app/src/main/res/drawable/edittext_bottom_border.xml" value="0.35260416666666666" />
@@ -21,6 +23,7 @@
         <entry key="app/src/main/res/drawable/ic_info_white_background.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/ic_login_page.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/ic_status_default.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/layout_bg.xml" value="0.3861538461538462" />
         <entry key="app/src/main/res/drawable/rectangle_with_gray_border.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/rounded_border_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_button_red.xml" value="0.26510416666666664" />
@@ -38,7 +41,7 @@
         <entry key="app/src/main/res/layout/checkout_order_row.xml" value="0.47181881227196076" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/custom_related_category_row.xml" value="0.3442028985507246" />
+        <entry key="app/src/main/res/layout/custom_related_category_row.xml" value="0.67" />
         <entry key="app/src/main/res/layout/custom_shop_details_row.xml" value="0.5653798256537983" />
         <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.8747591522157996" />
         <entry key="app/src/main/res/layout/filter_and_sort_barlayout.xml" value="0.19375" />
@@ -50,6 +53,7 @@
         <entry key="app/src/main/res/layout/groceries_shop_category_row.xml" value="0.2884963768115942" />
         <entry key="app/src/main/res/layout/groceries_shop_fragment.xml" value="0.29347826086956524" />
         <entry key="app/src/main/res/layout/grocery_category_details_fragment.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/grocery_shop_banner.xml" value="0.2572463768115942" />
         <entry key="app/src/main/res/layout/home_campaign_image_row.xml" value="0.3442028985507246" />
         <entry key="app/src/main/res/layout/home_category_row.xml" value="0.3442028985507246" />
         <entry key="app/src/main/res/layout/home_hotdeal_row.xml" value="0.3442028985507246" />
