@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/dynamic_white_box_curve">
+
+        <TextView
+            android:id="@+id/orderId"
+            style="@style/small_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/dark_sky_blue"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toStartOf="@+id/trac_order"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="JCO-00" />
+
+        <TextView
+            android:id="@+id/shop_name"
+            style="@style/heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textView21"
+            app:layout_constraintStart_toStartOf="@+id/orderId"
+            app:layout_constraintTop_toBottomOf="@+id/orderId"
+            tools:text="Bangaliana Bhoj" />
+
+        <TextView
+            android:id="@+id/order_time"
+            style="@style/small_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/gray"
+            android:textSize="10sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/shop_name"
+            app:layout_constraintTop_toBottomOf="@+id/shop_name"
+            tools:text="12:00 PM" />
+
+        <Button
+            android:id="@+id/trac_order"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="TRACK ORDER"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:backgroundTint="#14876A"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/orderId"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/orderId" />
+
+        <TextView
+            android:id="@+id/totalCostOfOrder"
+            style="@style/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="0.00"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/shop_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/shop_name" />
+
+        <TextView
+            android:id="@+id/textView21"
+            style="@style/sub_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="৳"
+            app:layout_constraintBottom_toBottomOf="@+id/totalCostOfOrder"
+            app:layout_constraintEnd_toStartOf="@+id/totalCostOfOrder"
+            app:layout_constraintTop_toTopOf="@+id/totalCostOfOrder" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

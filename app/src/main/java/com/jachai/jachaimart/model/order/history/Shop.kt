@@ -1,41 +1,84 @@
 package com.jachai.jachaimart.model.order.history
 
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class Shop(
+@Entity(tableName = "Shop")
+class Shop {
+    @Expose
+    @PrimaryKey
+    @ColumnInfo(defaultValue = "")
+    var orderId: String= ""
+
     @SerializedName("address")
-    var address: String,
+    @ColumnInfo(defaultValue = "")
+    var address: String? = null
+
     @SerializedName("area")
-    var area: Any,
+    @ColumnInfo(defaultValue = "")
+    var area: String? = null
+
     @SerializedName("banner")
-    var banner: String,
+    @ColumnInfo(defaultValue = "")
+    var banner: String? = null
+
     @SerializedName("baseDeliveryCharge")
-    var baseDeliveryCharge: Int,
+    @ColumnInfo(defaultValue = "")
+    var baseDeliveryCharge: Int? = null
+
     @SerializedName("city")
-    var city: Any,
+    @ColumnInfo(defaultValue = "")
+    var city: String? = null
+
     @SerializedName("contactNumber")
-    var contactNumber: String,
+    @ColumnInfo(defaultValue = "")
+    var contactNumber: String? = null
+
     @SerializedName("country")
-    var country: Any,
+    @ColumnInfo(defaultValue = "")
+    var country: String? = null
+
     @SerializedName("id")
-    var id: String,
+    @ColumnInfo(defaultValue = "")
+    var id: String? = null
+
     @SerializedName("isFreeDelivery")
-    var isFreeDelivery: Boolean,
+    @ColumnInfo(defaultValue = "")
+    var isFreeDelivery: Boolean = false
+
     @SerializedName("logo")
-    var logo: String,
+    @ColumnInfo(defaultValue = "")
+    var logo: String? = null
+
     @SerializedName("mobileNumber")
-    var mobileNumber: Any,
+    @ColumnInfo(defaultValue = "")
+    var mobileNumber: String? = null
+
     @SerializedName("name")
-    var name: String,
+    @ColumnInfo(defaultValue = "")
+    var name: String? = null
+
     @SerializedName("ownerId")
-    var ownerId: String,
+    @ColumnInfo(defaultValue = "")
+    var ownerId: String? = null
+
     @SerializedName("prepareTime")
-    var prepareTime: Int,
+    @ColumnInfo(defaultValue = "")
+    var prepareTime: Int? = null
+
     @SerializedName("slug")
-    var slug: String,
+    @ColumnInfo(defaultValue = "")
+    var slug: String? = null
+
     @SerializedName("status")
-    var status: Any,
+    @ColumnInfo(defaultValue = "")
+    var status: String? = null
+
     @SerializedName("type")
-    var type: String
-)
+    @ColumnInfo(defaultValue = "")
+    var type: String? = null
+}

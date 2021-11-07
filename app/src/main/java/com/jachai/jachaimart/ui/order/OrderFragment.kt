@@ -3,31 +3,100 @@ package com.jachai.jachaimart.ui.order
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OrderFragmentBinding
+import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.ui.base.BaseFragment
-import com.jachai.jachaimart.utils.RetrofitConfig
+import com.jachai.jachaimart.ui.order.adapter.OrderViewRowAdapter
 
-class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment) {
+class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment),
+    OrderViewRowAdapter.Interaction {
 
     companion object {
         fun newInstance() = OrderFragment()
     }
-    private val orderService = RetrofitConfig.orderService
+
+    private lateinit var navController: NavController
+
+
     private val viewModel: OrderViewModel by viewModels()
+    private lateinit var orderViewOnGoingAdapter: OrderViewRowAdapter
+    private lateinit var orderViewOnCompletedAdapter: OrderViewRowAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
         initView()
         subscribeObservers()
     }
 
     override fun initView() {
+        viewModel.getAllOrder()
+        showLoader()
+
+        binding.apply {
+            toolbarMain.title.text = "Orders"
+            toolbarMain.back.setOnClickListener {
+                navController.popBackStack()
+            }
+
+            rvOnGoingOrder.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                orderViewOnGoingAdapter =
+                    OrderViewRowAdapter(requireContext(), emptyList(), true, this@OrderFragment)
+                adapter = orderViewOnGoingAdapter
+            }
+
+            rvOrderCompleted.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                orderViewOnCompletedAdapter =
+                    OrderViewRowAdapter(requireContext(), emptyList(), false, this@OrderFragment)
+                adapter = orderViewOnCompletedAdapter
+            }
+        }
+
 
     }
 
     override fun subscribeObservers() {
 
+        viewModel.successOnGoingOrderListLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+
+            orderViewOnGoingAdapter.setList(it)
+            orderViewOnGoingAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.successPreviousOrderListLiveData.observe(viewLifecycleOwner) {
+            orderViewOnCompletedAdapter.setList(it)
+            orderViewOnCompletedAdapter.notifyDataSetChanged()
+        }
+        viewModel.errorDetailsLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+        }
+
+
+    }
+
+    override fun onOrderSelected(order: Order?, isOnGoingOrder: Boolean) {
+        if (order != null) {
+            if (isOnGoingOrder) {
+                val action = OrderFragmentDirections.actionOrderFragmentToOnGoingOrderFragment()
+                action.orderID = order.orderId
+                navController.navigate(action)
+            } else {
+                val action =
+                    OrderFragmentDirections.actionOrderFragmentToOrderDetailsFragment(order.orderId)
+                navController.navigate(action)
+            }
+        } else {
+            showShortToast("Order id is is missing or something wrong")
+        }
     }
 
 }

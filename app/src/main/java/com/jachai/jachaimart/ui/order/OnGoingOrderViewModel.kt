@@ -26,7 +26,7 @@ class OnGoingOrderViewModel(application: Application) : BaseViewModel(applicatio
 
 
     fun getOrderDetails(orderId: String) {
-//        try {
+        try {
 
 
             if (orderCall != null) {
@@ -58,9 +58,9 @@ class OnGoingOrderViewModel(application: Application) : BaseViewModel(applicatio
                 }
             })
 
-//        } catch (ex: Exception) {
-//            JachaiLog.d(TAG, ex.message!!)
-//        }
+        } catch (ex: Exception) {
+            JachaiLog.d(TAG, ex.message!!)
+        }
     }
 
 }

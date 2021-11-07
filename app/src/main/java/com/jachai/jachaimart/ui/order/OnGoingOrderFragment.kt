@@ -69,6 +69,8 @@ class OnGoingOrderFragment :
 
     private fun updateUI(it: OrderDetailsResponse?) {
         binding.apply {
+            toolbarMain.subTitle.text = it?.order?.shop?.address.toString()
+            address.text = it?.order?.shippingAddress.toString()
             orderID.text = it?.order?.orderId.toString()
             orderFrom.text = it?.order?.shop?.name.toString()
             itemCost.text = it?.order?.subTotal.toString()
@@ -79,9 +81,11 @@ class OnGoingOrderFragment :
                 it?.order?.status?.equals(ApiConstants.ORDER_INITIATED) == true -> {
 
                 }
-                it?.order?.status?.equals(ApiConstants.ORDER_ACCEPTED_BY_DELIVERY_MAN) == true -> {
+                it?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_ACCEPTED_BY_DELIVERY_MAN) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
-
+                }
+                it?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_PICKED) == true -> {
+                    constraintLayout9.visibility = View.VISIBLE
                 }
                 it?.order?.status?.equals(ApiConstants.ORDER_PROCESSING) == true -> {
                     constraintLayout9.visibility = View.VISIBLE

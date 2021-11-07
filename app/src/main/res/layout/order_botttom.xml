@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/box_top_white_curve">
+
+    <TextView
+        android:id="@+id/inProgressText"
+        style="@style/small_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Order in progress"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/shop_name"
+        style="@style/small_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Bangaliana Bhoj"
+        app:layout_constraintStart_toStartOf="@+id/inProgressText"
+        app:layout_constraintTop_toBottomOf="@+id/inProgressText" />
+
+    <TextView
+        android:id="@+id/order_time"
+        style="@style/small_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="12:00 PM"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/orderPlaced"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/orderPlaced" />
+
+    <TextView
+        android:id="@+id/orderPlaced"
+        style="@style/small_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Placed : "
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/inProgressText"
+        app:layout_constraintEnd_toStartOf="@+id/order_time"
+        app:layout_constraintTop_toTopOf="@+id/inProgressText" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/order_time"
+        app:layout_constraintStart_toStartOf="@+id/shop_name"
+        app:layout_constraintTop_toBottomOf="@+id/shop_name" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
