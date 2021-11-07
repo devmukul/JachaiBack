@@ -1,7 +1,9 @@
 package com.jachai.jachaimart.ui.order
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import com.jachai.jachaimart.ui.base.BaseViewModel
 
-class OrderDetailsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class OrderDetailsViewModel(application: Application) : BaseViewModel(application) {
+
+
 }

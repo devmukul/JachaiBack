@@ -139,16 +139,16 @@
                     android:id="@+id/delivery_address"
                     style="@style/heading"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:gravity="center_vertical"
-                    tools:text="House #62, Road No #21 \nbanani, Dhaka"
                     android:textColor="#393E46"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView8"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView8"
-                    app:layout_constraintTop_toTopOf="@+id/imageView8" />
+                    app:layout_constraintTop_toTopOf="@+id/imageView8"
+                    tools:text="House #62, Road No #21 \nbanani, Dhaka" />
 
                 <TextView
                     android:id="@+id/items2"

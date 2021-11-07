@@ -84,6 +84,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             binding.apply {
                 restraurantName.text = it.shopName
                 restraurantSubtitle.text = it.shopSubtitle
+
                 Glide.with(requireContext())
                     .load(it.shopImage)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
@@ -126,14 +127,13 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     private fun updateBottomCart(grandTotal: Double) {
         binding.apply {
 
-
             itemCount.text =
                 JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
                     .toString()
             totalCount.text = if (grandTotal == 0.0) {
-                JachaiFoodApplication.mDatabase.daoAccess().totalCost().toString()
+                String.format("%.2f", JachaiFoodApplication.mDatabase.daoAccess().totalCost())
             } else {
-                grandTotal.toString()
+                String.format("%.2f", grandTotal)
             }
 
 
@@ -154,12 +154,11 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             val grandTotal = total - discount
 
 
-            itemCost.text = subtotal.toString()
-            totalDiscount.text = "-$discount"
-            vat.text = vatSd.toString()
+            itemCost.text = String.format("%.2f", subtotal)
+            totalDiscount.text = "-" + String.format("%.2f", discount)
+            vat.text = String.format("%.2f", vatSd)
 
-
-            deliveryCharge.text = "$deliveryCost"
+            deliveryCharge.text = String.format("%.2f", deliveryCost)
 
             updateBottomCart(grandTotal)
 

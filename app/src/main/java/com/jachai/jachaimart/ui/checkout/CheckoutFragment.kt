@@ -77,11 +77,6 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                     )
                 }
 
-//                val location = CurrentLocation(
-//                    23.737209579805366,
-//                    90.43048604373678, "NA"
-//                )
-
 
                 showLoader()
             }
@@ -115,13 +110,13 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             val grandTotal = total - discount
 
 
-            itemCost.text = subtotal.toString()
-            itemGrandTotal.text = grandTotal.toString()
-            totalDiscount.text = "-$discount"
-            vat.text = vatSd.toString()
+            itemCost.text = String.format("%.2f", subtotal)
+            itemGrandTotal.text = String.format("%.2f", grandTotal)
+            totalDiscount.text = "-" + String.format("%.2f", discount)
+            vat.text = String.format("%.2f", vatSd)
 
 
-            deliveryCharge.text = "$deliveryCost"
+            deliveryCharge.text = String.format("%.2f", deliveryCost)
 
             updateBottomCart(grandTotal)
 
@@ -158,9 +153,11 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                 JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
                     .toString()
             totalCount.text = if (grandTotal == 0.0) {
-                JachaiFoodApplication.mDatabase.daoAccess().totalCost().toString()
+                String.format("%.2f", JachaiFoodApplication.mDatabase.daoAccess().totalCost())
+
             } else {
-                grandTotal.toString()
+                String.format("%.2f", grandTotal)
+
             }
 
 

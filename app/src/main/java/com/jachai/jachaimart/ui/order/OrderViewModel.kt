@@ -70,6 +70,7 @@ class OrderViewModel(application: Application) : BaseViewModel(application) {
             })
 
         } catch (ex: Exception) {
+            errorDetailsLiveData.postValue("Failed")
             JachaiLog.d(BaseViewModel.TAG, ex.message!!)
         }
     }
