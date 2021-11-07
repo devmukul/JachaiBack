@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/inProgressText"
         style="@style/small_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -17,6 +17,7 @@
         android:textColor="@color/black"
         android:textSize="10sp"
         android:textStyle="normal|bold"
+        app:layout_constraintEnd_toStartOf="@+id/order_time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,21 +41,8 @@
         android:textColor="@color/black"
         android:textSize="10sp"
         android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/orderPlaced"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/orderPlaced" />
-
-    <TextView
-        android:id="@+id/orderPlaced"
-        style="@style/small_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Order Placed : "
-        android:textColor="@color/black"
-        android:textSize="10sp"
-        android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="@+id/inProgressText"
-        app:layout_constraintEnd_toStartOf="@+id/order_time"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/inProgressText" />
 
     <ProgressBar

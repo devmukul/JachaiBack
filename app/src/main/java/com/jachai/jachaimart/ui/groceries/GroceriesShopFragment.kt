@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.ui.groceries
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -28,6 +29,8 @@ import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GroceriesShopFragment :
     BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment),
@@ -62,6 +65,12 @@ class GroceriesShopFragment :
 
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCurrentOrderStatus()
+    }
+
     private fun showNoShopFoundAlert() {
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)
@@ -75,8 +84,6 @@ class GroceriesShopFragment :
         builder.show()
 
     }
-
-
 
 
     override fun initView() {
@@ -203,6 +210,29 @@ class GroceriesShopFragment :
                 viewModel.successCategoryResponseLiveData.value = null
             }
             initView()
+        }
+
+        viewModel.successOnGoingOrderFound.observe(viewLifecycleOwner) {
+            binding.apply {
+                if (it > 0) {
+                    orderBottom.root.visibility = View.VISIBLE
+                    val order = JachaiFoodApplication.mDatabase.daoAccess().getLastOnGoingOrder()
+                    JachaiLog.e(TAG, order.toString())
+                    if (order != null) {
+                        orderBottom.inProgressText.text = "$it orders in progress"
+
+                        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+
+                        orderBottom.orderTime.text =format.parse(order.createdAt).toString()
+
+                        orderBottom.shopName.text = order.shop?.name
+                    }
+                } else {
+                    orderBottom.root.visibility = View.GONE
+                }
+            }
+
+
         }
 
 

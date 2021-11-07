@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OnGoingOrderFragmentBinding
-import com.jachai.jachaimart.model.order.OrderDetailsResponse
+import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.order.adapter.OrderDetailsAdapter
 import com.jachai.jachaimart.utils.constant.ApiConstants
@@ -69,13 +69,17 @@ class OnGoingOrderFragment :
 
     private fun updateUI(it: OrderDetailsResponse?) {
         binding.apply {
-            toolbarMain.subTitle.text = it?.order?.shop?.address.toString()
+            toolbarMain.subTitle.text = it?.order?.shop?.name.toString()
             address.text = it?.order?.shippingAddress.toString()
             orderID.text = it?.order?.orderId.toString()
             orderFrom.text = it?.order?.shop?.name.toString()
             itemCost.text = it?.order?.subTotal.toString()
             itemGrandTotal.text = it?.order?.total.toString()
-            deliverManName.text = it?.order?.deliveryMan.toString()
+            deliveryCharge.text = it?.order?.deliveryCharge.toString()
+            totalDiscount.text = it?.order?.discount.toString()
+            vat.text = it?.order?.vat.toString()
+
+            deliverManName.text = it?.order?.deliveryMan?.name
 
             when {
                 it?.order?.status?.equals(ApiConstants.ORDER_INITIATED) == true -> {
@@ -88,10 +92,6 @@ class OnGoingOrderFragment :
                     constraintLayout9.visibility = View.VISIBLE
                 }
                 it?.order?.status?.equals(ApiConstants.ORDER_PROCESSING) == true -> {
-                    constraintLayout9.visibility = View.VISIBLE
-
-                }
-                it?.order?.status?.equals(ApiConstants.ORDER_PICKED) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
 
                 }

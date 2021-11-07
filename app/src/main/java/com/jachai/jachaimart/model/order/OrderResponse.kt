@@ -2,6 +2,7 @@ package com.jachai.jachaimart.model.order
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.jachai.jachaimart.model.order.details.Product
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -26,6 +27,6 @@ data class OrderResponse(
 	val statusCode: Int? = null,
 
 	@field:SerializedName("products")
-	val products: List<ProductsItem?>? = null
+	val products: List<Product?>? = null
 ) : Parcelable
 

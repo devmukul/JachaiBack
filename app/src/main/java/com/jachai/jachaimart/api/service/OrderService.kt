@@ -1,7 +1,7 @@
 package com.jachai.jachaimart.api.service
 
-import com.jachai.jachaimart.model.order.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.OrderResponse
+import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.model.request.FProductsItem
 import com.jachai.jachaimart.model.request.OrderRequest

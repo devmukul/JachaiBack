@@ -7,6 +7,7 @@ import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.database.AppDatabase
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
@@ -88,9 +89,14 @@ class OrderViewModel(application: Application) : BaseViewModel(application) {
                     completedOrder.add(orders[i])
                 } else {
                     onGoingOrder.add(orders[i])
+                    JachaiFoodApplication.mDatabase
+                        .daoAccess()
+                        .insertOngoingOrder(orders[i])
+
                 }
 
             }
+
             successOnGoingOrderListLiveData.postValue(onGoingOrder)
             successPreviousOrderListLiveData.postValue(completedOrder)
 
