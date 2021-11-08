@@ -131,18 +131,18 @@ class ProductDetailsFragment :
 
 
             if (mDiscountedPrice !=0  && mDiscountedPrice<mPrice){
-                price.text = mDiscountedPrice.toFloat().toString()
-                oldPrice.text = mPrice.toFloat().toString()
+                price.text = "৳${mDiscountedPrice.toFloat()}"
+                oldPrice.text = "৳${mPrice.toFloat()}"
                 oldPrice.paintFlags =  oldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }else{
-                price.text = mPrice.toFloat().toString()
-                oldPrice.text = mDiscountedPrice.toFloat().toString()
+                price.text = "৳${mPrice.toFloat()}"
+                oldPrice.text = "৳${mDiscountedPrice.toFloat()}"
                 oldPrice.visibility = View.GONE
             }
 
             if (product?.variations?.get(0)?.productDiscount?.flat!! > 0 || product.variations[0]?.productDiscount?.percentage!! > 0){
                 if (product.variations[0]?.productDiscount?.flat!! > 0){
-                    discount.text = "Flat ${product.variations[0]?.productDiscount?.flat!!} BDT OFF"
+                    discount.text = "Flat ৳${product.variations[0]?.productDiscount?.flat!!} OFF"
                 }else{
                     if (product.variations[0]?.productDiscount?.percentage!! > 0){
                         discount.text = "${product.variations[0]?.productDiscount?.percentage}% OFF"

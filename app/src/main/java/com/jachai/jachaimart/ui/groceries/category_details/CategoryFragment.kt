@@ -35,6 +35,10 @@ class CategoryFragment :
 
     override fun initView() {
         binding.apply {
+            back.setOnClickListener {
+                navController.popBackStack()
+
+            }
 
 
 
