@@ -31,6 +31,7 @@
         <entry key="app/src/main/res/drawable/loght_gray_rounded_corner.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/rectangle_with_gray_border.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/rounded_border_red.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/rounded_border_red_1.xml" value="0.362962962962963" />
         <entry key="app/src/main/res/drawable/rounded_button_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_corner_back.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/statusbar_actiobar_gradient.xml" value="0.35260416666666666" />
@@ -90,6 +91,7 @@
         <entry key="app/src/main/res/layout/shop_list_fragment.xml" value="0.14447191272908635" />
         <entry key="app/src/main/res/layout/splash_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/test.xml" value="0.33641170325781894" />
+        <entry key="app/src/main/res/layout/sub_category_row.xml" value="0.20018115942028986" />
         <entry key="app/src/main/res/layout/toolbar_app.xml" value="0.12974989152083405" />
         <entry key="app/src/main/res/layout/toolbar_cart.xml" value="0.6889798892838498" />
         <entry key="app/src/main/res/layout/toolbar_common.xml" value="0.49079754601226994" />

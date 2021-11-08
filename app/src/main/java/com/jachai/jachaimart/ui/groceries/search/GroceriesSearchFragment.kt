@@ -1,48 +1,40 @@
 package com.jachai.jachaimart.ui.search
 
 import android.os.Bundle
-import android.view.View
-import androidx.lifecycle.lifecycleScope
-import androidx.paging.ExperimentalPagingApi
-import androidx.recyclerview.widget.GridLayoutManager
-import com.jachai.jachaimart.R
-import com.jachai.jachaimart.databinding.FragmentProductSearchBinding
-import com.jachai.jachaimart.model.response.home.ShopsItem
-import com.jachai.jachaimart.ui.base.BaseFragment
-import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
-import com.vikas.paging3.view.loader.adapter.LoaderDoggoImageAdapter
-import com.vikas.paging3.view.loader.adapter.LoaderStateAdapter
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.paging.ExperimentalPagingApi
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.material.chip.Chip
+import com.jachai.jachaimart.R
+import com.jachai.jachaimart.databinding.FragmentProductSearchBinding
+import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.home.ShopsItem
+import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.search.adapter.PopularTagAdapter
 import com.jachai.jachaimart.ui.groceries.search.adapter.SearchSuggetionAdapter
+import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
+import com.vikas.paging3.view.loader.adapter.LoaderDoggoImageAdapter
+import com.vikas.paging3.view.loader.adapter.LoaderStateAdapter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import android.view.inputmethod.EditorInfo
-
-import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import com.jachai.jachaimart.model.response.category.Product
-import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
-
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
 class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.layout.fragment_product_search),
@@ -93,10 +85,9 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
     override fun initView() {
 
         binding.apply {
-
+            etSearchShops.requestFocus()
             recyclerView.layoutManager = GridLayoutManager(context, 2)
             recyclerView.adapter = adapter.withLoadStateFooter(loaderStateAdapter)
-
 
             clearSearch.setOnClickListener { handleClearSearch() }
 
