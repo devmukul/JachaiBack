@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryDetailsProductAdapter
+import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
 
 class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragmentBinding>(R.layout.grocery_category_details_fragment),
@@ -69,7 +70,7 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
         binding.apply {
             initRecycler(emptyList())
 
-            viewModel.getCategoryDetailsDetails("617e4b8f5097d45c3f896d0b", categoryId!!)
+            SharedPreferenceUtil.getJCShopId()?.let { viewModel.getCategoryDetailsDetails(it, categoryId!!) }
         }
     }
 

@@ -146,10 +146,10 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             val dao = JachaiFoodApplication.mDatabase.daoAccess()
 
             val subtotal = dao.getProductOrderSubtotal()
-            val deliveryCost = 20.0
-            val vatSdPercent = 10.0
+            val deliveryCost = SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+            val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
             val vatSd = (subtotal * vatSdPercent) / 100
-            val discount = 20.0
+            val discount = 0.0
             val total = subtotal + deliveryCost + vatSd
             val grandTotal = total - discount
 

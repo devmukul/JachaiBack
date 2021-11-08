@@ -4,6 +4,7 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.model.response.address.Address
+import com.jachai.jachaimart.model.response.grocery.Shop
 import com.jachai.jachaimart.model.response.location.LocationDetails
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
@@ -100,16 +101,17 @@ object SharedPreferenceUtil {
             putBoolean(SharedPreferenceConstants.JC_IS_CONFIRM_KEY, isConfirm)
         }
     }
-    fun isConfirmDeliveryAddress() : Boolean{
+
+    fun isConfirmDeliveryAddress(): Boolean {
         return preferences.getBoolean(SharedPreferenceConstants.JC_IS_CONFIRM_KEY, false)
     }
 
 
     fun getDeliveryAddress(): Address? {
         val data = preferences.getString(SharedPreferenceConstants.USER_ADDRESS_KEY, null)
-        return if (data!= null){
+        return if (data != null) {
             Gson().fromJson(data, Address::class.java)
-        }else{
+        } else {
             null
         }
 
@@ -125,9 +127,9 @@ object SharedPreferenceUtil {
     fun getCurrentAddress(): Address? {
         val data = preferences.getString(SharedPreferenceConstants.USER_CURRENT_ADDRESS_KEY, null)
 
-        return if (data!= null) {
+        return if (data != null) {
             Gson().fromJson(data, Address::class.java)
-        }else{
+        } else {
             null
         }
     }
@@ -137,7 +139,27 @@ object SharedPreferenceUtil {
             putString(SharedPreferenceConstants.SAVE_NOTE_KEY, note)
         }
     }
+
     fun getNotes() =
         preferences.getString(SharedPreferenceConstants.SAVE_NOTE_KEY, "n/a")
+
+    fun saveNearestShop(shop: Shop) {
+        preferences.edit {
+            val data = Gson().toJson(shop)
+            putString(SharedPreferenceConstants.SAVE_SHOP_KEY, data)
+        }
+    }
+
+    fun getNearestShop(): Shop? {
+        val data = preferences.getString(SharedPreferenceConstants.SAVE_SHOP_KEY, null)
+
+        return if (data != null) {
+            Gson().fromJson(data, Shop::class.java)
+        } else {
+            null
+        }
+    }
+
+
 
 }

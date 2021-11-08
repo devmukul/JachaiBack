@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.ui.base
 
 
+import android.Manifest
 import android.annotation.TargetApi
 import android.app.Notification
 import android.app.NotificationChannel
@@ -16,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.URLUtil
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -26,6 +28,7 @@ import androidx.navigation.NavOptions
 import bd.com.evaly.ehealth.models.common.CurrentLocation
 import com.jachai.jachai_driver.utils.JachaiLocationManager
 import com.jachai.jachai_driver.utils.JachaiLog
+import com.jachai.jachai_driver.utils.Utils
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.JachaiFoodApplication.Companion.compositeDisposable
@@ -303,6 +306,39 @@ abstract class BaseActivity<BINDING : ViewDataBinding>(@LayoutRes val layoutId: 
 
     }
 
+    open fun phoneCall(phoneNumber: String) {
+
+
+        val number = "+$phoneNumber"
+        val intent = Intent(Intent.ACTION_CALL);
+        intent.data = Uri.parse("tel:$number")
+
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.CALL_PHONE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.CALL_PHONE
+                )
+            ) {
+            } else {
+                val MY_PERMISSIONS_REQUEST_CALL_PHONE = 0
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.CALL_PHONE),
+                    MY_PERMISSIONS_REQUEST_CALL_PHONE
+                )
+            }
+        }
+        try {
+            startActivity(intent)
+
+        } catch (e: Exception) {
+            Utils.longToast(applicationContext, "Phone number not found")
+        }
+    }
 
     protected abstract fun initView()
     protected abstract fun initToolbar()

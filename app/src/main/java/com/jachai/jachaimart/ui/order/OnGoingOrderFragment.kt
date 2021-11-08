@@ -58,11 +58,7 @@ class OnGoingOrderFragment :
             adapter = orderDetailsAdapter
         }
 
-        viewModel.successOrderDetailsLiveData.observe(viewLifecycleOwner) {
-            updateUI(it)
 
-
-        }
 
 
     }
@@ -83,21 +79,62 @@ class OnGoingOrderFragment :
 
             when {
                 it?.order?.status?.equals(ApiConstants.ORDER_INITIATED) == true -> {
+                    state1.isIndeterminate = true
+                    status.text = "Initiating order"
+                    statusMessage.text = "Shop will pick your order soon."
+                    timeDuration.text = "25 - 30 mins"
 
                 }
                 it?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_ACCEPTED_BY_DELIVERY_MAN) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
+                    state1.isIndeterminate = false
+                    state1.progress = 100
+                    state2.isIndeterminate = true
+                    status.text = "Packaging products"
+                    statusMessage.text = "Shop is arranging your product."
+                    timeDuration.text = "22 - 28 mins"
+
                 }
                 it?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_PICKED) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
+                    state1.isIndeterminate = false
+                    state1.progress = 100
+                    state2.isIndeterminate = false
+                    state2.progress = 100
+                    state3.isIndeterminate = true
+                    status.text = "Rider on the way"
+                    statusMessage.text = "Rider just picked your order from the shop"
+                    timeDuration.text = "15 - 23 mins"
+
+
                 }
                 it?.order?.status?.equals(ApiConstants.ORDER_PROCESSING) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
-
+                    state1.isIndeterminate = false
+                    state1.progress = 100
+                    state2.isIndeterminate = false
+                    state2.progress = 100
+                    state3.isIndeterminate = false
+                    state3.progress = 100
+                    state4.isIndeterminate = true
+                    status.text = "Rider on the way"
+                    statusMessage.text = "Your order is on the way for delivery"
+                    timeDuration.text = "0 - 5 mins"
                 }
                 it?.order?.status?.equals(ApiConstants.ORDER_DELIVERED) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
-
+                    state1.isIndeterminate = false
+                    state1.progress = 100
+                    state2.isIndeterminate = false
+                    state2.progress = 100
+                    state3.isIndeterminate = false
+                    state3.progress = 100
+                    state4.isIndeterminate = false
+                    state4.progress = 100
+                    status.text = "Please collect order"
+                    statusMessage.text = "Thanks for shopping with JaChai Mart"
+                    timeDuration.text = "Delivered"
+                    textView14.text = "ARRIVED"
                 }
 
 
@@ -112,7 +149,9 @@ class OnGoingOrderFragment :
     }
 
     override fun subscribeObservers() {
-
+        viewModel.successOrderDetailsLiveData.observe(viewLifecycleOwner) {
+            updateUI(it)
+        }
     }
 
 

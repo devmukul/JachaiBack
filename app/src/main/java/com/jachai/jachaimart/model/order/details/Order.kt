@@ -15,7 +15,7 @@ data class Order(
     @SerializedName("customer")
     var customer: Customer,
     @SerializedName("deliveryCharge")
-    var deliveryCharge: Int,
+    var deliveryCharge: Double,
     @SerializedName("deliveryMan")
     var deliveryMan: DeliveryMan,
     @SerializedName("deliveryManId")

@@ -17,6 +17,7 @@ object SharedPreferenceConstants {
     const val USER_ADDRESS_KEY = "delivery_address"
     const val USER_CURRENT_ADDRESS_KEY = "current_address"
     const val SAVE_NOTE_KEY = "order_note"
+    const val SAVE_SHOP_KEY = "save_shop"
     const val JC_IS_CONFIRM_KEY = "is_delivery_address_confirm"
 
 
