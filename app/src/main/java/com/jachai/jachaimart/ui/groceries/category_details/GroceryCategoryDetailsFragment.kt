@@ -107,10 +107,12 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
         for (category in categories) {
             binding.apply {
                 val tab = tabLayout.newTab()
-                tab.setCustomView(R.layout.custom_related_category_row)
+                tab.setCustomView(R.layout.sub_category_row)
                 val view = tab.customView
                 val title = view!!.findViewById<TextView>(R.id.name)
                 val image = view.findViewById<ImageView>(R.id.image)
+
+
                 title.text = category.category
                 tabLayout.addTab(tab)
             }
