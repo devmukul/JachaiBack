@@ -44,13 +44,13 @@ class CategoryFragment :
                 tab.text = categoryData.categoryList?.categories!![position].title
             }.attach()
 
-            for ((index, value) in  categoryData.categoryList?.categories!!.withIndex()) {
-                if(value.id.equals(categoryData.categoryId)){
-                    tabLayout.setScrollPosition(index,0f,true)
-                    viewPager.currentItem = index
-                    break
-                }
-            }
+//            for ((index, value) in  categoryData.categoryList?.categories!!.withIndex()) {
+//                if(value.id.equals(categoryData.categoryId)){
+//                    tabLayout.setScrollPosition(index,1f,false)
+//                    viewPager.currentItem = index
+//                    break
+//                }
+//            }
 
         }
     }
