@@ -64,7 +64,7 @@ class CategoryFragment :
 
             val categoryViewPagerAdapter = CategoryViewPagerAdapter( categoryData.categoryList?.categories!!, navController, this@CategoryFragment)
             viewPager.adapter = categoryViewPagerAdapter
-//            viewPager.offscreenPageLimit = 1
+            viewPager.offscreenPageLimit = 20
 //            viewPager.clipToPadding = false
 //            viewPager.clipChildren = false
 //            viewPager.setCurrentItem(selectedTabPos, true)
