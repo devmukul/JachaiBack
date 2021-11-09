@@ -118,6 +118,21 @@
 
                         </FrameLayout>
 
+                        <TextView
+                            android:id="@+id/toolbarTItle"
+                            style="@style/title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:textColor="#3A494E"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/back"
+                            app:layout_constraintEnd_toStartOf="@+id/frame_lay"
+                            app:layout_constraintStart_toEndOf="@+id/back"
+                            app:layout_constraintTop_toTopOf="@+id/back"
+                            tools:text="Product Name" />
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -317,7 +332,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="For more details about this product, please dial 09610002345  to get, assistance from our expert agents. "
+                        android:text="For more details about this product, please dial +88 01955529893  to get, assistance from our expert agents. "
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@id/descriptionTitle" />
@@ -439,7 +454,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="125"
+                        android:text="0"
                         android:textColor="#B1B1B1"
                         app:layout_constraintBottom_toBottomOf="@+id/divider"
                         app:layout_constraintStart_toEndOf="@+id/divider"

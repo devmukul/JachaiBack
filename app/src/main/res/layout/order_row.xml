@@ -51,16 +51,17 @@
             app:layout_constraintTop_toBottomOf="@+id/shop_name"
             tools:text="12:00 PM" />
 
-        <Button
+        <TextView
             android:id="@+id/trac_order"
-            style="@style/Widget.MaterialComponents.Button"
+            style="@style/small_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="TRACK ORDER"
             android:textColor="@color/white"
             android:textSize="10sp"
-            app:backgroundTint="#14876A"
+            android:background="#14876A"
+            android:padding="5dp"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/orderId"
             app:layout_constraintEnd_toEndOf="parent"
