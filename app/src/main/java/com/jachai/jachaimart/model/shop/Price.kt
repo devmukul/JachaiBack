@@ -7,8 +7,8 @@ import com.google.gson.annotations.Expose
 data class Price(
     @SerializedName("discountedPrice")
     @Expose
-    var discountedPrice: Any,
+    var discountedPrice: Double,
     @SerializedName("mrp")
     @Expose
-    var mrp: Int
+    var mrp: Double
 )

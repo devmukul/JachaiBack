@@ -173,6 +173,18 @@ class GroceriesShopFragment :
                     )
                 adapter = categoryWithProductAdapter
             }
+            orderBottom.root.setOnClickListener {
+                if (JachaiFoodApplication.mDatabase.daoAccess().getOnGoingOrderCount() >= 1){
+                    val action = GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
+                    navController.navigate(action)
+
+                }else{
+                    val action = GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
+                    navController.navigate(action)
+                }
+
+            }
+
 
 
         }
@@ -233,9 +245,12 @@ class GroceriesShopFragment :
                     if (order != null) {
                         orderBottom.inProgressText.text = "$it orders in progress"
 
-                        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
+                        val date: Date = format.parse(order.createdAt)
+                        val myFormat = SimpleDateFormat("dd-MM HH:mm a ", Locale.getDefault())
 
-                        orderBottom.orderTime.text =format.parse(order.createdAt).toString()
+
+                        orderBottom.orderTime.text =myFormat.format(date).toString()
 
                         orderBottom.shopName.text = order.shop?.name
                     }

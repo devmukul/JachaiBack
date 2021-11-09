@@ -79,16 +79,34 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         productOrder.image = item.productImage
         productOrder.isChecked = false
         productOrder.isPopular = false
-
-
         productOrder.variationId = item.variations?.get(0)?.variationId
-        productOrder.price = item.variations?.get(0)?.price?.mrp.toString()
-        try {
-            productOrder.discountedPrice = item.variations?.get(0)?.price?.discountedPrice.toString()
 
-        } catch (e: Exception) {
-            productOrder.discountedPrice = 0.toString()
+
+        val tempPrice = item.variations?.get(0)?.price?.mrp ?: 0.0
+        val tempDiscountedPrice = item.variations?.get(0)?.price?.discountedPrice ?: 0.0
+
+        val mPrice: Double
+        val mDiscountPrice: Double
+
+
+        when {
+            tempDiscountedPrice <= 0.0 -> {
+                mPrice = tempPrice
+                mDiscountPrice = tempPrice
+            }
+            tempDiscountedPrice > 0 && tempDiscountedPrice < tempPrice -> {
+                mPrice = tempPrice
+                mDiscountPrice = tempDiscountedPrice
+            }
+            else -> {
+                mPrice = tempPrice
+                mDiscountPrice = tempPrice
+
+            }
         }
+
+        productOrder.price = mPrice
+        productOrder.discountedPrice = mDiscountPrice
 
         successAddToCartData.postValue(
             JachaiFoodApplication.mDatabase.daoAccess().insertOrder(productOrder, isFromSameShop)

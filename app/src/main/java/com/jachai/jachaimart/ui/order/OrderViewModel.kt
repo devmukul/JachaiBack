@@ -7,7 +7,6 @@ import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
-import com.jachai.jachaimart.database.AppDatabase
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
@@ -20,10 +19,10 @@ import retrofit2.Response
 
 class OrderViewModel(application: Application) : BaseViewModel(application) {
 
-    var successOrderDetailsLiveData = MutableLiveData<OrderHistoryResponse>()
+    var successOrderHistoryDetailsLiveData = MutableLiveData<OrderHistoryResponse>()
     var successOnGoingOrderListLiveData = MutableLiveData<List<Order>>()
     var successPreviousOrderListLiveData = MutableLiveData<List<Order>>()
-    var errorDetailsLiveData = MutableLiveData<String>()
+    var errorOrderDetailsLiveData = MutableLiveData<String>()
 
     private val orderService = RetrofitConfig.orderService
     private var orderCall: Call<OrderHistoryResponse>? = null
@@ -52,7 +51,7 @@ class OrderViewModel(application: Application) : BaseViewModel(application) {
                 ) {
                     JachaiLog.d(TAG, response.body().toString())
                     orderCall = null
-                    successOrderDetailsLiveData.postValue(response.body())
+                    successOrderHistoryDetailsLiveData.postValue(response.body())
                     if (response.isSuccessful) {
                         if (response.body()?.statusCode ?: 0 == HttpStatusCode.HTTP_OK) {
                             postData(response.body())
@@ -65,7 +64,7 @@ class OrderViewModel(application: Application) : BaseViewModel(application) {
                 override fun onFailure(call: Call<OrderHistoryResponse>, t: Throwable) {
                     orderCall = null
                     JachaiLog.d(TAG, t.localizedMessage)
-                    errorDetailsLiveData.postValue("Failed")
+                    errorOrderDetailsLiveData.postValue("Failed")
 
                 }
             })
@@ -85,6 +84,8 @@ class OrderViewModel(application: Application) : BaseViewModel(application) {
                 if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
                     ||
                     orders[i].status.equals(ApiConstants.ORDER_DELIVERED)
+                    ||
+                    orders[i].status.equals(ApiConstants.ORDER_REVIEWED)
                 ) {
                     completedOrder.add(orders[i])
                 } else {

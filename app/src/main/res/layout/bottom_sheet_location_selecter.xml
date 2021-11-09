@@ -88,7 +88,7 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_button_red"
             android:backgroundTint="@color/red_roses"
-            android:text="SAVE"
+            android:text="SET"
             android:textColor="@color/white"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"

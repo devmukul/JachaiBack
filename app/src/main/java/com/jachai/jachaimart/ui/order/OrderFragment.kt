@@ -76,7 +76,7 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
             orderViewOnCompletedAdapter.setList(it)
             orderViewOnCompletedAdapter.notifyDataSetChanged()
         }
-        viewModel.errorDetailsLiveData.observe(viewLifecycleOwner) {
+        viewModel.errorOrderDetailsLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
         }
 

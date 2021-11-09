@@ -10,8 +10,8 @@
 
         <ImageView
             android:id="@+id/ivAdd"
-            android:layout_width="16dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
             android:background="@drawable/rounded_button_red"
             android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/ic_count"
@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/ic_sub"
-            android:layout_width="16dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
             android:background="@drawable/rounded_button_red"
             android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,12 +34,14 @@
         <TextView
             android:id="@+id/ic_count"
             style="@style/title"
-            android:layout_width="24dp"
+            android:layout_width="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:layout_height="0dp"
             android:gravity="center"
             android:text="0"
             android:textColor="#CD113B"
-            android:textSize="9sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/ic_sub"
             app:layout_constraintEnd_toStartOf="@+id/ivAdd"
             app:layout_constraintStart_toEndOf="@+id/ic_sub"

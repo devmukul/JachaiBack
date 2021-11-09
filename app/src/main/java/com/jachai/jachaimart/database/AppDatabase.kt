@@ -24,7 +24,7 @@ import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
         ShippingLocation::class,
         Shop::class
     ],
-    version = 4,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

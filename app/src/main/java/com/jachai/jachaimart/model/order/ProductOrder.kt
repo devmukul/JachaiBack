@@ -45,11 +45,11 @@ class ProductOrder {
     @ColumnInfo(defaultValue = "")
     var image: String? = null
 
-    @ColumnInfo(defaultValue = "")
-    var price: String? = null
+    @ColumnInfo(defaultValue = "0")
+    var price: Double? = null
 
-    @ColumnInfo(defaultValue = "")
-    var discountedPrice: String? = null
+    @ColumnInfo(defaultValue = "0")
+    var discountedPrice: Double? = 0.0
 
     @ColumnInfo(defaultValue = "")
     var campaignName: String? = null

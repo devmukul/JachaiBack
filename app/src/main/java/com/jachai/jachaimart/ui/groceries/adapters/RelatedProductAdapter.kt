@@ -42,12 +42,12 @@ class RelatedProductAdapter(
 //                    productPreviousPrice.text = product.variations[0].price.discountedPrice.toString()
 
                     if (mDiscountedPrice != 0.0 && mDiscountedPrice < mPrice){
-                        productPrice.text = mDiscountedPrice.toFloat().toString()
-                        productPreviousPrice.text = mPrice.toFloat().toString()
+                        productPrice.text = "${mDiscountedPrice.toFloat()}"
+                        productPreviousPrice.text = "৳${mPrice.toFloat()}"
                         productPreviousPrice.paintFlags =  productPreviousPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     }else{
                         productPrice.text = mPrice.toFloat().toString()
-                        productPreviousPrice.text = mDiscountedPrice.toFloat().toString()
+                        productPreviousPrice.text = "${mDiscountedPrice.toFloat()}"
                         productPreviousPrice.visibility = View.GONE
                     }
 

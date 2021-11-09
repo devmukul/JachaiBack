@@ -46,6 +46,10 @@ class CategoryFragment :
 
     override fun initView() {
         binding.apply {
+            back.setOnClickListener {
+                navController.popBackStack()
+
+            }
 
             loop@ for ((index, value) in  categoryData.categoryList?.categories!!.withIndex()) {
                 if(value.id.equals(categoryData.categoryId)){

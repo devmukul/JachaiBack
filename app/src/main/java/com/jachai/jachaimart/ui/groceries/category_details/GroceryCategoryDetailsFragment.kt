@@ -71,6 +71,7 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
         binding.apply {
             initRecycler(emptyList())
 
+            SharedPreferenceUtil.getJCShopId()?.let { viewModel.getCategoryDetailsDetails(it, categoryId!!) }
             viewModel.getCategoryDetailsDetails(SharedPreferenceUtil.getJCShopId()!!, categoryId!!)
         }
     }

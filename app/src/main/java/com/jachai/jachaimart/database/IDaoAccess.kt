@@ -64,6 +64,9 @@ interface IDaoAccess {
     @Query("SELECT SUM(price * quantity) FROM ProductOrder")
     fun getProductOrderSubtotal(): Double
 
+    @Query("SELECT SUM(discountedPrice * quantity) FROM ProductOrder")
+    fun getProductOrderDiscountedSubtotal(): Double
+
     @Query("SELECT quantity FROM ProductOrder WHERE product =:id")
     fun getOrderCount(id: String): Int
 
@@ -75,16 +78,16 @@ interface IDaoAccess {
     fun insertOngoingOrder(order: Order): Boolean {
         insertOrder(order)
         order.deliveryMan?.let {
-            order.deliveryMan!!.orderId =  order.orderId
+            order.deliveryMan!!.orderId = order.orderId
             insertDeliveryMain(it)
 
         }
         order.shop?.let {
-            order.shop!!.orderId =  order.orderId
+            order.shop!!.orderId = order.orderId
             insertShop(it)
         }
         order.shippingLocation?.let {
-            order.shippingLocation!!.orderId =  order.orderId
+            order.shippingLocation!!.orderId = order.orderId
             insertShippingLocation(it)
         }
         return true
@@ -127,6 +130,11 @@ interface IDaoAccess {
 
     @Query("SELECT * FROM DeliveryMan WHERE orderId= :orderId")
     fun getLastOrderDeliveryMan(orderId: String): DeliveryMan
+
+    @Transaction
+    fun geDiscountPrice(): Double {
+        return getProductOrderDiscountedSubtotal() - getProductOrderSubtotal()
+    }
 
 
 }

@@ -130,6 +130,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(
     fun showLoader() = baseActivity?.showLoader()
 
     fun dismissLoader() = baseActivity?.dismissLoader()
+    fun phoneCall(phoneNumber: String) = baseActivity?.phoneCall(phoneNumber)
 
     fun fetchCurrentLocation(onLocationResultUpdate: (location: CurrentLocation?) -> Unit) =
         baseActivity?.fetchCurrentLocation(onLocationResultUpdate)

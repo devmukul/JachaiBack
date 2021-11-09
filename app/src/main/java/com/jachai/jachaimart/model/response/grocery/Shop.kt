@@ -35,5 +35,8 @@ data class Shop(
     @SerializedName("timeRemaining")
     val timeRemaining: Int,
     @SerializedName("type")
-    val type: String
+    val type: String,
+    @SerializedName("vat")
+    val vat: Double,
+
 )
