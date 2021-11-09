@@ -48,7 +48,6 @@
                 android:layout_height="0dp"
                 android:background="#F8F8F8"
                 android:fillViewport="true"
-                android:paddingBottom="100dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +131,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_categories1"
                     tools:itemCount="2"
-                    tools:listitem="@layout/groceries_shop_category_row" />
+                    tools:listitem="@layout/groceries_shop_category_row"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

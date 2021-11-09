@@ -8,6 +8,7 @@ import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.ShippingLocation
 import com.jachai.jachaimart.model.order.history.Shop
 import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.shop.SearchHistoryItem
 
 @Keep
 @Dao
@@ -135,6 +136,12 @@ interface IDaoAccess {
     fun geDiscountPrice(): Double {
         return getProductOrderDiscountedSubtotal() - getProductOrderSubtotal()
     }
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSearchKeyword(items: SearchHistoryItem)
+
+    @Query("SELECT * FROM SearchHistory")
+    fun getSearchHistory(): List<SearchHistoryItem>
 
 
 }

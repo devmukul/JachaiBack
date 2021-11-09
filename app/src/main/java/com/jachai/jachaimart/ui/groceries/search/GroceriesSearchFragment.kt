@@ -19,12 +19,15 @@ import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentProductSearchBinding
 import com.jachai.jachaimart.model.response.category.Product
 import com.jachai.jachaimart.model.response.home.ShopsItem
+import com.jachai.jachaimart.model.shop.SearchHistoryItem
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.search.adapter.PopularTagAdapter
+import com.jachai.jachaimart.ui.groceries.search.adapter.SearchHistoryAdapter
 import com.jachai.jachaimart.ui.groceries.search.adapter.SearchSuggetionAdapter
 import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
 import com.vikas.paging3.view.loader.adapter.LoaderDoggoImageAdapter
@@ -38,7 +41,8 @@ import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
 class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.layout.fragment_product_search),
-    ShopRecyclerAdapter.Interaction, PopularTagAdapter.Interaction, SearchSuggetionAdapter.Interaction, LoaderDoggoImageAdapter.Interaction {
+    ShopRecyclerAdapter.Interaction, PopularTagAdapter.Interaction, SearchSuggetionAdapter.Interaction, LoaderDoggoImageAdapter.Interaction,
+    SearchHistoryAdapter.Interaction{
 
     lateinit var loaderViewModel: GroceriesSearchViewModel
     lateinit var adapter: LoaderDoggoImageAdapter
@@ -59,6 +63,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
         initView()
         subscribeObservers()
         loaderViewModel.searchPopularSearch()
+        loaderViewModel.geSearchHistoryList()
 
     }
 
@@ -67,6 +72,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
         binding.popularSerachView.visibility = View.GONE
         binding.recentSerachView.visibility = View.GONE
         binding.searchSuggetionView.visibility = View.GONE
+        JachaiFoodApplication.mDatabase.daoAccess().insertSearchKeyword(SearchHistoryItem(key))
         lifecycleScope.launch {
             loaderViewModel.fetchDoggoImages(key).distinctUntilChanged().collectLatest {
                 adapter.submitData(it)
@@ -92,8 +98,8 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
             clearSearch.setOnClickListener { handleClearSearch() }
 
 
-            icSearch.setOnClickListener {
-                fetchDoggoImages(etSearchShops.text.toString())
+            back.setOnClickListener {
+                requireActivity().onBackPressed()
             }
 
             searchSuggetionTitle.setOnClickListener {
@@ -162,6 +168,22 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
                 binding.popularSerachRV.adapter = adapter
             }else{
                 binding.popularSerachView.visibility = View.GONE
+            }
+        }
+
+        loaderViewModel.serachSuccessList.observe(viewLifecycleOwner){
+
+            if(it.isNotEmpty()) {
+                binding.recentSerachView.visibility = View.VISIBLE
+                val layoutManager = FlexboxLayoutManager(requireContext())
+                layoutManager.flexWrap = FlexWrap.WRAP
+                layoutManager.flexDirection = FlexDirection.ROW
+                layoutManager.alignItems = AlignItems.STRETCH
+                binding.recentSearchRecyclerView.layoutManager = layoutManager
+                val adapter = SearchHistoryAdapter(requireContext(), it, this)
+                binding.recentSearchRecyclerView.adapter = adapter
+            }else{
+                binding.recentSerachView.visibility = View.GONE
             }
         }
 
