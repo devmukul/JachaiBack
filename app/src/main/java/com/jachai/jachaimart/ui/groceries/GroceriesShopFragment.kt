@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -31,6 +32,12 @@ import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import java.text.SimpleDateFormat
 import java.util.*
+import com.jachai.jachaimart.ui.home.HomeFragment
+
+import android.content.DialogInterface
+
+
+
 
 class GroceriesShopFragment :
     BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment),
@@ -62,6 +69,15 @@ class GroceriesShopFragment :
         initView()
         subscribeObservers()
 
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Exit") { arg0, arg1 -> requireActivity().finish() }.create().show()
+
+        }
+
 
     }
 
@@ -84,7 +100,6 @@ class GroceriesShopFragment :
         builder.show()
 
     }
-
 
     override fun initView() {
         if (SharedPreferenceUtil.getJCShopId() == null) {

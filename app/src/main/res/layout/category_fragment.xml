@@ -98,7 +98,8 @@
                             app:iconifiedByDefault="true"
                             app:queryBackground="@drawable/box_curve_gray"
                             app:searchIcon="@drawable/ic_search_circle"
-                            app:showAsAction="always|collapseActionView" />
+                            app:showAsAction="always|collapseActionView"
+                            android:visibility="gone"/>
 
                     </RelativeLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

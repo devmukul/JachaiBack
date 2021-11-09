@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Jachai Food</string>
+    <string name="app_name">Jachai</string>
 
     <string name="app_name_short"><font color="#CD113B">Ja</font>Chai Food</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
