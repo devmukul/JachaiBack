@@ -72,7 +72,7 @@ class OnGoingOrderFragment :
             itemCost.text = it?.order?.subTotal.toString()
             itemGrandTotal.text = it?.order?.total.toString()
             deliveryCharge.text = it?.order?.deliveryCharge.toString()
-            totalDiscount.text = it?.order?.discount.toString()
+            totalDiscount.text = "-${it?.order?.discount ?: 0.0}"
             vat.text = it?.order?.vat.toString()
 
             deliverManName.text = it?.order?.deliveryMan?.name

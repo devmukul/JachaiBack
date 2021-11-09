@@ -307,10 +307,10 @@ data class ProductDiscount(
 data class Price(
 
     @field:SerializedName("discountedPrice")
-    val discountedPrice: Int? = null,
+    val discountedPrice: Double? = null,
 
     @field:SerializedName("mrp")
-    val mrp: Int? = null
+    val mrp: Double? = null
 ) : Parcelable
 
 @Parcelize

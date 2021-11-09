@@ -126,11 +126,11 @@ class ProductDetailsFragment :
 
             descriptionBody.text = product?.description
 
-            val mPrice = product?.variations?.get(0)?.price?.mrp ?: 0
-            val mDiscountedPrice = product?.variations?.get(0)?.price?.discountedPrice ?: 0
+            val mPrice = product?.variations?.get(0)?.price?.mrp ?: 0.0
+            val mDiscountedPrice = product?.variations?.get(0)?.price?.discountedPrice ?: 0.0
 
 
-            if (mDiscountedPrice !=0  && mDiscountedPrice<mPrice){
+            if (mDiscountedPrice != 0.0  && mDiscountedPrice<mPrice){
                 price.text = "৳${mDiscountedPrice.toFloat()}"
                 oldPrice.text = "৳${mPrice.toFloat()}"
                 oldPrice.paintFlags =  oldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

@@ -61,12 +61,12 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
 
 
         productOrder.variationId = item.variations[0].variationId
-        productOrder.price = item.variations[0].price.mrp.toString()
+        productOrder.price = item.variations[0].price.mrp ?: 0.0
         try {
-            productOrder.discountedPrice = item.variations[0].price.discountedPrice.toString()
+            productOrder.discountedPrice = item.variations[0].price.discountedPrice ?: 0.0
 
         } catch (e: Exception) {
-            productOrder.discountedPrice = 0.toString()
+            productOrder.discountedPrice = 0.0
         }
 
         successAddToCartData.postValue(

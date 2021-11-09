@@ -160,8 +160,6 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     }
 
 
-
-
     fun getOrderDetails(orderId: String) {
         try {
 
@@ -199,6 +197,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
             JachaiLog.d(TAG, ex.message!!)
         }
     }
+
+    fun getDiscountPrice() = JachaiFoodApplication.mDatabase.daoAccess().geDiscountPrice()
 
 
 }

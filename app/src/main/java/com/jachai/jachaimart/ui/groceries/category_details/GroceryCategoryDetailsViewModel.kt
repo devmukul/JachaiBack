@@ -62,12 +62,12 @@ class GroceryCategoryDetailsViewModel (application: Application) : AndroidViewMo
 
 
         productOrder.variationId = item.variations[0].variationId
-        productOrder.price = item.variations[0].price.mrp.toString()
+        productOrder.price = item.variations[0].price.mrp.toDouble()
         try {
-            productOrder.discountedPrice = item.variations[0].price.discountedPrice.toString()
+            productOrder.discountedPrice = item.variations[0].price.discountedPrice
 
         } catch (e: Exception) {
-            productOrder.discountedPrice = 0.toString()
+            productOrder.discountedPrice = 0.0
         }
 
         successAddToCartData.postValue(
