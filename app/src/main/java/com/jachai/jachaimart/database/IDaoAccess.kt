@@ -74,6 +74,13 @@ interface IDaoAccess {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavouriteProduct(fProductsItem: List<FProductsItem>)
 
+    @Query("DELETE FROM FavouriteProduct where productId =:id")
+    fun deleteFavouriteProduct(id: String)
+
+
+    @Query("SELECT * FROM FavouriteProduct WHERE productId =:id")
+    fun getFavouriteProductById(id: String): List<FProductsItem>
+
 
     @Transaction
     fun insertOngoingOrder(order: Order): Boolean {

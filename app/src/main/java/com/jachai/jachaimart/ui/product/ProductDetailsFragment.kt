@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -98,12 +99,26 @@ class ProductDetailsFragment :
         })
 
         viewModel.errorResponseLiveData.observe(viewLifecycleOwner, {
-            when{
-                it.equals("failed")->{
+            when {
+                it.equals("failed") -> {
                     dismissLoader()
                 }
             }
         })
+
+        viewModel.successFavouriteProductResponseLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+            showShortToast("Success")
+        }
+
+        viewModel.errorFavouriteProductResponseLiveData.observe(viewLifecycleOwner) {
+            when {
+                it.equals("failed") -> {
+                    dismissLoader()
+                }
+            }
+        }
+
 
     }
 
@@ -179,6 +194,24 @@ class ProductDetailsFragment :
                     .setChooserTitle("Share via")
                     .setText("https://jachai.com/products/${product?.slug}")
                     .startChooser()
+            }
+
+            favorite.isChecked = product.slug?.let { viewModel.isProductFavourite(it) } == false
+
+
+            favorite.setOnCheckedChangeListener { p0, isChecked ->
+                if (isChecked) {
+                    product.slug?.let {
+                        showLoader()
+                        viewModel.requestForSetFavouriteProduct(slug = it)
+
+                    }
+                } else {
+                    product.slug?.let {
+                        showLoader()
+                        viewModel.requestForRemoveFavouriteProduct(slug = it)
+                    }
+                }
             }
 
 

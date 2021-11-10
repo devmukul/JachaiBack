@@ -28,7 +28,7 @@ interface OrderService {
 
 
     @PUT(ApiConstants.FAVOURITE_PRODUCT_BASE)
-    fun removeMyFavouriteProduct(): Call<GenericResponse>
+    fun removeMyFavouriteProduct(@Body fProductsItem: FProductsItem): Call<GenericResponse>
 
     @GET(ApiConstants.ORDER_LIST_BASE)
     fun getMyAllOrder(
