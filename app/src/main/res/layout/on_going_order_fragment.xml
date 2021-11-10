@@ -55,6 +55,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/appbar">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/conlay_orders"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -71,7 +72,7 @@
                         style="@style/heading"
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
-                        android:text="Cash Payment"
+                        android:text="COD"
                         android:textColor="#3A494E"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -423,7 +424,36 @@
                         app:layout_constraintTop_toTopOf="@+id/item_grand_total" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/call_customer"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="5dp"
+                    android:drawableLeft="@drawable/ic_phone_call"
+                    android:drawablePadding="15dp"
+                    android:text="CALL CUSTOMER CARE"
+                    android:textColor="#CD113B"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/order_again"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/conlay_orders"
+                    app:strokeColor="#C4C4C4" />
 
+                <Button
+                    android:id="@+id/order_again"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="PAY NOW"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/call_customer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/call_customer"
+                    app:layout_constraintTop_toTopOf="@+id/call_customer" />
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout8"
                     android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.order.adapter.OrderDetailsAdapter
 import com.jachai.jachaimart.utils.constant.ApiConstants
+import com.jachai.jachaimart.utils.constant.CommonConstants
 
 class OnGoingOrderFragment :
     BaseFragment<OnGoingOrderFragmentBinding>(R.layout.on_going_order_fragment) {
@@ -57,6 +58,11 @@ class OnGoingOrderFragment :
             orderDetailsAdapter = OrderDetailsAdapter(requireContext(), emptyList())
             adapter = orderDetailsAdapter
         }
+        binding.callCustomer.setOnClickListener {
+            phoneCall(CommonConstants.CUSTOMER_CARE_PHONE_NO)
+
+        }
+
 
 
 
@@ -74,6 +80,7 @@ class OnGoingOrderFragment :
             deliveryCharge.text = it?.order?.deliveryCharge.toString()
             totalDiscount.text = "-${it?.order?.discount ?: 0.0}"
             vat.text = it?.order?.vat.toString()
+            paymentType.text = it?.order?.paymentMethod
 
             deliverManName.text = it?.order?.deliveryMan?.name
 

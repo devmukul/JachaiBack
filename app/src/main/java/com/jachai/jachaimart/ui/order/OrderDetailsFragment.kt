@@ -51,6 +51,10 @@ class OrderDetailsFragment :
             orderDetailsAdapter = OrderDetailsAdapter(requireContext(), emptyList())
             adapter = orderDetailsAdapter
         }
+        binding.callCustomer.setOnClickListener {
+            phoneCall(CommonConstants.CUSTOMER_CARE_PHONE_NO)
+
+        }
 
 
     }
@@ -84,6 +88,8 @@ class OrderDetailsFragment :
             totalDiscount.text = it?.order?.discount.toString()
             vat.text = it?.order?.vat.toString()
             deliverManName.text = it?.order?.deliveryMan?.name
+            paymentType.text = it?.order?.paymentMethod
+
             orderDetailsAdapter.setList(it?.order?.products)
             orderDetailsAdapter.notifyDataSetChanged()
 
@@ -93,10 +99,9 @@ class OrderDetailsFragment :
                 comment.text = it?.order?.orderNote.toString()
 
             }
-            callCustomer.setOnClickListener {
-                phoneCall(CommonConstants.CUSTOMER_CARE_PHONE_NO)
 
-            }
+
+
             toolbarMain.helpButton.setOnClickListener {
                 phoneCall(CommonConstants.CUSTOMER_CARE_PHONE_NO)
             }
