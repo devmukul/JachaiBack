@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jachai.jachaimart.databinding.FavouriteProductRowBinding
 import com.jachai.jachaimart.databinding.GroceriesShopCategoryProductRowBinding
 import com.jachai.jachaimart.model.response.category.Product
 
@@ -18,7 +19,7 @@ class FavouriteProductAdapter(
 ) : RecyclerView.Adapter<FavouriteProductAdapter.ViewHolder>() {
 
 
-    class ViewHolder(private var binding: GroceriesShopCategoryProductRowBinding) :
+    class ViewHolder(private var binding: FavouriteProductRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             context: Context,
@@ -77,7 +78,7 @@ class FavouriteProductAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            GroceriesShopCategoryProductRowBinding.inflate(
+            FavouriteProductRowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
