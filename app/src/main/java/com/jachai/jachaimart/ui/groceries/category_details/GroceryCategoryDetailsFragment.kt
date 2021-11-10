@@ -13,6 +13,8 @@ import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import android.R.attr.defaultValue
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.NavController
@@ -48,6 +50,10 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val window: Window = requireActivity().window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = resources.getColor(R.color.red)
         categoryId = this.arguments?.getString(CATEGORY_ID_KEY,"")
 
     }

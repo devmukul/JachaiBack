@@ -11,6 +11,7 @@ import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.ShippingLocation
 import com.jachai.jachaimart.model.order.history.Shop
 import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.shop.SearchHistoryItem
 import com.jachai.jachaimart.utils.Converters
 import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
 
@@ -22,9 +23,10 @@ import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
         Order::class,
         DeliveryMan::class,
         ShippingLocation::class,
-        Shop::class
+        Shop::class,
+        SearchHistoryItem::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

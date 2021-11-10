@@ -2,7 +2,9 @@ package com.jachai.jachaimart.ui.search
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.model.response.home.ShopsItem
+import com.jachai.jachaimart.model.shop.SearchHistoryItem
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
 import retrofit2.Call
@@ -21,6 +23,8 @@ class RestaurantSearchViewModel  (application: Application) : BaseViewModel(appl
     val shopResponse: MutableLiveData<List<ShopsItem>> by lazy { MutableLiveData<List<ShopsItem>>() }
     val shopErr: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
+    val serachSuccessList: MutableLiveData<List<SearchHistoryItem>> by lazy { MutableLiveData<List<SearchHistoryItem>>() }
+
 
     private val foodService = RetrofitConfig.foodService
     private var foodSearchRequestCall: Call<List<ShopsItem>>? = null
@@ -29,6 +33,12 @@ class RestaurantSearchViewModel  (application: Application) : BaseViewModel(appl
         pageCount = 1
         _totalDataCount = 0
         shopList.clear()
+    }
+
+    fun geSearchHistoryList() {
+        serachSuccessList.postValue(
+            JachaiFoodApplication.mDatabase.daoAccess().getSearchHistory()
+        )
     }
 
 //    fun searchRestaurant() {

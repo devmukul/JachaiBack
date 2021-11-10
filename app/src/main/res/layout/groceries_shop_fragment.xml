@@ -131,7 +131,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_categories1"
                     tools:itemCount="2"
-                    tools:listitem="@layout/groceries_shop_category_row" />
+                    tools:listitem="@layout/groceries_shop_category_row"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
