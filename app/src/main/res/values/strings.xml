@@ -45,4 +45,6 @@
     <string name="restaurant_closed">Restaurant Closed!</string>
     <string name="place_order">Place Order</string>
     <string name="checkout_order">Checkout</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
 </resources>

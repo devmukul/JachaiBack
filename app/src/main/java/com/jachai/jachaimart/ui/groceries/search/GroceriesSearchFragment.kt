@@ -1,4 +1,4 @@
-package com.jachai.jachaimart.ui.search
+package com.jachai.jachaimart.ui.groceries.search
 
 import android.os.Bundle
 import android.os.StrictMode
@@ -30,6 +30,7 @@ import com.jachai.jachaimart.ui.groceries.search.adapter.PopularTagAdapter
 import com.jachai.jachaimart.ui.groceries.search.adapter.SearchHistoryAdapter
 import com.jachai.jachaimart.ui.groceries.search.adapter.SearchSuggetionAdapter
 import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
+import com.jachai.jachaimart.ui.search.GroceriesSearchViewModel
 import com.vikas.paging3.view.loader.adapter.LoaderDoggoImageAdapter
 import com.vikas.paging3.view.loader.adapter.LoaderStateAdapter
 import kotlinx.coroutines.Dispatchers
@@ -134,7 +135,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
                             delayAndProcessSearch(text)
                         }else{
                             recyclerView.visibility = View.GONE
-                            recentSerachView.visibility  = View.GONE
+                            recentSerachView.visibility  = View.VISIBLE
                             popularSerachView.visibility  = View.VISIBLE
                             searchSuggetionView.visibility = View.GONE
                         }
@@ -202,7 +203,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
         binding.etSearchShops.setText("")
         binding.recyclerView.visibility = View.GONE
         binding.popularSerachView.visibility = View.VISIBLE
-        binding.recentSerachView.visibility = View.GONE
+        binding.recentSerachView.visibility = View.VISIBLE
         binding.searchSuggetionView.visibility = View.GONE
     }
 
@@ -226,8 +227,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
     }
 
     override fun onItemSelected(product: Product?) {
-        val action =
-            GroceriesSearchFragmentDirections.actionGroceriesSearchFragmentToProductDetailsFragment()
+        val action = GroceriesSearchFragmentDirections.actionGroceriesSearchFragmentToProductDetailsFragment()
 
         action.productId = product?.slug
         navController.navigate(action)

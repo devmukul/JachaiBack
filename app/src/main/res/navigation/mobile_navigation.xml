@@ -302,7 +302,7 @@
     </fragment>
     <fragment
         android:id="@+id/groceriesSearchFragment"
-        android:name="com.jachai.jachaimart.ui.search.GroceriesSearchFragment"
+        android:name="com.jachai.jachaimart.ui.groceries.search.GroceriesSearchFragment"
         android:label="GroceriesSearchFragment" >
         <action
             android:id="@+id/action_groceriesSearchFragment_to_productDetailsFragment"

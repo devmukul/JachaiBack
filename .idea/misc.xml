@@ -47,6 +47,7 @@
         <entry key="app/src/main/res/layout/custom_search_result_row.xml" value="0.14270833333333333" />
         <entry key="app/src/main/res/layout/custom_shop_details_row.xml" value="0.5653798256537983" />
         <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.8747591522157996" />
+        <entry key="app/src/main/res/layout/drawer_layout.xml" value="0.3481182795698925" />
         <entry key="app/src/main/res/layout/filter_and_sort_barlayout.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
         <entry key="app/src/main/res/layout/fragment_product_search.xml" value="0.23731884057971014" />
@@ -67,6 +68,8 @@
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/model_cuisine_title.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/name_update_fragment.xml" value="0.33645833333333336" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.3481182795698925" />
+        <entry key="app/src/main/res/layout/on_going_order_fragment.xml" value="0.2571214392803598" />
         <entry key="app/src/main/res/layout/order_details_fragment.xml" value="0.42985611510791366" />
         <entry key="app/src/main/res/layout/order_details_row.xml" value="0.45696969696969697" />
         <entry key="app/src/main/res/layout/order_fragment.xml" value="0.43254845811769865" />
