@@ -58,6 +58,7 @@
         <entry key="app/src/main/res/layout/custom_search_result_row.xml" value="0.41441713718874434" />
         <entry key="app/src/main/res/layout/custom_shop_details_row.xml" value="0.5653798256537983" />
         <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.8747591522157996" />
+        <entry key="app/src/main/res/layout/favourite_fragment.xml" value="0.1308876811594203" />
         <entry key="app/src/main/res/layout/filter_and_sort_barlayout.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
         <entry key="app/src/main/res/layout/fragment_restaurant_search.xml" value="0.33" />
@@ -100,6 +101,7 @@
         <entry key="app/src/main/res/layout/toolbar_home.xml" value="0.4666185320137938" />
         <entry key="app/src/main/res/layout/toolbar_ongoing_order.xml" value="0.6136146969035841" />
         <entry key="app/src/main/res/layout/verify_code_fragment.xml" value="0.33645833333333336" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
     </option>
   </component>

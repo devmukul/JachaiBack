@@ -29,7 +29,7 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
             when (it) {
                 "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
-//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_orderFragment)
+//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_favouriteFragment)
                 "login" -> view.findNavController().navigate(R.id.splash_to_login)
             }
         })
