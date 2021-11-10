@@ -8,6 +8,8 @@ import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.response.product.ProductDetailsResponse
 import com.jachai.jachaimart.model.response.product.Shop
@@ -24,10 +26,18 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
     }
 
     private val groceryService = RetrofitConfig.groceryService
+    private val orderService = RetrofitConfig.orderService
+
+    private var productDetailsCall: Call<ProductDetailsResponse>? = null
+    private var favouriteProductCall: Call<GenericResponse>? = null
+
 
     var successAddToCartData = MutableLiveData<Boolean?>()
-    private var productDetailsCall: Call<ProductDetailsResponse>? = null
     var successProductDetailsResponseLiveData = MutableLiveData<ProductDetailsResponse?>()
+    var successFavouriteProductResponseLiveData = MutableLiveData<GenericResponse?>()
+    var errorFavouriteProductResponseLiveData = MutableLiveData<String?>()
+
+
     var errorResponseLiveData = MutableLiveData<String?>()
 
 
@@ -113,6 +123,109 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         )
 
 
+    }
+
+
+    fun requestForSetFavouriteProduct(slug: String) {
+        try {
+            if (favouriteProductCall != null) {
+                return
+            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+                return
+            }
+            val fProductsItem = FProductsItem(slug)
+
+            favouriteProductCall = orderService.setAsMyFavouriteProduct(fProductsItem)
+
+            favouriteProductCall?.enqueue(object : Callback<GenericResponse> {
+                override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+                ) {
+                    favouriteProductCall = null
+                    if (response.isSuccessful) {
+                        successFavouriteProductResponseLiveData.postValue(response.body())
+                        updateFavouriteProductTable(slug, false)
+                        JachaiLog.d(TAG, response.body().toString())
+                    } else {
+                        errorFavouriteProductResponseLiveData.value = "failed"
+                    }
+                }
+
+                override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                    favouriteProductCall = null
+                    errorFavouriteProductResponseLiveData.value = "failed"
+                    JachaiLog.d(TAG, errorResponseLiveData.value.toString())
+
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+        }
+
+
+    }
+
+
+    fun requestForRemoveFavouriteProduct(slug: String) {
+        try {
+            if (favouriteProductCall != null) {
+                return
+            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+                return
+            }
+            val fProductsItem = FProductsItem(slug)
+
+            favouriteProductCall = orderService.removeMyFavouriteProduct(fProductsItem)
+
+            favouriteProductCall?.enqueue(object : Callback<GenericResponse> {
+                override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+                ) {
+                    favouriteProductCall = null
+                    if (response.isSuccessful) {
+                        successFavouriteProductResponseLiveData.postValue(response.body())
+                        updateFavouriteProductTable(slug, true)
+                        JachaiLog.d(TAG, response.body().toString())
+                    } else {
+                        errorFavouriteProductResponseLiveData.value = "failed"
+
+                    }
+                }
+
+                override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                    favouriteProductCall = null
+                    errorFavouriteProductResponseLiveData.value = "failed"
+                    JachaiLog.d(TAG, t.localizedMessage)
+
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(TAG, ex.message!!)
+        }
+
+
+    }
+
+    private fun updateFavouriteProductTable(slug: String, isDelete: Boolean?) {
+        val fProductsItem = FProductsItem(slug)
+        if (isDelete == false) {
+            JachaiFoodApplication.mDatabase.daoAccess()
+                .insertFavouriteProduct(listOf(fProductsItem))
+        } else {
+            JachaiFoodApplication.mDatabase.daoAccess().deleteFavouriteProduct(slug)
+        }
+    }
+
+    fun isProductFavourite(slug: String): Boolean {
+        return JachaiFoodApplication.mDatabase.daoAccess().getFavouriteProductById(slug).isEmpty()
     }
 
 

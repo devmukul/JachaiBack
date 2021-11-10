@@ -13,7 +13,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "FavouriteProduct")
 data class FProductsItem(
 
-    @field:SerializedName("productId")
+    @field:SerializedName("slug")
     @PrimaryKey
     @ColumnInfo(defaultValue = "")
     val productId: String = ""

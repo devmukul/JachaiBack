@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -43,6 +44,7 @@ class ProductDetailsFragment :
 
     override fun initView() {
         viewModel.requestForProductDetails(productSlug)
+        showLoader()
 
         binding.apply {
 
@@ -76,6 +78,7 @@ class ProductDetailsFragment :
             { productDetailsResponse ->
                 productDetailsResponse?.let {
                     showProduct(productDetailsResponse.product)
+                    dismissLoader()
 
                 }
             })
@@ -94,6 +97,28 @@ class ProductDetailsFragment :
             }
 
         })
+
+        viewModel.errorResponseLiveData.observe(viewLifecycleOwner, {
+            when {
+                it.equals("failed") -> {
+                    dismissLoader()
+                }
+            }
+        })
+
+        viewModel.successFavouriteProductResponseLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+            showShortToast("Success")
+        }
+
+        viewModel.errorFavouriteProductResponseLiveData.observe(viewLifecycleOwner) {
+            when {
+                it.equals("failed") -> {
+                    dismissLoader()
+                }
+            }
+        }
+
 
     }
 
@@ -119,7 +144,8 @@ class ProductDetailsFragment :
         product: Product?
     ) {
         binding.apply {
-            name.text = product?.name ?: "Product Name"
+            toolbarTItle.text = product?.name ?: " "
+            name.text = product?.name ?: " "
             Glide.with(requireContext())
                 .load(product?.productImage)
                 .into(image)
@@ -130,26 +156,26 @@ class ProductDetailsFragment :
             val mDiscountedPrice = product?.variations?.get(0)?.price?.discountedPrice ?: 0.0
 
 
-            if (mDiscountedPrice != 0.0  && mDiscountedPrice<mPrice){
+            if (mDiscountedPrice != 0.0 && mDiscountedPrice < mPrice) {
                 price.text = "৳${mDiscountedPrice.toFloat()}"
                 oldPrice.text = "৳${mPrice.toFloat()}"
-                oldPrice.paintFlags =  oldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            }else{
+                oldPrice.paintFlags = oldPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
                 price.text = "৳${mPrice.toFloat()}"
                 oldPrice.text = "৳${mDiscountedPrice.toFloat()}"
                 oldPrice.visibility = View.GONE
             }
 
-            if (product?.variations?.get(0)?.productDiscount?.flat!! > 0 || product.variations[0]?.productDiscount?.percentage!! > 0){
-                if (product.variations[0]?.productDiscount?.flat!! > 0){
+            if (product?.variations?.get(0)?.productDiscount?.flat!! > 0 || product.variations[0]?.productDiscount?.percentage!! > 0) {
+                if (product.variations[0]?.productDiscount?.flat!! > 0) {
                     discount.text = "Flat ৳${product.variations[0]?.productDiscount?.flat!!} OFF"
-                }else{
-                    if (product.variations[0]?.productDiscount?.percentage!! > 0){
+                } else {
+                    if (product.variations[0]?.productDiscount?.percentage!! > 0) {
                         discount.text = "${product.variations[0]?.productDiscount?.percentage}% OFF"
                     }
                 }
 
-            }else{
+            } else {
                 discount.visibility = View.GONE
             }
 
@@ -168,6 +194,24 @@ class ProductDetailsFragment :
                     .setChooserTitle("Share via")
                     .setText("https://jachai.com/products/${product?.slug}")
                     .startChooser()
+            }
+
+            favorite.isChecked = product.slug?.let { viewModel.isProductFavourite(it) } == false
+
+
+            favorite.setOnCheckedChangeListener { p0, isChecked ->
+                if (isChecked) {
+                    product.slug?.let {
+                        showLoader()
+                        viewModel.requestForSetFavouriteProduct(slug = it)
+
+                    }
+                } else {
+                    product.slug?.let {
+                        showLoader()
+                        viewModel.requestForRemoveFavouriteProduct(slug = it)
+                    }
+                }
             }
 
 

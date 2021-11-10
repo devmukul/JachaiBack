@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_splashFragment2_to_orderFragment"
             app:destination="@id/orderFragment" />
+        <action
+            android:id="@+id/action_splashFragment2_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -211,7 +214,12 @@
             app:destination="@id/userMapsFragment" />
         <action
             android:id="@+id/action_groceriesShopFragment_to_orderFragment"
-            app:destination="@id/orderFragment" />
+            app:destination="@id/orderFragment"
+            app:popUpTo="@id/groceriesShopFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_groceriesShopFragment_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -356,6 +364,15 @@
         <action
             android:id="@+id/action_orderFragment_to_onGoingOrderFragment"
             app:destination="@id/onGoingOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.jachai.jachaimart.ui.favourite.FavouriteFragment"
+        android:label="FavouriteFragment"
+        tools:layout="@layout/favourite_fragment">
+        <action
+            android:id="@+id/action_favouriteFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 
 

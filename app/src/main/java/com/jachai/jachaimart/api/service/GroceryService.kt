@@ -2,11 +2,13 @@ package com.jachai.jachaimart.api.service
 
 
 import com.jachai.jachaimart.model.request.CategoryWithProductRequest
+import com.jachai.jachaimart.model.request.FProductRequest
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsResponse
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
 import com.jachai.jachaimart.model.response.home.BannerResponse
 import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.model.response.product.CategoryDetailsResponse
+import com.jachai.jachaimart.model.response.product.ProductBySlugResponse
 import com.jachai.jachaimart.model.response.product.ProductDetailsResponse
 import com.jachai.jachaimart.model.response.search.PopularKeywordResponse
 import com.jachai.jachaimart.model.response.search.SearchKeywordResponse
@@ -57,8 +59,6 @@ interface GroceryService {
     ): Call<CategoryDetailsResponse>
 
 
-
-
     @GET(ApiConstants.SEARCH_PRODUCT_BASE)
     fun searchProducts(
         @Query("key") key: String,
@@ -77,6 +77,10 @@ interface GroceryService {
     fun searchPopularSearch(
         @Query("type") type: String = "JC_MART"
     ): Call<PopularKeywordResponse>
+
+
+    @POST(ApiConstants.PRODUCT_BY_SLUG_BASE)
+    fun getProductBySlugs(@Body fProductRequest: FProductRequest): Call<ProductBySlugResponse>
 
 
 }
