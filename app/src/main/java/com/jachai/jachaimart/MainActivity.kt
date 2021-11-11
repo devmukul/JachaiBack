@@ -16,10 +16,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.jachai.jachai_driver.utils.JachaiLocationManager
 import com.jachai.jachaimart.databinding.ActivityMainBinding
+import com.jachai.jachaimart.databinding.ContentMainBinding
 import com.jachai.jachaimart.ui.base.BaseActivity
 import java.util.*
 
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)  {
+class MainActivity : BaseActivity<ContentMainBinding>(R.layout.content_main)  {
 
 //    private lateinit var appBarConfiguration: AppBarConfiguration
 //    private lateinit var binding: ActivityMainBinding

@@ -1,19 +1,26 @@
 package com.jachai.jachaimart.ui.groceries
 
 import android.app.AlertDialog
-import android.os.Build
+import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.navigation.NavigationView
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.showLongToast
 import com.jachai.jachaimart.JachaiFoodApplication
@@ -32,11 +39,9 @@ import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import java.text.SimpleDateFormat
 import java.util.*
-import com.jachai.jachaimart.ui.home.HomeFragment
 
-import android.content.DialogInterface
-
-
+import androidx.appcompat.app.AppCompatActivity
+import com.jachai.jachaimart.MainActivity
 
 
 class GroceriesShopFragment :
@@ -60,6 +65,9 @@ class GroceriesShopFragment :
 
     private lateinit var categoryResponse: CategoryResponse
 
+
+    lateinit var mDrawerToggle: ActionBarDrawerToggle
+
     private lateinit var shopID: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,6 +84,38 @@ class GroceriesShopFragment :
                 .setNegativeButton("Cancel", null)
                 .setPositiveButton("Exit") { arg0, arg1 -> requireActivity().finish() }.create().show()
 
+        }
+
+        mDrawerToggle = ActionBarDrawerToggle(
+            activity, binding.drawerLayout, binding.toolbarMain.toolbar ,R.string.drawer_open, R.string.drawer_close
+        )
+        mDrawerToggle.syncState()
+        binding.toolbarMain.toolbar.setNavigationIcon(R.drawable.ic_hamburger_icon)
+
+        val navView: NavigationView = binding.navView
+        navView.setupWithNavController(navController)
+
+        binding.layoutView.close.setOnClickListener {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        binding.layoutView.favourite.setOnClickListener {
+            val action =
+                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToFavouriteFragment()
+            navController.navigate(action)
+        }
+
+        binding.layoutView.order.setOnClickListener {
+            val action =
+                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
+            navController.navigate(action)
+        }
+
+        binding.layoutView.logout.setOnClickListener {
+            SharedPreferenceUtil.clearAllPreferences();
+            val action =
+                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToLoginFragment2()
+            navController.navigate(action)
         }
 
 
@@ -112,6 +152,10 @@ class GroceriesShopFragment :
         viewModel.requestAllAddress()
 
         binding.apply {
+
+            layoutView.mobileNo.text = SharedPreferenceUtil.getMobileNo()
+            layoutView.name.text = SharedPreferenceUtil.getName()
+
             fetchCurrentLocation {
 //                toolbarMain.title.text = "Current Location"
                 val mAddress = it?.address ?: "n/a"
@@ -391,6 +435,12 @@ class GroceriesShopFragment :
 
 
     }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        mDrawerToggle.onConfigurationChanged(newConfig)
+    }
+
 
 
 }

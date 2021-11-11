@@ -1,7 +1,9 @@
 package com.jachai.jachaimart.ui.order
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -14,6 +16,7 @@ import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.order.adapter.OrderDetailsAdapter
 import com.jachai.jachaimart.utils.constant.ApiConstants
+import es.dmoral.toasty.Toasty
 import com.jachai.jachaimart.utils.constant.CommonConstants
 
 class OnGoingOrderFragment :
@@ -39,6 +42,12 @@ class OnGoingOrderFragment :
 
         initView()
         subscribeObservers()
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            val action =
+                OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToGroceriesShopFragment()
+            navController.navigate(action)
+        }
     }
 
     override fun onResume() {

@@ -12,5 +12,6 @@ object RetrofitConfig {
         JachaiFoodApplication.CATELOGREADER_RETROFIT.create(GroceryService::class.java)
     val driverService =
         JachaiFoodApplication.DRIVER_RETROFIT.create(DriverService::class.java)
-
+    val paymentService =
+        JachaiFoodApplication.PAYMENT_RETROFIT.create(PaymentService::class.java)
 }
