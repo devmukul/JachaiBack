@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.ui.groceries
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuInflater
@@ -40,9 +41,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 import androidx.appcompat.app.AppCompatActivity
-
-
-
+import com.jachai.jachaimart.MainActivity
 
 
 class GroceriesShopFragment :
@@ -101,15 +100,22 @@ class GroceriesShopFragment :
         }
 
         binding.layoutView.favourite.setOnClickListener {
-            //binding.drawerLayout.closeDrawer(GravityCompat.START)
+            val action =
+                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToFavouriteFragment()
+            navController.navigate(action)
         }
 
         binding.layoutView.order.setOnClickListener {
-            //binding.drawerLayout.closeDrawer(GravityCompat.START)
+            val action =
+                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
+            navController.navigate(action)
         }
 
-        binding.layoutView.close.setOnClickListener {
-            //binding.drawerLayout.closeDrawer(GravityCompat.START)
+        binding.layoutView.logout.setOnClickListener {
+            SharedPreferenceUtil.clearAllPreferences();
+            val action =
+                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToLoginFragment2()
+            navController.navigate(action)
         }
 
 

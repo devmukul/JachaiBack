@@ -160,6 +160,10 @@ object SharedPreferenceUtil {
         }
     }
 
+    fun clearAllPreferences() = preferences.edit {
+        clear()
+    }
+
 
 
 }

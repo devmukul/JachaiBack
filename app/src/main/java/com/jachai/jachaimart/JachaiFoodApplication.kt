@@ -1,7 +1,9 @@
 package com.jachai.jachaimart
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
@@ -167,6 +169,11 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
             .build()
+        val PAYMENT_RETROFIT = Retrofit.Builder()
+            .baseUrl(ApiConstants.JACHAI_BASE_URL_PAYMENT)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
+            .build()
 
 
         fun getAppContext(): JachaiFoodApplication {
@@ -180,6 +187,13 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onMoveToBackground() {
+    }
+
+    fun launchLoginPage() {
+        SharedPreferenceUtil.clearAllPreferences();
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 
 }

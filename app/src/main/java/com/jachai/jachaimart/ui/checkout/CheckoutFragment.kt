@@ -2,6 +2,7 @@ package com.jachai.jachaimart.ui.checkout
 
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioButton
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -12,9 +13,12 @@ import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CheckoutFragmentBinding
+import com.jachai.jachaimart.model.request.PaymentRequest
+import com.jachai.jachaimart.radiobutton.PresetValueButton
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import kotlin.math.ceil
 
 class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout_fragment) {
 
@@ -26,6 +30,8 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
     private lateinit var checkoutAdapter: CheckoutAdapter
     private val viewModel: CheckoutViewModel by viewModels()
     private val args: CheckoutFragmentArgs by navArgs()
+    var mCheckedId = ""
+    var mOrderId = ""
 
     private lateinit var additionalComment: String
 
@@ -69,7 +75,6 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
             clCheckout.setOnClickListener {
 
-
                 SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
                     viewModel.placeOrder(
                         SharedPreferenceUtil.getNotes().toString(),
@@ -79,6 +84,18 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
 
                 showLoader()
+            }
+            option1.value = "Cash on Delivery"
+            option2.value = "Online Payment"
+            option1.isChecked = true
+
+            paymentRadio.setOnCheckedChangeListener { radiogroupn, radioButton, _, checkedId ->
+                when (checkedId) {
+                    R.id.option1 -> mCheckedId = "COD"
+                    R.id.option2 -> mCheckedId = "SSL"
+                }
+                System.out.println("test $mCheckedId")
+
             }
         }
 
@@ -131,13 +148,28 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         }
 
         viewModel.successOrderLiveData.observe(viewLifecycleOwner) {
-            dismissLoader()
-            val action = CheckoutFragmentDirections.actionCheckoutFragmentToOnGoingOrderFragment()
-            action.orderID = it.orderId.toString()
-            navController.navigate(action)
+            val jacjaiUrl = "https://www.jachai.com"
             viewModel.clearCreatedOrder()
-
+            if(mCheckedId == "SSL"){
+                mOrderId = it.orderId!!
+                val paymentRequest = PaymentRequest(it.total!!, it.orderId!!, mCheckedId, "$jacjaiUrl/payment/success", "$jacjaiUrl/payment/fail", "$jacjaiUrl/payment/cancel")
+                viewModel.requestPayment(paymentRequest)
+            }else{
+                dismissLoader()
+                val action = CheckoutFragmentDirections.actionCheckoutFragmentToOnGoingOrderFragment()
+                action.orderID = it.orderId.toString()
+                navController.navigate(action)
+            }
         }
+
+        viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {
+                dismissLoader()
+                val action = CheckoutFragmentDirections.actionCheckoutFragmentToPaymentFragment()
+                action.orderID = mOrderId
+                action.url = it.url
+                navController.navigate(action)
+        }
+
         viewModel.errorResponseLiveData.observe(viewLifecycleOwner, { message ->
             dismissLoader()
             ToastUtils.error(message ?: getString(R.string.text_something_went_wrong))

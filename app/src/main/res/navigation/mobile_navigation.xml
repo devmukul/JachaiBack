@@ -160,6 +160,9 @@
             android:id="@+id/action_checkoutFragment_to_cartFragment"
             app:destination="@id/cartFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderDetailsFragment"
@@ -219,7 +222,12 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_groceriesShopFragment_to_favouriteFragment"
-            app:destination="@id/favouriteFragment" />
+            app:destination="@id/favouriteFragment"
+            app:popUpTo="@id/groceriesShopFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_groceriesShopFragment_to_loginFragment2"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
@@ -373,6 +381,23 @@
         <action
             android:id="@+id/action_favouriteFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.jachai.jachaimart.ui.order.PaymentFragment"
+        android:label="PaymentFragment">
+        <argument
+            android:name="orderID"
+            app:argType="string"
+            android:defaultValue="na" />
+        <argument
+            android:name="url"
+            app:argType="string"
+            android:defaultValue="na" />
+        <action
+            android:id="@+id/action_paymentFragment_to_onGoingOrderFragment"
+            app:destination="@id/onGoingOrderFragment" />
     </fragment>
 
 
