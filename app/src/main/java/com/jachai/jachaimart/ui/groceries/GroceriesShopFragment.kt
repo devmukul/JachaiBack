@@ -51,7 +51,7 @@ class GroceriesShopFragment :
     }
 
     private val viewModel: GroceriesShopViewModel by viewModels()
-
+    private var mView: View? = null
     private var address: Address? = null
 
     private lateinit var categoryAdapter: CategoryAdapter
@@ -66,9 +66,27 @@ class GroceriesShopFragment :
 
     private lateinit var shopID: String
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+
+        if (isViewNull) {
+            GlobalScope.async {
+                if (SharedPreferenceUtil.getJCShopId() == null) {
+                    showNoShopFoundAlert()
+                } else {
+                    shopID = SharedPreferenceUtil.getJCShopId().toString()
+                    viewModel.requestForShopCategories(shopID)
+                }
+                viewModel.requestAllFavouriteProduct()
+                viewModel.requestAllAddress()
+                viewModel.getAllOrder()
+
+                initRecyclerViews()
+            }
+
+        }
 
         initView()
         subscribeObservers()
@@ -122,6 +140,27 @@ class GroceriesShopFragment :
 
     }
 
+    private fun initRecyclerViews() {
+        binding.apply {
+            rvCategories1.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                categoryAdapter =
+                    CategoryAdapter(requireContext(), emptyList(), this@GroceriesShopFragment)
+                adapter = categoryAdapter
+            }
+            rvCategories.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                categoryWithProductAdapter =
+                    CategoryWithProductAdapter(
+                        requireContext(),
+                        emptyList(),
+                        this@GroceriesShopFragment
+                    )
+                adapter = categoryWithProductAdapter
+            }
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -143,18 +182,8 @@ class GroceriesShopFragment :
     }
 
     override fun initView() {
-        if (SharedPreferenceUtil.getJCShopId() == null) {
-            showNoShopFoundAlert()
-        } else {
-            shopID = SharedPreferenceUtil.getJCShopId().toString()
-            viewModel.requestForShopCategories(shopID)
-        }
 
-        GlobalScope.async {
-            viewModel.requestAllFavouriteProduct()
-            viewModel.requestAllAddress()
-            viewModel.getAllOrder()
-        }
+
         binding.apply {
 
             layoutView.mobileNo.text = SharedPreferenceUtil.getMobileNo()
@@ -205,22 +234,7 @@ class GroceriesShopFragment :
 
 
 
-            rvCategories1.apply {
-                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-                categoryAdapter =
-                    CategoryAdapter(requireContext(), emptyList(), this@GroceriesShopFragment)
-                adapter = categoryAdapter
-            }
-            rvCategories.apply {
-                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                categoryWithProductAdapter =
-                    CategoryWithProductAdapter(
-                        requireContext(),
-                        emptyList(),
-                        this@GroceriesShopFragment
-                    )
-                adapter = categoryWithProductAdapter
-            }
+
             orderBottom.root.setOnClickListener {
                 if (JachaiFoodApplication.mDatabase.daoAccess().getOnGoingOrderCount() >= 1) {
                     val action =
@@ -239,7 +253,6 @@ class GroceriesShopFragment :
         }
 
 
-
     }
 
     override fun subscribeObservers() {
@@ -248,6 +261,7 @@ class GroceriesShopFragment :
 
 
                 if (it.categories?.isEmpty() == false) {
+                    initRecyclerViews()
                     categoryResponse = it
                     categoryAdapter.setList(it.categories)
                     categoryAdapter.notifyDataSetChanged()
@@ -283,8 +297,26 @@ class GroceriesShopFragment :
         viewModel.successNearestJCShopUpdate.observe(viewLifecycleOwner) {
             if (it == true) {
                 viewModel.successCategoryResponseLiveData.value = null
+                if (SharedPreferenceUtil.getJCShopId() == null) {
+                    showNoShopFoundAlert()
+                    initRecyclerViews()
+                } else {
+                    shopID = SharedPreferenceUtil.getJCShopId().toString()
+                    viewModel.requestForShopCategories(shopID)
+                }
+            } else {
+                if (SharedPreferenceUtil.getJCShopId() == null) {
+
+                    showNoShopFoundAlert()
+                    initRecyclerViews()
+                } else {
+                    shopID = SharedPreferenceUtil.getJCShopId().toString()
+                    viewModel.requestForShopCategories(shopID)
+                }
             }
             initView()
+
+
         }
 
         viewModel.successOnGoingOrderFound.observe(viewLifecycleOwner) {
@@ -315,7 +347,7 @@ class GroceriesShopFragment :
         }
 
 
-        viewModel.successOnGoingOrderListLiveData.observe(viewLifecycleOwner){
+        viewModel.successOnGoingOrderListLiveData.observe(viewLifecycleOwner) {
             viewModel.getCurrentOrderStatus()
         }
 

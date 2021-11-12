@@ -28,11 +28,13 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(
     companion object {
         val TAG = BaseFragment::class.java
     }
-
+    private var mView: View? = null
+    protected var isViewNull: Boolean = true
     private var _binding: BINDING? = null
     private var baseActivity: BaseActivity<BINDING>? = null
 
     protected val binding get() = _binding!!
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,12 +49,19 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        return _binding?.let {
-            it.lifecycleOwner = viewLifecycleOwner
-            it.executePendingBindings()
-            printClassName()
-            _binding?.root
+        return if (mView == null || _binding == null){
+            _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+            _binding?.let {
+                it.lifecycleOwner = viewLifecycleOwner
+                it.executePendingBindings()
+                printClassName()
+                isViewNull = true
+                mView = _binding?.root
+                _binding?.root
+            }
+        }else{
+            isViewNull= false
+            mView
         }
     }
 
@@ -70,7 +79,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(
     override fun onDestroyView() {
 
         super.onDestroyView()
-        _binding = null
+//        _binding = null
     }
 
     protected fun <VIEW_MODEL : ViewModel> bindViewModel(viewModel: VIEW_MODEL) {
