@@ -10,6 +10,8 @@ import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
+import com.jachai.jachaimart.model.order.history.Order
+import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
@@ -18,6 +20,7 @@ import com.jachai.jachaimart.ui.groceries.GroceriesShopViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.jachai.jachaimart.utils.constant.ApiConstants
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,6 +41,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private var addressCall: Call<AddressResponse>? = null
     private var deleteAddressCall: Call<AddressResponse>? = null
     private var orderCall: Call<OrderDetailsResponse>? = null
+    private var orderListCall: Call<OrderHistoryResponse>? = null
 
 
     var successOrderDetailsLiveData = MutableLiveData<OrderDetailsResponse>()
@@ -48,6 +52,12 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     var deleteAddressResponseLiveData = MutableLiveData<AddressResponse?>()
     var successNearestJCShopUpdate = MutableLiveData<Boolean?>()
     var errorAddressResponseLiveData = MutableLiveData<String?>()
+
+    var successOrderHistoryDetailsLiveData = MutableLiveData<OrderHistoryResponse>()
+    var successOnGoingOrderListLiveData = MutableLiveData<List<Order>>()
+    var successPreviousOrderListLiveData = MutableLiveData<List<Order>>()
+    var errorOrderDetailsLiveData = MutableLiveData<String>()
+
 
     fun requestAllAddress() {
         try {
@@ -243,4 +253,85 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
             JachaiLog.d(GroceriesShopViewModel.TAG, ex.message!!)
         }
     }
+
+
+    fun getAllOrder() {
+        try {
+            if (orderListCall != null) {
+                return
+            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+                return
+            }
+
+            orderListCall = orderService.getMyAllOrder(
+                "2021-10-01",
+                "2022-12-01",
+                0,
+                50
+
+            )
+
+            orderListCall?.enqueue(object : Callback<OrderHistoryResponse> {
+                override fun onResponse(
+                    call: Call<OrderHistoryResponse>,
+                    response: Response<OrderHistoryResponse>
+                ) {
+                    JachaiLog.d(TAG, response.body().toString())
+                    orderListCall = null
+                    successOrderHistoryDetailsLiveData.postValue(response.body())
+                    if (response.isSuccessful) {
+                        if (response.body()?.statusCode ?: 0 == HttpStatusCode.HTTP_OK) {
+                            postData(response.body())
+                        }
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<OrderHistoryResponse>, t: Throwable) {
+                    orderListCall = null
+                    JachaiLog.d(TAG, t.localizedMessage)
+                    errorOrderDetailsLiveData.postValue("Failed")
+
+                }
+            })
+
+        } catch (ex: Exception) {
+            errorDetailsLiveData.postValue("Failed")
+            JachaiLog.d(BaseViewModel.TAG, ex.message!!)
+        }
+    }
+
+    private fun postData(orderHistoryResponse: OrderHistoryResponse?) {
+        val orders = orderHistoryResponse?.orders
+        val onGoingOrder = mutableListOf<Order>()
+        val completedOrder = mutableListOf<Order>()
+        if (orders != null) {
+            for (i in orders.indices) {
+                if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
+                    ||
+                    orders[i].status.equals(ApiConstants.ORDER_DELIVERED)
+                    ||
+                    orders[i].status.equals(ApiConstants.ORDER_REVIEWED)
+                ) {
+                    completedOrder.add(orders[i])
+                } else {
+                    onGoingOrder.add(orders[i])
+                    JachaiFoodApplication.mDatabase
+                        .daoAccess()
+                        .insertOngoingOrder(orders[i])
+
+                }
+
+            }
+
+            successOnGoingOrderListLiveData.postValue(onGoingOrder)
+            successPreviousOrderListLiveData.postValue(completedOrder)
+
+
+        }
+    }
+
+
 }

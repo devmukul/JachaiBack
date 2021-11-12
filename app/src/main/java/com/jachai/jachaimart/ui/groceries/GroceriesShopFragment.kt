@@ -34,6 +34,8 @@ import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -147,9 +149,12 @@ class GroceriesShopFragment :
             shopID = SharedPreferenceUtil.getJCShopId().toString()
             viewModel.requestForShopCategories(shopID)
         }
-        viewModel.requestAllFavouriteProduct()
-        viewModel.requestAllAddress()
 
+        GlobalScope.async {
+            viewModel.requestAllFavouriteProduct()
+            viewModel.requestAllAddress()
+            viewModel.getAllOrder()
+        }
         binding.apply {
 
             layoutView.mobileNo.text = SharedPreferenceUtil.getMobileNo()
@@ -233,6 +238,8 @@ class GroceriesShopFragment :
 
         }
 
+
+
     }
 
     override fun subscribeObservers() {
@@ -305,6 +312,11 @@ class GroceriesShopFragment :
             }
 
 
+        }
+
+
+        viewModel.successOnGoingOrderListLiveData.observe(viewLifecycleOwner){
+            viewModel.getCurrentOrderStatus()
         }
 
 
