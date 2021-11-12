@@ -64,6 +64,7 @@ class CategoryFragment :
             viewPager.offscreenPageLimit = 1
             viewPager.clipToPadding = false
             viewPager.clipChildren = false
+            viewPager.isSaveEnabled = false
             viewPager.setCurrentItem(selectedTabPos, true)
 
             TabLayoutMediator(tabLayout, viewPager, true, true ) { tab, position ->
@@ -83,9 +84,13 @@ class CategoryFragment :
 
     class CategoryViewPagerAdapter(private val tabTitleList: List<CategoriesItem>, private val navController: NavController,
                                fragmentManager: Fragment) : FragmentStateAdapter(fragmentManager) {
+
+
         override fun getItemCount(): Int  = tabTitleList.size
 
         override fun createFragment(position: Int): Fragment = GroceryCategoryDetailsFragment.newInstance(tabTitleList[position].title!!, tabTitleList[position].id!!, navController)
+
+
 
 
     }
