@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
@@ -167,6 +168,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                 val action = CheckoutFragmentDirections.actionCheckoutFragmentToPaymentFragment()
                 action.orderID = mOrderId
                 action.url = it.url
+            JachaiLog.e(TAG,it.url)
                 navController.navigate(action)
         }
 

@@ -6,9 +6,7 @@ import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsRespo
 import com.jachai.jachaimart.model.response.location.LocationDetails
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface DriverService {
 
@@ -17,6 +15,10 @@ interface DriverService {
 
     @GET(ApiConstants.GET_ADDRESSES_BASE)
     fun getAllUserAddress(): Call<AddressResponse>
+
+    @PUT(ApiConstants.SAVE_ADDRESS_BASE)
+    fun deleteUserAddress(@Query("addressId") addressId: String): Call<AddressResponse>
+
 
 
 }

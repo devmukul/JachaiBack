@@ -61,7 +61,7 @@ data class Order(
     @SerializedName("total")
     var total: Double,
     @SerializedName("totalPaid")
-    var totalPaid: Int,
+    var totalPaid: Double,
     @SerializedName("type")
     var type: String,
     @SerializedName("vat")

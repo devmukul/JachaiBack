@@ -85,7 +85,7 @@ object SharedPreferenceUtil {
 
     fun saveAddressPosition(position: Int) {
         preferences.edit {
-            putInt(SharedPreferenceConstants.JC_ADDRESS_KEY, 0)
+            putInt(SharedPreferenceConstants.JC_ADDRESS_KEY, position)
         }
     }
 

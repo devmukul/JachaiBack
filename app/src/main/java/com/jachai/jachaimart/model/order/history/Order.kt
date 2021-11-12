@@ -81,5 +81,5 @@ class Order : Parcelable {
 
     @SerializedName("totalPaid")
     @ColumnInfo(defaultValue = "")
-    var totalPaid: Int? = null
+    var totalPaid: Double? = null
 }

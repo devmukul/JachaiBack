@@ -41,6 +41,7 @@ class MyAddressListFragment :
                 goToCheckout()
             }
 
+
             rvAddress.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 savedUserLocationAdapter =
@@ -97,6 +98,10 @@ class MyAddressListFragment :
         savedUserLocationAdapter.setList(data)
         savedUserLocationAdapter.notifyDataSetChanged()
         goToCheckout()
+    }
+
+    override fun onAddressDeletedListener(data: List<Address>, position: Int) {
+
     }
 
     private fun goToCheckout() {

@@ -47,7 +47,9 @@ class ProductDetailsFragment :
         showLoader()
 
         binding.apply {
-
+            cartBadge.text =
+                JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
+                    .toString()
             back.setOnClickListener {
                 navController.popBackStack()
             }
@@ -166,16 +168,22 @@ class ProductDetailsFragment :
                 oldPrice.visibility = View.GONE
             }
 
-            if (product?.variations?.get(0)?.productDiscount?.flat!! > 0 || product.variations[0]?.productDiscount?.percentage!! > 0) {
-                if (product.variations[0]?.productDiscount?.flat!! > 0) {
-                    discount.text = "Flat ৳${product.variations[0]?.productDiscount?.flat!!} OFF"
-                } else {
-                    if (product.variations[0]?.productDiscount?.percentage!! > 0) {
-                        discount.text = "${product.variations[0]?.productDiscount?.percentage}% OFF"
+            try {
+                if (product?.variations?.get(0)?.productDiscount?.flat!! > 0 || product.variations[0]?.productDiscount?.percentage!! > 0) {
+                    if (product.variations[0]?.productDiscount?.flat!! > 0) {
+                        discount.text =
+                            "Flat ৳${product.variations[0]?.productDiscount?.flat!!} OFF"
+                    } else {
+                        if (product.variations[0]?.productDiscount?.percentage!! > 0) {
+                            discount.text =
+                                "${product.variations[0]?.productDiscount?.percentage}% OFF"
+                        }
                     }
-                }
 
-            } else {
+                } else {
+                    discount.visibility = View.GONE
+                }
+            }catch (ex: Exception){
                 discount.visibility = View.GONE
             }
 
@@ -196,18 +204,18 @@ class ProductDetailsFragment :
                     .startChooser()
             }
 
-            favorite.isChecked = product.slug?.let { viewModel.isProductFavourite(it) } == false
+            favorite.isChecked = product?.slug?.let { viewModel.isProductFavourite(it) } == false
 
 
             favorite.setOnCheckedChangeListener { p0, isChecked ->
                 if (isChecked) {
-                    product.slug?.let {
+                    product?.slug?.let {
                         showLoader()
                         viewModel.requestForSetFavouriteProduct(slug = it)
 
                     }
                 } else {
-                    product.slug?.let {
+                    product?.slug?.let {
                         showLoader()
                         viewModel.requestForRemoveFavouriteProduct(slug = it)
                     }

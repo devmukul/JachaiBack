@@ -1,11 +1,8 @@
 package com.jachai.jachaimart.ui.groceries
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -39,9 +36,6 @@ import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import java.text.SimpleDateFormat
 import java.util.*
-
-import androidx.appcompat.app.AppCompatActivity
-import com.jachai.jachaimart.MainActivity
 
 
 class GroceriesShopFragment :
@@ -82,12 +76,17 @@ class GroceriesShopFragment :
                 .setTitle("Exit?")
                 .setMessage("Are you sure you want to exit?")
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("Exit") { arg0, arg1 -> requireActivity().finish() }.create().show()
+                .setPositiveButton("Exit") { arg0, arg1 -> requireActivity().finish() }.create()
+                .show()
 
         }
 
         mDrawerToggle = ActionBarDrawerToggle(
-            activity, binding.drawerLayout, binding.toolbarMain.toolbar ,R.string.drawer_open, R.string.drawer_close
+            activity,
+            binding.drawerLayout,
+            binding.toolbarMain.toolbar,
+            R.string.drawer_open,
+            R.string.drawer_close
         )
         mDrawerToggle.syncState()
         binding.toolbarMain.toolbar.setNavigationIcon(R.drawable.ic_hamburger_icon)
@@ -218,17 +217,18 @@ class GroceriesShopFragment :
                 adapter = categoryWithProductAdapter
             }
             orderBottom.root.setOnClickListener {
-                if (JachaiFoodApplication.mDatabase.daoAccess().getOnGoingOrderCount() >= 1){
-                    val action = GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
+                if (JachaiFoodApplication.mDatabase.daoAccess().getOnGoingOrderCount() >= 1) {
+                    val action =
+                        GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
                     navController.navigate(action)
 
-                }else{
-                    val action = GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
+                } else {
+                    val action =
+                        GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
                     navController.navigate(action)
                 }
 
             }
-
 
 
         }
@@ -289,12 +289,13 @@ class GroceriesShopFragment :
                     if (order != null) {
                         orderBottom.inProgressText.text = "$it orders in progress"
 
-                        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
+                        val format =
+                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
                         val date: Date = format.parse(order.createdAt)
                         val myFormat = SimpleDateFormat("dd-MM HH:mm a ", Locale.getDefault())
 
 
-                        orderBottom.orderTime.text =myFormat.format(date).toString()
+                        orderBottom.orderTime.text = myFormat.format(date).toString()
 
                         orderBottom.shopName.text = order.shop?.name
                     }
@@ -436,11 +437,14 @@ class GroceriesShopFragment :
 
     }
 
+    override fun onAddressDeletedListener(data: List<Address>, position: Int) {
+
+    }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         mDrawerToggle.onConfigurationChanged(newConfig)
     }
-
 
 
 }

@@ -10,6 +10,7 @@ import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
@@ -35,6 +36,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     private var nearestJCShopCall: Call<NearestJCShopResponse>? = null
     private var addressCall: Call<AddressResponse>? = null
+    private var deleteAddressCall: Call<AddressResponse>? = null
     private var orderCall: Call<OrderDetailsResponse>? = null
 
 
@@ -43,6 +45,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
 
     var successAddressResponseLiveData = MutableLiveData<AddressResponse?>()
+    var deleteAddressResponseLiveData = MutableLiveData<AddressResponse?>()
     var successNearestJCShopUpdate = MutableLiveData<Boolean?>()
     var errorAddressResponseLiveData = MutableLiveData<String?>()
 
@@ -201,4 +204,43 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     fun getDiscountPrice() = JachaiFoodApplication.mDatabase.daoAccess().geDiscountPrice()
 
 
+    fun deleteAddress(addressID: String) {
+        try {
+            if (deleteAddressCall != null) {
+                return
+            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+                return
+            }
+
+            deleteAddressCall = driverService.deleteUserAddress(addressID)
+
+            deleteAddressCall?.enqueue(object : Callback<AddressResponse> {
+                override fun onResponse(
+                    call: Call<AddressResponse>,
+                    response: Response<AddressResponse>
+                ) {
+                    deleteAddressCall = null
+                    if (response.isSuccessful) {
+                        deleteAddressResponseLiveData.value = response.body()
+                    }else{
+                        errorAddressResponseLiveData.value = "deleted failed"
+                    }
+                    JachaiLog.d(GroceriesShopViewModel.TAG, response.body().toString())
+
+                }
+
+                override fun onFailure(call: Call<AddressResponse>, t: Throwable) {
+                    deleteAddressCall = null
+                    errorAddressResponseLiveData.value = "deleted failed"
+                    JachaiLog.d(GroceriesShopViewModel.TAG, t.localizedMessage)
+
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(GroceriesShopViewModel.TAG, ex.message!!)
+        }
+    }
 }

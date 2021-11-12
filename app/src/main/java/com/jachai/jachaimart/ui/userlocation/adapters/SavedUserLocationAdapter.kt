@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -22,12 +23,14 @@ class SavedUserLocationAdapter(
         val mAddress: TextView = view.findViewById(R.id.mAddress)
         val title: TextView = view.findViewById(R.id.title)
         val radioButton: RadioButton = view.findViewById(R.id.radioButton)
+        val imageDelete: ImageView = view.findViewById(R.id.ivDelete)
+
         fun bind(context: Context, data: Address) {
 
             title.text = data.name.toString()
             mAddress.text = data.fullAddress.toString()
-
             radioButton.isChecked = data.isSelected
+
 
         }
 
@@ -47,6 +50,10 @@ class SavedUserLocationAdapter(
         holder.itemView.setOnClickListener {
             interaction.onAddressSelectedListener(list, position)
         }
+//        holder.imageDelete.setOnClickListener {
+//            interaction.onAddressDeletedListener(list,position)
+//        }
+
     }
 
     override fun getItemCount(): Int {
@@ -59,6 +66,7 @@ class SavedUserLocationAdapter(
 
     interface Interaction {
         fun onAddressSelectedListener(data: List<Address>, position: Int)
+        fun onAddressDeletedListener(data: List<Address>, position: Int)
     }
 
 }
