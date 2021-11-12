@@ -2,7 +2,9 @@ package com.jachai.jachaimart.ui.product
 
 import android.app.AlertDialog
 import android.graphics.Paint
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.widget.CompoundButton
 import androidx.core.app.ShareCompat
@@ -18,6 +20,10 @@ import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.ProductDetailsFragmentBinding
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
+import android.text.Spanned
+
+
+
 
 class ProductDetailsFragment :
     BaseFragment<ProductDetailsFragmentBinding>(R.layout.product_details_fragment) {
@@ -152,7 +158,29 @@ class ProductDetailsFragment :
                 .load(product?.productImage)
                 .into(image)
 
-            descriptionBody.text = product?.description
+            descriptionBody.loadData(
+                """
+                <!doctype html>
+                <html>
+                <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                </head>
+                <body style="margin: 0; padding: 0">
+                <div>
+                ${product?.description!!}
+                </div>
+                </body>
+                </html>
+                 """.trimIndent(), "text/html", "UTF-8")
+//
+//
+//            val htmlAsSpanned = Html.fromHtml("<html>${product?.description}</html>")
+
+//            descriptionBody.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                Html.fromHtml("<html>${product?.description}</html>", Html.FROM_HTML_MODE_COMPACT)
+//            } else {
+//                Html.fromHtml("<html>${product?.description}</html>")
+//            }
 
             val mPrice = product?.variations?.get(0)?.price?.mrp ?: 0.0
             val mDiscountedPrice = product?.variations?.get(0)?.price?.discountedPrice ?: 0.0
