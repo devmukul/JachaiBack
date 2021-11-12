@@ -5,11 +5,25 @@ plugins {
     id("org.jetbrains.kotlin.plugin.parcelize")
     id 'androidx.navigation.safeargs'
 }
+
+def keystorePropertiesFile = rootProject.file("Jachai_keyStore/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 def appPropertiesFile = rootProject.file("app-settings.properties")
 def appProperties = new Properties()
 appProperties.load(new FileInputStream(appPropertiesFile))
 def envProperties
 android {
+    signingConfigs {
+        JachaiSigningConfig {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     compileSdkVersion = appProperties['sdk.version.compile'] as int
 
     defaultConfig {
@@ -46,11 +60,13 @@ android {
         debug {
             debuggable true
             applicationIdSuffix ".debug"
+            signingConfig signingConfigs.JachaiSigningConfig
             manifestPlaceholders = [appName: "@string/app_name_debug_test"]
         }
         debugLive {
             debuggable true
             applicationIdSuffix ".debug.live"
+            signingConfig signingConfigs.JachaiSigningConfig
             manifestPlaceholders = [appName: "@string/app_name_debug_Live"]
         }
         releaseTest {
@@ -58,11 +74,14 @@ android {
             manifestPlaceholders = [appName: "@string/app_name_test"]
             applicationIdSuffix ".release.test"
             minifyEnabled false
+            signingConfig signingConfigs.JachaiSigningConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
+            debuggable true
             manifestPlaceholders = [appName: "@string/app_name"]
             minifyEnabled false
+            signingConfig signingConfigs.JachaiSigningConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

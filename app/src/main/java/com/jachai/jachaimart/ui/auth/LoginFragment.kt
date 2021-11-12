@@ -1,11 +1,13 @@
 package com.jachai.jachaimart.ui.auth
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -50,6 +52,10 @@ class LoginFragment : BaseFragment<LoginFragmentBinding>(R.layout.login_fragment
             dismissLoader()
             ToastUtils.error(message ?: getString(R.string.text_something_went_wrong))
         })
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finish()
+        }
 
     }
     override fun initView() {
