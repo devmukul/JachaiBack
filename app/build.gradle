@@ -61,17 +61,17 @@ android {
             debuggable true
             applicationIdSuffix ".debug"
             signingConfig signingConfigs.JachaiSigningConfig
-            manifestPlaceholders = [appName: "@string/app_name_debug_test"]
+            manifestPlaceholders = [appNameJachai: "@string/app_name_debug_test"]
         }
         debugLive {
             debuggable true
             applicationIdSuffix ".debug.live"
             signingConfig signingConfigs.JachaiSigningConfig
-            manifestPlaceholders = [appName: "@string/app_name_debug_Live"]
+            manifestPlaceholders = [appNameJachai: "@string/app_name_debug_Live"]
         }
         releaseTest {
             debuggable true
-            manifestPlaceholders = [appName: "@string/app_name_test"]
+            manifestPlaceholders = [appNameJachai: "@string/app_name_test"]
             applicationIdSuffix ".release.test"
             minifyEnabled false
             signingConfig signingConfigs.JachaiSigningConfig
@@ -79,7 +79,7 @@ android {
         }
         release {
             debuggable true
-            manifestPlaceholders = [appName: "@string/app_name"]
+            manifestPlaceholders = [appNameJachai: "@string/app_name_live"]
             minifyEnabled false
             signingConfig signingConfigs.JachaiSigningConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

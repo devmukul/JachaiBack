@@ -50,10 +50,6 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val window: Window = requireActivity().window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = resources.getColor(R.color.red)
         categoryId = this.arguments?.getString(CATEGORY_ID_KEY,"")
 
     }
