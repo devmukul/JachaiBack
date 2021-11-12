@@ -1,11 +1,15 @@
 package com.jachai.jachaimart.ui.auth
 
+import android.app.AlertDialog
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.tasks.OnFailureListener
@@ -24,6 +28,8 @@ import com.jachai.user.model.response.auth.signup.AuthRequest
 class VerifyCodeFragment : BaseFragment<VerifyCodeFragmentBinding>(R.layout.verify_code_fragment),
     MySMSBroadcastReceiver.OTPReceiveListener {
 
+    private lateinit var navController: NavController
+
     private val viewModel: VerifyCodeViewModel by viewModels()
 
     private val phoneNumberUtil = PhoneNumberUtil.getInstance()
@@ -38,11 +44,22 @@ class VerifyCodeFragment : BaseFragment<VerifyCodeFragmentBinding>(R.layout.veri
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        navController = Navigation.findNavController(view)
         mobile = arguments?.getString("mobile_number")!!
         initView()
         subscribeObservers()
 
         observeOTPTimer()
+
+        binding.closeButton.setOnClickListener {
+            onBackPressed()
+        }
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            view.findNavController()
+                .navigate(R.id.action_verifyCodeFragment_to_loginFragment)
+        }
 
         binding.titleTextView.text = "Enter 5 digit verification code we have sent to $mobile"
 

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Jachai</string>
 
+    <string name="app_name_test">Jachai Test</string>
+    <string name="app_name_debug_Live">Jachai Debug Live</string>
+    <string name="app_name_debug_test">Jachai Debug Test</string>
+
     <string name="app_name_short"><font color="#CD113B">Ja</font>Chai</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

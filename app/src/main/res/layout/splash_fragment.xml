@@ -31,9 +31,9 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_login_page"
+                app:srcCompat="@mipmap/ic_login_page"
                 android:layout_marginTop="40dp"/>
 
         </LinearLayout>
