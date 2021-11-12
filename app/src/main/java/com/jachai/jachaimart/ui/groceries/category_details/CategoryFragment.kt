@@ -33,9 +33,6 @@ class CategoryFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val window: Window = requireActivity().window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = resources.getColor(R.color.red)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,16 +62,16 @@ class CategoryFragment :
             val categoryViewPagerAdapter = CategoryViewPagerAdapter( categoryData.categoryList?.categories!!, navController, this@CategoryFragment)
             viewPager.adapter = categoryViewPagerAdapter
             viewPager.offscreenPageLimit = 1
-//            viewPager.clipToPadding = false
-//            viewPager.clipChildren = false
-//            viewPager.setCurrentItem(selectedTabPos, true)
+            viewPager.clipToPadding = false
+            viewPager.clipChildren = false
+            viewPager.setCurrentItem(selectedTabPos, true)
 
             TabLayoutMediator(tabLayout, viewPager, true, true ) { tab, position ->
                 tab.text = categoryData.categoryList?.categories!![position].title
 
             }.attach()
 
-//            tabLayout.setScrollPosition(selectedTabPos,0f,false, true)
+            tabLayout.setScrollPosition(selectedTabPos,0f,true, true)
 
 
 
