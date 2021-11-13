@@ -39,9 +39,9 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:background="#F8F8F8"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#F8F8F8"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -107,25 +107,25 @@
                         android:paddingTop="7dp"
                         android:paddingEnd="18dp"
                         android:paddingBottom="7dp"
-                        tools:text="JcF-09876546"
                         android:textColor="#27A2DB"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/textView25"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView25" />
+                        app:layout_constraintTop_toTopOf="@+id/textView25"
+                        tools:text="JcF-09876546" />
 
                     <TextView
                         android:id="@+id/orderFrom"
                         style="@style/heading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="Pizzaburg Dhamondi"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/textView28"
                         app:layout_constraintEnd_toEndOf="@+id/orderID"
-                        app:layout_constraintTop_toTopOf="@+id/textView28" />
+                        app:layout_constraintTop_toTopOf="@+id/textView28"
+                        tools:text="Pizzaburg Dhamondi" />
 
                     <TextView
                         android:id="@+id/textView25"
@@ -165,12 +165,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
+                        android:overScrollMode="never"
                         app:layout_constraintEnd_toEndOf="@+id/paymentType"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/textView11"
                         app:layout_constraintTop_toBottomOf="@+id/textView29"
                         tools:itemCount="1"
-                        android:overScrollMode="never"
                         tools:listitem="@layout/checkout_order_row" />
 
                     <View
@@ -424,35 +424,32 @@
                         app:layout_constraintTop_toTopOf="@+id/item_grand_total" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <Button
                     android:id="@+id/call_customer"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="4dp"
                     android:drawableLeft="@drawable/ic_phone_call"
                     android:drawablePadding="15dp"
                     android:text="CALL CUSTOMER CARE"
                     android:textColor="#CD113B"
                     app:cornerRadius="10dp"
-                    app:layout_constraintEnd_toStartOf="@+id/order_again"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/pay_now"
+                    app:layout_constraintStart_toStartOf="@+id/conlay_orders"
                     app:layout_constraintTop_toBottomOf="@+id/conlay_orders"
                     app:strokeColor="#C4C4C4" />
 
                 <Button
                     android:id="@+id/pay_now"
-                    android:layout_width="wrap_content"
+                    android:layout_width="147dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="16dp"
                     android:text="PAY NOW"
                     app:cornerRadius="10dp"
                     app:layout_constraintBottom_toBottomOf="@+id/call_customer"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/call_customer"
+                    app:layout_constraintEnd_toEndOf="@+id/conlay_orders"
                     app:layout_constraintTop_toTopOf="@+id/call_customer" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -488,30 +485,30 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="14dp"
-                        tools:text="Packaging your products"
                         android:textColor="#393E46"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/state1"
-                        app:layout_constraintTop_toBottomOf="@+id/state1" />
+                        app:layout_constraintTop_toBottomOf="@+id/state1"
+                        tools:text="Packaging your products" />
 
                     <ProgressBar
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:indeterminate="true"
                         android:id="@+id/state1"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="0dp"
                         android:layout_height="5dp"
                         android:layout_marginStart="14dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="4dp"
                         android:background="#E5E5E5"
+                        android:indeterminate="true"
                         app:layout_constraintEnd_toStartOf="@+id/state2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/time_duration" />
 
                     <ProgressBar
-                        style="?android:attr/progressBarStyleHorizontal"
                         android:id="@+id/state2"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="0dp"
                         android:layout_height="5dp"
                         android:layout_marginEnd="4dp"
@@ -522,8 +519,8 @@
                         app:layout_constraintTop_toTopOf="@+id/state1" />
 
                     <ProgressBar
-                        style="?android:attr/progressBarStyleHorizontal"
                         android:id="@+id/state3"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="0dp"
                         android:layout_height="5dp"
                         android:layout_marginEnd="4dp"
@@ -534,8 +531,8 @@
                         app:layout_constraintTop_toTopOf="@+id/state2" />
 
                     <ProgressBar
-                        style="?android:attr/progressBarStyleHorizontal"
                         android:id="@+id/state4"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="0dp"
                         android:layout_height="5dp"
                         android:layout_marginEnd="14dp"
@@ -564,11 +561,11 @@
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="14dp"
                         android:layout_marginBottom="12dp"
-                        tools:text="Your rider will pick it once it ready"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/status"
-                        app:layout_constraintTop_toBottomOf="@+id/status" />
+                        app:layout_constraintTop_toBottomOf="@+id/status"
+                        tools:text="Your rider will pick it once it ready" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -714,11 +711,11 @@
                             android:id="@+id/address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            tools:text="House #62, Road No #21, banani, Dhaka"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/textView23"
                             app:layout_constraintStart_toStartOf="@+id/textView23"
-                            app:layout_constraintTop_toBottomOf="@+id/textView23" />
+                            app:layout_constraintTop_toBottomOf="@+id/textView23"
+                            tools:text="House #62, Road No #21, banani, Dhaka" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
