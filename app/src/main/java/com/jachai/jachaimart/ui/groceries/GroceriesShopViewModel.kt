@@ -36,9 +36,9 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     private val groceryService = RetrofitConfig.groceryService
     private var favouriteProductCall: Call<FavouriteProductResponse>? = null
     var successCategoryResponseLiveData = MutableLiveData<CategoryResponse?>()
-    var successCategoryWithProductResponseLiveData =
-        MutableLiveData<CatWithRelatedProductsResponse?>()
-    private var errorResponseLiveData = MutableLiveData<String?>()
+    var successCategoryWithProductResponseLiveData = MutableLiveData<CatWithRelatedProductsResponse?>()
+    var errorResponseLiveData = MutableLiveData<String?>()
+    var errorCategoryWithProductResponseLiveData = MutableLiveData<String?>()
 
 
     fun requestForBanners() {
@@ -127,6 +127,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
                     call: Call<CatWithRelatedProductsResponse>,
                     t: Throwable
                 ) {
+                    errorCategoryWithProductResponseLiveData.postValue("Failed")
                     categoryWithProductCall = null
                     JachaiLog.d(TAG, errorResponseLiveData.value.toString())
 
@@ -136,6 +137,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
         } catch (ex: Exception) {
             JachaiLog.d(TAG, ex.message!!)
+            errorCategoryWithProductResponseLiveData.postValue("Failed")
         }
 
     }
