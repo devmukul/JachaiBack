@@ -256,9 +256,17 @@ class ProductDetailsFragment :
                 val count = icCount.text.toString().toInt()
                 val addCount = count + 1
                 val price = product?.variations?.get(0)?.price?.mrp?.times(addCount)
-                quantity = addCount
-                icCount.text = addCount.toString()
+
 //                productPrice?.text = price.toString()
+                val finalCount = if (addCount <= 6 ) {
+                    addCount
+                } else {
+                    showShortToast("Max limit reached")
+                    6
+                }
+                quantity = finalCount
+                icCount.text = finalCount.toString()
+
 
             }
 

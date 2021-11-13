@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CartFragmentBinding
@@ -110,8 +111,16 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     }
 
     override fun onQuantityItemAdded(item: ProductOrder?) {
-        val qty = (item?.quantity?.toInt() ?: 0) + 1
-        item?.quantity = qty
+        var qty = (item?.quantity?.toInt() ?: 0) + 1
+        val finalCount = if (qty <= 6 ) {
+            qty
+        } else {
+            showShortToast("Max limit reached")
+            6
+        }
+        qty = finalCount
+
+        item?.quantity = finalCount
         viewModel.updateQuantity(item)
 
 
