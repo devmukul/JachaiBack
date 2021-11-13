@@ -319,6 +319,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                     orders[i].status.equals(ApiConstants.ORDER_DELIVERED)
                     ||
                     orders[i].status.equals(ApiConstants.ORDER_REVIEWED)
+                    ||
+                    orders[i].status.equals(ApiConstants.ORDER_CANCELLED)
                 ) {
                     completedOrder.add(orders[i])
                 } else {

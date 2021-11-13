@@ -29,6 +29,7 @@ class OrderViewRowAdapter(
                     if (!isOnGoingOrder) {
                         tracOrder.visibility = View.GONE
                     }
+                    orderStatus.text = order.status.toString()
 
                 }
 

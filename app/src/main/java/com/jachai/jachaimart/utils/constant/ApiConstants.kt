@@ -90,6 +90,7 @@ object ApiConstants {
     const val ORDER_DELIVERED = "DELIVERED"
     const val ORDER_COMPLETED = "COMPLETED"
     const val ORDER_REVIEWED = "REVIEWED"
+    const val ORDER_CANCELLED = "CANCELLED"
 
 
 }
