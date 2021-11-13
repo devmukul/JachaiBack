@@ -137,6 +137,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
         } catch (ex: Exception) {
             JachaiLog.d(TAG, ex.message!!)
+            errorCategoryWithProductResponseLiveData.postValue("Failed")
         }
 
     }
