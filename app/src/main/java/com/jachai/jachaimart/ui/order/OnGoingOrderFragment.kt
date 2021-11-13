@@ -1,5 +1,6 @@
 package com.jachai.jachaimart.ui.order
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -159,7 +160,17 @@ class OnGoingOrderFragment :
             }
 
             if(orderDetailsResponse?.order?.totalPaid == orderDetailsResponse?.order?.total){
+                paymentStatus.text = "PAID"
+                paymentStatus.setTextColor(Color.parseColor("#28a745"))
                 payNow.visibility = View.GONE
+            }else if((orderDetailsResponse?.order?.total!! -  orderDetailsResponse.order.totalPaid)<=0.0){
+                paymentStatus.text = "PARTIAL PAID"
+                paymentStatus.setTextColor(Color.parseColor("#3A494E"))
+                payNow.visibility = View.VISIBLE
+            }else{
+                paymentStatus.text = "UNPAID"
+                paymentStatus.setTextColor(Color.parseColor("#FF0000"))
+                payNow.visibility = View.VISIBLE
             }
 
 

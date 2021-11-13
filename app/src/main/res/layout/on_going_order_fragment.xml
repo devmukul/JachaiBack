@@ -160,6 +160,30 @@
                         app:layout_constraintStart_toStartOf="@+id/textView28"
                         app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
+                    <TextView
+                        android:id="@+id/textView30"
+                        style="@style/heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Payment status"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="@+id/textView29"
+                        app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+                    <TextView
+                        android:id="@+id/paymentStatus"
+                        style="@style/heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:text="COD"
+                        android:textColor="#3A494E"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView30"
+                        app:layout_constraintEnd_toEndOf="@+id/orderID"
+                        app:layout_constraintTop_toTopOf="@+id/textView30" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="0dp"
@@ -169,7 +193,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/paymentType"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/textView11"
-                        app:layout_constraintTop_toBottomOf="@+id/textView29"
+                        app:layout_constraintTop_toBottomOf="@+id/textView30"
                         tools:itemCount="1"
                         tools:listitem="@layout/checkout_order_row" />
 
