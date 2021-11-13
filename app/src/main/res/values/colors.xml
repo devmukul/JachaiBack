@@ -14,4 +14,9 @@
     <color name="background_light_gray">#F8F8F8</color>
     <color name="red_roses">#CD113B</color>
     <color name="ferry">#393E46</color>
+
+    <color name="success">#28a745</color>
+    <color name="failed">#dc3545</color>
+    <color name="processing">#FF000000</color>
+
 </resources>

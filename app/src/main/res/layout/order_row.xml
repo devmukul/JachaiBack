@@ -10,6 +10,20 @@
         android:background="@drawable/dynamic_white_box_curve">
 
         <TextView
+            android:id="@+id/order_status"
+            style="@style/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:padding="5dp"
+            android:textSize="10sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/order_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/order_time"
+            tools:text="INITIATED" />
+
+        <TextView
             android:id="@+id/orderId"
             style="@style/small_text"
             android:layout_width="0dp"
@@ -29,7 +43,7 @@
             style="@style/heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/textView21"
             app:layout_constraintStart_toStartOf="@+id/orderId"
@@ -39,14 +53,15 @@
         <TextView
             android:id="@+id/order_time"
             style="@style/small_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="24dp"
             android:textColor="@color/gray"
             android:textSize="10sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/order_status"
             app:layout_constraintStart_toStartOf="@+id/shop_name"
             app:layout_constraintTop_toBottomOf="@+id/shop_name"
             tools:text="12:00 PM" />
@@ -57,11 +72,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:background="#14876A"
+            android:padding="5dp"
             android:text="TRACK ORDER"
             android:textColor="@color/white"
             android:textSize="10sp"
-            android:background="#14876A"
-            android:padding="5dp"
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/orderId"
             app:layout_constraintEnd_toEndOf="parent"
