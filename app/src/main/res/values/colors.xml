@@ -17,6 +17,6 @@
 
     <color name="success">#28a745</color>
     <color name="failed">#dc3545</color>
-    <color name="processing">#007bff</color>
+    <color name="processing">#FF000000</color>
 
 </resources>

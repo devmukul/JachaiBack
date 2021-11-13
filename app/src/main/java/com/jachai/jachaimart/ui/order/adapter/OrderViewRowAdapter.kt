@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.ui.order.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,16 +34,21 @@ class OrderViewRowAdapter(
                     }
                     orderStatus.text = order.status.toString()
                     if (order.status.equals(ApiConstants.ORDER_CANCELLED)){
-                        orderStatus.setBackgroundResource(R.color.failed)
+//                        orderStatus.setBackgroundResource(R.color.failed)
+
+                        orderStatus.setTextColor(view.resources.getColor(R.color.failed))
                     }else if (order.status.equals(ApiConstants.ORDER_COMPLETED)
                         ||
                         order.status.equals(ApiConstants.ORDER_DELIVERED)
                         ||
                         order.status.equals(ApiConstants.ORDER_REVIEWED)){
 
-                        orderStatus.setBackgroundResource(R.color.success)
+
+
+                        orderStatus.setTextColor(view.resources.getColor(R.color.success))
                     }else{
-                        orderStatus.setBackgroundResource(R.color.processing)
+                        orderStatus.setTextColor(view.resources.getColor(R.color.processing))
+
                     }
 
                 }
