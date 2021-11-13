@@ -48,7 +48,7 @@ class RelatedProductAdapter(
                     }else{
                         productPrice.text = mPrice.toFloat().toString()
                         productPreviousPrice.text = "${mDiscountedPrice.toFloat()}"
-                        productPreviousPrice.visibility = View.GONE
+                        productPreviousPrice.visibility = View.INVISIBLE
                     }
 
                     if (product.variations[0].productDiscount.flat > 0 || product.variations[0].productDiscount.percentage > 0){

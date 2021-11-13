@@ -42,7 +42,7 @@ class FavouriteFragment :
 
             toolbarMain.title.text = "Favourite Products"
             toolbarMain.back.setOnClickListener {
-                navController.popBackStack(R.id.groceriesShopFragment, true)
+                onBackPressed()
             }
 
             rvFavs.apply {

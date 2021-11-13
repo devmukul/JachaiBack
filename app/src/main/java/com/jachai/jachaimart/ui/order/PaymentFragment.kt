@@ -124,7 +124,7 @@ class PaymentFragment :
                         navController.navigate(action)
                         true
                     } else if (url.contains("payment/success")) {
-                        Toasty.error(requireContext(),"Payment Success!!").show()
+                        Toasty.success(requireContext(),"Payment Success!!").show()
                         navController.navigate(action)
                         true
                     } else {
