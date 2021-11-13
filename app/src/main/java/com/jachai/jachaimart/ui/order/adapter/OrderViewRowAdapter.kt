@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OrderRowBinding
 import com.jachai.jachaimart.model.order.history.Order
+import com.jachai.jachaimart.utils.constant.ApiConstants
 
 class OrderViewRowAdapter(
     private val context: Context,
@@ -30,6 +32,18 @@ class OrderViewRowAdapter(
                         tracOrder.visibility = View.GONE
                     }
                     orderStatus.text = order.status.toString()
+                    if (order.status.equals(ApiConstants.ORDER_CANCELLED)){
+                        orderStatus.setBackgroundResource(R.color.failed)
+                    }else if (order.status.equals(ApiConstants.ORDER_COMPLETED)
+                        ||
+                        order.status.equals(ApiConstants.ORDER_DELIVERED)
+                        ||
+                        order.status.equals(ApiConstants.ORDER_REVIEWED)){
+
+                        orderStatus.setBackgroundResource(R.color.success)
+                    }else{
+                        orderStatus.setBackgroundResource(R.color.processing)
+                    }
 
                 }
 
