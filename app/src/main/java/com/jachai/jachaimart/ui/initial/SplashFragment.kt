@@ -39,6 +39,21 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
     override fun initView() {
         binding.apply {
+            fetchCurrentLocation {
+                val mAddress = it?.address ?: "n/a"
+                val location = Location(it?.latitude, it?.longitude)
+                val cAddress = Address(
+                    mAddress,
+                    "0",
+                    location = location,
+                    "Current Location",
+                    "0",
+                    mAddress,
+                    mAddress,
+                    true
+                )
+                SharedPreferenceUtil.saveCurrentAddress(cAddress)
+            }
         }
     }
 

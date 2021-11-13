@@ -2,24 +2,22 @@ package com.jachai.jachaimart.ui.checkout
 
 import android.os.Bundle
 import android.view.View
-import android.widget.RadioButton
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CheckoutFragmentBinding
 import com.jachai.jachaimart.model.request.PaymentRequest
-import com.jachai.jachaimart.radiobutton.PresetValueButton
+import com.jachai.jachaimart.model.response.address.Address
+import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
-import kotlin.math.ceil
 
 class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout_fragment) {
 
@@ -48,18 +46,18 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         viewModel.geOrderList()
         updateBottomCart(0.0)
         binding.apply {
+
+
+
             toolbarMain.title.text = "Checkout"
             toolbarMain.back.setOnClickListener {
-                val action =
-                    CheckoutFragmentDirections.actionCheckoutFragmentToCartFragment()
-
+                val action = CheckoutFragmentDirections.actionCheckoutFragmentToCartFragment()
                 navController.navigate(action)
             }
 
             editAddress.setOnClickListener {
                 val action =
                     CheckoutFragmentDirections.actionCheckoutFragmentToMyAddressListFragment()
-
                 navController.navigate(action)
             }
 
@@ -74,17 +72,24 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             checkout.text = getString(R.string.place_order)
 
 
+
+
             clCheckout.setOnClickListener {
 
-                SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
+
+                val address: Address = (SharedPreferenceUtil.getDeliveryAddress()
+                    ?: SharedPreferenceUtil.getCurrentAddress()) as Address
+
+
+
                     viewModel.placeOrder(
                         SharedPreferenceUtil.getNotes().toString(),
-                        it1
+                        address
                     )
-                }
 
 
-                showLoader()
+
+
             }
             option1.value = "Cash on Delivery"
             option2.value = "Online Payment"
