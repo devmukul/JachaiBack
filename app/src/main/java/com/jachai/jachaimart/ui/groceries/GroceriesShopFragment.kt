@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.showLongToast
+import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
@@ -78,6 +79,7 @@ class GroceriesShopFragment :
                 } else {
                     shopID = SharedPreferenceUtil.getJCShopId().toString()
                     viewModel.requestForShopCategories(shopID)
+
                 }
                 viewModel.requestAllFavouriteProduct()
                 viewModel.requestAllAddress()
@@ -257,6 +259,7 @@ class GroceriesShopFragment :
 
     override fun subscribeObservers() {
         viewModel.successCategoryResponseLiveData.observe(viewLifecycleOwner) {
+
             if (it != null) {
 
 
@@ -265,7 +268,9 @@ class GroceriesShopFragment :
                     categoryResponse = it
                     categoryAdapter.setList(it.categories)
                     categoryAdapter.notifyDataSetChanged()
+                    showLoader()
                     viewModel.requestForShopCategoryWithRelatedProduct(it.categories, shopID)
+
 
 
                 } else {
@@ -278,7 +283,13 @@ class GroceriesShopFragment :
 
         }
 
+        viewModel.errorCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+            it?.let { it1 -> showShortToast(it1) }
+        }
+
         viewModel.successCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
             categoryWithProductAdapter.setList(it?.catWithRelatedProducts)
             categoryWithProductAdapter.notifyDataSetChanged()
         }
