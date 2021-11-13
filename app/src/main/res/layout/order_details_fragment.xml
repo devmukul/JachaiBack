@@ -52,21 +52,36 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/appbar">
 
+
+                <TextView
+                    android:id="@+id/additional_item"
+                    style="@style/heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="ADDITIONAL COMMENTS"
+                    android:textColor="#BDBDBD "
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout10" />
+
                 <TextView
                     android:id="@+id/comment"
                     style="@style/small_text"
                     android:layout_width="0dp"
-                    android:layout_height="71dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/box_curve_gray"
                     android:ems="10"
                     android:gravity="start|top"
                     android:padding="10dp"
-                    android:text="ADDITIONAL COMMENTS"
-                    android:textColor="#838282"
+                    android:textColor="#393E46"
+                    android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@+id/constraintLayout10"
                     app:layout_constraintStart_toStartOf="@+id/constraintLayout10"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout10" />
+                    app:layout_constraintTop_toBottomOf="@+id/additional_item" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout8"

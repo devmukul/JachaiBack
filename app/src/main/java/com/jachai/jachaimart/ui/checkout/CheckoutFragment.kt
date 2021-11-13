@@ -14,7 +14,6 @@ import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CheckoutFragmentBinding
 import com.jachai.jachaimart.model.request.PaymentRequest
 import com.jachai.jachaimart.model.response.address.Address
-import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
@@ -48,7 +47,6 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         binding.apply {
 
 
-
             toolbarMain.title.text = "Checkout"
             toolbarMain.back.setOnClickListener {
                 val action = CheckoutFragmentDirections.actionCheckoutFragmentToCartFragment()
@@ -68,12 +66,11 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             }
 
             updateCostCalculation()
+            if (!additionalComment.isNullOrEmpty()) {
+                comment.text = additionalComment.toString()
+            }
 
             checkout.text = getString(R.string.place_order)
-
-
-
-
             clCheckout.setOnClickListener {
 
 
@@ -82,12 +79,10 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
 
 
-                    viewModel.placeOrder(
-                        SharedPreferenceUtil.getNotes().toString(),
-                        address
-                    )
-
-
+                viewModel.placeOrder(
+                    SharedPreferenceUtil.getNotes().toString(),
+                    address
+                )
 
 
             }
@@ -125,7 +120,8 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             val dao = JachaiFoodApplication.mDatabase.daoAccess()
 
             val subtotal = dao.getProductOrderSubtotal()
-            val deliveryCost = SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+            val deliveryCost =
+                SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
             val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
             val vatSd = (subtotal * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
@@ -156,24 +152,32 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         viewModel.successOrderLiveData.observe(viewLifecycleOwner) {
             val jacjaiUrl = "https://www.jachai.com"
             viewModel.clearCreatedOrder()
-            if(mCheckedId == "SSL"){
+            if (mCheckedId == "SSL") {
                 mOrderId = it.orderId!!
-                val paymentRequest = PaymentRequest(it.total!!, it.orderId!!, mCheckedId, "$jacjaiUrl/payment/success", "$jacjaiUrl/payment/fail", "$jacjaiUrl/payment/cancel")
+                val paymentRequest = PaymentRequest(
+                    it.total!!,
+                    it.orderId!!,
+                    mCheckedId,
+                    "$jacjaiUrl/payment/success",
+                    "$jacjaiUrl/payment/fail",
+                    "$jacjaiUrl/payment/cancel"
+                )
                 viewModel.requestPayment(paymentRequest)
-            }else{
+            } else {
                 dismissLoader()
-                val action = CheckoutFragmentDirections.actionCheckoutFragmentToOnGoingOrderFragment()
+                val action =
+                    CheckoutFragmentDirections.actionCheckoutFragmentToOnGoingOrderFragment()
                 action.orderID = it.orderId.toString()
                 navController.navigate(action)
             }
         }
 
         viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {
-                dismissLoader()
-                val action = CheckoutFragmentDirections.actionCheckoutFragmentToPaymentFragment()
-                action.orderID = mOrderId
-                action.url = it.url
-                navController.navigate(action)
+            dismissLoader()
+            val action = CheckoutFragmentDirections.actionCheckoutFragmentToPaymentFragment()
+            action.orderID = mOrderId
+            action.url = it.url
+            navController.navigate(action)
         }
 
         viewModel.errorResponseLiveData.observe(viewLifecycleOwner, { message ->
