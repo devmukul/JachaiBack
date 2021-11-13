@@ -134,6 +134,7 @@ class GroceriesShopFragment :
 
         binding.layoutView.logout.setOnClickListener {
             SharedPreferenceUtil.clearAllPreferences();
+            JachaiFoodApplication.mDatabase.clearAllTables()
             val action =
                 GroceriesShopFragmentDirections.actionGroceriesShopFragmentToLoginFragment2()
             navController.navigate(action)
