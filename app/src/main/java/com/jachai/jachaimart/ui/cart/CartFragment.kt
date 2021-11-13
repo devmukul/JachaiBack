@@ -65,6 +65,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
                 val action =
                     CartFragmentDirections.actionCartFragmentToCheckoutFragment(null)
+                action.addNote = comment.text.toString()
                 navController.navigate(action)
             }
 

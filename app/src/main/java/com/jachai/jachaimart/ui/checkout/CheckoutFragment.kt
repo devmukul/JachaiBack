@@ -66,9 +66,9 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             }
 
             updateCostCalculation()
-            if (!additionalComment.isNullOrEmpty()) {
-                comment.text = additionalComment.toString()
-            }
+
+                comment.text = SharedPreferenceUtil.getNotes()
+
 
             checkout.text = getString(R.string.place_order)
             clCheckout.setOnClickListener {
