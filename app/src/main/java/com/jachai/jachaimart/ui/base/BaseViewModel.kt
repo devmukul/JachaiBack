@@ -4,14 +4,17 @@ package com.jachai.jachaimart.ui.base
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiFoodApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.model.order.PaymentRequestResponse
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
+import com.jachai.jachaimart.model.request.PaymentRequest
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
@@ -57,6 +60,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     var successOnGoingOrderListLiveData = MutableLiveData<List<Order>>()
     var successPreviousOrderListLiveData = MutableLiveData<List<Order>>()
     var errorOrderDetailsLiveData = MutableLiveData<String>()
+
+    var errorPaymentResponseLiveData =  MutableLiveData<String>()
 
 
     fun requestAllAddress() {
@@ -331,6 +336,50 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
 
         }
+    }
+
+    private val paymetService = RetrofitConfig.paymentService
+    private var paymentCall: Call<PaymentRequestResponse>? = null
+
+    var successPaymentRequestLiveData = MutableLiveData<PaymentRequestResponse>()
+
+    fun requestPayment( paymentRequest: PaymentRequest) {
+
+        try {
+            if (paymentCall != null) {
+                return
+            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+                return
+            }
+            paymentCall = paymetService.paymentRequest(paymentRequest)
+            JachaiLog.d(TAG, Gson().toJson(paymentRequest).toString())
+
+            paymentCall?.enqueue(object : Callback<PaymentRequestResponse> {
+                override fun onResponse(
+                    call: Call<PaymentRequestResponse>,
+                    response: Response<PaymentRequestResponse>
+                ) {
+                    JachaiLog.d(TAG, response.body().toString())
+                    paymentCall = null
+                    successPaymentRequestLiveData.postValue(response.body())
+
+
+                }
+
+                override fun onFailure(call: Call<PaymentRequestResponse>, t: Throwable) {
+                    paymentCall = null
+                    JachaiLog.d(TAG, t.localizedMessage)
+                    errorPaymentResponseLiveData.postValue("failed")
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(TAG, ex.message!!)
+        }
+
+
     }
 
 

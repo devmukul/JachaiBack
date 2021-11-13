@@ -34,12 +34,6 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
     private val orderService = RetrofitConfig.orderService
     private var orderCall: Call<OrderResponse>? = null
 
-    private val paymetService = RetrofitConfig.paymentService
-    private var paymentCall: Call<PaymentRequestResponse>? = null
-
-    var successPaymentRequestLiveData = MutableLiveData<PaymentRequestResponse>()
-
-
     fun placeOrder(additionalComment: String, deliveryAddress: Address) {
         var productOrderList: List<ProductOrder> = db.getProductOrders()
 
@@ -86,45 +80,6 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
 
                 override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
                     orderCall = null
-                    JachaiLog.d(TAG, t.localizedMessage)
-                    errorResponseLiveData.postValue("failed")
-                }
-            })
-
-
-        } catch (ex: Exception) {
-            JachaiLog.d(TAG, ex.message!!)
-        }
-
-
-    }
-
-    fun requestPayment( paymentRequest: PaymentRequest) {
-
-        try {
-            if (paymentCall != null) {
-                return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
-                return
-            }
-            paymentCall = paymetService.paymentRequest(paymentRequest)
-            JachaiLog.d(TAG, Gson().toJson(paymentRequest).toString())
-
-            paymentCall?.enqueue(object : Callback<PaymentRequestResponse> {
-                override fun onResponse(
-                    call: Call<PaymentRequestResponse>,
-                    response: Response<PaymentRequestResponse>
-                ) {
-                    JachaiLog.d(TAG, response.body().toString())
-                    paymentCall = null
-                    successPaymentRequestLiveData.postValue(response.body())
-
-
-                }
-
-                override fun onFailure(call: Call<PaymentRequestResponse>, t: Throwable) {
-                    paymentCall = null
                     JachaiLog.d(TAG, t.localizedMessage)
                     errorResponseLiveData.postValue("failed")
                 }

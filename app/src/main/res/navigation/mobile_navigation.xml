@@ -189,6 +189,10 @@
             android:id="@+id/action_onGoingOrderFragment_to_groceriesShopFragment"
             app:destination="@id/groceriesShopFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_onGoingOrderFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/groceriesShopFragment"

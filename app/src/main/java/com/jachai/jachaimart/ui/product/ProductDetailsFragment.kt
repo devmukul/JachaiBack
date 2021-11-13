@@ -158,8 +158,11 @@ class ProductDetailsFragment :
                 .load(product?.productImage)
                 .into(image)
 
-            descriptionBody.loadData(
-                """
+
+            if(product?.description != null) {
+
+                descriptionBody.loadData(
+                    """
                 <!doctype html>
                 <html>
                 <head>
@@ -171,7 +174,11 @@ class ProductDetailsFragment :
                 </div>
                 </body>
                 </html>
-                 """.trimIndent(), "text/html", "UTF-8")
+                 """.trimIndent(), "text/html", "UTF-8"
+                )
+            }else{
+                descriptionBody.visibility = View.GONE
+            }
 //
 //
 //            val htmlAsSpanned = Html.fromHtml("<html>${product?.description}</html>")

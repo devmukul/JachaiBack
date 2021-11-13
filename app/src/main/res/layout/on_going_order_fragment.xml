@@ -443,7 +443,7 @@
                     app:strokeColor="#C4C4C4" />
 
                 <Button
-                    android:id="@+id/order_again"
+                    android:id="@+id/pay_now"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -454,6 +454,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/call_customer"
                     app:layout_constraintTop_toTopOf="@+id/call_customer" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout8"
                     android:layout_width="match_parent"

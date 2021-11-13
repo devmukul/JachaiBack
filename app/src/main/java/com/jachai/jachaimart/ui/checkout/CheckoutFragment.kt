@@ -168,7 +168,6 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                 val action = CheckoutFragmentDirections.actionCheckoutFragmentToPaymentFragment()
                 action.orderID = mOrderId
                 action.url = it.url
-            JachaiLog.e(TAG,it.url)
                 navController.navigate(action)
         }
 

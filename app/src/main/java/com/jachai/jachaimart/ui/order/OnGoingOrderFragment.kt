@@ -1,6 +1,5 @@
 package com.jachai.jachaimart.ui.order
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -13,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OnGoingOrderFragmentBinding
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
+import com.jachai.jachaimart.model.request.PaymentRequest
 import com.jachai.jachaimart.ui.base.BaseFragment
+import com.jachai.jachaimart.ui.checkout.CheckoutFragmentDirections
 import com.jachai.jachaimart.ui.order.adapter.OrderDetailsAdapter
 import com.jachai.jachaimart.utils.constant.ApiConstants
-import es.dmoral.toasty.Toasty
 import com.jachai.jachaimart.utils.constant.CommonConstants
 
 class OnGoingOrderFragment :
@@ -67,6 +67,7 @@ class OnGoingOrderFragment :
             orderDetailsAdapter = OrderDetailsAdapter(requireContext(), emptyList())
             adapter = orderDetailsAdapter
         }
+
         binding.callCustomer.setOnClickListener {
             phoneCall(CommonConstants.CUSTOMER_CARE_PHONE_NO)
 
@@ -78,30 +79,31 @@ class OnGoingOrderFragment :
 
     }
 
-    private fun updateUI(it: OrderDetailsResponse?) {
+    private fun updateUI(orderDetailsResponse
+                         : OrderDetailsResponse?) {
         binding.apply {
-            toolbarMain.subTitle.text = it?.order?.shop?.name.toString()
-            address.text = it?.order?.shippingAddress.toString()
-            orderID.text = it?.order?.orderId.toString()
-            orderFrom.text = it?.order?.shop?.name.toString()
-            itemCost.text = it?.order?.subTotal.toString()
-            itemGrandTotal.text = it?.order?.total.toString()
-            deliveryCharge.text = it?.order?.deliveryCharge.toString()
-            totalDiscount.text = "-${it?.order?.discount ?: 0.0}"
-            vat.text = it?.order?.vat.toString()
-            paymentType.text = it?.order?.paymentMethod
+            toolbarMain.subTitle.text = orderDetailsResponse?.order?.shop?.name.toString()
+            address.text = orderDetailsResponse?.order?.shippingAddress.toString()
+            orderID.text = orderDetailsResponse?.order?.orderId.toString()
+            orderFrom.text = orderDetailsResponse?.order?.shop?.name.toString()
+            itemCost.text = orderDetailsResponse?.order?.subTotal.toString()
+            itemGrandTotal.text = orderDetailsResponse?.order?.total.toString()
+            deliveryCharge.text = orderDetailsResponse?.order?.deliveryCharge.toString()
+            totalDiscount.text = "-${orderDetailsResponse?.order?.discount ?: 0.0}"
+            vat.text = orderDetailsResponse?.order?.vat.toString()
+            paymentType.text = orderDetailsResponse?.order?.paymentMethod
 
-            deliverManName.text = it?.order?.deliveryMan?.name
+            deliverManName.text = orderDetailsResponse?.order?.deliveryMan?.name
 
             when {
-                it?.order?.status?.equals(ApiConstants.ORDER_INITIATED) == true -> {
+                orderDetailsResponse?.order?.status?.equals(ApiConstants.ORDER_INITIATED) == true -> {
                     state1.isIndeterminate = true
                     status.text = "Initiating order"
                     statusMessage.text = "Shop will pick your order soon."
                     timeDuration.text = "25 - 30 mins"
 
                 }
-                it?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_ACCEPTED_BY_DELIVERY_MAN) == true -> {
+                orderDetailsResponse?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_ACCEPTED_BY_DELIVERY_MAN) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
                     state1.isIndeterminate = false
                     state1.progress = 100
@@ -111,7 +113,7 @@ class OnGoingOrderFragment :
                     timeDuration.text = "22 - 28 mins"
 
                 }
-                it?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_PICKED) == true -> {
+                orderDetailsResponse?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_PICKED) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
                     state1.isIndeterminate = false
                     state1.progress = 100
@@ -124,7 +126,7 @@ class OnGoingOrderFragment :
 
 
                 }
-                it?.order?.status?.equals(ApiConstants.ORDER_PROCESSING) == true -> {
+                orderDetailsResponse?.order?.status?.equals(ApiConstants.ORDER_PROCESSING) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
                     state1.isIndeterminate = false
                     state1.progress = 100
@@ -137,7 +139,7 @@ class OnGoingOrderFragment :
                     statusMessage.text = "Your order is on the way for delivery"
                     timeDuration.text = "0 - 5 mins"
                 }
-                it?.order?.status?.equals(ApiConstants.ORDER_DELIVERED) == true -> {
+                orderDetailsResponse?.order?.status?.equals(ApiConstants.ORDER_DELIVERED) == true -> {
                     constraintLayout9.visibility = View.VISIBLE
                     state1.isIndeterminate = false
                     state1.progress = 100
@@ -156,9 +158,21 @@ class OnGoingOrderFragment :
 
             }
 
+            if(orderDetailsResponse?.order?.totalPaid == orderDetailsResponse?.order?.total){
+                payNow.visibility = View.GONE
+            }
 
-            orderDetailsAdapter.setList(it?.order?.products)
+
+            orderDetailsAdapter.setList(orderDetailsResponse?.order?.products)
             orderDetailsAdapter.notifyDataSetChanged()
+
+            payNow.setOnClickListener {
+                showLoader()
+                val jacjaiUrl = "https://www.jachai.com"
+                val order = orderDetailsResponse?.order
+                val paymentRequest = PaymentRequest((order?.total!! - order.totalPaid),orderId, "SSL", "$jacjaiUrl/payment/success", "$jacjaiUrl/payment/fail", "$jacjaiUrl/payment/cancel")
+                viewModel.requestPayment(paymentRequest)
+            }
 
 
         }
@@ -167,6 +181,14 @@ class OnGoingOrderFragment :
     override fun subscribeObservers() {
         viewModel.successOrderDetailsLiveData.observe(viewLifecycleOwner) {
             updateUI(it)
+        }
+
+        viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+            val action = OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
+            action.orderID = orderId
+            action.url = it.url
+            navController.navigate(action)
         }
     }
 
