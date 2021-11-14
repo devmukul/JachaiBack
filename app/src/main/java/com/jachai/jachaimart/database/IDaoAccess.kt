@@ -18,6 +18,7 @@ interface IDaoAccess {
 
     @Transaction
     fun insertOrder(productOrder: ProductOrder, isFromSameShop: Boolean): Boolean {
+
         if (isFromSameShop) {
             insertProductOrder(productOrder)
         } else {
@@ -37,6 +38,9 @@ interface IDaoAccess {
 
     @Query("SELECT count(*) FROM ProductOrder WHERE shopId = :shopID")
     fun getProductByShopID(shopID: String): Int
+
+    @Query("SELECT count(*) FROM ProductOrder WHERE product = :productId AND shopId = :shopID")
+    fun getProductByProductID(productId: String, shopID: String): Int
 
 
     @Query("SELECT count(*) FROM ProductOrder")

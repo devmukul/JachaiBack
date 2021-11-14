@@ -31,7 +31,7 @@ class ProductOrder {
     var variant: String? = null
 
     @ColumnInfo(defaultValue = "")
-    var shopId: String? = null
+    var shopId: String = ""
 
     @ColumnInfo(defaultValue = "")
     var shopName: String? = null

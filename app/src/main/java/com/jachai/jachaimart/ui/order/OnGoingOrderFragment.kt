@@ -15,7 +15,6 @@ import com.jachai.jachaimart.databinding.OnGoingOrderFragmentBinding
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.request.PaymentRequest
 import com.jachai.jachaimart.ui.base.BaseFragment
-import com.jachai.jachaimart.ui.checkout.CheckoutFragmentDirections
 import com.jachai.jachaimart.ui.order.adapter.OrderDetailsAdapter
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import com.jachai.jachaimart.utils.constant.CommonConstants
@@ -73,6 +72,9 @@ class OnGoingOrderFragment :
             phoneCall(CommonConstants.CUSTOMER_CARE_PHONE_NO)
 
         }
+        binding.toolbarMain.helpButton.setOnClickListener {
+            phoneCall(CommonConstants.CUSTOMER_CARE_PHONE_NO)
+        }
 
 
 
@@ -80,8 +82,10 @@ class OnGoingOrderFragment :
 
     }
 
-    private fun updateUI(orderDetailsResponse
-                         : OrderDetailsResponse?) {
+    private fun updateUI(
+        orderDetailsResponse
+        : OrderDetailsResponse?
+    ) {
         binding.apply {
             toolbarMain.subTitle.text = orderDetailsResponse?.order?.shop?.name.toString()
             address.text = orderDetailsResponse?.order?.shippingAddress.toString()
@@ -95,6 +99,8 @@ class OnGoingOrderFragment :
             paymentType.text = orderDetailsResponse?.order?.paymentMethod
 
             deliverManName.text = orderDetailsResponse?.order?.deliveryMan?.name
+            comment.text = orderDetailsResponse?.order?.orderNote.toString()
+
 
             when {
                 orderDetailsResponse?.order?.status?.equals(ApiConstants.ORDER_INITIATED) == true -> {
@@ -181,7 +187,14 @@ class OnGoingOrderFragment :
                 showLoader()
                 val jacjaiUrl = "https://www.jachai.com"
                 val order = orderDetailsResponse?.order
-                val paymentRequest = PaymentRequest((order?.total!! - order.totalPaid),orderId, "SSL", "$jacjaiUrl/payment/success", "$jacjaiUrl/payment/fail", "$jacjaiUrl/payment/cancel")
+                val paymentRequest = PaymentRequest(
+                    (order?.total!! - order.totalPaid),
+                    orderId,
+                    "SSL",
+                    "$jacjaiUrl/payment/success",
+                    "$jacjaiUrl/payment/fail",
+                    "$jacjaiUrl/payment/cancel"
+                )
                 viewModel.requestPayment(paymentRequest)
             }
 
@@ -196,7 +209,8 @@ class OnGoingOrderFragment :
 
         viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
-            val action = OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
+            val action =
+                OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
             action.orderID = orderId
             action.url = it.url
             navController.navigate(action)

@@ -50,9 +50,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
                     android:layout_width="0dp"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="@+id/payment_radio"
                     app:layout_constraintStart_toStartOf="@+id/payment_radio"
                     app:layout_constraintTop_toBottomOf="@+id/payment_radio">
@@ -187,6 +187,35 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
                 <TextView
+                    android:id="@+id/additional_item"
+                    style="@style/heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="ADDITIONAL COMMENTS"
+                    android:textColor="#BDBDBD "
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/imageView9"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+
+                <TextView
+                    android:id="@+id/comment"
+                    style="@style/small_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/box_curve_gray"
+                    android:ems="10"
+                    android:textColor="#393E46"
+                    android:textSize="12sp"
+                    android:gravity="start|top"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/edit_address"
+                    app:layout_constraintStart_toStartOf="@+id/additional_item"
+                    app:layout_constraintTop_toBottomOf="@+id/additional_item" />
+
+                <TextView
                     android:id="@+id/textView12"
                     style="@style/heading"
                     android:layout_width="wrap_content"
@@ -196,8 +225,8 @@
                     android:textColor="#BDBDBD "
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/imageView9"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+                    app:layout_constraintStart_toStartOf="@+id/comment"
+                    app:layout_constraintTop_toBottomOf="@+id/comment" />
 
                 <com.jachai.jachaimart.radiobutton.PresetRadioGroup
                     android:id="@+id/payment_radio"

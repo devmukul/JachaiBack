@@ -271,7 +271,7 @@ data class VariationsItem(
     val productDiscount: ProductDiscount? = null,
 
     @field:SerializedName("stock")
-    val stock: Int? = null,
+    val stock: Int = 0,
 
     @field:SerializedName("quantitativeProductDiscount")
     val quantitativeProductDiscount: QuantitativeProductDiscount? = null

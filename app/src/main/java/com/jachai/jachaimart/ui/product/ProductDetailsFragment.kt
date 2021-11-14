@@ -2,11 +2,8 @@ package com.jachai.jachaimart.ui.product
 
 import android.app.AlertDialog
 import android.graphics.Paint
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.View
-import android.widget.CompoundButton
 import androidx.core.app.ShareCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -20,9 +17,6 @@ import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.ProductDetailsFragmentBinding
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
-import android.text.Spanned
-
-
 
 
 class ProductDetailsFragment :
@@ -92,13 +86,12 @@ class ProductDetailsFragment :
             })
 
         viewModel.successAddToCartData.observe(viewLifecycleOwner, {
-            if (it == true) {
-                binding.apply {
+            binding.apply {
+                if (it == true) {
+
                     cartBadge.text =
                         JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
                             .toString()
-
-                    showShortToast("Product Added")
 
 
                 }
@@ -135,7 +128,7 @@ class ProductDetailsFragment :
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)
         builder.setTitle(getString(R.string.app_name_short) + " alert")
-        builder.setMessage("Do have already selected products from a different restaurant. if you continue, your cart and selection will be removed")
+        builder.setMessage("Do have already selected products from a different shop. if you continue, your cart and selection will be removed")
 
         builder.setPositiveButton("Continue") { _, _ ->
 
@@ -159,7 +152,7 @@ class ProductDetailsFragment :
                 .into(image)
 
 
-            if(product?.description != null) {
+            if (product?.description != null) {
 
                 descriptionBody.loadData(
                     """
@@ -176,7 +169,7 @@ class ProductDetailsFragment :
                 </html>
                  """.trimIndent(), "text/html", "UTF-8"
                 )
-            }else{
+            } else {
                 descriptionBody.visibility = View.GONE
             }
 //
@@ -218,7 +211,7 @@ class ProductDetailsFragment :
                 } else {
                     discount.visibility = View.GONE
                 }
-            }catch (ex: Exception){
+            } catch (ex: Exception) {
                 discount.visibility = View.GONE
             }
 
@@ -263,9 +256,17 @@ class ProductDetailsFragment :
                 val count = icCount.text.toString().toInt()
                 val addCount = count + 1
                 val price = product?.variations?.get(0)?.price?.mrp?.times(addCount)
-                quantity = addCount
-                icCount.text = addCount.toString()
+
 //                productPrice?.text = price.toString()
+                val finalCount = if (addCount <= 6 ) {
+                    addCount
+                } else {
+                    showShortToast("Max limit reached")
+                    6
+                }
+                quantity = finalCount
+                icCount.text = finalCount.toString()
+
 
             }
 
@@ -296,7 +297,16 @@ class ProductDetailsFragment :
                                 .isInsertionApplicable(shopID = it)
                         } == true) {
 //
+                        if (JachaiFoodApplication.mDatabase.daoAccess()
+                                .getProductByProductID(product.id!!, product.shop.id) > 0
+                        ) {
 
+                            showShortToast("Product already added")
+
+                        } else {
+
+                            showShortToast("Product added")
+                        }
                         viewModel.saveProduct(it1, quantity, product.shop, true)
 
                     } else {

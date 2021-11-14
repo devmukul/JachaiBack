@@ -89,6 +89,7 @@ class OrderDetailsFragment :
             vat.text = it?.order?.vat.toString()
             deliverManName.text = it?.order?.deliveryMan?.name
             paymentType.text = it?.order?.paymentMethod
+            comment.text = it?.order?.orderNote
 
             orderDetailsAdapter.setList(it?.order?.products)
             orderDetailsAdapter.notifyDataSetChanged()
