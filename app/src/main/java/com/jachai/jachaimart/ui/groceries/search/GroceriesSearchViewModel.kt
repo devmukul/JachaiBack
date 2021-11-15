@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.model.response.category.Product
 import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.response.search.PopularKeywordResponse
@@ -123,7 +123,7 @@ class GroceriesSearchViewModel  constructor(val repository: DoggoImagesRepositor
 
     fun geSearchHistoryList() {
         serachSuccessList.postValue(
-            JachaiFoodApplication.mDatabase.daoAccess().getSearchHistory()
+            JachaiApplication.mDatabase.daoAccess().getSearchHistory()
         )
     }
 

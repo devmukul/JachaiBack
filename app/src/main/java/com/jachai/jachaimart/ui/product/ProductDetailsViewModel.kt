@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.request.FProductsItem
@@ -45,8 +45,8 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         try {
             if (productDetailsCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
             productDetailsCall = groceryService.getProductDetails(slug)
@@ -119,7 +119,7 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         productOrder.discountedPrice = mDiscountPrice
 
         successAddToCartData.postValue(
-            JachaiFoodApplication.mDatabase.daoAccess().insertOrder(productOrder, isFromSameShop)
+            JachaiApplication.mDatabase.daoAccess().insertOrder(productOrder, isFromSameShop)
         )
 
 
@@ -130,8 +130,8 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         try {
             if (favouriteProductCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
             val fProductsItem = FProductsItem(slug)
@@ -174,8 +174,8 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         try {
             if (favouriteProductCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
             val fProductsItem = FProductsItem(slug)
@@ -217,15 +217,15 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
     private fun updateFavouriteProductTable(slug: String, isDelete: Boolean?) {
         val fProductsItem = FProductsItem(slug)
         if (isDelete == false) {
-            JachaiFoodApplication.mDatabase.daoAccess()
+            JachaiApplication.mDatabase.daoAccess()
                 .insertFavouriteProduct(listOf(fProductsItem))
         } else {
-            JachaiFoodApplication.mDatabase.daoAccess().deleteFavouriteProduct(slug)
+            JachaiApplication.mDatabase.daoAccess().deleteFavouriteProduct(slug)
         }
     }
 
     fun isProductFavourite(slug: String): Boolean {
-        return JachaiFoodApplication.mDatabase.daoAccess().getFavouriteProductById(slug).isEmpty()
+        return JachaiApplication.mDatabase.daoAccess().getFavouriteProductById(slug).isEmpty()
     }
 
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.utils.HttpStatusCode
@@ -27,7 +27,7 @@ class LoginViewModel (application: Application) : AndroidViewModel(application) 
         const val DEFAULT_COUNT_DOWN_TIME = 1000 * 60 * 5L
     }
 
-    private val preferences = JachaiFoodApplication.preferences
+    private val preferences = JachaiApplication.preferences
 
     private val authService = RetrofitConfig.authService
     private var otpRequestCall: Call<GenericResponse>? = null
@@ -39,8 +39,8 @@ class LoginViewModel (application: Application) : AndroidViewModel(application) 
         try {
             if (otpRequestCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 

@@ -6,14 +6,13 @@ import com.google.gson.Gson
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.order.OrderResponse
 import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.request.OrderRequest
 import com.jachai.jachaimart.model.request.ProductsItem
 import com.jachai.jachaimart.model.request.ShippingLocation
-import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
@@ -23,7 +22,7 @@ import retrofit2.Response
 
 class CheckoutViewModel(application: Application) : BaseViewModel(application) {
 
-    val db = JachaiFoodApplication.mDatabase.daoAccess()
+    val db = JachaiApplication.mDatabase.daoAccess()
     var successProductOrderListLiveData = MutableLiveData<List<ProductOrder>>()
     var successOrderLiveData = MutableLiveData<OrderResponse>()
     var errorResponseLiveData =  MutableLiveData<String>()
@@ -56,8 +55,8 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
         try {
             if (orderCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
             orderCall = orderService.orderRequest(orderRequest)
@@ -92,12 +91,12 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
 
     fun geOrderList() {
         successProductOrderListLiveData.postValue(
-            JachaiFoodApplication.mDatabase.daoAccess().getProductOrders()
+            JachaiApplication.mDatabase.daoAccess().getProductOrders()
         )
     }
 
     fun clearCreatedOrder() {
-        JachaiFoodApplication.mDatabase.daoAccess().clearOrderTable()
+        JachaiApplication.mDatabase.daoAccess().clearOrderTable()
 
     }
 

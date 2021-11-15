@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachai_driver.utils.ToastUtils
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CheckoutFragmentBinding
 import com.jachai.jachaimart.model.request.PaymentRequest
@@ -121,7 +121,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
     private fun updateCostCalculation() {
         binding.apply {
-            val dao = JachaiFoodApplication.mDatabase.daoAccess()
+            val dao = JachaiApplication.mDatabase.daoAccess()
 
             val subtotal = dao.getProductOrderSubtotal()
 
@@ -219,10 +219,10 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         binding.apply {
 
             itemCount.text =
-                JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
+                JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
                     .toString()
             totalCount.text = if (grandTotal == 0.0) {
-                String.format("%.2f", JachaiFoodApplication.mDatabase.daoAccess().totalCost())
+                String.format("%.2f", JachaiApplication.mDatabase.daoAccess().totalCost())
 
             } else {
                 String.format("%.2f", grandTotal)

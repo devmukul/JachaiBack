@@ -12,7 +12,7 @@ import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.jachai.jachai_driver.utils.JachaiLog
-import com.jachai.jachaimart.JachaiFoodApplication.Companion.placesClient
+import com.jachai.jachaimart.JachaiApplication.Companion.placesClient
 import com.jachai.jachaimart.model.response.location.LocationDetails
 
 class SelectUserLocationViewModel : ViewModel() {

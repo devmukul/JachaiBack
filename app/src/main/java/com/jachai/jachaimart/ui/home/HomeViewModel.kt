@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.home.BannerResponse
 import com.jachai.jachaimart.model.response.home.CategoryResponse
@@ -38,8 +38,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         try {
             if (bannerCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -76,8 +76,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         try {
             if (categoryCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -114,8 +114,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         try {
             if (restaurantAroundYouCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 

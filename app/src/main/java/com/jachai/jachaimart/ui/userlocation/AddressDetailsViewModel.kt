@@ -5,12 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.location.LocationDetails
 import com.jachai.jachaimart.ui.base.BaseViewModel
-import com.jachai.jachaimart.ui.product.ProductDetailsViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import retrofit2.Call
@@ -29,8 +28,8 @@ class AddressDetailsViewModel(application: Application) : BaseViewModel(applicat
         try {
             if (addressCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
             addressCall = driverService.saveUserAddress(locationDetails)

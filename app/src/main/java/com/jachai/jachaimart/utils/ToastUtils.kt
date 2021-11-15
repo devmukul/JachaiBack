@@ -1,7 +1,7 @@
 package com.jachai.jachai_driver.utils
 
 import androidx.annotation.StringRes
-import com.jachai.jachaimart.JachaiFoodApplication.Companion.getAppContext
+import com.jachai.jachaimart.JachaiApplication.Companion.getAppContext
 import es.dmoral.toasty.Toasty
 
 object ToastUtils {

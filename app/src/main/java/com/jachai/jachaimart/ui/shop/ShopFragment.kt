@@ -21,7 +21,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.Utils
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.ShopFragmentBinding
 import com.jachai.jachaimart.model.response.home.ShopsItem
@@ -167,10 +167,10 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
                     cartBottom.checkout.text = "ViEW CART"
                     cartBottom.conLayout.visibility = View.VISIBLE
                     cartBottom.itemCount.text =
-                        JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
+                        JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
                             .toString()
                     cartBottom.totalCount.text =
-                        JachaiFoodApplication.mDatabase.daoAccess().totalCost().toString()
+                        JachaiApplication.mDatabase.daoAccess().totalCost().toString()
 
                 }
             } else {
@@ -213,7 +213,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
 
     override fun onProductItemSelected(position: Int, item: ProductX) {
         if (shopItem.id?.let {
-                JachaiFoodApplication.mDatabase.daoAccess().isInsertionApplicable(shopID = it)
+                JachaiApplication.mDatabase.daoAccess().isInsertionApplicable(shopID = it)
             } == true) {
 //            viewModel.saveProduct(item, 1, shopItem, true)
             showBottomSheetDialog(item, shopItem, true)

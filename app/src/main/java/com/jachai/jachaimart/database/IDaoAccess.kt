@@ -158,7 +158,7 @@ interface IDaoAccess {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSearchKeyword(items: SearchHistoryItem)
 
-    @Query("SELECT * FROM SearchHistory")
+    @Query("SELECT * FROM SearchHistory  ORDER BY updated_at DESC")
     fun getSearchHistory(): List<SearchHistoryItem>
 
 

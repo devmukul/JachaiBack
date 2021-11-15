@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.category.ShopByCategoryResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
@@ -34,8 +34,8 @@ class ShopListViewModel(application: Application) : BaseViewModel(application) {
         try {
             if (shopByCategoryCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 

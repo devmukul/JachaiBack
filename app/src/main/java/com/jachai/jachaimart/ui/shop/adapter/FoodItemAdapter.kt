@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.shop.ProductX
 
@@ -44,7 +44,7 @@ class FoodItemAdapter(
             view.findViewById<TextView>(R.id.cost).text =
                 item.variations.get(0).price.mrp.toString()
             val countView = view.findViewById<TextView>(R.id.count)
-            val count = JachaiFoodApplication.mDatabase.daoAccess().getOrderCount(item.id)
+            val count = JachaiApplication.mDatabase.daoAccess().getOrderCount(item.id)
 
             if (count > 0) {
                 countView.visibility = View.VISIBLE

@@ -2,7 +2,7 @@ package com.jachai.jachaimart.ui.search
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.shop.SearchHistoryItem
 import com.jachai.jachaimart.ui.base.BaseViewModel
@@ -37,7 +37,7 @@ class RestaurantSearchViewModel  (application: Application) : BaseViewModel(appl
 
     fun geSearchHistoryList() {
         serachSuccessList.postValue(
-            JachaiFoodApplication.mDatabase.daoAccess().getSearchHistory()
+            JachaiApplication.mDatabase.daoAccess().getSearchHistory()
         )
     }
 

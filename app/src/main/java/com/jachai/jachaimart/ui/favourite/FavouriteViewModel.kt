@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.request.FProductRequest
 import com.jachai.jachaimart.model.request.FProductsItem
@@ -30,7 +30,7 @@ class FavouriteViewModel(application: Application) : BaseViewModel(application) 
     fun getAllFavouriteProducts() {
 
         val slugList: List<FProductsItem> =
-            JachaiFoodApplication.mDatabase.daoAccess().getAllFavouriteProducts()
+            JachaiApplication.mDatabase.daoAccess().getAllFavouriteProducts()
 
         val mSlugs = mutableListOf<String>()
 
@@ -53,8 +53,8 @@ class FavouriteViewModel(application: Application) : BaseViewModel(application) 
         try {
             if (slugProductCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
             slugProductCall = groceryService.getProductBySlugs(fProductRequest)

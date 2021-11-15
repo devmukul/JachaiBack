@@ -30,9 +30,9 @@ import com.jachai.jachai_driver.utils.JachaiLocationManager
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.Utils
 import com.jachai.jachai_driver.utils.isConnectionAvailable
-import com.jachai.jachaimart.JachaiFoodApplication
-import com.jachai.jachaimart.JachaiFoodApplication.Companion.compositeDisposable
-import com.jachai.jachaimart.JachaiFoodApplication.Companion.socketStatus
+import com.jachai.jachaimart.JachaiApplication
+import com.jachai.jachaimart.JachaiApplication.Companion.compositeDisposable
+import com.jachai.jachaimart.JachaiApplication.Companion.socketStatus
 import com.jachai.jachaimart.R
 import io.reactivex.Completable
 import io.reactivex.CompletableTransformer
@@ -226,9 +226,9 @@ abstract class BaseActivity<BINDING : ViewDataBinding>(@LayoutRes val layoutId: 
 
 
     open fun connectStomp() {
-        JachaiFoodApplication.mStompClient.withClientHeartbeat(10000).withServerHeartbeat(10000)
+        JachaiApplication.mStompClient.withClientHeartbeat(10000).withServerHeartbeat(10000)
         resetSubscriptions()
-        val dispLifecycle = JachaiFoodApplication.mStompClient.lifecycle()
+        val dispLifecycle = JachaiApplication.mStompClient.lifecycle()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { lifecycleEvent: LifecycleEvent ->
@@ -263,7 +263,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding>(@LayoutRes val layoutId: 
                 }
             }
         compositeDisposable?.add(dispLifecycle)
-        JachaiFoodApplication.mStompClient.connect()
+        JachaiApplication.mStompClient.connect()
 
 
     }
@@ -276,14 +276,14 @@ abstract class BaseActivity<BINDING : ViewDataBinding>(@LayoutRes val layoutId: 
     }
 
     open fun disconnectStomp() {
-        if (JachaiFoodApplication.mStompClient.isConnected) {
-            JachaiFoodApplication.mStompClient.disconnect()
+        if (JachaiApplication.mStompClient.isConnected) {
+            JachaiApplication.mStompClient.disconnect()
         }
     }
 
     open fun reconnectStomp() {
 
-        JachaiFoodApplication.mStompClient.reconnect()
+        JachaiApplication.mStompClient.reconnect()
 
     }
 
@@ -297,7 +297,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding>(@LayoutRes val layoutId: 
     }
 
     open fun destroyPing() {
-        if (JachaiFoodApplication.mRestPingDisposable != null) JachaiFoodApplication.mRestPingDisposable?.dispose()
+        if (JachaiApplication.mRestPingDisposable != null) JachaiApplication.mRestPingDisposable?.dispose()
         if (compositeDisposable != null) compositeDisposable?.dispose()
     }
 

@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
-import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.request.CategoryWithProductRequest
 import com.jachai.jachaimart.model.request.FProductsItem
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsResponse
@@ -49,8 +48,8 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         try {
             if (categoryCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -90,8 +89,8 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
             if (categoryWithProductCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
             val categoryWithProductRequest = CategoryWithProductRequest()
@@ -146,8 +145,8 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         try {
             if (favouriteProductCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -159,7 +158,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
                     response: Response<FavouriteProductResponse>
                 ) {
                     favouriteProductCall = null
-                    JachaiFoodApplication.mDatabase.daoAccess()
+                    JachaiApplication.mDatabase.daoAccess()
                         .insertFavouriteProduct(response.body()?.products as List<FProductsItem>)
 
                     JachaiLog.d(ProductDetailsViewModel.TAG, response.body().toString())
@@ -180,7 +179,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     }
 
     fun getCurrentOrderStatus() {
-        val db = JachaiFoodApplication.mDatabase.daoAccess()
+        val db = JachaiApplication.mDatabase.daoAccess()
         if (db.getOnGoingOrderCount() >0){
             successOnGoingOrderFound.postValue(db.getOnGoingOrderCount())
         }

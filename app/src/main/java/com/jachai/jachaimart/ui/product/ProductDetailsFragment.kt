@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.ProductDetailsFragmentBinding
 import com.jachai.jachaimart.model.response.product.Product
@@ -48,7 +48,7 @@ class ProductDetailsFragment :
 
         binding.apply {
             cartBadge.text =
-                JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
+                JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
                     .toString()
             back.setOnClickListener {
                 navController.popBackStack()
@@ -57,7 +57,7 @@ class ProductDetailsFragment :
             frameLay.setOnClickListener {
 
                 val action =
-                    if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
+                    if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
                         ProductDetailsFragmentDirections.actionProductDetailsFragmentToEmptyCartFragment()
                     } else {
                         ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartFragment()
@@ -90,7 +90,7 @@ class ProductDetailsFragment :
                 if (it == true) {
 
                     cartBadge.text =
-                        JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
+                        JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
                             .toString()
 
 
@@ -293,11 +293,11 @@ class ProductDetailsFragment :
                 product?.let { it1 ->
 
                     if (product.shop?.id?.let {
-                            JachaiFoodApplication.mDatabase.daoAccess()
+                            JachaiApplication.mDatabase.daoAccess()
                                 .isInsertionApplicable(shopID = it)
                         } == true) {
 //
-                        if (JachaiFoodApplication.mDatabase.daoAccess()
+                        if (JachaiApplication.mDatabase.daoAccess()
                                 .getProductByProductID(product.id!!, product.shop.id) > 0
                         ) {
 

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.isConnectionAvailable
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.shop.ProductX
@@ -24,7 +24,7 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
     fun getShopDetails(shopId: String) {
         if (shopDetailsCall != null) {
             return
-        } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+        } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
             return
         }
 
@@ -70,14 +70,14 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         successAddToCartData.postValue(
-            JachaiFoodApplication.mDatabase.daoAccess().insertOrder(productOrder, isFromSameShop)
+            JachaiApplication.mDatabase.daoAccess().insertOrder(productOrder, isFromSameShop)
         )
 
 
     }
 
     fun checkCartStatus() {
-        if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() > 0) {
+        if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() > 0) {
             successAddToCartData.postValue(true)
         } else {
             successAddToCartData.postValue(false)

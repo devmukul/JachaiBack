@@ -8,7 +8,7 @@ import com.google.gson.Gson
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.order.PaymentRequestResponse
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
@@ -71,8 +71,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         try {
             if (addressCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -110,7 +110,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
             if (nearestJCShopCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
                 // alertMessageListener?.showAlertMessage(R.string.no_internet_connection_message, AlertType.Snackbar)
 
                 return
@@ -196,8 +196,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
             if (orderCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -228,15 +228,15 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun getDiscountPrice() = JachaiFoodApplication.mDatabase.daoAccess().geDiscountPrice()
+    fun getDiscountPrice() = JachaiApplication.mDatabase.daoAccess().geDiscountPrice()
 
 
     fun deleteAddress(addressID: String) {
         try {
             if (deleteAddressCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -276,8 +276,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         try {
             if (orderListCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -326,7 +326,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         val completedOrder = mutableListOf<Order>()
         if (orders != null) {
 
-            JachaiFoodApplication.mDatabase
+            JachaiApplication.mDatabase
                 .daoAccess().clearLiveOrderTable()
             for (i in orders.indices) {
                 if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
@@ -340,7 +340,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                     completedOrder.add(orders[i])
                 } else {
                     onGoingOrder.add(orders[i])
-                    JachaiFoodApplication.mDatabase
+                    JachaiApplication.mDatabase
                         .daoAccess()
                         .insertOngoingOrder(orders[i])
 
@@ -365,8 +365,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         try {
             if (paymentCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
             paymentCall = paymetService.paymentRequest(paymentRequest)

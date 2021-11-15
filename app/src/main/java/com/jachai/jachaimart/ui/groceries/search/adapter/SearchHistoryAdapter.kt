@@ -55,7 +55,7 @@ class SearchHistoryAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return if(list.size>5) 5 else list.size
     }
 
     fun setList(it: List<SearchHistoryItem>?) {

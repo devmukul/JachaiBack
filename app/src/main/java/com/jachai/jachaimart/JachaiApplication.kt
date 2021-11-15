@@ -3,7 +3,6 @@ package com.jachai.jachaimart
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
@@ -35,7 +34,7 @@ import timber.log.Timber
 import ua.naiksoftware.stomp.StompClient
 import java.util.concurrent.TimeUnit
 
-class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
+class JachaiApplication : MultiDexApplication(), LifecycleObserver {
 
 
     override fun onCreate() {
@@ -90,8 +89,8 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
     }
 
     companion object {
-        private val TAG = JachaiFoodApplication::class.java.simpleName
-        lateinit var instance: JachaiFoodApplication
+        private val TAG = JachaiApplication::class.java.simpleName
+        lateinit var instance: JachaiApplication
             private set
 
         lateinit var preferences: SharedPreferences
@@ -176,7 +175,7 @@ class JachaiFoodApplication : MultiDexApplication(), LifecycleObserver {
             .build()
 
 
-        fun getAppContext(): JachaiFoodApplication {
+        fun getAppContext(): JachaiApplication {
             return instance
         }
     }

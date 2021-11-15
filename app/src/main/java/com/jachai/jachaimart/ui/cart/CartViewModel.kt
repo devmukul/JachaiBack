@@ -2,7 +2,7 @@ package com.jachai.jachaimart.ui.cart
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.ui.base.BaseViewModel
 
@@ -13,9 +13,9 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
 
     fun getOrderDetails() {
-        if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() > 0) {
+        if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() > 0) {
             successShopDetailsLiveData.postValue(
-                JachaiFoodApplication.mDatabase.daoAccess().getProductOrders()[0]
+                JachaiApplication.mDatabase.daoAccess().getProductOrders()[0]
             )
         } else {
 
@@ -27,12 +27,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
             item.quantity?.let {
 
                 if (it <= 0) {
-                    JachaiFoodApplication.mDatabase.daoAccess()
+                    JachaiApplication.mDatabase.daoAccess()
                         .deleteCartProducts(listOf(item.product))
 
 
                 } else {
-                    JachaiFoodApplication.mDatabase.daoAccess()
+                    JachaiApplication.mDatabase.daoAccess()
                         .updateProductQuantity(it, item.product)
 
                 }
@@ -47,7 +47,7 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
     fun geOrderList() {
         successProductOrderListLiveData.postValue(
-            JachaiFoodApplication.mDatabase.daoAccess().getProductOrders()
+            JachaiApplication.mDatabase.daoAccess().getProductOrders()
         )
     }
 

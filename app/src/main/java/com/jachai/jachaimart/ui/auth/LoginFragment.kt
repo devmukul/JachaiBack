@@ -64,7 +64,12 @@ class LoginFragment : BaseFragment<LoginFragmentBinding>(R.layout.login_fragment
             loginButton.setOnClickListener {
                 if (isFromValidationSuccess()) {
                     showLoader()
-                    viewModel.registerMobileNumber(binding.mobileNumber.text.toString())
+
+                    var number = binding.mobileNumber.text.toString()
+                    if (number.contains("+88")) {
+                        number = number.replace("+88", "")
+                    }
+                    viewModel.registerMobileNumber(number)
                 }
             }
         }

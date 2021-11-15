@@ -21,7 +21,7 @@ import com.google.android.material.navigation.NavigationView
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.showLongToast
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
 import com.jachai.jachaimart.model.response.address.Address
@@ -134,7 +134,7 @@ class GroceriesShopFragment :
 
         binding.layoutView.logout.setOnClickListener {
             SharedPreferenceUtil.clearAllPreferences();
-            JachaiFoodApplication.mDatabase.clearAllTables()
+            JachaiApplication.mDatabase.clearAllTables()
             val action =
                 GroceriesShopFragmentDirections.actionGroceriesShopFragmentToLoginFragment2()
             navController.navigate(action)
@@ -229,7 +229,7 @@ class GroceriesShopFragment :
 
             toolbarMain.frameLay.setOnClickListener {
                 val action =
-                    if (JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
+                    if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
                         GroceriesShopFragmentDirections.actionGroceriesShopFragmentToEmptyCartFragment()
                     } else {
                         GroceriesShopFragmentDirections.actionGroceriesShopFragmentToCartFragment()
@@ -242,7 +242,7 @@ class GroceriesShopFragment :
 
 
             orderBottom.root.setOnClickListener {
-                if (JachaiFoodApplication.mDatabase.daoAccess().getOnGoingOrderCount() >= 1) {
+                if (JachaiApplication.mDatabase.daoAccess().getOnGoingOrderCount() >= 1) {
                     val action =
                         GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
                     navController.navigate(action)
@@ -338,7 +338,7 @@ class GroceriesShopFragment :
             binding.apply {
                 if (it > 0) {
                     orderBottom.root.visibility = View.VISIBLE
-                    val order = JachaiFoodApplication.mDatabase.daoAccess().getLastOnGoingOrder()
+                    val order = JachaiApplication.mDatabase.daoAccess().getLastOnGoingOrder()
                     JachaiLog.e(TAG, order.toString())
                     if (order != null) {
                         orderBottom.inProgressText.text = "$it orders in progress"
@@ -473,7 +473,7 @@ class GroceriesShopFragment :
             toolbarMain.title.text = address?.name
             toolbarMain.locationAddress.text = address?.fullAddress
             toolbarMain.cartBadge.text =
-                JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize().toString()
+                JachaiApplication.mDatabase.daoAccess().getProductOrdersSize().toString()
 
             toolbarMain.clHome.setOnClickListener {
                 SharedPreferenceUtil.setConfirmDeliveryAddress(false)

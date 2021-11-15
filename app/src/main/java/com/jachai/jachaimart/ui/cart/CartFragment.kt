@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CartFragmentBinding
 import com.jachai.jachaimart.model.order.ProductOrder
@@ -55,7 +55,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             }
 
             toolbarMain.clearCart.setOnClickListener {
-                JachaiFoodApplication.mDatabase.daoAccess().clearOrderTable()
+                JachaiApplication.mDatabase.daoAccess().clearOrderTable()
                 goToShop()
             }
 
@@ -138,10 +138,10 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
         binding.apply {
 
             itemCount.text =
-                JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
+                JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
                     .toString()
             totalCount.text = if (grandTotal == 0.0) {
-                String.format("%.2f", JachaiFoodApplication.mDatabase.daoAccess().totalCost())
+                String.format("%.2f", JachaiApplication.mDatabase.daoAccess().totalCost())
             } else {
                 String.format("%.2f", grandTotal)
             }
@@ -153,7 +153,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
     private fun updateCostCalculation() {
         binding.apply {
-            val dao = JachaiFoodApplication.mDatabase.daoAccess()
+            val dao = JachaiApplication.mDatabase.daoAccess()
 
             val subtotal = dao.getProductOrderSubtotal()
             var nearCostToFree = 0F

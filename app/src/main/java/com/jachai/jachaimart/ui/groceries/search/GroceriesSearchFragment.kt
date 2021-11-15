@@ -19,7 +19,7 @@ import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentProductSearchBinding
 import com.jachai.jachaimart.model.response.category.Product
@@ -39,6 +39,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import java.util.*
 
 @ExperimentalPagingApi
 class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.layout.fragment_product_search),
@@ -73,7 +74,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
         binding.popularSerachView.visibility = View.GONE
         binding.recentSerachView.visibility = View.GONE
         binding.searchSuggetionView.visibility = View.GONE
-        JachaiFoodApplication.mDatabase.daoAccess().insertSearchKeyword(SearchHistoryItem(key))
+        JachaiApplication.mDatabase.daoAccess().insertSearchKeyword(SearchHistoryItem(key, Date(System.currentTimeMillis())))
         lifecycleScope.launch {
             loaderViewModel.fetchDoggoImages(key).distinctUntilChanged().collectLatest {
                 adapter.submitData(it)

@@ -2,7 +2,7 @@ package com.jachai.jachaimart.utils
 
 import androidx.core.content.edit
 import com.google.gson.Gson
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.grocery.Shop
 import com.jachai.jachaimart.model.response.location.LocationDetails
@@ -11,7 +11,7 @@ import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 
 object SharedPreferenceUtil {
 
-    private val preferences = JachaiFoodApplication.preferences
+    private val preferences = JachaiApplication.preferences
     private val TAG = SharedPreferenceUtil::class.java
 
     fun getAuthToken() =

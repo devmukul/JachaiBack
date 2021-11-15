@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiFoodApplication
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.utils.HttpStatusCode
@@ -36,7 +36,7 @@ class VerifyCodeViewModel (application: Application) : AndroidViewModel(applicat
     private var signupCall: Call<AuthResponse>? = null
 
 
-    private val preferences = JachaiFoodApplication.preferences
+    private val preferences = JachaiApplication.preferences
 
     var successResponseLiveData = MutableLiveData<AuthResponse?>()
     var createdResponseLiveData = MutableLiveData<AuthResponse?>()
@@ -51,8 +51,8 @@ class VerifyCodeViewModel (application: Application) : AndroidViewModel(applicat
         try {
             if (otpRequestCall != null) {
                 return
-            } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
-                getApplication<JachaiFoodApplication>().showShortToast(R.string.networkError)
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
 
@@ -105,7 +105,7 @@ class VerifyCodeViewModel (application: Application) : AndroidViewModel(applicat
     fun performSignupRequest(signupRequest: AuthRequest) {
         if (signupCall != null) {
             return
-        } else if (!getApplication<JachaiFoodApplication>().isConnectionAvailable()) {
+        } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
             // alertMessageListener?.showAlertMessage(R.string.no_internet_connection_message, AlertType.Snackbar)
 
             return

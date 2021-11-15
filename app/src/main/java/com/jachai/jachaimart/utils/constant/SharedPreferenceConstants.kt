@@ -21,5 +21,5 @@ object SharedPreferenceConstants {
     const val JC_IS_CONFIRM_KEY = "is_delivery_address_confirm"
 
 
-    const val TAG_JACHAI = "jachai_food_preference_v1"
+    const val TAG_JACHAI = "jachai_preference_v1"
 }
