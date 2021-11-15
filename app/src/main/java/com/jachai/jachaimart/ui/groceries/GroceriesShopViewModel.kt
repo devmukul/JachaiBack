@@ -28,7 +28,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     }
 
     var successOnGoingOrderFound = MutableLiveData<Int>()
-
+    val isRefresh = MutableLiveData<Boolean>()
 
     private var categoryCall: Call<CategoryResponse>? = null
     private var categoryWithProductCall: Call<CatWithRelatedProductsResponse>? = null
@@ -46,6 +46,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     }
 
     fun requestForShopCategories(shopId: String) {
+        isRefresh.postValue(true)
         try {
             if (categoryCall != null) {
                 return
@@ -62,6 +63,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
                     response: Response<CategoryResponse>
                 ) {
                     categoryCall = null
+                    isRefresh.postValue(false)
                     successCategoryResponseLiveData.postValue(response.body())
                     JachaiLog.d(TAG, response.body().toString())
 
@@ -69,6 +71,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
                 override fun onFailure(call: Call<CategoryResponse>, t: Throwable) {
                     categoryCall = null
+                    isRefresh.postValue(false)
                     errorResponseLiveData.value = "failed"
                     JachaiLog.d(TAG, errorResponseLiveData.value.toString())
 

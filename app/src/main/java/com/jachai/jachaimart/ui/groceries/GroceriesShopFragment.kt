@@ -140,6 +140,10 @@ class GroceriesShopFragment :
             navController.navigate(action)
         }
 
+        binding.refresh.setOnRefreshListener {
+            viewModel.requestForShopCategories(shopID)
+        }
+
 
     }
 
@@ -276,7 +280,6 @@ class GroceriesShopFragment :
                     viewModel.requestForShopCategoryWithRelatedProduct(it.categories, shopID)
 
 
-
                 } else {
                     showLongToast("No Product found. Empty Shop.")
                 }
@@ -364,6 +367,12 @@ class GroceriesShopFragment :
 
         viewModel.successOnGoingOrderListLiveData.observe(viewLifecycleOwner) {
             viewModel.getCurrentOrderStatus()
+        }
+
+        viewModel.isRefresh.observe(viewLifecycleOwner) { isRefresh ->
+            isRefresh?.let {
+                binding.refresh.isRefreshing = it
+            }
         }
 
 
