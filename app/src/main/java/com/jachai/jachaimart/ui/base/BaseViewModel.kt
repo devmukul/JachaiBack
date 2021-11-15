@@ -313,6 +313,9 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         val onGoingOrder = mutableListOf<Order>()
         val completedOrder = mutableListOf<Order>()
         if (orders != null) {
+
+            JachaiFoodApplication.mDatabase
+                .daoAccess().clearLiveOrderTable()
             for (i in orders.indices) {
                 if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
                     ||
