@@ -41,5 +41,7 @@ data class Shop(
     val type: String,
     @SerializedName("vat")
     val vat: Double,
+    @SerializedName("minimumAmountForFreeDelivery")
+    val minimumAmountForFreeDelivery: Float= 0F,
 
-) : Parcelable
+    ) : Parcelable

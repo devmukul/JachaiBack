@@ -156,7 +156,21 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             val dao = JachaiFoodApplication.mDatabase.daoAccess()
 
             val subtotal = dao.getProductOrderSubtotal()
-            val deliveryCost = SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+            var nearCostToFree = 0F
+            val deliveryCost = if (SharedPreferenceUtil.getNearestShop()?.isFreeDelivery== true){
+                0.toFloat()
+            } else{
+                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery !=0F){
+                    if (subtotal.toDouble()>= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!! ){
+                        0.toFloat()
+                    }else{
+                        nearCostToFree = SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - subtotal.toFloat()
+                        SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+                    }
+                }else {
+                    SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+                }
+            }
             val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
             val vatSd = (subtotal * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
@@ -169,7 +183,12 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             vat.text = String.format("%.2f", vatSd)
 
             deliveryCharge.text = String.format("%.2f", deliveryCost)
-
+            if (nearCostToFree>0){
+                tvDeliveryFreeMessage.visibility = View.VISIBLE
+                tvDeliveryFreeMessage.text = String.format("Add %.2f tk more to get free delivery", nearCostToFree)
+            }else{
+                tvDeliveryFreeMessage.visibility = View.GONE
+            }
             updateBottomCart(grandTotal)
 
 
