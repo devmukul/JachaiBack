@@ -2,6 +2,7 @@ package com.jachai.jachaimart.model.response.grocery
 
 
 import com.google.gson.annotations.SerializedName
+import com.jachai.jachaimart.model.response.address.Address
 
 data class NearestJCShopResponse(
     @SerializedName("currentPageNumber")
@@ -21,5 +22,6 @@ data class NearestJCShopResponse(
     @SerializedName("totalElements")
     val totalElements: Int,
     @SerializedName("totalPages")
-    val totalPages: Int
+    val totalPages: Int,
+    var userDeliveryAddress: Address? = null
 )

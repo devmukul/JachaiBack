@@ -444,7 +444,7 @@ class GroceriesShopFragment :
             SharedPreferenceUtil.setConfirmDeliveryAddress(true)
             initTopView()
             SharedPreferenceUtil.getDeliveryAddress()
-                ?.let { it1 -> viewModel.getNearestJCShop(it1.location) }
+                ?.let { it1 -> viewModel.getNearestJCShop(it1.location, false, null) }
         }
 
 

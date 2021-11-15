@@ -41,6 +41,8 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         subscribeObservers()
     }
 
+
+
     override fun initView() {
         viewModel.geOrderList()
         updateBottomCart(0.0)
@@ -56,6 +58,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             editAddress.setOnClickListener {
                 val action =
                     CheckoutFragmentDirections.actionCheckoutFragmentToMyAddressListFragment()
+                action.shop =  SharedPreferenceUtil.getNearestShop()
                 navController.navigate(action)
             }
 
@@ -67,7 +70,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
             updateCostCalculation()
 
-                comment.text = SharedPreferenceUtil.getNotes()
+            comment.text = SharedPreferenceUtil.getNotes()
 
 
             checkout.text = getString(R.string.place_order)
@@ -106,6 +109,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
     override fun onResume() {
         super.onResume()
         updateDeliveryAddress()
+        updateCostCalculation()
 
     }
 
