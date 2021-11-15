@@ -83,7 +83,7 @@ class GroceriesShopFragment :
                 }
                 viewModel.requestAllFavouriteProduct()
                 viewModel.requestAllAddress()
-                viewModel.getAllOrder()
+
 
                 initRecyclerViews()
             }
@@ -167,7 +167,10 @@ class GroceriesShopFragment :
 
     override fun onResume() {
         super.onResume()
-        viewModel.getCurrentOrderStatus()
+        viewModel.getAllOrder()
+//        viewModel.getCurrentOrderStatus()
+
+
     }
 
     private fun showNoShopFoundAlert() {
@@ -441,7 +444,7 @@ class GroceriesShopFragment :
             SharedPreferenceUtil.setConfirmDeliveryAddress(true)
             initTopView()
             SharedPreferenceUtil.getDeliveryAddress()
-                ?.let { it1 -> viewModel.getNearestJCShop(it1.location) }
+                ?.let { it1 -> viewModel.getNearestJCShop(it1.location, false, null) }
         }
 
 

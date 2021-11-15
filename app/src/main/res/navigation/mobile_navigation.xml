@@ -368,6 +368,11 @@
         <action
             android:id="@+id/action_myAddressListFragment_to_checkoutFragment"
             app:destination="@id/checkoutFragment" />
+        <argument
+            android:name="shop"
+            app:argType="com.jachai.jachaimart.model.response.grocery.Shop"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"

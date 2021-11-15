@@ -15,7 +15,7 @@ import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.model.request.PaymentRequest
-import com.jachai.jachaimart.model.response.GenericResponse
+import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
@@ -54,6 +54,9 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     var successAddressResponseLiveData = MutableLiveData<AddressResponse?>()
     var deleteAddressResponseLiveData = MutableLiveData<AddressResponse?>()
     var successNearestJCShopUpdate = MutableLiveData<Boolean?>()
+
+    var successNearestJCShop = MutableLiveData<NearestJCShopResponse?>()
+    var errorNearestJCShop = MutableLiveData<String?>()
     var errorAddressResponseLiveData = MutableLiveData<String?>()
 
     var successOrderHistoryDetailsLiveData = MutableLiveData<OrderHistoryResponse>()
@@ -102,7 +105,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    fun getNearestJCShop(location: Location) {
+    fun getNearestJCShop(location: Location, isFromCheckout: Boolean, address: Address?) {
         try {
 
             if (nearestJCShopCall != null) {
@@ -148,14 +151,22 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                         HttpStatusCode.HTTP_OK -> {
                             val mResponse = response.body()
                             if (mResponse != null) {
-                                if (mResponse.shops.isNotEmpty()) {
-                                    SharedPreferenceUtil.setJCShopId(mResponse.shops[0].id)
-                                    SharedPreferenceUtil.saveNearestShop(mResponse.shops[0])
-                                    successNearestJCShopUpdate.value = true
-                                } else {
-                                    SharedPreferenceUtil.setJCShopId(null)
-                                    successNearestJCShopUpdate.value = false
+                                if (isFromCheckout){
+                                    mResponse.userDeliveryAddress = address
+                                    successNearestJCShop.value = mResponse
+
+                                }else {
+                                    if (mResponse.shops.isNotEmpty()) {
+                                        SharedPreferenceUtil.setJCShopId(mResponse.shops[0].id)
+                                        SharedPreferenceUtil.saveNearestShop(mResponse.shops[0])
+                                        successNearestJCShopUpdate.value = true
+                                    } else {
+                                        SharedPreferenceUtil.setJCShopId(null)
+                                        successNearestJCShopUpdate.value = false
+                                    }
                                 }
+                            }else{
+                                errorNearestJCShop.value= "failed"
                             }
                         }
                     }
@@ -163,6 +174,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
                 override fun onFailure(call: Call<NearestJCShopResponse>?, t: Throwable?) {
                     nearestJCShopCall = null
+                    errorNearestJCShop.value= "failed"
                     if (t != null) {
                         t.message?.let { JachaiLog.e(BaseFragment.TAG, it) }
                     }
@@ -313,6 +325,9 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         val onGoingOrder = mutableListOf<Order>()
         val completedOrder = mutableListOf<Order>()
         if (orders != null) {
+
+            JachaiFoodApplication.mDatabase
+                .daoAccess().clearLiveOrderTable()
             for (i in orders.indices) {
                 if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
                     ||

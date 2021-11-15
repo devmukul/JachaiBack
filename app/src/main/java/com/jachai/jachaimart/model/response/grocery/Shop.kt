@@ -1,8 +1,11 @@
 package com.jachai.jachaimart.model.response.grocery
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Shop(
     @SerializedName("address")
     val address: String,
@@ -38,5 +41,7 @@ data class Shop(
     val type: String,
     @SerializedName("vat")
     val vat: Double,
+    @SerializedName("minimumAmountForFreeDelivery")
+    val minimumAmountForFreeDelivery: Float= 0F,
 
-)
+    ) : Parcelable

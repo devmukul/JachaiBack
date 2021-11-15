@@ -82,10 +82,8 @@ class OnGoingOrderFragment :
 
     }
 
-    private fun updateUI(
-        orderDetailsResponse
-        : OrderDetailsResponse?
-    ) {
+    private fun updateUI(orderDetailsResponse
+                         : OrderDetailsResponse?) {
         binding.apply {
             toolbarMain.subTitle.text = orderDetailsResponse?.order?.shop?.name.toString()
             address.text = orderDetailsResponse?.order?.shippingAddress.toString()
@@ -187,14 +185,7 @@ class OnGoingOrderFragment :
                 showLoader()
                 val jacjaiUrl = "https://www.jachai.com"
                 val order = orderDetailsResponse?.order
-                val paymentRequest = PaymentRequest(
-                    (order?.total!! - order.totalPaid),
-                    orderId,
-                    "SSL",
-                    "$jacjaiUrl/payment/success",
-                    "$jacjaiUrl/payment/fail",
-                    "$jacjaiUrl/payment/cancel"
-                )
+                val paymentRequest = PaymentRequest((order?.total!! - order.totalPaid),orderId, "SSL", "$jacjaiUrl/payment/success", "$jacjaiUrl/payment/fail", "$jacjaiUrl/payment/cancel")
                 viewModel.requestPayment(paymentRequest)
             }
 
@@ -209,8 +200,7 @@ class OnGoingOrderFragment :
 
         viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
-            val action =
-                OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
+            val action = OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
             action.orderID = orderId
             action.url = it.url
             navController.navigate(action)

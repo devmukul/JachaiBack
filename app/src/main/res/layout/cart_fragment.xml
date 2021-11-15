@@ -274,6 +274,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvsub" />
 
                 <TextView
+                    android:id="@+id/tvDeliveryFreeMessage"
+                    style="@style/sub_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:drawableLeft="@drawable/ic_tag"
+                    android:padding="2dp"
+                    android:visibility="gone"
+                    tools:text="Add 20 tk more to get free delivery"
+                    android:textColor="@color/red_roses"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="@+id/tvdelivery"
+                    app:layout_constraintTop_toBottomOf="@+id/tvdelivery" />
+
+                <TextView
                     style="@style/sub_heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -312,7 +328,7 @@
                     android:textSize="12sp"
                     android:textStyle="normal"
                     app:layout_constraintStart_toStartOf="@+id/tvsub"
-                    app:layout_constraintTop_toBottomOf="@+id/tvdelivery" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvDeliveryFreeMessage" />
 
                 <TextView
                     style="@style/sub_heading"

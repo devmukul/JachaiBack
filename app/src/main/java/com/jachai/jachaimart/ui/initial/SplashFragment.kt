@@ -90,11 +90,11 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
             if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
                 SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
                     viewModel.getNearestJCShop(
-                        it1.location
+                        it1.location, false, null
                     )
                 }
             } else {
-                viewModel.getNearestJCShop(address.location)
+                viewModel.getNearestJCShop(address.location, false, null)
             }
         }
 
