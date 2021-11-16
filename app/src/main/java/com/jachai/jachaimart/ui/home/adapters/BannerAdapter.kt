@@ -31,9 +31,9 @@ class BannerAdapter(
         if (data != null) {
             Glide.with(context)
                 .load(data.bannerImage)
-                .into(
-                    holder.image
-                )
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
+                .into(holder.image)
         }
     }
 

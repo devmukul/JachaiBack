@@ -53,7 +53,11 @@ class FoodItemAdapter(
                 countView.visibility = View.GONE
             }
 
-            Glide.with(view.context).load(item.productImage).into(view.findViewById(R.id.foodImage))
+            Glide.with(view.context)
+                .load(item.productImage)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
+                .into(view.findViewById(R.id.foodImage))
 
         }
     }

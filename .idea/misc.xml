@@ -30,12 +30,13 @@
         <entry key="app/src/main/res/drawable/ic_location.xml" value="0.13958333333333334" />
         <entry key="app/src/main/res/drawable/ic_login_page.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/ic_status_default.xml" value="0.26510416666666664" />
-        <entry key="app/src/main/res/drawable/ic_tag.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/loght_gray_rounded_corner.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/rectangle_with_gray_border.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/rounded_border_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_button_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/rounded_corner_back.xml" value="0.2598958333333333" />
+        <entry key="app/src/main/res/drawable/rounded_corner_white.xml" value="0.52421875" />
+        <entry key="app/src/main/res/drawable/shape_circle.xml" value="0.52421875" />
         <entry key="app/src/main/res/drawable/statusbar_actiobar_gradient.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/toggle_image.xml" value="0.13958333333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33645833333333336" />
@@ -50,7 +51,7 @@
         <entry key="app/src/main/res/layout/category_fragment.xml" value="0.1796875" />
         <entry key="app/src/main/res/layout/category_product_row.xml" value="0.1403985507246377" />
         <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.13209580078895622" />
-        <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.5458952663398846" />
+        <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.28797083839611176" />
         <entry key="app/src/main/res/layout/checkout_order_row.xml" value="0.47181881227196076" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/counter.xml" value="0.8423279469404306" />

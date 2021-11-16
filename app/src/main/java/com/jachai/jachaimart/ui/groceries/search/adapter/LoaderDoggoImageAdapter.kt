@@ -59,6 +59,8 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
             if (data != null) {
                 Glide.with(itemView.context)
                     .load(data.productImage)
+                    .placeholder(R.drawable.ic_place_holder)
+                    .error(R.drawable.ic_place_holder)
                     .into(productImage)
                 productTitle.text = data.name
                 productPrice.text = data.variations[0].price.mrp.toString()

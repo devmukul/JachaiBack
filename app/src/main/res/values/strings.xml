@@ -34,8 +34,8 @@
 
     <string name="step_1_of_2">Step 1 of 2</string>
 
-    <string name="signin_agreement_message">By selecting Continue, I agree to the \n <a href="https://www.jachai.com/terms-and-conditions/">Terms of Service
-    </a> and <a href="https://www.jachai.com/privacy-policy">Privacy Policy</a>.
+    <string name="signin_agreement_message">By selecting Continue, I agree to the \n <a href="https://www.jachai.com/jachai-terms-conditions">Terms of Service
+    </a> and <a href="https://www.jachai.com/jachai-policy">Privacy Policy</a>.
     </string>
     <string name="home">Home</string>
     <string name="work">Work</string>

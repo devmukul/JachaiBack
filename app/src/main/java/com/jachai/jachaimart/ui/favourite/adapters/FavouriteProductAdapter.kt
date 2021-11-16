@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FavouriteProductRowBinding
 import com.jachai.jachaimart.databinding.GroceriesShopCategoryProductRowBinding
 import com.jachai.jachaimart.model.response.category.Product
@@ -30,6 +31,8 @@ class FavouriteProductAdapter(
                 if (product != null) {
                     Glide.with(context)
                         .load(product.productImage)
+                        .placeholder(R.drawable.ic_place_holder)
+                        .error(R.drawable.ic_place_holder)
                         .into(productImage)
 
                     productTitle.text = product.name

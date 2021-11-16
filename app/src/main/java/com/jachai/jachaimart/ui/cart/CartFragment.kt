@@ -89,6 +89,8 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
                 Glide.with(requireContext())
                     .load(it.shopImage)
+                    .placeholder(R.drawable.ic_place_holder)
+                    .error(R.drawable.ic_place_holder)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .into(image)
             }

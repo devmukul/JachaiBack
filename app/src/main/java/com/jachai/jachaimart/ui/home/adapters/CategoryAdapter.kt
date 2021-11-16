@@ -36,6 +36,8 @@ class CategoryAdapter(
         if (data != null) {
             Glide.with(context)
                 .load(data.image)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(holder.image)
 

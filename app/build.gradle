@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-kapt'
     id("org.jetbrains.kotlin.plugin.parcelize")
     id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 def keystorePropertiesFile = rootProject.file("Jachai_keyStore/keystore.properties")
@@ -78,7 +80,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
-            debuggable true
+            debuggable false
             manifestPlaceholders = [appNameJachai: "@string/app_name_live"]
             minifyEnabled false
             signingConfig signingConfigs.JachaiSigningConfig
@@ -204,8 +206,13 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     implementation 'androidx.paging:paging-runtime:3.0.0-alpha03'
-
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
 
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

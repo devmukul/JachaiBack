@@ -74,6 +74,8 @@ class OrderDetailsFragment :
             restaurantName.text = it?.order?.shop?.name
             Glide.with(requireContext())
                 .load(it?.order?.shop?.logo)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(restaurantImage)
             restaurantSubHead.text = it?.order?.shop?.address

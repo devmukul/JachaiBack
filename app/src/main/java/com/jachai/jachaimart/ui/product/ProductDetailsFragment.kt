@@ -149,6 +149,8 @@ class ProductDetailsFragment :
             name.text = product?.name ?: " "
             Glide.with(requireContext())
                 .load(product?.productImage)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
                 .into(image)
 
 
@@ -228,7 +230,7 @@ class ProductDetailsFragment :
                 ShareCompat.IntentBuilder.from(requireActivity())
                     .setType("text/plain")
                     .setChooserTitle("Share via")
-                    .setText("https://jachai.com/products/${product?.slug}")
+                    .setText("https://jachai.com/product/${product?.slug}")
                     .startChooser()
             }
 

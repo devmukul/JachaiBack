@@ -120,11 +120,19 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         binding.apply {
             Glide.with(requireContext())
                 .load(shopItem.banner)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(coverImage)
 
             Glide.with(requireContext())
                 .load(shopItem.logo)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(logo)
 
@@ -259,6 +267,8 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         image?.let {
             Glide.with(requireContext())
                 .load(item.productImage)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(it)
         }

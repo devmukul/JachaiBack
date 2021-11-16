@@ -40,6 +40,8 @@ class ShopRecyclerAdapter(
         if (data != null) {
             Glide.with(context)
                 .load(data.banner)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(holder.image)
 

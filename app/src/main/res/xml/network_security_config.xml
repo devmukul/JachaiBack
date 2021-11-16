@@ -6,4 +6,8 @@
         </trust-anchors>
     </base-config>
 
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">jachai-rider.com</domain>
+    </domain-config>
+
 </network-security-config>

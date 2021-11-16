@@ -1,0 +1,123 @@
+{
+  "project_info": {
+    "project_number": "893976073783",
+    "project_id": "jachai-user",
+    "storage_bucket": "jachai-user.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893976073783:android:0909c081422fefe60e51b2",
+        "android_client_info": {
+          "package_name": "com.jachai.jachaimart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893976073783-24814c32v2qjjmv6kn8nrpg63ksj5h70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0sm8NvgsXhpHeakciGSYGRb6VZYJLJUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893976073783-24814c32v2qjjmv6kn8nrpg63ksj5h70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },{
+      "client_info": {
+        "mobilesdk_app_id": "1:893976073783:android:0909c081422fefe60e51b2",
+        "android_client_info": {
+          "package_name": "com.jachai.jachaimart.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893976073783-24814c32v2qjjmv6kn8nrpg63ksj5h70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0sm8NvgsXhpHeakciGSYGRb6VZYJLJUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893976073783-24814c32v2qjjmv6kn8nrpg63ksj5h70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },{
+      "client_info": {
+        "mobilesdk_app_id": "1:893976073783:android:0909c081422fefe60e51b2",
+        "android_client_info": {
+          "package_name": "com.jachai.jachaimart.debug.live"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893976073783-24814c32v2qjjmv6kn8nrpg63ksj5h70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0sm8NvgsXhpHeakciGSYGRb6VZYJLJUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893976073783-24814c32v2qjjmv6kn8nrpg63ksj5h70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },{
+      "client_info": {
+        "mobilesdk_app_id": "1:893976073783:android:0909c081422fefe60e51b2",
+        "android_client_info": {
+          "package_name": "com.jachai.jachaimart.release.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893976073783-24814c32v2qjjmv6kn8nrpg63ksj5h70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0sm8NvgsXhpHeakciGSYGRb6VZYJLJUE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893976073783-24814c32v2qjjmv6kn8nrpg63ksj5h70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CartItemRowBinding
 import com.jachai.jachaimart.model.order.ProductOrder
 
@@ -25,6 +26,8 @@ class CartAdapter(
 
             Glide.with(context)
                 .load(productOrder?.image)
+                .placeholder(R.drawable.ic_place_holder)
+                .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(binding.image)
             binding.price.text = productOrder?.price.toString()
