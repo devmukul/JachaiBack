@@ -9,5 +9,19 @@ data class CatWithRelatedProductsResponse(
     @SerializedName("message")
     val message: String,
     @SerializedName("statusCode")
-    val statusCode: Int
+    val statusCode: Int,
+    @SerializedName("currentPageNumber")
+    var currentPageNumber: Int,
+    @SerializedName("first")
+    var first: Boolean,
+    @SerializedName("last")
+    var last: Boolean,
+    @SerializedName("numberOfElements")
+    var numberOfElements: Int,
+    @SerializedName("totalElements")
+    var totalElements: Int,
+    @SerializedName("totalPages")
+    var totalPages: Int
+
+
 )

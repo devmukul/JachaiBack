@@ -94,4 +94,12 @@ object ApiConstants {
     const val ORDER_CANCELLED = "CANCELLED"
 
 
+    //paging
+    const val PAGE_LIMIT = "100"
+    const val PAGE_LIMIT_MAX = "10000"
+    const val PAGING_PAGE_LIMIT_MIN = 3
+    const val PAGING_PAGE_LIMIT = 100
+    const val PAGING_PAGE_LIMIT_MAX = 1000
+
+
 }

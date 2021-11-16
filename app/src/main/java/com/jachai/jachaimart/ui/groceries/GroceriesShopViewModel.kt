@@ -2,13 +2,20 @@ package com.jachai.jachaimart.ui.groceries
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.api.paging_source.HomePagingSource
 import com.jachai.jachaimart.model.request.CategoryWithProductRequest
 import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsResponse
 import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.model.response.home.CategoryResponse
@@ -16,6 +23,8 @@ import com.jachai.jachaimart.model.response.product.FavouriteProductResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.ui.product.ProductDetailsViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
+import com.jachai.jachaimart.utils.constant.ApiConstants.PAGING_PAGE_LIMIT_MIN
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,7 +44,8 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     private val groceryService = RetrofitConfig.groceryService
     private var favouriteProductCall: Call<FavouriteProductResponse>? = null
     var successCategoryResponseLiveData = MutableLiveData<CategoryResponse?>()
-    var successCategoryWithProductResponseLiveData = MutableLiveData<CatWithRelatedProductsResponse?>()
+    var successCategoryWithProductResponseLiveData =
+        MutableLiveData<CatWithRelatedProductsResponse?>()
     var errorResponseLiveData = MutableLiveData<String?>()
     var errorCategoryWithProductResponseLiveData = MutableLiveData<String?>()
 
@@ -186,6 +196,18 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         if (db.getOnGoingOrderCount() >0){
             successOnGoingOrderFound.postValue(db.getOnGoingOrderCount())
         }
+    }
+
+    fun requestForShopCategoryWithRelatedProduct(shopId: String?): Flow<PagingData<CatWithRelatedProduct>> {
+        return Pager(
+            PagingConfig(
+                pageSize = PAGING_PAGE_LIMIT_MIN,
+                initialLoadSize = PAGING_PAGE_LIMIT_MIN
+            )
+        ) {
+            HomePagingSource(shopId)
+        }.flow.cachedIn(viewModelScope)
+
     }
 
 

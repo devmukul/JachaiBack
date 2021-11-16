@@ -10,10 +10,13 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -32,11 +35,14 @@ import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
+import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductPaginAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,7 +50,7 @@ import java.util.*
 class GroceriesShopFragment :
     BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment),
     CategoryAdapter.Interaction, CategoryWithProductAdapter.Interaction,
-    SavedUserLocationAdapter.Interaction {
+    SavedUserLocationAdapter.Interaction, CategoryWithProductPaginAdapter.Interaction {
     lateinit var savedUserLocationAdapter: SavedUserLocationAdapter
 
     companion object {
@@ -56,7 +62,7 @@ class GroceriesShopFragment :
     private var address: Address? = null
 
     private lateinit var categoryAdapter: CategoryAdapter
-    private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
+//    private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
     private lateinit var navController: NavController
     private val args: GroceriesShopFragmentArgs by navArgs()
 
@@ -66,7 +72,7 @@ class GroceriesShopFragment :
     lateinit var mDrawerToggle: ActionBarDrawerToggle
 
     private lateinit var shopID: String
-
+    private lateinit var categoryWithProductPaginAdapter: CategoryWithProductPaginAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,21 +80,19 @@ class GroceriesShopFragment :
 
         if (isViewNull) {
             GlobalScope.async {
+                initRecyclerViews()
                 if (SharedPreferenceUtil.getJCShopId() == null) {
                     showNoShopFoundAlert()
                 } else {
                     shopID = SharedPreferenceUtil.getJCShopId().toString()
                     viewModel.requestForShopCategories(shopID)
-
+                    loadCatWithProducts(shopID)
                 }
                 viewModel.requestAllFavouriteProduct()
                 viewModel.requestAllAddress()
-
-
-                initRecyclerViews()
             }
-
         }
+
 
         initView()
         subscribeObservers()
@@ -142,12 +146,59 @@ class GroceriesShopFragment :
 
         binding.refresh.setOnRefreshListener {
             viewModel.requestForShopCategories(shopID)
+            loadCatWithProducts(shopID)
+        }
+
+
+    }
+
+    private fun loadCatWithProducts(shopID: String) {
+        lifecycleScope.launch {
+            viewModel.requestForShopCategoryWithRelatedProduct(shopID).collectLatest {
+                categoryWithProductPaginAdapter.submitData(it)
+            }
+            categoryWithProductPaginAdapter.loadStateFlow.collectLatest { loadStates ->
+                JachaiLog.d(TAG, "loadStates $loadStates")
+                when (loadStates.refresh) {
+                    is LoadState.Loading -> {
+                        binding.refresh.isRefreshing = true
+                    }
+                    !is LoadState.Loading -> {
+                        binding.refresh.isRefreshing = false
+                    }
+                    !is LoadState.Error -> {
+                        binding.refresh.isRefreshing = false
+                        JachaiLog.d(TAG, "Error message")
+                    }
+                }
+
+            }
+        }
+        categoryWithProductPaginAdapter.addLoadStateListener { loadState ->
+            try {
+                binding.refresh.isRefreshing = loadState.refresh == LoadState.Loading
+
+                val errorState = when {
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+                errorState?.let {
+                    JachaiLog.d(TAG, it.error.toString())
+                    showShortToast(it.error.toString())
+
+                }
+            } catch (exception: Exception) {
+                exception.message?.let { it1 -> JachaiLog.d(TAG, it1) }
+            }
         }
 
 
     }
 
     private fun initRecyclerViews() {
+
         binding.apply {
             rvCategories1.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -155,16 +206,25 @@ class GroceriesShopFragment :
                     CategoryAdapter(requireContext(), emptyList(), this@GroceriesShopFragment)
                 adapter = categoryAdapter
             }
+//            rvCategories.apply {
+//                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+//                categoryWithProductAdapter =
+//                    CategoryWithProductAdapter(
+//                        requireContext(),
+//                        emptyList(),
+//                        this@GroceriesShopFragment
+//                    )
+//                adapter = categoryWithProductAdapter
+//            }
+            categoryWithProductPaginAdapter = CategoryWithProductPaginAdapter(requireContext(), this@GroceriesShopFragment)
+
             rvCategories.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                categoryWithProductAdapter =
-                    CategoryWithProductAdapter(
-                        requireContext(),
-                        emptyList(),
-                        this@GroceriesShopFragment
-                    )
-                adapter = categoryWithProductAdapter
-            }
+                    adapter = categoryWithProductPaginAdapter
+                }
+
+
+
         }
     }
 
@@ -272,12 +332,12 @@ class GroceriesShopFragment :
 
 
                 if (it.categories?.isEmpty() == false) {
-                    initRecyclerViews()
+//                    initRecyclerViews()
                     categoryResponse = it
                     categoryAdapter.setList(it.categories)
                     categoryAdapter.notifyDataSetChanged()
-                    showLoader()
-                    viewModel.requestForShopCategoryWithRelatedProduct(it.categories, shopID)
+//                    showLoader()
+//                    viewModel.requestForShopCategoryWithRelatedProduct(it.categories, shopID)
 
 
                 } else {
@@ -295,11 +355,11 @@ class GroceriesShopFragment :
             it?.let { it1 -> showShortToast(it1) }
         }
 
-        viewModel.successCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {
-            dismissLoader()
-            categoryWithProductAdapter.setList(it?.catWithRelatedProducts)
-            categoryWithProductAdapter.notifyDataSetChanged()
-        }
+//        viewModel.successCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {
+//            dismissLoader()
+//            categoryWithProductAdapter.setList(it?.catWithRelatedProducts)
+//            categoryWithProductAdapter.notifyDataSetChanged()
+//        }
 
         viewModel.successAddressResponseLiveData.observe(viewLifecycleOwner) {
             if (!SharedPreferenceUtil.isConfirmDeliveryAddress()) {
@@ -321,6 +381,7 @@ class GroceriesShopFragment :
                 } else {
                     shopID = SharedPreferenceUtil.getJCShopId().toString()
                     viewModel.requestForShopCategories(shopID)
+                    loadCatWithProducts(shopID)
                 }
             } else {
                 if (SharedPreferenceUtil.getJCShopId() == null) {
@@ -330,6 +391,7 @@ class GroceriesShopFragment :
                 } else {
                     shopID = SharedPreferenceUtil.getJCShopId().toString()
                     viewModel.requestForShopCategories(shopID)
+                    loadCatWithProducts(shopID)
                 }
             }
             initView()

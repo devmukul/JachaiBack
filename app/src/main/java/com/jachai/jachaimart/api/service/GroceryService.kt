@@ -16,6 +16,7 @@ import com.jachai.jachaimart.model.response.search.SearchProductResponse
 import com.jachai.jachaimart.model.shop.ShopDetailsResponse
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -39,6 +40,14 @@ interface GroceryService {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): Call<NearestJCShopResponse>
+
+
+   @GET(ApiConstants.PRODUCT_BY_CATEGORY_BASE)
+    suspend fun getProductsByCategoryShop(
+        @Query("shopId") type: String?,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Response<CatWithRelatedProductsResponse>
 
     @GET(ApiConstants.PRODUCT_BY_CAT_BASE)
     fun getShopDetails(@Query("shopId") shopId: String): Call<ShopDetailsResponse>
