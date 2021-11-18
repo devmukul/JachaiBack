@@ -13,10 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -58,7 +56,6 @@ class GroceriesShopFragment :
     }
 
     private val viewModel: GroceriesShopViewModel by viewModels()
-    private var mView: View? = null
     private var address: Address? = null
 
     private lateinit var categoryAdapter: CategoryAdapter
@@ -69,9 +66,9 @@ class GroceriesShopFragment :
     private lateinit var categoryResponse: CategoryResponse
 
 
-    lateinit var mDrawerToggle: ActionBarDrawerToggle
+    private lateinit var mDrawerToggle: ActionBarDrawerToggle
 
-    private lateinit var shopID: String
+    private var shopID: String = ""
     private lateinit var categoryWithProductPaginAdapter: CategoryWithProductPaginAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,12 +94,12 @@ class GroceriesShopFragment :
         initView()
         subscribeObservers()
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             AlertDialog.Builder(requireContext())
                 .setTitle("Exit?")
                 .setMessage("Are you sure you want to exit?")
                 .setNegativeButton("Cancel", null)
-                .setPositiveButton("Exit") { arg0, arg1 -> requireActivity().finish() }.create()
+                .setPositiveButton("Exit") { _, _ -> requireActivity().finish() }.create()
                 .show()
 
         }
@@ -244,7 +241,7 @@ class GroceriesShopFragment :
         builder.setMessage("Sorry !! Shop is not available at your location right now. We are coming soon. Thanks")
 
 
-        builder.setNegativeButton("Close") { dialog, which ->
+        builder.setNegativeButton("Close") { dialog, _ ->
             dialog.dismiss()
         }
         builder.show()
@@ -263,7 +260,7 @@ class GroceriesShopFragment :
 //                toolbarMain.title.text = "Current Location"
                 val mAddress = it?.address ?: "n/a"
 //                toolbarMain.locationAddress.text = mAddress
-                var location = Location(it?.latitude, it?.longitude)
+                val location = Location(it?.latitude, it?.longitude)
 
                 address = Address(
                     mAddress,
@@ -343,9 +340,10 @@ class GroceriesShopFragment :
                 } else {
                     showLongToast("No Product found. Empty Shop.")
                 }
-            } else {
-//                showLongToast("No Product found. Empty Shop.")
             }
+//            else {
+//                showLongToast("No Product found. Empty Shop.")
+//            }
 
 
         }
@@ -405,19 +403,17 @@ class GroceriesShopFragment :
                     orderBottom.root.visibility = View.VISIBLE
                     val order = JachaiApplication.mDatabase.daoAccess().getLastOnGoingOrder()
                     JachaiLog.e(TAG, order.toString())
-                    if (order != null) {
-                        orderBottom.inProgressText.text = "$it orders in progress"
+                    orderBottom.inProgressText.text = "$it orders in progress"
 
-                        val format =
-                            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
-                        val date: Date = format.parse(order.createdAt)
-                        val myFormat = SimpleDateFormat("dd-MM HH:mm a ", Locale.getDefault())
+                    val format =
+                        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
+                    val date: Date = format.parse(order.createdAt)
+                    val myFormat = SimpleDateFormat("dd-MM HH:mm a ", Locale.getDefault())
 
 
-                        orderBottom.orderTime.text = myFormat.format(date).toString()
+                    orderBottom.orderTime.text = myFormat.format(date).toString()
 
-                        orderBottom.shopName.text = order.shop?.name
-                    }
+                    orderBottom.shopName.text = order.shop?.name
                 } else {
                     orderBottom.root.visibility = View.GONE
                 }
@@ -467,15 +463,15 @@ class GroceriesShopFragment :
     }
 
 
-    fun showBottomSheetDialog(
+    private fun showBottomSheetDialog(
         item: MutableList<Address>
     ) {
-        var bottomSheetDialog = BottomSheetDialog(requireContext())
-        bottomSheetDialog?.setContentView(R.layout.bottom_sheet_location_selecter)
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_location_selecter)
 
-        val rvSavedAddress = bottomSheetDialog?.findViewById<RecyclerView>(R.id.rvSavedAddress)
-        val addAddress = bottomSheetDialog?.findViewById<TextView>(R.id.addNewAddress)
-        val confirm = bottomSheetDialog?.findViewById<Button>(R.id.confirm_button)
+        val rvSavedAddress = bottomSheetDialog.findViewById<RecyclerView>(R.id.rvSavedAddress)
+        val addAddress = bottomSheetDialog.findViewById<TextView>(R.id.addNewAddress)
+        val confirm = bottomSheetDialog.findViewById<Button>(R.id.confirm_button)
 
         if (SharedPreferenceUtil.getDeliveryAddress() != null) {
             for (i in item.indices) {
