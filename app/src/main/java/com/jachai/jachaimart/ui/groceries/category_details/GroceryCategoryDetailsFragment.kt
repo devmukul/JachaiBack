@@ -19,6 +19,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.google.android.gms.common.util.SharedPreferencesUtils
 import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryDetailsProductAdapter
@@ -114,6 +115,12 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
                 val view = tab.customView
                 val title = view!!.findViewById<TextView>(R.id.name)
                 val image = view.findViewById<ImageView>(R.id.image)
+
+                Glide.with(requireContext())
+                    .load(category.categoryImage)
+                    .placeholder(R.drawable.ic_place_holder)
+                    .error(R.drawable.ic_place_holder)
+                    .into(image)
 
 
                 title.text = category.category

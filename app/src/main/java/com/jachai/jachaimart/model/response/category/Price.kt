@@ -7,5 +7,5 @@ data class Price(
     @SerializedName("discountedPrice")
     val discountedPrice: Float,
     @SerializedName("mrp")
-    val mrp: Int
+    val mrp: Float
 )

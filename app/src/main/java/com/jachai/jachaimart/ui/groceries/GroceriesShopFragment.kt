@@ -61,7 +61,6 @@ class GroceriesShopFragment :
     private lateinit var categoryAdapter: CategoryAdapter
 //    private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
     private lateinit var navController: NavController
-    private val args: GroceriesShopFragmentArgs by navArgs()
 
     private lateinit var categoryResponse: CategoryResponse
 

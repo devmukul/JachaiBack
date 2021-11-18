@@ -101,6 +101,10 @@ android {
     configurations.all {
         exclude group: 'com.google.guava', module: 'listenablefuture'
     }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 def getBuildVariant() {
@@ -215,4 +219,6 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'com.google.android.play:core:1.10.2'
 }

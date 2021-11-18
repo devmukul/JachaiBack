@@ -309,7 +309,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding>(@LayoutRes val layoutId: 
     open fun phoneCall(phoneNumber: String) {
 
 
-        val number = "+$phoneNumber"
+        val number = phoneNumber
         val intent = Intent(Intent.ACTION_CALL);
         intent.data = Uri.parse("tel:$number")
 
