@@ -188,6 +188,7 @@
         <action
             android:id="@+id/action_onGoingOrderFragment_to_groceriesShopFragment"
             app:destination="@id/groceriesShopFragment"
+            app:popUpTo="@id/nav_home"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_onGoingOrderFragment_to_paymentFragment"
@@ -384,6 +385,11 @@
         <action
             android:id="@+id/action_orderFragment_to_onGoingOrderFragment"
             app:destination="@id/onGoingOrderFragment" />
+        <action
+            android:id="@+id/action_orderFragment_to_groceriesShopFragment"
+            app:destination="@id/groceriesShopFragment"
+            app:popUpTo="@id/groceriesShopFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"

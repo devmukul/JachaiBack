@@ -42,7 +42,8 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
         binding.apply {
             toolbarMain.title.text = "Orders"
             toolbarMain.back.setOnClickListener {
-                navController.popBackStack()
+                val action = OrderFragmentDirections.actionOrderFragmentToGroceriesShopFragment()
+                navController.navigate(action)
             }
 
             rvOnGoingOrder.apply {
