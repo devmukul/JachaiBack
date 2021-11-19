@@ -570,6 +570,4 @@ class GroceriesShopFragment :
         super.onConfigurationChanged(newConfig)
         mDrawerToggle.onConfigurationChanged(newConfig)
     }
-
-
 }

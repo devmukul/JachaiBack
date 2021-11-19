@@ -9,6 +9,7 @@ import androidx.lifecycle.*
 import androidx.multidex.MultiDexApplication
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.jachai.jachaimart.database.AppDatabase
 import com.jachai.jachaimart.manager.smshelper.AppSignatureHelper
 import com.jachai.jachaimart.utils.HttpLogger
@@ -66,7 +67,6 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
 
         setupLogger()
 
-
     }
 
     private fun setupLogger() {
@@ -74,7 +74,7 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
             .showThreadInfo(false)
             .methodCount(0)
             .methodOffset(5)
-            .tag("eHealth_Log:")
+            .tag("Jachai_Log:")
             .build()
         Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
             override fun isLoggable(priority: Int, tag: String?): Boolean {
