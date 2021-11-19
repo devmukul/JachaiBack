@@ -10,7 +10,7 @@ data class Price(
     @SerializedName("discountedPrice")
     var discountedPrice: Double,
     @SerializedName("mrp")
-    var mrp: Int,
+    var mrp: Double,
     @SerializedName("tp")
-    var tp: Int
+    var tp: Double
 ) : Parcelable
