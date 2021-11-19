@@ -508,6 +508,7 @@ class GroceriesShopFragment :
 
             viewModel.successAddressResponseLiveData.value = null
             SharedPreferenceUtil.setConfirmDeliveryAddress(true)
+            initRecyclerViews()
             initTopView()
             SharedPreferenceUtil.getDeliveryAddress()
                 ?.let { it1 -> viewModel.getNearestJCShop(it1.location, false, null) }
