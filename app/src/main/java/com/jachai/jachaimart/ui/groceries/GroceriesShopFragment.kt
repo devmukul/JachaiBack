@@ -59,7 +59,8 @@ class GroceriesShopFragment :
     private var address: Address? = null
 
     private lateinit var categoryAdapter: CategoryAdapter
-//    private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
+
+    //    private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
     private lateinit var navController: NavController
 
     private lateinit var categoryResponse: CategoryResponse
@@ -212,13 +213,13 @@ class GroceriesShopFragment :
 //                    )
 //                adapter = categoryWithProductAdapter
 //            }
-            categoryWithProductPaginAdapter = CategoryWithProductPaginAdapter(requireContext(), this@GroceriesShopFragment)
+            categoryWithProductPaginAdapter =
+                CategoryWithProductPaginAdapter(requireContext(), this@GroceriesShopFragment)
 
             rvCategories.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                    adapter = categoryWithProductPaginAdapter
-                }
-
+                adapter = categoryWithProductPaginAdapter
+            }
 
 
         }
@@ -507,8 +508,20 @@ class GroceriesShopFragment :
             SharedPreferenceUtil.setConfirmDeliveryAddress(true)
             initRecyclerViews()
             initTopView()
-            SharedPreferenceUtil.getDeliveryAddress()
-                ?.let { it1 -> viewModel.getNearestJCShop(it1.location, false, null) }
+
+            if (SharedPreferenceUtil.getDeliveryAddress() != null) {
+                SharedPreferenceUtil.getDeliveryAddress()
+                    ?.let { it1 ->
+                        viewModel.getNearestJCShop(it1.location, false, null)
+                    }
+            }else{
+                SharedPreferenceUtil.getCurrentAddress()
+                    ?.let { it1 ->
+                        viewModel.getNearestJCShop(it1.location, false, null)
+                    }
+            }
+
+
         }
 
 
