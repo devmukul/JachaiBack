@@ -8,6 +8,7 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -159,20 +160,35 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
                 .position(latLng)
                 .icon(bitmapDescriptorFromVector(requireContext(), R.drawable.ic_location))
         )
+//        marker.position = gMap.cameraPosition.target
 
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14f))
         gMap.animateCamera(CameraUpdateFactory.zoomTo(15F), 1000, null)
         gMap.setOnCameraMoveListener(object : GoogleMap.OnCameraMoveListener {
             override fun onCameraMove() {
-                val midLatLan = gMap.cameraPosition.target
-                marker.position = midLatLan
+//                val midLatLan = gMap.cameraPosition.target
+//                marker.position = midLatLan
+                marker.isVisible = false
+                if (!binding.staticGps.isVisible){
+                    binding.staticGps.visibility  = View.VISIBLE
+
+                }
+
+
             }
         })
 
         gMap.setOnCameraIdleListener(object : GoogleMap.OnCameraIdleListener {
             override fun onCameraIdle() {
+                marker.isVisible = true
+                binding.staticGps.visibility  = View.VISIBLE
+
                 nowLocation.latitude = marker.position.latitude
                 nowLocation.longitude = marker.position.longitude
+
+                val midLatLan = gMap.cameraPosition.target
+                marker.position = midLatLan
+
                 viewModel.updateLocationAddress(requireContext(), nowLocation)
 
             }

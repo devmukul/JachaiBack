@@ -40,11 +40,12 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
+            android:layout_marginRight="15dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <TextView
                 android:id="@+id/searchLocation"
@@ -76,6 +77,18 @@
                 map:layout_constraintStart_toStartOf="parent"
                 map:layout_constraintTop_toBottomOf="@+id/searchLocation" />
 
+            <ImageView
+                android:id="@+id/static_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location"
+                android:visibility="visible"
+                map:layout_constraintBottom_toBottomOf="@+id/map"
+                map:layout_constraintEnd_toEndOf="@+id/map"
+                map:layout_constraintStart_toStartOf="@+id/map"
+                map:layout_constraintTop_toTopOf="@+id/map"
+                map:layout_constraintVertical_bias="0.465" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/confrim_button"
                 android:layout_width="match_parent"
@@ -90,5 +103,6 @@
                 map:layout_constraintEnd_toEndOf="parent"
                 map:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

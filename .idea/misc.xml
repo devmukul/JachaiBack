@@ -28,6 +28,7 @@
         <entry key="app/src/main/res/drawable/ic_heart.xml" value="0.13958333333333334" />
         <entry key="app/src/main/res/drawable/ic_info_white_background.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/ic_location.xml" value="0.13958333333333334" />
+        <entry key="app/src/main/res/drawable/ic_location_demo.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/ic_login_page.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/ic_status_default.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/loght_gray_rounded_corner.xml" value="0.2598958333333333" />
@@ -66,7 +67,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
         <entry key="app/src/main/res/layout/fragment_restaurant_search.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_restaurent_search.xml" value="0.33061594202898553" />
-        <entry key="app/src/main/res/layout/fragment_user_maps.xml" value="0.35198325617863757" />
+        <entry key="app/src/main/res/layout/fragment_user_maps.xml" value="0.30381704932918135" />
         <entry key="app/src/main/res/layout/groceries_shop_category_product_row.xml" value="0.47065670647922964" />
         <entry key="app/src/main/res/layout/groceries_shop_category_row.xml" value="0.12318840579710146" />
         <entry key="app/src/main/res/layout/groceries_shop_fragment.xml" value="0.29347826086956524" />

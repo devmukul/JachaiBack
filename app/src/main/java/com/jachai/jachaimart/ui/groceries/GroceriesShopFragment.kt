@@ -298,9 +298,6 @@ class GroceriesShopFragment :
             }
 
 
-
-
-
             orderBottom.root.setOnClickListener {
                 if (JachaiApplication.mDatabase.daoAccess().getOnGoingOrderCount() >= 1) {
                     val action =
