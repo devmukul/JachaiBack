@@ -105,7 +105,7 @@ class OnGoingOrderFragment :
                     state1.isIndeterminate = true
                     status.text = "Initiating order"
                     statusMessage.text = "Shop will pick your order soon."
-                    timeDuration.text = "25 - 30 mins"
+                    timeDuration.text = "55 mins - 24 hrs"
 
                 }
                 orderDetailsResponse?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_ACCEPTED_BY_DELIVERY_MAN) == true -> {
@@ -115,7 +115,7 @@ class OnGoingOrderFragment :
                     state2.isIndeterminate = true
                     status.text = "Packaging products"
                     statusMessage.text = "Shop is arranging your product."
-                    timeDuration.text = "22 - 28 mins"
+                    timeDuration.text = "29 mins - 3 hrs"
 
                 }
                 orderDetailsResponse?.order?.statusOfDeliveryMan?.equals(ApiConstants.ORDER_PICKED) == true -> {
