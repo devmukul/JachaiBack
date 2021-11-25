@@ -651,7 +651,7 @@
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:padding="15dp"
-                android:text="By proceeding, you ensure that you have read and agreed to the terms &amp; conditions on JaChai Blog and Facebook page."
+                android:text="@string/place_order_agreement_message"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toTopOf="@+id/cl_checkout"
                 app:layout_constraintEnd_toEndOf="parent"

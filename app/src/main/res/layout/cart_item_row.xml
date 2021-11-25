@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,9 +16,9 @@
             android:layout_marginStart="16dp"
             app:cardCornerRadius="100dp"
             app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/conLay_item"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/itemName">
+            app:layout_constraintTop_toTopOf="@+id/conLay_item">
 
 
             <ImageView
@@ -27,43 +28,55 @@
                 app:srcCompat="@drawable/sample_restaurant" />
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/itemName"
-            style="@style/heading"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conLay_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Handcrafted Burger"
-            android:textStyle="bold"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/include"
             app:layout_constraintStart_toEndOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/price"
-            style="@style/sub_heading"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:text="200"
-            android:textColor="#787878"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView"
-            app:layout_constraintEnd_toEndOf="@+id/itemName"
-            app:layout_constraintStart_toStartOf="@+id/itemName"
-            app:layout_constraintTop_toBottomOf="@+id/itemName" />
+            <TextView
+                android:id="@+id/itemName"
+                style="@style/heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Handcrafted Burger" />
+
+            <TextView
+                android:id="@+id/price"
+                style="@style/sub_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="#787878"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/itemName"
+                app:layout_constraintTop_toBottomOf="@+id/itemName"
+                tools:text="200" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/include"
             layout="@layout/counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/conLay_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/cardView" />
+            app:layout_constraintTop_toTopOf="@+id/conLay_item" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

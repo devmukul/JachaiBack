@@ -37,6 +37,16 @@
     <string name="signin_agreement_message">By selecting Continue, I agree to the \n <a href="https://www.jachai.com/jachai-terms-conditions">Terms of Service
     </a> and <a href="https://www.jachai.com/jachai-policy">Privacy Policy</a>.
     </string>
+
+    <string name="place_order_agreement_message">By selecting Place Order, I agree to the \n <a href="https://www.jachai.com/jachai-terms-conditions">Terms of Service
+    </a> and <a href="https://www.jachai.com/jachai-policy">Privacy Policy</a>.
+    </string>
+
+    <string name="check_out_agreement_message">By selecting Checkout, I agree to the \n <a href="https://www.jachai.com/jachai-terms-conditions">Terms of Service
+    </a> and <a href="https://www.jachai.com/jachai-policy">Privacy Policy</a>.
+    </string>
+
+
     <string name="home">Home</string>
     <string name="work">Work</string>
     <string name="where_to_go">Where to go?</string>
