@@ -13,14 +13,14 @@
             android:layout_height="wrap_content"
             android:contentInsetStart="0dp"
             android:contentInsetLeft="0dp"
+            android:backgroundTint="@color/white"
             android:theme="@style/Theme.JachaiMart.AppBarOverlay"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
             app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/red">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -30,8 +30,7 @@
                 android:contentInsetLeft="0dp"
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
-                app:contentInsetStartWithNavigation="0dp"
-                app:popupTheme="@style/Theme.JachaiMart.PopupOverlay">
+                app:contentInsetStartWithNavigation="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -42,7 +41,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_back_with_icon"
+                        android:src="@drawable/ic_back"
+                        app:tint="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -50,13 +50,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:fontFamily="@font/uni_neue_bold"
+                        android:text="All Categories"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/back"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginLeft="16dp"
-                        android:text="All Categories"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/uni_neue_bold"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <RelativeLayout
                         android:layout_width="0dp"
@@ -97,20 +98,19 @@
                             style="?attr/actionButtonStyle"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:clipToPadding="false"
-                            android:focusable="true"
-                            android:background="@drawable/ic_icon_back"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginRight="10dp">
+                            android:layout_marginRight="10dp"
+                            android:clipToPadding="false"
+                            android:focusable="true">
 
                             <ImageView
                                 android:layout_width="25dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/ic_cart_bucket"
-                                app:tint="@color/white"/>
+                                app:tint="@color/black" />
 
                             <TextView
                                 android:id="@+id/cart_badge"
