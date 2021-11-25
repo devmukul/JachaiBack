@@ -1,7 +1,10 @@
 package com.jachai.jachaimart.ui.checkout
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -17,13 +20,14 @@ import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.jachai.jachaimart.utils.constant.CommonConstants
 
 class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout_fragment) {
 
     companion object {
         fun newInstance() = CheckoutFragment()
     }
-
+    private lateinit var customTabsIntent:CustomTabsIntent
     private lateinit var navController: NavController
     private lateinit var checkoutAdapter: CheckoutAdapter
     private val viewModel: CheckoutViewModel by viewModels()
@@ -101,6 +105,12 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                 System.out.println("test $mCheckedId")
 
             }
+            textView4.setOnClickListener {
+                val builder = CustomTabsIntent.Builder()
+                builder.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.design_default_color_on_primary))
+                customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(requireContext(), Uri.parse(CommonConstants.POLICY_URL))
+            }
         }
 
 
@@ -152,7 +162,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
             itemCost.text = String.format("%.2f", subtotal)
             itemGrandTotal.text = String.format("%.2f", grandTotal)
-            totalDiscount.text = String.format("%.2f", discount)
+            totalDiscount.text = String.format("-%.2f", discount)
             vat.text = String.format("%.2f", vatSd)
 
 

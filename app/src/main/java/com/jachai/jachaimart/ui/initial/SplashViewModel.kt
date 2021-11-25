@@ -23,7 +23,6 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
     private val authService = RetrofitConfig.authService
 
 
-
     fun initSplashScreen() {
         viewModelScope.launch {
             delay(2000)
@@ -59,6 +58,7 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
             }
 
             override fun onFailure(call: Call<AuthResponse>?, t: Throwable?) {
+                liveData.value = "login"
             }
         })
     }

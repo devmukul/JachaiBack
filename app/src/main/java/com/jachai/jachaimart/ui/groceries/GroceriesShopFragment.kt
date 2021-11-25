@@ -402,13 +402,7 @@ class GroceriesShopFragment :
                     JachaiLog.e(TAG, order.toString())
                     orderBottom.inProgressText.text = "$it orders in progress"
 
-                    val format =
-                        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
-                    val date: Date = format.parse(order.createdAt)
-                    val myFormat = SimpleDateFormat("dd-MM HH:mm a ", Locale.getDefault())
-
-
-                    orderBottom.orderTime.text = myFormat.format(date).toString()
+                    orderBottom.orderTime.text = order.createdAt?.let { it1 -> getDateFormatter(it1) }
 
                     orderBottom.shopName.text = order.shop?.name
                 } else {
@@ -580,5 +574,13 @@ class GroceriesShopFragment :
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         mDrawerToggle.onConfigurationChanged(newConfig)
+    }
+
+    private fun getDateFormatter(date: String): String {
+        val inputFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        inputFormatter.timeZone = TimeZone.getTimeZone("UTC")
+        val date = inputFormatter.parse(date)
+        val outFormatter = SimpleDateFormat("dd MMM yyyy h:mm a ")
+        return outFormatter.format(date)
     }
 }
