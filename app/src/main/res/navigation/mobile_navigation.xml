@@ -274,6 +274,16 @@
         <action
             android:id="@+id/action_groceryCategoryDetailsFragment_to_groceryCategoryDetailsFragment2"
             app:destination="@id/groceryCategoryDetailsFragment2" />
+
+        <action
+            android:id="@+id/action_categoryFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_emptyCartFragment"
+            app:destination="@id/emptyCartFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_groceriesSearchFragment"
+            app:destination="@id/groceriesSearchFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/empty_cart_fragment"

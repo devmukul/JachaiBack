@@ -20,7 +20,9 @@
             app:tabMode="scrollable"
             app:tabPaddingEnd="-1dp"
             app:tabPaddingStart="-1dp"
-            android:background="@color/transparent"/>
+            app:tabIndicatorHeight="0dp"
+            android:background="@color/transparent"
+            android:layout_marginVertical="10dp"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

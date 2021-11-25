@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName
 data class CatWithRelatedProduct(
     @SerializedName("category")
     val category: String,
-    @SerializedName("categoryId")
-    val categoryImage: String,
     @SerializedName("categoryImage")
+    val categoryImage: String,
+    @SerializedName("categoryId")
     val categoryId: String,
     @SerializedName("products")
     val products: List<Product>

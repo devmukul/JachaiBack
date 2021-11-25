@@ -13,6 +13,8 @@ import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import android.R.attr.defaultValue
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
@@ -24,6 +26,14 @@ import com.google.android.gms.common.util.SharedPreferencesUtils
 import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryDetailsProductAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.google.android.material.tabs.TabLayout
+
+import android.graphics.PorterDuff
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat.setBackgroundTintList
+import com.google.android.material.chip.Chip
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 
 class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragmentBinding>(R.layout.grocery_category_details_fragment),
@@ -68,6 +78,23 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
             initMediator(it.productCategories)
         })
 
+        binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val view = tab.customView
+                val root = view!!.findViewById<ConstraintLayout>(R.id.root)
+                root.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F4E3E2"))
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                val view = tab.customView
+                val root = view!!.findViewById<ConstraintLayout>(R.id.root)
+                root.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFFFFF"))
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+        })
+
     }
 
     override fun initView() {
@@ -106,26 +133,23 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
 
     private fun initTabLayout(categories: List<CatWithRelatedProduct>) {
 
-        binding.tabLayout.removeAllTabs()
+        binding.apply {
+            tabLayout.removeAllTabs()
 
-        for (category in categories) {
-            binding.apply {
+            for (category in categories) {
+
+
+//                tabLayout.addTab(tabLayout.newTab().setText(category.category))
                 val tab = tabLayout.newTab()
-                tab.setCustomView(R.layout.sub_category_row)
+                tab.setCustomView(R.layout.sub_category_row_new)
                 val view = tab.customView
                 val title = view!!.findViewById<TextView>(R.id.name)
-                val image = view.findViewById<ImageView>(R.id.image)
-
-                Glide.with(requireContext())
-                    .load(category.categoryImage)
-                    .placeholder(R.drawable.ic_place_holder)
-                    .error(R.drawable.ic_place_holder)
-                    .into(image)
-
-
                 title.text = category.category
+
                 tabLayout.addTab(tab)
             }
+
+
 
         }
     }

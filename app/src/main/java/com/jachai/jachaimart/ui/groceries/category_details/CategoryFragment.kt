@@ -16,6 +16,8 @@ import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.ui.base.BaseFragment
 import android.view.WindowManager
 import android.view.Window
+import com.jachai.jachaimart.JachaiApplication
+import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
 
 
 class CategoryFragment :
@@ -73,6 +75,25 @@ class CategoryFragment :
             }.attach()
 
             tabLayout.setScrollPosition(selectedTabPos,0f,true, true)
+
+            cartBadge.text =
+                JachaiApplication.mDatabase.daoAccess().getProductOrdersSize().toString()
+
+            frameLay.setOnClickListener {
+                val action =
+                    if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
+                        CategoryFragmentDirections.actionCategoryFragmentToEmptyCartFragment()
+                    } else {
+                        CategoryFragmentDirections.actionCategoryFragmentToCartFragment()
+                    }
+                navController.navigate(action)
+            }
+
+            search.setOnClickListener {
+                val action =
+                    CategoryFragmentDirections.actionCategoryFragmentToGroceriesSearchFragment()
+                navController.navigate(action)
+            }
 
 
 
