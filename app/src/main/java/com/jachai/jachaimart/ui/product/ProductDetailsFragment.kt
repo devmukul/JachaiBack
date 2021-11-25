@@ -156,6 +156,13 @@ class ProductDetailsFragment :
 
             if (product?.description != null) {
 
+
+                descriptionBody.setOnLongClickListener(object : View.OnLongClickListener{
+                    override fun onLongClick(p0: View?): Boolean {
+                        return true
+                    }
+                })
+                descriptionBody.isLongClickable = false
                 descriptionBody.loadData(
                     """
                 <!doctype html>

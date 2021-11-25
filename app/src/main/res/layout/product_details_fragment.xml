@@ -178,7 +178,6 @@
                         android:fontFamily="@font/uni_neue_regular"
                         tools:text="KTM Racing Bike"
                         android:textColor="@color/black"
-                        android:textIsSelectable="true"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/favorite"
