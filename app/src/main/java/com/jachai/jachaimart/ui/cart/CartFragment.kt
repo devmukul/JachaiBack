@@ -1,7 +1,10 @@
 package com.jachai.jachaimart.ui.cart
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -17,6 +20,7 @@ import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.cart.adapter.CartAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.jachai.jachaimart.utils.constant.CommonConstants
 
 class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     CartAdapter.Interaction {
@@ -27,6 +31,8 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
     private lateinit var cartAdapter: CartAdapter
     private lateinit var navController: NavController
+    private lateinit var customTabsIntent:CustomTabsIntent
+
 
     private val viewModel: CartViewModel by viewModels()
 
@@ -68,6 +74,12 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
                     CartFragmentDirections.actionCartFragmentToCheckoutFragment(null)
                 action.addNote = comment.text.toString()
                 navController.navigate(action)
+            }
+            textView4.setOnClickListener {
+                val builder = CustomTabsIntent.Builder()
+                builder.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.design_default_color_on_primary))
+                customTabsIntent = builder.build()
+                customTabsIntent.launchUrl(requireContext(), Uri.parse(CommonConstants.POLICY_URL))
             }
 
         }
@@ -181,7 +193,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
 
             itemCost.text = String.format("%.2f", subtotal)
-            totalDiscount.text = String.format("%.2f", discount)
+            totalDiscount.text = String.format("-%.2f", discount)
             vat.text = String.format("%.2f", vatSd)
 
             deliveryCharge.text = String.format("%.2f", deliveryCost)
