@@ -3,6 +3,7 @@ package com.jachai.jachaimart.ui.cart
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -200,7 +201,9 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             deliveryCharge.text = String.format("%.2f", deliveryCost)
             if (nearCostToFree>0){
                 tvDeliveryFreeMessage.visibility = View.VISIBLE
-                tvDeliveryFreeMessage.text = String.format("Add %.2f tk more to get free delivery", nearCostToFree)
+                val deliveryFreeMessage = String.format("Add %.2f tk more to get free delivery", nearCostToFree)
+                tvDeliveryFreeMessage.text = deliveryFreeMessage
+                showShortToast(deliveryFreeMessage)
             }else{
                 tvDeliveryFreeMessage.visibility = View.GONE
             }
