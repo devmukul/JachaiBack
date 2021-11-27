@@ -344,6 +344,9 @@
             app:popUpToInclusive="true"
             app:launchSingleTop="true"
             app:popUpTo="@+id/groceriesShopFragment"/>
+        <argument
+            android:name="shopId"
+            app:argType="string" />
 
     </fragment>
     <fragment

@@ -1,6 +1,5 @@
 package com.jachai.jachaimart.ui.groceries.category_details
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -10,14 +9,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CategoryFragmentBinding
 import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.ui.base.BaseFragment
-import android.view.WindowManager
-import android.view.Window
-import com.jachai.jachaimart.JachaiApplication
-import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
+import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
 
 class CategoryFragment :
@@ -50,8 +47,8 @@ class CategoryFragment :
 
             }
 
-            loop@ for ((index, value) in  categoryData.categoryList?.categories!!.withIndex()) {
-                if(value.id.equals(categoryData.categoryId)){
+            loop@ for ((index, value) in categoryData.categoryList?.categories!!.withIndex()) {
+                if (value.id.equals(categoryData.categoryId)) {
                     selectedTabPos = index
                     break@loop
                 }
@@ -61,7 +58,11 @@ class CategoryFragment :
                 onBackPressed()
             }
 
-            val categoryViewPagerAdapter = CategoryViewPagerAdapter( categoryData.categoryList?.categories!!, navController, this@CategoryFragment)
+            val categoryViewPagerAdapter = CategoryViewPagerAdapter(
+                categoryData.categoryList?.categories!!,
+                navController,
+                this@CategoryFragment
+            )
             viewPager.adapter = categoryViewPagerAdapter
             viewPager.offscreenPageLimit = 1
             viewPager.clipToPadding = false
@@ -69,12 +70,12 @@ class CategoryFragment :
             viewPager.isSaveEnabled = false
             viewPager.setCurrentItem(selectedTabPos, true)
 
-            TabLayoutMediator(tabLayout, viewPager, true, true ) { tab, position ->
+            TabLayoutMediator(tabLayout, viewPager, true, true) { tab, position ->
                 tab.text = categoryData.categoryList?.categories!![position].title
 
             }.attach()
 
-            tabLayout.setScrollPosition(selectedTabPos,0f,true, true)
+            tabLayout.setScrollPosition(selectedTabPos, 0f, true, true)
 
             cartBadge.text =
                 JachaiApplication.mDatabase.daoAccess().getProductOrdersSize().toString()
@@ -90,11 +91,17 @@ class CategoryFragment :
             }
 
             search.setOnClickListener {
-                val action =
-                    CategoryFragmentDirections.actionCategoryFragmentToGroceriesSearchFragment()
-                navController.navigate(action)
-            }
 
+                if (SharedPreferenceUtil.getJCShopId().isNullOrEmpty()) {
+                    navController.popBackStack()
+                } else {
+                    val action =
+                        CategoryFragmentDirections.actionCategoryFragmentToGroceriesSearchFragment(
+                            SharedPreferenceUtil.getJCShopId()!!
+                        )
+                    navController.navigate(action)
+                }
+            }
 
 
         }
@@ -103,15 +110,20 @@ class CategoryFragment :
     override fun subscribeObservers() {
     }
 
-    class CategoryViewPagerAdapter(private val tabTitleList: List<CategoriesItem>, private val navController: NavController,
-                               fragmentManager: Fragment) : FragmentStateAdapter(fragmentManager) {
+    class CategoryViewPagerAdapter(
+        private val tabTitleList: List<CategoriesItem>, private val navController: NavController,
+        fragmentManager: Fragment
+    ) : FragmentStateAdapter(fragmentManager) {
 
 
-        override fun getItemCount(): Int  = tabTitleList.size
+        override fun getItemCount(): Int = tabTitleList.size
 
-        override fun createFragment(position: Int): Fragment = GroceryCategoryDetailsFragment.newInstance(tabTitleList[position].title!!, tabTitleList[position].id!!, navController)
-
-
+        override fun createFragment(position: Int): Fragment =
+            GroceryCategoryDetailsFragment.newInstance(
+                tabTitleList[position].title!!,
+                tabTitleList[position].id!!,
+                navController
+            )
 
 
     }

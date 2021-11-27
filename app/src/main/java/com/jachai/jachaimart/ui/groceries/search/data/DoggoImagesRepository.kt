@@ -5,7 +5,6 @@ import androidx.paging.*
 import com.jachai.jachaimart.api.service.GroceryService
 import com.jachai.jachaimart.model.response.category.Product
 import com.jachai.jachaimart.utils.RetrofitConfig
-import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -29,19 +28,27 @@ class DoggoImagesRepository(
      * and returning the results in the form of flow [Flow<PagingData<DoggoImageModel>>]
      * since the [PagingDataAdapter] accepts the [PagingData] as the source in later stage
      */
-    fun letDoggoImagesFlow(pagingConfig: PagingConfig = getDefaultPageConfig(), key: String): Flow<PagingData<Product>> {
+    fun letDoggoImagesFlow(
+        pagingConfig: PagingConfig = getDefaultPageConfig(),
+        key: String,
+        shopId: String
+    ): Flow<PagingData<Product>> {
         return Pager(
             config = pagingConfig,
-            pagingSourceFactory = { DoggoImagePagingSource(doggoApiService, key) }
+            pagingSourceFactory = { DoggoImagePagingSource(doggoApiService, key, shopId) }
         ).flow
     }
 
 
     //for live data users
-    fun letDoggoImagesLiveData(pagingConfig: PagingConfig = getDefaultPageConfig(), key: String): LiveData<PagingData<Product>> {
+    fun letDoggoImagesLiveData(
+        pagingConfig: PagingConfig = getDefaultPageConfig(),
+        key: String,
+        shopId: String
+    ): LiveData<PagingData<Product>> {
         return Pager(
             config = pagingConfig,
-            pagingSourceFactory = { DoggoImagePagingSource(doggoApiService, key) }
+            pagingSourceFactory = { DoggoImagePagingSource(doggoApiService, key, shopId) }
         ).liveData
     }
 

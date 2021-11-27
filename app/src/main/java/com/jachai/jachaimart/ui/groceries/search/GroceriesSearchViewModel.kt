@@ -29,8 +29,8 @@ class GroceriesSearchViewModel  constructor(val repository: DoggoImagesRepositor
      * returning non modified PagingData<DoggoImageModel> value as opposite to remote view model
      * where we have mapped the coming values into different object
      */
-    fun fetchDoggoImages(key: String): Flow<PagingData<Product>> {
-        return repository.letDoggoImagesFlow(key = key).cachedIn(viewModelScope)
+    fun fetchDoggoImages(key: String, shopId: String): Flow<PagingData<Product>> {
+        return repository.letDoggoImagesFlow(key = key, shopId = shopId).cachedIn(viewModelScope)
     }
 
     private var pageCount = 1

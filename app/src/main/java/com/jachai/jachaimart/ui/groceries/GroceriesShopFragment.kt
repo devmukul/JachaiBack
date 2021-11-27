@@ -279,9 +279,14 @@ class GroceriesShopFragment :
 
             initTopView()
             etSearchShops.setOnClickListener {
-                val action =
-                    GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceriesSearchFragment()
-                navController.navigate(action)
+
+                if (SharedPreferenceUtil.getJCShopId().isNullOrEmpty()) {
+                    showNoShopFoundAlert()
+                } else {
+                    val action =
+                        GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceriesSearchFragment(SharedPreferenceUtil.getJCShopId()!!)
+                    navController.navigate(action)
+                }
             }
 
             toolbarMain.back.setOnClickListener {
@@ -402,7 +407,8 @@ class GroceriesShopFragment :
                     JachaiLog.e(TAG, order.toString())
                     orderBottom.inProgressText.text = "$it orders in progress"
 
-                    orderBottom.orderTime.text = order.createdAt?.let { it1 -> getDateFormatter(it1) }
+                    orderBottom.orderTime.text =
+                        order.createdAt?.let { it1 -> getDateFormatter(it1) }
 
                     orderBottom.shopName.text = order.shop?.name
                 } else {
@@ -508,7 +514,7 @@ class GroceriesShopFragment :
                     ?.let { it1 ->
                         viewModel.getNearestJCShop(it1.location, false, null)
                     }
-            }else{
+            } else {
                 SharedPreferenceUtil.getCurrentAddress()
                     ?.let { it1 ->
                         viewModel.getNearestJCShop(it1.location, false, null)

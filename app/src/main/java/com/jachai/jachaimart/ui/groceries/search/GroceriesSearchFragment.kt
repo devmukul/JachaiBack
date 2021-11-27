@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,14 +43,18 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 @ExperimentalPagingApi
-class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.layout.fragment_product_search),
-    ShopRecyclerAdapter.Interaction, PopularTagAdapter.Interaction, SearchSuggetionAdapter.Interaction, LoaderDoggoImageAdapter.Interaction,
-    SearchHistoryAdapter.Interaction{
+class GroceriesSearchFragment :
+    BaseFragment<FragmentProductSearchBinding>(R.layout.fragment_product_search),
+    ShopRecyclerAdapter.Interaction, PopularTagAdapter.Interaction,
+    SearchSuggetionAdapter.Interaction, LoaderDoggoImageAdapter.Interaction,
+    SearchHistoryAdapter.Interaction {
 
     lateinit var loaderViewModel: GroceriesSearchViewModel
     lateinit var adapter: LoaderDoggoImageAdapter
     lateinit var loaderStateAdapter: LoaderStateAdapter
     private lateinit var navController: NavController
+    private lateinit var shopId: String
+    private val args: GroceriesSearchFragmentArgs by navArgs()
 
     var isLoading = true
     var searchJob: Job? = null
@@ -58,7 +63,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         super.onViewCreated(view, savedInstanceState)
-
+        shopId = args.shopId
         navController = Navigation.findNavController(view)
 
         initMembers()
@@ -69,25 +74,26 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
 
     }
 
-    private fun fetchDoggoImages(key: String) {
+    private fun fetchDoggoImages(key: String, shopId: String) {
         binding.recyclerView.visibility = View.VISIBLE
         binding.popularSerachView.visibility = View.GONE
         binding.recentSerachView.visibility = View.GONE
         binding.searchSuggetionView.visibility = View.GONE
-        JachaiApplication.mDatabase.daoAccess().insertSearchKeyword(SearchHistoryItem(key, Date(System.currentTimeMillis())))
+        JachaiApplication.mDatabase.daoAccess()
+            .insertSearchKeyword(SearchHistoryItem(key, Date(System.currentTimeMillis())))
         lifecycleScope.launch {
-            loaderViewModel.fetchDoggoImages(key).distinctUntilChanged().collectLatest {
+            loaderViewModel.fetchDoggoImages(key,shopId).distinctUntilChanged().collectLatest {
                 adapter.submitData(it)
             }
         }
     }
 
     private fun initMembers() {
-        loaderViewModel = defaultViewModelProviderFactory.create(GroceriesSearchViewModel::class.java)
+        loaderViewModel =
+            defaultViewModelProviderFactory.create(GroceriesSearchViewModel::class.java)
         adapter = LoaderDoggoImageAdapter(this)
         loaderStateAdapter = LoaderStateAdapter { adapter.retry() }
     }
-
 
 
     override fun initView() {
@@ -105,7 +111,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
             }
 
             searchSuggetionTitle.setOnClickListener {
-                fetchDoggoImages(etSearchShops.text.toString())
+                fetchDoggoImages(etSearchShops.text.toString(), shopId)
             }
 
             etSearchShops.addTextChangedListener(object : TextWatcher {
@@ -127,17 +133,17 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
                     if (searchText != null) {
                         clearSearch.isVisible = searchText.toString().isNotEmpty()
                         val text = searchText.toString()
-                        if(text.length>1) {
+                        if (text.length > 1) {
                             recyclerView.visibility = View.GONE
-                            recentSerachView.visibility  = View.GONE
-                            popularSerachView.visibility  = View.GONE
+                            recentSerachView.visibility = View.GONE
+                            popularSerachView.visibility = View.GONE
                             searchSuggetionView.visibility = View.VISIBLE
                             searchSuggetionTitle.text = "Search for $text"
                             delayAndProcessSearch(text)
-                        }else{
+                        } else {
                             recyclerView.visibility = View.GONE
-                            recentSerachView.visibility  = View.VISIBLE
-                            popularSerachView.visibility  = View.VISIBLE
+                            recentSerachView.visibility = View.VISIBLE
+                            popularSerachView.visibility = View.VISIBLE
                             searchSuggetionView.visibility = View.GONE
                         }
                     }
@@ -146,7 +152,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
 
             etSearchShops.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    fetchDoggoImages(etSearchShops.text.toString())
+                    fetchDoggoImages(etSearchShops.text.toString(), shopId)
                     return@OnEditorActionListener true
                 }
                 false
@@ -157,9 +163,9 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
     }
 
     override fun subscribeObservers() {
-        loaderViewModel.popularKeywordLiveData.observe(viewLifecycleOwner){
+        loaderViewModel.popularKeywordLiveData.observe(viewLifecycleOwner) {
 
-            if(it.popular.isNotEmpty()) {
+            if (it.popular.isNotEmpty()) {
                 binding.popularSerachView.visibility = View.VISIBLE
                 val layoutManager = FlexboxLayoutManager(requireContext())
                 layoutManager.flexWrap = FlexWrap.WRAP
@@ -168,14 +174,14 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
                 binding.popularSerachRV.layoutManager = layoutManager
                 val adapter = PopularTagAdapter(requireContext(), it.popular, this)
                 binding.popularSerachRV.adapter = adapter
-            }else{
+            } else {
                 binding.popularSerachView.visibility = View.GONE
             }
         }
 
-        loaderViewModel.serachSuccessList.observe(viewLifecycleOwner){
+        loaderViewModel.serachSuccessList.observe(viewLifecycleOwner) {
 
-            if(it.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 binding.recentSerachView.visibility = View.VISIBLE
                 val layoutManager = FlexboxLayoutManager(requireContext())
                 layoutManager.flexWrap = FlexWrap.WRAP
@@ -184,12 +190,12 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
                 binding.recentSearchRecyclerView.layoutManager = layoutManager
                 val adapter = SearchHistoryAdapter(requireContext(), it, this)
                 binding.recentSearchRecyclerView.adapter = adapter
-            }else{
+            } else {
                 binding.recentSerachView.visibility = View.GONE
             }
         }
 
-        loaderViewModel.searhKeywordLiveData.observe(viewLifecycleOwner){
+        loaderViewModel.searhKeywordLiveData.observe(viewLifecycleOwner) {
             val searchSuggetionAdapter = SearchSuggetionAdapter(requireContext(), it.keys, this)
             binding.searchSuggetionRV.layoutManager = LinearLayoutManager(requireContext())
             binding.searchSuggetionRV.adapter = searchSuggetionAdapter
@@ -210,7 +216,7 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
 
     override fun onItemSelected(product: String) {
         binding.etSearchShops.setText(product)
-        fetchDoggoImages(product)
+        fetchDoggoImages(product, shopId)
     }
 
     private fun delayAndProcessSearch(key: String) {
@@ -228,7 +234,8 @@ class GroceriesSearchFragment : BaseFragment<FragmentProductSearchBinding>(R.lay
     }
 
     override fun onItemSelected(product: Product?) {
-        val action = GroceriesSearchFragmentDirections.actionGroceriesSearchFragmentToProductDetailsFragment()
+        val action =
+            GroceriesSearchFragmentDirections.actionGroceriesSearchFragmentToProductDetailsFragment()
 
         action.productId = product?.slug
         navController.navigate(action)
