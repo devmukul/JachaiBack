@@ -174,7 +174,8 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             val deliveryCost = if (SharedPreferenceUtil.getNearestShop()?.isFreeDelivery== true){
                 0.toFloat()
             } else{
-                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery !=0F){
+                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery != null &&
+                    SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery !=0F){
                     if (subtotal.toDouble()>= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!! ){
                         0.toFloat()
                     }else{
@@ -186,9 +187,9 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
                 }
             }
             val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
-            val vatSd = (subtotal * vatSdPercent) / 100
+            val vatSd = (subtotal.toFloat() * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
-            val total = subtotal + deliveryCost + vatSd
+            val total = subtotal.toFloat() + deliveryCost + vatSd
             val grandTotal = total + discount
 
 
