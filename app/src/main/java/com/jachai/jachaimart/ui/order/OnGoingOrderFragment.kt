@@ -10,6 +10,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.crashlytics.ktx.setCustomKeys
+import com.google.firebase.ktx.Firebase
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OnGoingOrderFragmentBinding
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
@@ -200,10 +203,19 @@ class OnGoingOrderFragment :
 
         viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
-            val action = OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
-            action.orderID = orderId
-            action.url = it.url
-            navController.navigate(action)
+            try {
+                val action = OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
+                action.orderID = orderId
+                action.url = it.url
+                navController.navigate(action)
+
+            }catch (ex: Exception){
+                val crashlytics = Firebase.crashlytics
+                crashlytics.setCustomKeys {
+                    key("ERROR_PAYMENT", "URL-null")
+                    ex.message?.let { it1 -> key("ERROR_PAYMENT", it1) }
+                }
+            }
         }
     }
 
