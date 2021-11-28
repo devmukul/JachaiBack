@@ -171,31 +171,35 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             val dao = JachaiApplication.mDatabase.daoAccess()
 
             val subtotal = dao.getProductOrderSubtotal()
+            val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
+            val vatSd : Double = (subtotal * vatSdPercent) / 100
+            val discount = viewModel.getDiscountPrice()
+
+            val total = subtotal  + vatSd + discount
+
+
             var nearCostToFree = 0F
             val deliveryCost = if (SharedPreferenceUtil.getNearestShop()?.isFreeDelivery== true){
                 0.toFloat()
             } else{
-                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery != null &&
-                    SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery !=0F){
-                    if (subtotal.toDouble()>= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!! ){
+                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery !=0F){
+                    if (total.toDouble()>= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!! ){
                         0.toFloat()
                     }else{
-                        nearCostToFree = SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - subtotal.toFloat()
+                        nearCostToFree = SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
                         SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
                     }
                 }else {
                     SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
                 }
             }
-            val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
-            val vatSd = (subtotal.toFloat() * vatSdPercent) / 100
-            val discount = viewModel.getDiscountPrice()
-            val total = subtotal.toFloat() + deliveryCost + vatSd
-            val grandTotal = total + discount
+
+
+            val grandTotal = total + deliveryCost.toDouble()
 
 
             itemCost.text = String.format("%.2f", subtotal)
-            totalDiscount.text = String.format("-%.2f", discount)
+            totalDiscount.text = String.format("%.2f", discount)
             vat.text = String.format("%.2f", vatSd)
 
             deliveryCharge.text = String.format("%.2f", deliveryCost)
