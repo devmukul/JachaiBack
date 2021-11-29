@@ -43,6 +43,7 @@ object SharedPreferenceUtil {
             putString(SharedPreferenceConstants.DRIVER_NAME_KEY, name)
         }
     }
+    fun isNameAvailable() = preferences.contains(SharedPreferenceConstants.DRIVER_NAME_KEY)
 
     fun getDriverId() =
         preferences.getString(SharedPreferenceConstants.DRIVER_ID_KEY, "")
@@ -70,6 +71,8 @@ object SharedPreferenceUtil {
             putString(SharedPreferenceConstants.DRIVER_MOBILE_KEY, name)
         }
     }
+
+    fun isMobileAvailable() = preferences.contains(SharedPreferenceConstants.DRIVER_MOBILE_KEY)
 
     fun setUserLocation(locationDetails: LocationDetails) {
         preferences.edit {

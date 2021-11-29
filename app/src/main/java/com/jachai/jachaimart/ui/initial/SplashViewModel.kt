@@ -38,8 +38,6 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
         if (userInfoCall != null) {
             return
         } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
-            // alertMessageListener?.showAlertMessage(R.string.no_internet_connection_message, AlertType.Snackbar)
-
             return
         }
 
@@ -53,6 +51,9 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
                         SharedPreferenceUtil.setName(response.body()?.name)
                         SharedPreferenceUtil.setMobileNo(response.body()?.mobileNumber)
                         liveData.value = "seccess"
+                    }
+                    else ->{
+                        liveData.value = "login"
                     }
                 }
             }
