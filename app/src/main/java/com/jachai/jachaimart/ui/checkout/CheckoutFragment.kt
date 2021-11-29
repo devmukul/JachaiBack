@@ -21,6 +21,7 @@ import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.CommonConstants
+import es.dmoral.toasty.Toasty
 
 class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout_fragment) {
 
@@ -80,11 +81,9 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             checkout.text = getString(R.string.place_order)
             clCheckout.setOnClickListener {
 
-
+                showLoader()
                 val address: Address = (SharedPreferenceUtil.getDeliveryAddress()
                     ?: SharedPreferenceUtil.getCurrentAddress()) as Address
-
-
 
                 viewModel.placeOrder(
                     SharedPreferenceUtil.getNotes().toString(),
@@ -102,8 +101,6 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                     R.id.option1 -> mCheckedId = "COD"
                     R.id.option2 -> mCheckedId = "SSL"
                 }
-                System.out.println("test $mCheckedId")
-
             }
             textView4.setOnClickListener {
                 val builder = CustomTabsIntent.Builder()
@@ -189,17 +186,17 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         }
 
         viewModel.successOrderLiveData.observe(viewLifecycleOwner) {
-            val jacjaiUrl = "https://www.jachai.com"
+            val jachaiUrl = "https://www.jachai.com"
             viewModel.clearCreatedOrder()
             if (mCheckedId == "SSL") {
                 mOrderId = it.orderId!!
                 val paymentRequest = PaymentRequest(
                     it.total!!,
-                    it.orderId!!,
+                    it.orderId,
                     mCheckedId,
-                    "$jacjaiUrl/payment/success",
-                    "$jacjaiUrl/payment/fail",
-                    "$jacjaiUrl/payment/cancel"
+                    "$jachaiUrl/payment/success",
+                    "$jachaiUrl/payment/fail",
+                    "$jachaiUrl/payment/cancel"
                 )
                 viewModel.requestPayment(paymentRequest)
             } else {
@@ -209,6 +206,11 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                 action.orderID = it.orderId.toString()
                 navController.navigate(action)
             }
+        }
+
+        viewModel.failedResponseLiveData.observe(viewLifecycleOwner) {
+            Toasty.error(requireContext(), it?.message!!).show()
+            dismissLoader()
         }
 
         viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {
