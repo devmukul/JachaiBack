@@ -182,6 +182,7 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
             override fun onCameraIdle() {
                 marker.isVisible = true
                 binding.staticGps.visibility  = View.VISIBLE
+                binding.staticGps.visibility  = View.GONE
 
                 nowLocation.latitude = marker.position.latitude
                 nowLocation.longitude = marker.position.longitude

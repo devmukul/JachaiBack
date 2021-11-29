@@ -249,65 +249,6 @@
                         app:layout_constraintTop_toTopOf="@+id/oldPrice" />
 
 
-                    <!--    <TextView-->
-                    <!--        android:id="@+id/change"-->
-                    <!--        android:layout_width="0dp"-->
-                    <!--        android:layout_height="wrap_content"-->
-                    <!--        style="@style/subTitle3"-->
-                    <!--        android:textColor="@color/green"-->
-                    <!--        android:layout_marginEnd="8dp"-->
-                    <!--        android:text="CHANGE"-->
-                    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--        app:layout_constraintTop_toTopOf="@+id/address" />-->
-
-                    <!--                <View-->
-                    <!--                    android:id="@+id/divDelivery"-->
-                    <!--                    android:layout_width="0dp"-->
-                    <!--                    android:layout_height="1dp"-->
-                    <!--                    android:layout_marginTop="16dp"-->
-                    <!--                    android:background="@color/divider_color"-->
-                    <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--                    app:layout_constraintStart_toStartOf="@+id/name"-->
-                    <!--                    app:layout_constraintTop_toBottomOf="@id/deliveryDays" />-->
-
-                    <!--                <TextView-->
-                    <!--                    android:id="@+id/cashOnDelivery"-->
-                    <!--                    android:layout_width="0dp"-->
-                    <!--                    android:layout_height="wrap_content"-->
-                    <!--                    android:layout_marginTop="12dp"-->
-                    <!--                    android:drawableStart="@drawable/ic_credit_card"-->
-                    <!--                    android:drawablePadding="16dp"-->
-                    <!--                    android:fontFamily="@font/uni_neue_regular"-->
-                    <!--                    android:text="Cash on Delivery Available"-->
-                    <!--                    android:textColor="@color/light_gray"-->
-                    <!--                    android:textSize="16sp"-->
-                    <!--                    app:layout_constraintEnd_toStartOf="@+id/charge"-->
-                    <!--                    app:layout_constraintStart_toStartOf="@+id/name"-->
-                    <!--                    app:layout_constraintTop_toBottomOf="@id/divDelivery" />-->
-
-                    <!--                <TextView-->
-                    <!--                    android:id="@+id/cashOnDeliveryCharge"-->
-                    <!--                    style="@style/textNormal"-->
-                    <!--                    android:layout_width="0dp"-->
-                    <!--                    android:layout_height="wrap_content"-->
-                    <!--                    android:text="Free"-->
-                    <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--                    app:layout_constraintTop_toTopOf="@+id/cashOnDelivery" />-->
-
-                    <!--    <TextView-->
-                    <!--        android:id="@+id/verified"-->
-                    <!--        android:layout_width="0dp"-->
-                    <!--        android:layout_height="wrap_content"-->
-                    <!--        style="@style/textNormalGreen"-->
-                    <!--        android:layout_marginTop="6dp"-->
-                    <!--        android:maxLines="2"-->
-                    <!--        android:text="VERIFIED"-->
-                    <!--        android:drawableStart="@drawable/ic_check_circle"-->
-                    <!--        android:drawablePadding="16dp"-->
-                    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--        app:layout_constraintStart_toStartOf="@+id/deal"-->
-                    <!--        app:layout_constraintTop_toBottomOf="@id/shop" />-->
-
                     <View
                         android:id="@+id/divider4"
                         android:layout_width="0dp"
@@ -338,74 +279,110 @@
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@id/descriptionTitle"/>
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/descriptionBody"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="16dp"-->
-<!--                        android:text="For more details about this product, please dial +88 01955529893  to get, assistance from our expert agents. "-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/name"-->
-<!--                        app:layout_constraintTop_toBottomOf="@id/descriptionTitle" />-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/descriptionBody"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="16dp"-->
+                    <!--                        android:text="For more details about this product, please dial +88 01955529893  to get, assistance from our expert agents. "-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/name"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/descriptionTitle" />-->
 
-                    <Button
-                        android:id="@+id/addToCart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/red_roses"
-                        android:fontFamily="@font/uni_neue_regular"
-                        android:text="Add to cart"
-                        android:textColor="@color/white"
-                        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout11"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/constraintLayout11" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        android:background="@drawable/rounded_white_top_color"
+                        android:id="@+id/conlay21"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@+id/descriptionBody">
 
-                        <ImageView
-                            android:id="@+id/ivAdd"
-                            android:layout_width="30dp"
-                            android:layout_height="34dp"
-                            android:background="@drawable/rounded_button_red"
-                            android:padding="2dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ic_count"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ic_count"
-                            app:layout_constraintTop_toTopOf="@+id/ic_count"
-                            app:srcCompat="@drawable/ic_add" />
-
-                        <ImageView
-                            android:id="@+id/ic_sub"
-                            android:layout_width="30dp"
-                            android:layout_height="34dp"
-                            android:background="@drawable/rounded_button_red"
-                            android:padding="4dp"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:layout_marginBottom="16dp"
+                            android:background="@drawable/rounded_white_top_color"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_subtraction" />
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:id="@+id/ivAdd"
+                                android:layout_width="30dp"
+                                android:layout_height="34dp"
+                                android:background="@drawable/rounded_button_red"
+                                android:padding="2dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/ic_count"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/ic_count"
+                                app:layout_constraintTop_toTopOf="@+id/ic_count"
+                                app:srcCompat="@drawable/ic_add" />
+
+                            <ImageView
+                                android:id="@+id/ic_sub"
+                                android:layout_width="30dp"
+                                android:layout_height="34dp"
+                                android:background="@drawable/rounded_button_red"
+                                android:padding="4dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_subtraction" />
+
+                            <TextView
+                                android:id="@+id/ic_count"
+                                style="@style/title"
+                                android:layout_width="40dp"
+                                android:layout_height="0dp"
+                                android:gravity="center"
+                                android:text="1"
+                                android:textColor="#CD113B"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/ic_sub"
+                                app:layout_constraintEnd_toStartOf="@+id/ivAdd"
+                                app:layout_constraintStart_toEndOf="@+id/ic_sub"
+                                app:layout_constraintTop_toTopOf="@+id/ic_sub" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <Button
+                            android:id="@+id/addToCart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/red_roses"
+                            android:fontFamily="@font/uni_neue_regular"
+                            android:text="@string/add_to_cart"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout11"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/constraintLayout11" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/conlay22"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@+id/name"
+                        app:layout_constraintTop_toBottomOf="@+id/descriptionBody">
 
                         <TextView
-                            android:id="@+id/ic_count"
-                            style="@style/title"
-                            android:layout_width="40dp"
-                            android:layout_height="0dp"
-                            android:gravity="center"
-                            android:text="1"
-                            android:textColor="#CD113B"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ic_sub"
-                            app:layout_constraintEnd_toStartOf="@+id/ivAdd"
-                            app:layout_constraintStart_toEndOf="@+id/ic_sub"
-                            app:layout_constraintTop_toTopOf="@+id/ic_sub" />
+                            style="@style/Widget.MaterialComponents.TextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/uni_neue_regular"
+                            android:text="OUT OF STOCK"
+                            android:textColor="@color/red_roses"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
@@ -413,11 +390,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
                         android:layout_marginBottom="24dp"
-                        android:visibility="invisible"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/name"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11" />
+                        app:layout_constraintTop_toBottomOf="@+id/conlay21" />
 
                     <TextView
                         android:id="@+id/rate_text"
