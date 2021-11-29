@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.JachaiLog
+import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
@@ -259,6 +260,16 @@ class ProductDetailsFragment :
                 }
             }
 
+            if ( product?.variations?.get(0)?.stock ?: 0 > 0 ){
+                conlay21.visibility = View.VISIBLE
+                conlay22.visibility = View.GONE
+
+            }else{
+                conlay21.visibility = View.GONE
+                conlay22.visibility = View.VISIBLE
+
+            }
+
 
             var quantity = 1
             ivAdd.setOnClickListener {
@@ -267,11 +278,11 @@ class ProductDetailsFragment :
                 val price = product?.variations?.get(0)?.price?.mrp?.times(addCount)
 
 //                productPrice?.text = price.toString()
-                val finalCount = if (addCount <= 6 ) {
+                val finalCount = if (addCount <= product?.variations?.get(0)?.stock?.toInt() ?: 0) {
                     addCount
                 } else {
                     showShortToast("Max limit reached")
-                    6
+                    product?.variations?.get(0)?.stock?.toInt() ?: 0
                 }
                 quantity = finalCount
                 icCount.text = finalCount.toString()

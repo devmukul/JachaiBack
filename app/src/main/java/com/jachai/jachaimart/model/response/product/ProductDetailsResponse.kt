@@ -273,6 +273,12 @@ data class VariationsItem(
     @field:SerializedName("stock")
     val stock: Int = 0,
 
+    @field:SerializedName("regularVariationId")
+    val regularVariationId: String? = null,
+
+    @field:SerializedName("maximumOrderLimit")
+    val maximumOrderLimit: Int = 0,
+
     @field:SerializedName("quantitativeProductDiscount")
     val quantitativeProductDiscount: QuantitativeProductDiscount? = null
 ) : Parcelable
