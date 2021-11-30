@@ -21,6 +21,7 @@ import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.CommonConstants
+import es.dmoral.toasty.Toasty
 
 class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout_fragment) {
 
@@ -80,11 +81,9 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             checkout.text = getString(R.string.place_order)
             clCheckout.setOnClickListener {
 
-
+                showLoader()
                 val address: Address = (SharedPreferenceUtil.getDeliveryAddress()
                     ?: SharedPreferenceUtil.getCurrentAddress()) as Address
-
-
 
                 viewModel.placeOrder(
                     SharedPreferenceUtil.getNotes().toString(),
@@ -102,8 +101,6 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                     R.id.option1 -> mCheckedId = "COD"
                     R.id.option2 -> mCheckedId = "SSL"
                 }
-                System.out.println("test $mCheckedId")
-
             }
             textView4.setOnClickListener {
                 val builder = CustomTabsIntent.Builder()
@@ -135,15 +132,22 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
             val subtotal = dao.getProductOrderSubtotal()
 
+            val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
+            val vatSd : Double = (subtotal * vatSdPercent) / 100
+            val discount = viewModel.getDiscountPrice()
+
+            val total = subtotal  + vatSd + discount
+
+
             var nearCostToFree = 0F
             val deliveryCost = if (SharedPreferenceUtil.getNearestShop()?.isFreeDelivery== true){
                 0.toFloat()
             } else{
                 if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery !=0F){
-                    if (subtotal.toDouble()>= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!! ){
+                    if (total.toDouble()>= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!! ){
                         0.toFloat()
                     }else{
-                        nearCostToFree = SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - subtotal.toFloat()
+                        nearCostToFree = SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
                         SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
                     }
                 }else {
@@ -152,17 +156,12 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             }
 
 
-
-            val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
-            val vatSd : Double = (subtotal * vatSdPercent) / 100
-            val discount = viewModel.getDiscountPrice()
-            val total = subtotal + deliveryCost.toDouble() + vatSd
-            val grandTotal = total + discount
+            val grandTotal = total + deliveryCost.toDouble()
 
 
             itemCost.text = String.format("%.2f", subtotal)
             itemGrandTotal.text = String.format("%.2f", grandTotal)
-            totalDiscount.text = String.format("-%.2f", discount)
+            totalDiscount.text = String.format("%.2f", discount)
             vat.text = String.format("%.2f", vatSd)
 
 
@@ -187,17 +186,17 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         }
 
         viewModel.successOrderLiveData.observe(viewLifecycleOwner) {
-            val jacjaiUrl = "https://www.jachai.com"
+            val jachaiUrl = "https://www.jachai.com"
             viewModel.clearCreatedOrder()
             if (mCheckedId == "SSL") {
                 mOrderId = it.orderId!!
                 val paymentRequest = PaymentRequest(
                     it.total!!,
-                    it.orderId!!,
+                    it.orderId,
                     mCheckedId,
-                    "$jacjaiUrl/payment/success",
-                    "$jacjaiUrl/payment/fail",
-                    "$jacjaiUrl/payment/cancel"
+                    "$jachaiUrl/payment/success",
+                    "$jachaiUrl/payment/fail",
+                    "$jachaiUrl/payment/cancel"
                 )
                 viewModel.requestPayment(paymentRequest)
             } else {
@@ -207,6 +206,11 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                 action.orderID = it.orderId.toString()
                 navController.navigate(action)
             }
+        }
+
+        viewModel.failedResponseLiveData.observe(viewLifecycleOwner) {
+            Toasty.error(requireContext(), it?.message!!).show()
+            dismissLoader()
         }
 
         viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {

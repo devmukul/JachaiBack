@@ -13,9 +13,13 @@ import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.request.OrderRequest
 import com.jachai.jachaimart.model.request.ProductsItem
 import com.jachai.jachaimart.model.request.ShippingLocation
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.ui.base.BaseViewModel
+import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
+import com.jachai.jachaimart.utils.constant.CommonConstants
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,6 +30,8 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
     var successProductOrderListLiveData = MutableLiveData<List<ProductOrder>>()
     var successOrderLiveData = MutableLiveData<OrderResponse>()
     var errorResponseLiveData =  MutableLiveData<String>()
+
+    var failedResponseLiveData = MutableLiveData<GenericResponse?>()
 
     private val orderService = RetrofitConfig.orderService
     private var orderCall: Call<OrderResponse>? = null
@@ -67,9 +73,19 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
                     call: Call<OrderResponse>,
                     response: Response<OrderResponse>
                 ) {
-                    JachaiLog.d(TAG, response.body().toString())
                     orderCall = null
-                    successOrderLiveData.postValue(response.body())
+
+
+                    when (response.code()) {
+                        HttpStatusCode.HTTP_OK -> successOrderLiveData.postValue(response.body())
+                        else -> {
+                            val jObjError = JSONObject(response.errorBody()!!.string())
+                            failedResponseLiveData.value =
+                                CommonConstants.DEFAULT_NON_NULL_GSON.fromJson(
+                                    jObjError.toString(), GenericResponse::class.java
+                                ) ?: GenericResponse()
+                        }
+                    }
 
 
                 }

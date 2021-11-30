@@ -32,7 +32,7 @@ import com.jachai.jachaimart.ui.groceries.search.adapter.SearchHistoryAdapter
 import com.jachai.jachaimart.ui.groceries.search.adapter.SearchSuggetionAdapter
 import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
 import com.jachai.jachaimart.ui.search.GroceriesSearchViewModel
-import com.vikas.paging3.view.loader.adapter.LoaderDoggoImageAdapter
+import com.jachai.jachaimart.ui.groceries.search.adapter.LoaderDoggoImageAdapter
 import com.vikas.paging3.view.loader.adapter.LoaderStateAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

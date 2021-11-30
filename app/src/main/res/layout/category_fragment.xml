@@ -89,28 +89,28 @@
                             android:layout_height="40dp"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginRight="10dp"
                             android:layout_toStartOf="@+id/frame_lay"
                             android:src="@drawable/ic_search_circle" />
 
                         <FrameLayout
                             android:id="@+id/frame_lay"
                             style="?attr/actionButtonStyle"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:clipToPadding="false"
+
+                            android:focusable="true"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginRight="10dp"
-                            android:clipToPadding="false"
-                            android:focusable="true">
+                            android:layout_marginRight="10dp">
 
                             <ImageView
                                 android:layout_width="25dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/ic_cart_bucket"
-                                app:tint="@color/black" />
+                                android:src="@drawable/ic_cart_bucket" />
 
                             <TextView
                                 android:id="@+id/cart_badge"

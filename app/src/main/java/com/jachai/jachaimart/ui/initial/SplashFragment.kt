@@ -63,11 +63,12 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
     override fun onResume() {
         super.onResume()
         if (SharedPreferenceUtil.isTokenAvailable()) {
-            viewModel.getUserInfo()
-
+            if(SharedPreferenceUtil.isNameAvailable() && SharedPreferenceUtil.isMobileAvailable())
+                viewModel.getUserInfo()
+            else
+                viewModel.initSplashScreen()
         } else {
             viewModel.initSplashScreen()
-
         }
 
         fetchCurrentLocation {
