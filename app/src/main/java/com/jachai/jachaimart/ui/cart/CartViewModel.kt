@@ -28,12 +28,12 @@ class CartViewModel(application: Application) : BaseViewModel(application) {
 
                 if (it <= 0) {
                     JachaiApplication.mDatabase.daoAccess()
-                        .deleteCartProducts(listOf(item.product))
+                        .deleteCartProducts(item.product, item.variationId)
 
 
                 } else {
                     JachaiApplication.mDatabase.daoAccess()
-                        .updateProductQuantity(it, item.product)
+                        .updateProductQuantity(it, item.product, item.variationId)
 
                 }
                 geOrderList()

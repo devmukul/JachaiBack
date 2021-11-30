@@ -127,13 +127,15 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
     override fun onQuantityItemAdded(item: ProductOrder?) {
         var qty = (item?.quantity?.toInt() ?: 0) + 1
-        val finalCount = if (qty <= 6 ) {
+        val finalCount = if (qty <= item?.stock?.toInt() ?: 0) {
             qty
         } else {
             showShortToast("Max limit reached")
-            6
+            item?.stock?.toInt() ?: 0
         }
         qty = finalCount
+
+
 
         item?.quantity = finalCount
         viewModel.updateQuantity(item)

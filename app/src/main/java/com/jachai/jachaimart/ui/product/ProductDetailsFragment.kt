@@ -271,7 +271,7 @@ class ProductDetailsFragment :
             }
 
 
-            var quantity = 1
+            var quantity = icCount.text.toString().toInt()
             ivAdd.setOnClickListener {
                 val count = icCount.text.toString().toInt()
                 val addCount = count + 1

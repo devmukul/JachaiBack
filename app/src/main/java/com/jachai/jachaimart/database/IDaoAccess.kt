@@ -63,11 +63,11 @@ interface IDaoAccess {
     @Query("SELECT SUM(price * quantity) FROM ProductOrder")
     fun totalCost(): Double
 
-    @Query("UPDATE ProductOrder SET quantity = :itemQty WHERE product = :id ;")
-    fun updateProductQuantity(itemQty: Int, id: String)
+    @Query("UPDATE ProductOrder SET quantity = :itemQty WHERE product = :id AND variationId = :variationId ;")
+    fun updateProductQuantity(itemQty: Int, id: String, variationId: String)
 
-    @Query("DELETE FROM ProductOrder where product in (:id)")
-    fun deleteCartProducts(id: List<String>)
+    @Query("DELETE FROM ProductOrder where product=:id AND variationId=:variationId")
+    fun deleteCartProducts(id: String, variationId: String)
 
     @Query("SELECT SUM(price * quantity) FROM ProductOrder")
     fun getProductOrderSubtotal(): Double

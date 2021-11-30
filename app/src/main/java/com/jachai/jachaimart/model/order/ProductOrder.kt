@@ -8,12 +8,11 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Keep
-@Entity(tableName = "ProductOrder")
+@Entity(tableName = "ProductOrder", primaryKeys = ["product", "variationId"])
 class ProductOrder {
 
     @SerializedName("product")
     @Expose
-    @PrimaryKey
     @ColumnInfo(defaultValue = "")
     var product: String = ""
 
@@ -54,9 +53,16 @@ class ProductOrder {
     @ColumnInfo(defaultValue = "")
     var campaignName: String? = null
 
+    @SerializedName("maximumOrderLimit")
+    @ColumnInfo(defaultValue = "")
+    var maximumOrderLimit: Int = 0
+
+    @SerializedName("stock")
+    @ColumnInfo(defaultValue = "0")
+    var stock: Int = 0
 
     @ColumnInfo(defaultValue = "")
-    var variationId: String? = null
+    var variationId: String = ""
 
     @ColumnInfo(defaultValue = "")
     var isChecked: Boolean? = null

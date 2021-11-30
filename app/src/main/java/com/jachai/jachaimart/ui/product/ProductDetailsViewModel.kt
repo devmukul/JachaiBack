@@ -13,6 +13,7 @@ import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.response.product.ProductDetailsResponse
 import com.jachai.jachaimart.model.response.product.Shop
+import com.jachai.jachaimart.model.response.product.VariationsItem
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
@@ -81,7 +82,7 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         val productOrder = ProductOrder()
         productOrder.product = item.id.toString()
         productOrder.productName = item.name
-        productOrder.quantity = quantity.toInt()
+//        productOrder.quantity = quantity.toInt()
         productOrder.shopId = shopItem?.id!!
         productOrder.shopName = shopItem.name
         productOrder.shopSubtitle = "na"
@@ -89,11 +90,81 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         productOrder.image = item.productImage
         productOrder.isChecked = false
         productOrder.isPopular = false
-        productOrder.variationId = item.variations?.get(0)?.variationId
 
 
-        val tempPrice = item.variations?.get(0)?.price?.mrp ?: 0.0
-        val tempDiscountedPrice = item.variations?.get(0)?.price?.discountedPrice ?: 0.0
+//        var finalProductOrder =
+//            item.variations?.get(0)?.let {
+//                updatedProductOrder(productOrder, quantity, it)
+//            }
+        val finalProductOrder =
+            item.variations?.get(0)?.let {
+                when {
+                    item.variations[0]?.maximumOrderLimit == 0 -> {
+                        updatedProductOrder(productOrder, quantity, it, false)
+                    }
+                    quantity <= item.variations[0]?.maximumOrderLimit!! -> {
+                        updatedProductOrder(productOrder, quantity, it, false)
+
+                    }
+                    else -> {
+
+                        val tempProductOrder = updatedProductOrder(
+                            productOrder,
+                            item.variations[0]?.maximumOrderLimit!!,
+                            it,
+                            true
+                        )
+                        JachaiApplication.mDatabase.daoAccess()
+                            .insertOrder(tempProductOrder, isFromSameShop)
+                        val mQuantity = quantity - item.variations[0]?.maximumOrderLimit!!
+                        val nextVariationsId = item.variations[0]?.regularVariationId
+
+                        val nextVariationsItem: VariationsItem? =
+                            getVariationItemById(item.variations, nextVariationsId)
+
+                        if (nextVariationsItem != null) {
+                            updatedProductOrder(productOrder, mQuantity, nextVariationsItem, true)
+                        } else {
+                            null
+                        }
+
+                    }
+                }
+            }
+
+
+
+        successAddToCartData.postValue(
+            JachaiApplication.mDatabase.daoAccess().insertOrder(finalProductOrder!!, isFromSameShop)
+        )
+
+
+    }
+
+    private fun getVariationItemById(
+        variations: List<VariationsItem?>,
+        nextVariationsId: String?
+    ): VariationsItem? {
+        for (item in variations) {
+            if (item != null) {
+                if (item.variationId.equals(nextVariationsId)) {
+                    return item
+                }
+
+            }
+        }
+        return null
+    }
+
+    private fun updatedProductOrder(
+        tProductOrder: ProductOrder,
+        mQuantity: Int,
+        variationsItem: VariationsItem,
+        isRegularPrice: Boolean
+    ): ProductOrder {
+
+        val tempPrice = variationsItem.price?.mrp ?: 0.0
+        val tempDiscountedPrice = variationsItem.price?.discountedPrice ?: 0.0
 
         val mPrice: Double
         val mDiscountPrice: Double
@@ -115,14 +186,14 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
             }
         }
 
-        productOrder.price = mPrice
-        productOrder.discountedPrice = mDiscountPrice
-
-        successAddToCartData.postValue(
-            JachaiApplication.mDatabase.daoAccess().insertOrder(productOrder, isFromSameShop)
-        )
-
-
+        tProductOrder.variant = variationsItem.variationName
+        tProductOrder.quantity = mQuantity
+        tProductOrder.price = mPrice
+        tProductOrder.discountedPrice = mDiscountPrice
+        tProductOrder.variationId = variationsItem.variationId ?: ""
+        tProductOrder.maximumOrderLimit = variationsItem.maximumOrderLimit
+        tProductOrder.stock = variationsItem.stock
+        return tProductOrder
     }
 
 
