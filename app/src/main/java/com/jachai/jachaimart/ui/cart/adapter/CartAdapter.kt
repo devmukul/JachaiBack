@@ -40,7 +40,7 @@ class CartAdapter(
 
             if (productOrder?.variant?.equals("Discounted") == true){
                 binding.discount.visibility = View.VISIBLE
-                var discountedPrice = "Flat ৳${(productOrder.price?.toDouble() ?: 0.0) - (productOrder.discountedPrice?.toDouble()
+                val discountedPrice = "Flat ৳${(productOrder.price?.toDouble() ?: 0.0) - (productOrder.discountedPrice?.toDouble()
                     ?: 0.0)} OFF"
                 binding.discount.text =  discountedPrice.toString()
             }else{
