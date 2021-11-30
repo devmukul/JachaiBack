@@ -2,6 +2,7 @@ package com.jachai.jachaimart.ui.cart.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -31,10 +32,20 @@ class CartAdapter(
                 .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(binding.image)
-            binding.price.text = productOrder?.price.toString()
+
+            binding.price.text = "৳${productOrder?.price.toString()}"
             binding.itemName.text = productOrder?.productName
             binding.include.icCount.text = productOrder?.quantity.toString()
 
+
+            if (productOrder?.variant?.equals("Discounted") == true){
+                binding.discount.visibility = View.VISIBLE
+                var discountedPrice = "Flat ৳${(productOrder.price?.toDouble() ?: 0.0) - (productOrder.discountedPrice?.toDouble()
+                    ?: 0.0)} OFF"
+                binding.discount.text =  discountedPrice.toString()
+            }else{
+                binding.discount.visibility = View.GONE
+            }
 
 
             binding.include.ivAdd.setOnClickListener {
@@ -43,7 +54,6 @@ class CartAdapter(
                         ToastUtils.warning("Maximum limit reached")
                     }else{
                         interaction?.onQuantityItemAdded(productOrder)
-
                     }
 
                 }else{
