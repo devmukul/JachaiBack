@@ -29,15 +29,32 @@
             style="@style/sub_heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:padding="2dp"
             android:textColor="#636262"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@+id/item_qty"
+            app:layout_constraintBottom_toBottomOf="@+id/discount"
             app:layout_constraintEnd_toStartOf="@+id/textView17"
-            app:layout_constraintStart_toEndOf="@+id/item_qty"
-            app:layout_constraintTop_toTopOf="@+id/item_qty"
+            app:layout_constraintStart_toEndOf="@+id/discount"
+            app:layout_constraintTop_toTopOf="@+id/discount"
             tools:text="Handcrafted Burger " />
+
+        <TextView
+            android:id="@+id/discount"
+            style="@style/sub_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:background="@drawable/box_curve_light_green"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:text="Offer"
+            android:textColor="#14876A"
+            android:textSize="13sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/item_qty"
+            app:layout_constraintStart_toEndOf="@+id/item_qty"
+            app:layout_constraintTop_toTopOf="@+id/item_qty" />
 
         <TextView
             android:id="@+id/textView17"

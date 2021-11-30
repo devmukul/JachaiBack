@@ -2,6 +2,7 @@ package com.jachai.jachaimart.ui.checkout.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.databinding.CheckoutOrderRowBinding
@@ -19,6 +20,12 @@ class CheckoutAdapter(
             val quantity = data?.quantity?.toInt()
             val price = data?.price?.toDouble()
             val finalPrice = quantity?.times(price!!)
+
+            if (data?.variant?.equals("Discounted") == true){
+                binding.discount.visibility = View.VISIBLE
+            }else{
+                binding.discount.visibility = View.GONE
+            }
 
             binding.itemCost.text = finalPrice.toString()
             binding.itemName.text = data?.productName.toString()
