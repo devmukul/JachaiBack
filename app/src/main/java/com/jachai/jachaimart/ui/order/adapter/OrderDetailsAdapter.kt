@@ -2,6 +2,7 @@ package com.jachai.jachaimart.ui.order.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.databinding.CheckoutOrderRowBinding
@@ -22,6 +23,11 @@ class OrderDetailsAdapter(
 
             binding.itemCost.text = finalPrice.toString()
             binding.itemName.text = data?.name.toString()
+            if (data?.variation?.variationName.equals("Discounted")){
+                binding.discount.visibility = View.VISIBLE
+            }else{
+                binding.discount.visibility = View.GONE
+            }
         }
 
     }
