@@ -285,7 +285,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                 "2021-10-01",
                 "2022-12-01",
                 0,
-                50
+                100
 
             )
 
