@@ -11,7 +11,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.JachaiLog
-import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
@@ -54,9 +53,20 @@ class ProductDetailsFragment :
             back.setOnClickListener {
                 navController.popBackStack()
             }
+            updateBottomCart()
 
             frameLay.setOnClickListener {
 
+                val action =
+                    if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
+                        ProductDetailsFragmentDirections.actionProductDetailsFragmentToEmptyCartFragment()
+                    } else {
+                        ProductDetailsFragmentDirections.actionProductDetailsFragmentToCartFragment()
+                    }
+                navController.navigate(action)
+            }
+
+            clCart.setOnClickListener {
                 val action =
                     if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
                         ProductDetailsFragmentDirections.actionProductDetailsFragmentToEmptyCartFragment()
@@ -72,6 +82,11 @@ class ProductDetailsFragment :
 
     override fun onResume() {
         super.onResume()
+        if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()>0){
+            binding.bottomCart.visibility = View.VISIBLE
+        }else{
+            binding.bottomCart.visibility = View.GONE
+        }
 
     }
 
@@ -158,7 +173,7 @@ class ProductDetailsFragment :
             if (product?.description != null) {
 
 
-                descriptionBody.setOnLongClickListener(object : View.OnLongClickListener{
+                descriptionBody.setOnLongClickListener(object : View.OnLongClickListener {
                     override fun onLongClick(p0: View?): Boolean {
                         return true
                     }
@@ -260,11 +275,11 @@ class ProductDetailsFragment :
                 }
             }
 
-            if ( product?.variations?.get(0)?.stock ?: 0 > 0 ){
+            if (product?.variations?.get(0)?.stock ?: 0 > 0) {
                 conlay21.visibility = View.VISIBLE
                 conlay22.visibility = View.GONE
 
-            }else{
+            } else {
                 conlay21.visibility = View.GONE
                 conlay22.visibility = View.VISIBLE
 
@@ -335,11 +350,31 @@ class ProductDetailsFragment :
 
 
                 }
+                updateBottomCart()
 
             }
 
 
         }
+    }
+
+    private fun updateBottomCart() {
+        binding.apply {
+            if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()>0){
+                binding.bottomCart.visibility = View.VISIBLE
+            }else{
+                binding.bottomCart.visibility = View.GONE
+            }
+            itemCount.text =
+                JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
+                    .toString()
+            totalCount.text =
+                JachaiApplication.mDatabase.daoAccess().getProductOrderDiscountedSubtotal()
+                    .toString()
+
+
+        }
+
     }
 
 
