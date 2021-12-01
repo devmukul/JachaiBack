@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/drawable/box_curve_green.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/box_curve_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_top_curve.xml" value="0.2015625" />
+        <entry key="app/src/main/res/drawable/box_top_white_curve.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/brd_search_home_light.xml" value="0.3515625" />
         <entry key="app/src/main/res/drawable/dynamic_no_color_box_curve.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/dynamic_white_box_curve.xml" value="0.2598958333333333" />
@@ -56,7 +57,7 @@
         <entry key="app/src/main/res/layout/category_details_product_row.xml" value="0.1403985507246377" />
         <entry key="app/src/main/res/layout/category_fragment.xml" value="0.33364398139567314" />
         <entry key="app/src/main/res/layout/category_product_row.xml" value="0.1403985507246377" />
-        <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.13209580078895622" />
+        <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.1" />
         <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.3034410844629823" />
         <entry key="app/src/main/res/layout/checkout_order_row.xml" value="0.47181881227196076" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33645833333333336" />
@@ -94,7 +95,7 @@
         <entry key="app/src/main/res/layout/order_fragment.xml" value="0.2855421686746988" />
         <entry key="app/src/main/res/layout/order_row.xml" value="0.3885965121274973" />
         <entry key="app/src/main/res/layout/order_status_row.xml" value="3.958626819017759" />
-        <entry key="app/src/main/res/layout/product_details_fragment.xml" value="0.4013788262634332" />
+        <entry key="app/src/main/res/layout/product_details_fragment.xml" value="0.2651033354669928" />
         <entry key="app/src/main/res/layout/rounded_button_red.xml" value="0.17481884057971014" />
         <entry key="app/src/main/res/layout/runnting_order_details_row.xml" value="0.1408514492753623" />
         <entry key="app/src/main/res/layout/select_user_location_fragment.xml" value="0.2712683629496645" />
