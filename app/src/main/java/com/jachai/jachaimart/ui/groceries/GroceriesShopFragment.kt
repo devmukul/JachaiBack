@@ -28,9 +28,9 @@ import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
-import com.jachai.jachaimart.model.response.category.Product
 import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.model.response.home.CategoryResponse
+import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductPaginAdapter
@@ -459,6 +459,35 @@ class GroceriesShopFragment :
         navController.navigate(action)
     }
 
+    override fun onProductAddToCart(product: Product?) {
+        product?.let { it1 ->
+
+            if (product.shop?.id?.let {
+                    JachaiApplication.mDatabase.daoAccess()
+                        .isInsertionApplicable(shopID = it)
+                } == true) {
+//
+                if (JachaiApplication.mDatabase.daoAccess()
+                        .getProductByProductID(product.id!!, product.shop.id) > 0
+                ) {
+
+                    showShortToast("Product already added")
+
+                } else {
+
+                    showShortToast("Product added")
+                }
+                viewModel.saveProduct(it1, 1, product.shop, true)
+
+            } else {
+                alertDialog(product, 1)
+            }
+
+
+        }
+//        updateBottomCart()
+    }
+
 
     private fun showBottomSheetDialog(
         item: MutableList<Address>
@@ -588,5 +617,22 @@ class GroceriesShopFragment :
         val date = inputFormatter.parse(date)
         val outFormatter = SimpleDateFormat("dd MMM yyyy h:mm a ")
         return outFormatter.format(date)
+    }
+
+    private fun alertDialog(product: com.jachai.jachaimart.model.response.product.Product, quantity: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(false)
+        builder.setTitle(getString(R.string.app_name_short) + " alert")
+        builder.setMessage("Do have already selected products from a different shop. if you continue, your cart and selection will be removed")
+
+        builder.setPositiveButton("Continue") { _, _ ->
+
+            viewModel.saveProduct(product, quantity, product.shop, false)
+        }
+
+        builder.setNegativeButton("Close") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 }

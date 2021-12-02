@@ -7,8 +7,8 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jachai.jachaimart.JachaiApplication
-import com.jachai.jachaimart.model.response.category.Product
 import com.jachai.jachaimart.model.response.home.ShopsItem
+import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.response.search.PopularKeywordResponse
 import com.jachai.jachaimart.model.response.search.SearchKeywordResponse
 import com.jachai.jachaimart.model.response.search.SearchProductResponse

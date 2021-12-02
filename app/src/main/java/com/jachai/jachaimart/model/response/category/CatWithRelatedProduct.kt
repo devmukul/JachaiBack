@@ -2,6 +2,7 @@ package com.jachai.jachaimart.model.response.category
 
 
 import com.google.gson.annotations.SerializedName
+import com.jachai.jachaimart.model.response.product.Product
 
 data class CatWithRelatedProduct(
     @SerializedName("category")

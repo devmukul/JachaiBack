@@ -4,11 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.jachai.jachaimart.databinding.GroceriesShopCategoryProductRowBinding
 import com.jachai.jachaimart.databinding.ListItemSuggetionBinding
-import com.jachai.jachaimart.databinding.ListItemTagBinding
-import com.jachai.jachaimart.model.response.category.Product
 
 class SearchSuggetionAdapter(
     private val context: Context,

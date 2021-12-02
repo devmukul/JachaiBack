@@ -3,7 +3,7 @@ package com.jachai.jachaimart.model.response.search
 
 import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
-import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.product.Product
 
 data class SearchProductResponse(
     @SerializedName("currentPageNumber")

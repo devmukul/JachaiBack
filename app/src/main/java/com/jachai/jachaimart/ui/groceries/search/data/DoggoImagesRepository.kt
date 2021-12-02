@@ -3,7 +3,7 @@ package com.vikas.paging3.data
 import androidx.lifecycle.LiveData
 import androidx.paging.*
 import com.jachai.jachaimart.api.service.GroceryService
-import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.utils.RetrofitConfig
 import kotlinx.coroutines.flow.Flow
 

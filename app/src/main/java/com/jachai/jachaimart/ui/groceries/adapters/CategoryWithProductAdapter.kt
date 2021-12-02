@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.databinding.GroceriesShopCategoryRowBinding
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
-import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter.ViewHolder
 
 class CategoryWithProductAdapter(
@@ -50,6 +50,10 @@ class CategoryWithProductAdapter(
 
         override fun onProductSelected(product: Product?) {
             interaction?.onCategoryProductSelected(product)
+
+        }
+
+        override fun onProductAddToCart(product: Product?) {
 
         }
     }

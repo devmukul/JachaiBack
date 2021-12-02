@@ -33,7 +33,7 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
     private var favouriteProductCall: Call<GenericResponse>? = null
 
 
-    var successAddToCartData = MutableLiveData<Boolean?>()
+//    var successAddToCartData = MutableLiveData<Boolean?>()
     var successProductDetailsResponseLiveData = MutableLiveData<ProductDetailsResponse?>()
     var successFavouriteProductResponseLiveData = MutableLiveData<GenericResponse?>()
     var errorFavouriteProductResponseLiveData = MutableLiveData<String?>()
@@ -77,6 +77,7 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
 
 
     }
+/*
 
     fun saveProduct(item: Product, quantity: Int, shopItem: Shop?, isFromSameShop: Boolean) {
         val productOrder = ProductOrder()
@@ -196,6 +197,7 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
         return tProductOrder
     }
 
+*/
 
     fun requestForSetFavouriteProduct(slug: String) {
         try {

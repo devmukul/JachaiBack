@@ -4,8 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.jachai.jachaimart.api.service.GroceryService
-import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
-import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.product.Product
 import com.vikas.paging3.data.DoggoImagesRepository.Companion.DEFAULT_PAGE_INDEX
 import retrofit2.HttpException
 import java.io.IOException
