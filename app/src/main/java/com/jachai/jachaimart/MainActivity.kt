@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -14,6 +15,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.jachai.jachai_driver.utils.JachaiLocationManager
 import com.jachai.jachaimart.databinding.ActivityMainBinding
 import com.jachai.jachaimart.databinding.ContentMainBinding
@@ -60,6 +63,17 @@ class MainActivity : BaseActivity<ContentMainBinding>(R.layout.content_main)  {
 //    }
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+            Log.d("Jachai_FCM", "sendRegistrationTokenToServer($token)")
+        })
+    }
 
     override fun initView() {
 

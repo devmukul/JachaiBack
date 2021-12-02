@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.showLongToast
 import com.jachai.jachai_driver.utils.showShortToast
@@ -73,6 +74,9 @@ class GroceriesShopFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        subscribeToFCM("jachai_promotion")
+
         navController = Navigation.findNavController(view)
 
         if (isViewNull) {
@@ -588,5 +592,13 @@ class GroceriesShopFragment :
         val date = inputFormatter.parse(date)
         val outFormatter = SimpleDateFormat("dd MMM yyyy h:mm a ")
         return outFormatter.format(date)
+    }
+
+    fun subscribeToFCM(topic: String? = null, topicList: MutableList<String> = mutableListOf()) {
+        topic?.let { topicList.add(it) }
+        for(mTopic in topicList){
+            FirebaseMessaging.getInstance().subscribeToTopic(mTopic).addOnSuccessListener {
+            }
+        }
     }
 }
