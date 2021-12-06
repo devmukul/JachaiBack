@@ -87,8 +87,7 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
     override fun onOrderSelected(order: Order?, isOnGoingOrder: Boolean) {
         if (order != null) {
             if (isOnGoingOrder) {
-                val action = OrderFragmentDirections.actionOrderFragmentToOnGoingOrderFragment()
-                action.orderID = order.orderId
+                val action = OrderFragmentDirections.actionOrderFragmentToOnGoingOrderFragment(order.orderId)
                 navController.navigate(action)
             } else {
                 val action =

@@ -183,8 +183,7 @@
         tools:layout="@layout/on_going_order_fragment" >
         <argument
             android:name="orderID"
-            app:argType="string"
-            android:defaultValue="na" />
+            app:argType="string"/>
         <action
             android:id="@+id/action_onGoingOrderFragment_to_groceriesShopFragment"
             app:destination="@id/groceriesShopFragment"

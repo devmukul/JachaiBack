@@ -39,7 +39,7 @@
         </activity>
 
         <service
-            android:name="bd.com.evaly.ehealth.service.MyFirebaseMessagingService"
+            android:name=".service.MyFirebaseMessagingService"
             android:exported="true">
             android:exported="true">
             <intent-filter>

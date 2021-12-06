@@ -13,12 +13,16 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.navigation.NavDeepLinkBuilder
 import bd.com.evaly.ehealth.models.notification.NotificationResponse
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.FutureTarget
 import com.google.gson.Gson
 import com.jachai.jachaimart.MainActivity
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.ui.order.OnGoingOrderFragmentArgs
+import com.jachai.jachaimart.ui.order.OrderDetailsFragment
+import com.jachai.jachaimart.ui.order.OrderDetailsFragmentArgs
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import java.util.concurrent.ExecutionException
 
@@ -70,12 +74,22 @@ fun getSoundUri(): Uri {
 }
 
 fun getPendingIntent(context: Context, response: NotificationResponse): PendingIntent {
-    val intent = Intent(context, MainActivity::class.java)
-    intent.putExtra(CommonConstants.NOTIFICATION_DATA, Gson().toJson(response))
-    return PendingIntent.getActivity(
-        context, 0, intent,
-        PendingIntent.FLAG_ONE_SHOT
-    )
+
+
+    val pendingIntent = NavDeepLinkBuilder(context)
+        .setComponentName(MainActivity::class.java)
+        .setGraph(R.navigation.mobile_navigation)
+        .setDestination(R.id.onGoingOrderFragment)
+        .setArguments(OnGoingOrderFragmentArgs.Builder(response.typeId!!).build().toBundle())
+        .createPendingIntent()
+//    val intent = Intent(context, MainActivity::class.java)
+//    intent.putExtra(CommonConstants.NOTIFICATION_DATA, Gson().toJson(response))
+//    return PendingIntent.getActivity(
+//        context, 0, intent,
+//        PendingIntent.FLAG_ONE_SHOT
+//    )
+
+    return pendingIntent
 }
 
 fun getNotificationBuilder(
@@ -93,11 +107,11 @@ fun getNotificationBuilder(
         .setSmallIcon(R.mipmap.ic_launcher_round)
         .setContentIntent(pendingIntent).priority = Notification.PRIORITY_MAX
 
-    if (response.imageUrl != null) {
+    if (response.image != null) {
         try {
             val bitmapFutureTarget: FutureTarget<Bitmap> = Glide.with(context)
                 .asBitmap()
-                .load(response.imageUrl)
+                .load(response.image)
                 .submit()
             val imageBitmap = bitmapFutureTarget.get()
             val bigPictureStyle = NotificationCompat.BigPictureStyle()

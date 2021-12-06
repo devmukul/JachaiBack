@@ -34,9 +34,9 @@ class NotificationResponse : Parcelable {
     @Expose
     var body: String? = null
 
-    @SerializedName("resource_id")
+    @SerializedName("typeId")
     @Expose
-    var resourceId: String? = null
+    var typeId: String? = null
 
     @SerializedName("timestamp")
     @Expose
@@ -58,9 +58,9 @@ class NotificationResponse : Parcelable {
     @Expose
     var markAsRead: Boolean? = null
 
-    @SerializedName("icon")
+    @SerializedName("image")
     @Expose
-    var imageUrl: String? = null
+    var image: String? = null
 
     @SerializedName("redirect_url")
     @Expose
@@ -75,7 +75,7 @@ class NotificationResponse : Parcelable {
         notificationType = `in`.readString()
         title = `in`.readString()
         body = `in`.readString()
-        resourceId = `in`.readString()
+        typeId = `in`.readString()
         createdAt = `in`.readString()
         updatedAt = `in`.readString()
         v = if (`in`.readByte().toInt() == 0) {
@@ -86,7 +86,7 @@ class NotificationResponse : Parcelable {
         unReadCount = `in`.readString()
         val tmpMarkAsRead = `in`.readByte()
         markAsRead = if (tmpMarkAsRead.toInt() == 0) null else tmpMarkAsRead.toInt() == 1
-        imageUrl = `in`.readString()
+        image = `in`.readString()
         redirectUrl = `in`.readString()
     }
 
@@ -98,7 +98,7 @@ class NotificationResponse : Parcelable {
         dest.writeString(notificationType)
         dest.writeString(title)
         dest.writeString(body)
-        dest.writeString(resourceId)
+        dest.writeString(typeId)
         dest.writeString(createdAt)
         dest.writeString(updatedAt)
         if (v == null) {
@@ -109,7 +109,7 @@ class NotificationResponse : Parcelable {
         }
         dest.writeString(unReadCount)
         dest.writeByte((if (markAsRead == null) 0 else if (markAsRead as Boolean) 1 else 2).toByte())
-        dest.writeString(imageUrl)
+        dest.writeString(image)
         dest.writeString(redirectUrl)
     }
 

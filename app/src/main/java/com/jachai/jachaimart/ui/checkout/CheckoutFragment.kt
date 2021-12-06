@@ -202,8 +202,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             } else {
                 dismissLoader()
                 val action =
-                    CheckoutFragmentDirections.actionCheckoutFragmentToOnGoingOrderFragment()
-                action.orderID = it.orderId.toString()
+                    CheckoutFragmentDirections.actionCheckoutFragmentToOnGoingOrderFragment(it.orderId.toString())
                 navController.navigate(action)
             }
         }

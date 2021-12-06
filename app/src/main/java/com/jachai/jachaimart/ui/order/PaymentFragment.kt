@@ -66,8 +66,7 @@ class PaymentFragment :
                     .setMessage("Are you sure you want to Cancel?")
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes") { arg0, arg1 ->
-                        val action = PaymentFragmentDirections.actionPaymentFragmentToOnGoingOrderFragment()
-                        action.orderID = orderId
+                        val action = PaymentFragmentDirections.actionPaymentFragmentToOnGoingOrderFragment(orderId)
                         Toasty.error(requireContext(),"Payment Canceled!!").show()
                         navController.navigate(action)
                     }.create().show()
@@ -112,8 +111,7 @@ class PaymentFragment :
                 }
 
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                    val action = PaymentFragmentDirections.actionPaymentFragmentToOnGoingOrderFragment()
-                    action.orderID = orderId
+                    val action = PaymentFragmentDirections.actionPaymentFragmentToOnGoingOrderFragment(orderId
                     return if (url.contains("payment/cancel")) {
                         Toasty.error(requireContext(),"Payment Canceled!!").show()
                         navController.navigate(action)
