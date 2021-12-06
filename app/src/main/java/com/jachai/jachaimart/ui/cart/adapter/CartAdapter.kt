@@ -2,10 +2,12 @@ package com.jachai.jachaimart.ui.cart.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CartItemRowBinding
 import com.jachai.jachaimart.model.order.ProductOrder
@@ -30,11 +32,34 @@ class CartAdapter(
                 .error(R.drawable.ic_place_holder)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(binding.image)
-            binding.price.text = productOrder?.price.toString()
+
+            binding.price.text = "৳${productOrder?.price.toString()}"
             binding.itemName.text = productOrder?.productName
             binding.include.icCount.text = productOrder?.quantity.toString()
+
+
+            if (productOrder?.variant?.equals("Discounted") == true){
+                binding.discount.visibility = View.VISIBLE
+                val discountedPrice = "Flat ৳${(productOrder.price?.toDouble() ?: 0.0) - (productOrder.discountedPrice?.toDouble()
+                    ?: 0.0)} OFF"
+                binding.discount.text =  discountedPrice.toString()
+            }else{
+                binding.discount.visibility = View.GONE
+            }
+
+
             binding.include.ivAdd.setOnClickListener {
-                interaction?.onQuantityItemAdded(productOrder)
+                if (productOrder?.variant?.equals("Discounted") == true){
+                    if (binding.include.icCount.text.toString().toInt() >= productOrder.maximumOrderLimit){
+                        ToastUtils.warning("Maximum limit reached")
+                    }else{
+                        interaction?.onQuantityItemAdded(productOrder)
+                    }
+
+                }else{
+                    interaction?.onQuantityItemAdded(productOrder)
+                }
+
             }
             binding.include.icSub.setOnClickListener {
                 interaction?.onQuantityItemSubtraction(productOrder)

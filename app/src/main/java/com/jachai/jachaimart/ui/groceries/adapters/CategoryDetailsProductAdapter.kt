@@ -4,12 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.databinding.CategoryDetailsProductRowBinding
-import com.jachai.jachaimart.databinding.GroceriesShopCategoryRowBinding
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
-import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryDetailsProductAdapter.ViewHolder
 
 class CategoryDetailsProductAdapter(

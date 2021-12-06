@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setBackgroundTintList
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.jachai.jachaimart.model.response.product.Product
 
 
 class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragmentBinding>(R.layout.grocery_category_details_fragment),
@@ -178,7 +179,7 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
 
     }
 
-    override fun onCategoryProductSelected(product: com.jachai.jachaimart.model.response.category.Product?) {
+    override fun onCategoryProductSelected(product: Product?) {
 
         val action =
             CategoryFragmentDirections.categoryDetailsToProductDetails()

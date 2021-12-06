@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FavouriteFragmentBinding
-import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.favourite.adapters.FavouriteProductAdapter
 

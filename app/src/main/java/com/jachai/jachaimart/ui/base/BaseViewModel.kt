@@ -11,6 +11,7 @@ import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.order.PaymentRequestResponse
+import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
@@ -19,6 +20,9 @@ import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
+import com.jachai.jachaimart.model.response.product.Product
+import com.jachai.jachaimart.model.response.product.Shop
+import com.jachai.jachaimart.model.response.product.VariationsItem
 import com.jachai.jachaimart.ui.groceries.GroceriesShopViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
@@ -39,6 +43,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private val driverService = RetrofitConfig.driverService
     private val groceryService = RetrofitConfig.groceryService
     private val orderService = RetrofitConfig.orderService
+    var successAddToCartData = MutableLiveData<Boolean?>()
 
     private var nearestJCShopCall: Call<NearestJCShopResponse>? = null
     private var addressCall: Call<AddressResponse>? = null
@@ -285,7 +290,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                 "2021-10-01",
                 "2022-12-01",
                 0,
-                50
+                100
 
             )
 
@@ -399,5 +404,123 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     }
 
+
+    fun saveProduct(item: Product, quantity: Int, shopItem: Shop?, isFromSameShop: Boolean) {
+        val productOrder = ProductOrder()
+        productOrder.product = item.id.toString()
+        productOrder.productName = item.name
+//        productOrder.quantity = quantity.toInt()
+        productOrder.shopId = shopItem?.id!!
+        productOrder.shopName = shopItem.name
+        productOrder.shopSubtitle = "na"
+        productOrder.shopImage = shopItem.logo
+        productOrder.image = item.productImage
+        productOrder.isChecked = false
+        productOrder.isPopular = false
+
+
+//        var finalProductOrder =
+//            item.variations?.get(0)?.let {
+//                updatedProductOrder(productOrder, quantity, it)
+//            }
+        val finalProductOrder =
+            item.variations?.get(0)?.let {
+                when {
+                    item.variations[0]?.maximumOrderLimit == 0 -> {
+                        updatedProductOrder(productOrder, quantity, it, false)
+                    }
+                    quantity <= item.variations[0]?.maximumOrderLimit!! -> {
+                        updatedProductOrder(productOrder, quantity, it, false)
+
+                    }
+                    else -> {
+
+                        val tempProductOrder = updatedProductOrder(
+                            productOrder,
+                            item.variations[0]?.maximumOrderLimit!!,
+                            it,
+                            true
+                        )
+                        JachaiApplication.mDatabase.daoAccess()
+                            .insertOrder(tempProductOrder, isFromSameShop)
+                        val mQuantity = quantity - item.variations[0]?.maximumOrderLimit!!
+                        val nextVariationsId = item.variations[0]?.regularVariationId
+
+                        val nextVariationsItem: VariationsItem? =
+                            getVariationItemById(item.variations, nextVariationsId)
+
+                        if (nextVariationsItem != null) {
+                            updatedProductOrder(productOrder, mQuantity, nextVariationsItem, true)
+                        } else {
+                            null
+                        }
+
+                    }
+                }
+            }
+
+
+
+        successAddToCartData.postValue(
+            JachaiApplication.mDatabase.daoAccess().insertOrder(finalProductOrder!!, isFromSameShop)
+        )
+
+
+    }
+
+    private fun getVariationItemById(
+        variations: List<VariationsItem?>,
+        nextVariationsId: String?
+    ): VariationsItem? {
+        for (item in variations) {
+            if (item != null) {
+                if (item.variationId.equals(nextVariationsId)) {
+                    return item
+                }
+
+            }
+        }
+        return null
+    }
+
+    private fun updatedProductOrder(
+        tProductOrder: ProductOrder,
+        mQuantity: Int,
+        variationsItem: VariationsItem,
+        isRegularPrice: Boolean
+    ): ProductOrder {
+
+        val tempPrice = variationsItem.price?.mrp ?: 0.0
+        val tempDiscountedPrice = variationsItem.price?.discountedPrice ?: 0.0
+
+        val mPrice: Double
+        val mDiscountPrice: Double
+
+
+        when {
+            tempDiscountedPrice <= 0.0 -> {
+                mPrice = tempPrice
+                mDiscountPrice = tempPrice
+            }
+            tempDiscountedPrice > 0 && tempDiscountedPrice < tempPrice -> {
+                mPrice = tempPrice
+                mDiscountPrice = tempDiscountedPrice
+            }
+            else -> {
+                mPrice = tempPrice
+                mDiscountPrice = tempPrice
+
+            }
+        }
+
+        tProductOrder.variant = variationsItem.variationName
+        tProductOrder.quantity = mQuantity
+        tProductOrder.price = mPrice
+        tProductOrder.discountedPrice = mDiscountPrice
+        tProductOrder.variationId = variationsItem.variationId ?: ""
+        tProductOrder.maximumOrderLimit = variationsItem.maximumOrderLimit
+        tProductOrder.stock = variationsItem.stock
+        return tProductOrder
+    }
 
 }

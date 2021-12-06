@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jachai.jachai_driver.utils.isConnectionAvailable
+import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
+import com.jachai.jachaimart.R
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
@@ -25,7 +27,7 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
 
     fun initSplashScreen() {
         viewModelScope.launch {
-            delay(2000)
+            delay(1000)
             updateLiveData("login")
         }
     }
@@ -38,6 +40,7 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
         if (userInfoCall != null) {
             return
         } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+            getApplication<JachaiApplication>().showShortToast(R.string.networkError)
             return
         }
 
@@ -59,6 +62,7 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
             }
 
             override fun onFailure(call: Call<AuthResponse>?, t: Throwable?) {
+                userInfoCall = null
                 liveData.value = "login"
             }
         })

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jachai.jachaimart.R
-import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.product.Product
 
 class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
     PagingDataAdapter<Product, RecyclerView.ViewHolder>(REPO_COMPARATOR) {
@@ -66,8 +66,9 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
 
                 productTitle.text = data.name
 
-                val mPrice = data.variations[0].price.mrp.toDouble()
-                val mDiscountedPrice = data.variations[0].price.discountedPrice.toDouble()
+                val mPrice = data.variations?.get(0)?.price?.mrp?.toDouble() ?: 0.0
+                val mDiscountedPrice = data.variations?.get(0)?.price?.discountedPrice?.toDouble()
+                    ?: 0.0
                 if (mDiscountedPrice != 0.0 && mDiscountedPrice < mPrice){
                     productPrice.text = "${mDiscountedPrice.toFloat()}"
                     productPreviousPrice.text = "৳${mPrice.toFloat()}"
@@ -78,11 +79,11 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
                     productPreviousPrice.visibility = View.GONE
                 }
 
-                if (data.variations[0].productDiscount.flat > 0 || data.variations[0].productDiscount.percentage > 0){
-                    if (data.variations[0].productDiscount.flat > 0){
-                        discountPrice.text = "Save ৳${data.variations[0].productDiscount.flat}"
+                if (data.variations?.get(0)?.productDiscount?.flat ?: 0 > 0 || data.variations?.get(0)?.productDiscount?.percentage ?: 0 > 0){
+                    if (data.variations?.get(0)?.productDiscount?.flat ?: 0 > 0){
+                        discountPrice.text = "Save ৳${data.variations?.get(0)?.productDiscount?.flat}"
                     }else{
-                        if (data.variations[0].productDiscount?.percentage!! > 0){
+                        if (data.variations?.get(0)?.productDiscount?.percentage!! > 0){
                             discountPrice.text = "Save ${data.variations[0]?.productDiscount?.percentage}%"
                         }
                     }

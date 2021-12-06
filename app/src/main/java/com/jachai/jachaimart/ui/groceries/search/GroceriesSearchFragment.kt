@@ -23,8 +23,8 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentProductSearchBinding
-import com.jachai.jachaimart.model.response.category.Product
 import com.jachai.jachaimart.model.response.home.ShopsItem
+import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.shop.SearchHistoryItem
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.search.adapter.PopularTagAdapter

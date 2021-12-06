@@ -61,10 +61,24 @@
                 android:textColor="#787878"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/itemName"
                 app:layout_constraintTop_toBottomOf="@+id/itemName"
                 tools:text="200" />
+
+            <TextView
+                android:id="@+id/discount"
+                style="@style/sub_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/box_curve_light_green"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="0% Off"
+                android:textColor="#14876A"
+                app:layout_constraintBottom_toBottomOf="@+id/price"
+                app:layout_constraintStart_toEndOf="@+id/price"
+                app:layout_constraintTop_toTopOf="@+id/price" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -23,13 +23,20 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
         super.onViewCreated(view, savedInstanceState)
         initView()
 
+        if (SharedPreferenceUtil.isTokenAvailable()) {
+            if(SharedPreferenceUtil.isNameAvailable() && SharedPreferenceUtil.isMobileAvailable())
+                viewModel.getUserInfo()
+            else
+                viewModel.initSplashScreen()
+        } else {
+            viewModel.initSplashScreen()
+        }
+
 
         viewModel.liveData.observe(viewLifecycleOwner, {
 
-
             when (it) {
                 "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_groceriesShopFragment)
-//                "seccess" -> view.findNavController().navigate(R.id.action_splashFragment2_to_orderFragment)
                 "login" -> view.findNavController().navigate(R.id.splash_to_login)
             }
         })
@@ -62,14 +69,6 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
     override fun onResume() {
         super.onResume()
-        if (SharedPreferenceUtil.isTokenAvailable()) {
-            if(SharedPreferenceUtil.isNameAvailable() && SharedPreferenceUtil.isMobileAvailable())
-                viewModel.getUserInfo()
-            else
-                viewModel.initSplashScreen()
-        } else {
-            viewModel.initSplashScreen()
-        }
 
         fetchCurrentLocation {
             val mAddress = it?.address ?: "n/a"

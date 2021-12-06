@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.databinding.GroceriesShopCategoryRowBinding
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
-import com.jachai.jachaimart.model.response.category.Product
-import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter.ViewHolder
+import com.jachai.jachaimart.model.response.product.Product
 
 class CategoryWithProductPaginAdapter(
     private val context: Context,
@@ -53,6 +52,10 @@ class CategoryWithProductPaginAdapter(
             interaction?.onCategoryProductSelected(product)
 
         }
+
+        override fun onProductAddToCart(product: Product?) {
+            interaction?.onProductAddToCart(product)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -90,6 +93,7 @@ class CategoryWithProductPaginAdapter(
     interface Interaction {
         fun onCategoryViewAllSelected(catWithRelatedProduct: CatWithRelatedProduct?)
         fun onCategoryProductSelected(product: Product?)
+        fun onProductAddToCart(product: Product?)
     }
 
 

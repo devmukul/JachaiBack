@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CategoryProductRowBinding
-import com.jachai.jachaimart.databinding.GroceriesShopCategoryProductRowBinding
-import com.jachai.jachaimart.model.response.category.Product
+import com.jachai.jachaimart.model.response.product.Product
 
 class CategotyProductAdapter(
     private val context: Context,
@@ -37,28 +36,33 @@ class CategotyProductAdapter(
 
                     productTitle.text = product.name
 
-                    val mPrice = product.variations[0].price.mrp.toDouble()
-                    val mDiscountedPrice = product.variations[0].price.discountedPrice.toDouble()
-                    if (mDiscountedPrice != 0.0 && mDiscountedPrice < mPrice){
+                    val mPrice: Double = product.variations?.get(0)?.price?.mrp?.toDouble() ?: 0.0
+                    val mDiscountedPrice: Double =
+                        product.variations?.get(0)?.price?.discountedPrice?.toDouble()
+                            ?: 0.0
+                    if (mDiscountedPrice != 0.0 && mDiscountedPrice < mPrice) {
                         productPrice.text = "${mDiscountedPrice.toFloat()}"
                         productPreviousPrice.text = "৳${mPrice.toFloat()}"
-                        productPreviousPrice.paintFlags =  productPreviousPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    }else{
+                        productPreviousPrice.paintFlags =
+                            productPreviousPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    } else {
                         productPrice.text = mPrice.toFloat().toString()
                         productPreviousPrice.text = "${mDiscountedPrice.toFloat()}"
                         productPreviousPrice.visibility = View.GONE
                     }
 
-                    if (product.variations[0].productDiscount.flat > 0 || product.variations[0].productDiscount.percentage > 0){
-                        if (product.variations[0].productDiscount.flat > 0){
-                            discountPrice.text = "Save ৳${product.variations[0].productDiscount.flat}"
-                        }else{
-                            if (product.variations[0].productDiscount?.percentage!! > 0){
-                                discountPrice.text = "Save ${product.variations[0]?.productDiscount?.percentage}%"
+                    if (product.variations?.get(0)?.productDiscount?.flat ?: 0 > 0 || product.variations?.get(0)?.productDiscount?.percentage ?: 0 > 0) {
+                        if (product.variations?.get(0)?.productDiscount?.flat ?: 0 > 0) {
+                            discountPrice.text =
+                                "Save ৳${product.variations?.get(0)?.productDiscount?.flat}"
+                        } else {
+                            if (product.variations?.get(0)?.productDiscount?.percentage!! > 0) {
+                                discountPrice.text =
+                                    "Save ${product.variations[0]?.productDiscount?.percentage}%"
                             }
                         }
 
-                    }else{
+                    } else {
                         discountPrice.visibility = View.GONE
                     }
 
