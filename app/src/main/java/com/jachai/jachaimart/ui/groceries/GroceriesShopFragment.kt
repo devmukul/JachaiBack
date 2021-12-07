@@ -619,7 +619,7 @@ class GroceriesShopFragment :
         return outFormatter.format(date)
     }
 
-    private fun alertDialog(product: com.jachai.jachaimart.model.response.product.Product, quantity: Int) {
+    private fun alertDialog(product: Product, quantity: Int) {
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)
         builder.setTitle(getString(R.string.app_name_short) + " alert")
