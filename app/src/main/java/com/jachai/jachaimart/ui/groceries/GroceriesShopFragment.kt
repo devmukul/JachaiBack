@@ -2,6 +2,7 @@ package com.jachai.jachaimart.ui.groceries
 
 import android.app.AlertDialog
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -19,9 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.showLongToast
 import com.jachai.jachai_driver.utils.showShortToast
+import com.jachai.jachaimart.BuildConfig
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
@@ -73,6 +76,9 @@ class GroceriesShopFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        subscribeToFCM(BuildConfig.TOPIC_NOT)
+
         navController = Navigation.findNavController(view)
 
         if (isViewNull) {
@@ -618,7 +624,13 @@ class GroceriesShopFragment :
         val outFormatter = SimpleDateFormat("dd MMM yyyy h:mm a ")
         return outFormatter.format(date)
     }
-
+    fun subscribeToFCM(topic: String? = null, topicList: MutableList<String> = mutableListOf()) {
+        topic?.let { topicList.add(it) }
+        for(mTopic in topicList){
+            FirebaseMessaging.getInstance().subscribeToTopic(mTopic).addOnSuccessListener {
+            }
+        }
+    }
     private fun alertDialog(product: Product, quantity: Int) {
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)

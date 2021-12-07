@@ -14,4 +14,6 @@ object RetrofitConfig {
         JachaiApplication.DRIVER_RETROFIT.create(DriverService::class.java)
     val paymentService =
         JachaiApplication.PAYMENT_RETROFIT.create(PaymentService::class.java)
+    val notificationsService =
+        JachaiApplication.NOTIFICATIONS_RETROFIT.create(NotificationsService::class.java)
 }

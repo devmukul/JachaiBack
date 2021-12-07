@@ -21,4 +21,15 @@ object CommonConstants {
 
     const val TOKEN_MAX_ALIVE_TIME = 1000 * 60 * 60 * 24 * 15L
     const val CONNECTION_TIMEOUT = 2 * 60 * 1000L
+
+
+    const val NOTIFICATION_TITLE = "title"
+    const val NOTIFICATION_BODY = "message"
+    const val NOTIFICATION_TYPE = "type"
+    const val NOTIFICATION_TYPE_ID = "typeId"
+    const val NOTIFICATION_IMAGE_URL = "image"
+    const val NOTIFICATION_REDIRECT_URL = "redirect_url"
+    const val NOTIFICATION_DATA = "notification_data"
+
+    const val NOTIFICATION_CHANNEL = "Jachai_NOTIFICATION"
 }
