@@ -435,6 +435,19 @@ class GroceriesShopFragment :
                 binding.refresh.isRefreshing = it
             }
         }
+        viewModel.successAddToCartData.observe(viewLifecycleOwner, {
+            binding.apply {
+                if (it == true) {
+
+                    toolbarMain.cartBadge.text =
+                        JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
+                            .toString()
+
+
+                }
+            }
+
+        })
 
 
     }
