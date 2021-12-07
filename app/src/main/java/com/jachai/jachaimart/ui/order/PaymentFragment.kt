@@ -111,7 +111,7 @@ class PaymentFragment :
                 }
 
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                    val action = PaymentFragmentDirections.actionPaymentFragmentToOnGoingOrderFragment(orderId
+                    val action = PaymentFragmentDirections.actionPaymentFragmentToOnGoingOrderFragment(orderId)
                     return if (url.contains("payment/cancel")) {
                         Toasty.error(requireContext(),"Payment Canceled!!").show()
                         navController.navigate(action)

@@ -24,7 +24,7 @@ object CommonConstants {
 
 
     const val NOTIFICATION_TITLE = "title"
-    const val NOTIFICATION_BODY = "body"
+    const val NOTIFICATION_BODY = "message"
     const val NOTIFICATION_TYPE = "type"
     const val NOTIFICATION_TYPE_ID = "typeId"
     const val NOTIFICATION_IMAGE_URL = "image"
