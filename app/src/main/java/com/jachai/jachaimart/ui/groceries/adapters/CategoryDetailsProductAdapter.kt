@@ -41,18 +41,13 @@ class CategoryDetailsProductAdapter(
                         )
                     }
                 }
-
-
             }
-
-
         }
 
         override fun onProductSelected(product: Product?) {
             interaction?.onCategoryProductSelected(product)
 
         }
-
         override fun onProductAddToCart(product: Product?) {
             interaction?.onProductAddToCart(product)
         }
