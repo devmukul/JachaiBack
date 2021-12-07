@@ -52,6 +52,10 @@ class CategoryDetailsProductAdapter(
             interaction?.onCategoryProductSelected(product)
 
         }
+
+        override fun onProductAddToCart(product: Product?) {
+            interaction?.onProductAddToCart(product)
+        }
     }
 
 
@@ -83,6 +87,8 @@ class CategoryDetailsProductAdapter(
     interface Interaction {
         fun onCategoryViewAllSelected(catWithRelatedProduct: CatWithRelatedProduct?)
         fun onCategoryProductSelected(product: Product?)
+        fun onProductAddToCart(product: Product?)
+
     }
 
 }

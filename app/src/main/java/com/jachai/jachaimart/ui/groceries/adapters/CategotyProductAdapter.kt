@@ -51,23 +51,44 @@ class CategotyProductAdapter(
                         productPreviousPrice.visibility = View.GONE
                     }
 
-                    if (product.variations?.get(0)?.productDiscount?.flat ?: 0 > 0 || product.variations?.get(0)?.productDiscount?.percentage ?: 0 > 0) {
-                        if (product.variations?.get(0)?.productDiscount?.flat ?: 0 > 0) {
-                            discountPrice.text =
-                                "Save ৳${product.variations?.get(0)?.productDiscount?.flat}"
-                        } else {
-                            if (product.variations?.get(0)?.productDiscount?.percentage!! > 0) {
+                    try {
+
+                        if (product.variations?.get(0)?.productDiscount?.flat ?: 0 > 0 || product.variations?.get(
+                                0
+                            )?.productDiscount?.percentage ?: 0 > 0
+                        ) {
+                            if (product.variations?.get(0)?.productDiscount?.flat ?: 0 > 0) {
                                 discountPrice.text =
-                                    "Save ${product.variations[0]?.productDiscount?.percentage}%"
+                                    "Save ৳${product.variations?.get(0)?.productDiscount?.flat}"
+                            } else {
+                                if (product.variations?.get(0)?.productDiscount?.percentage!! > 0) {
+                                    discountPrice.text =
+                                        "Save ${product.variations[0]?.productDiscount?.percentage}%"
+                                }
                             }
+
+                        } else {
+                            discountPrice.visibility = View.GONE
                         }
+                    } catch (ex: Exception) {
+                        discountPrice.visibility = View.GONE
+                    }
+
+                    if (product?.variations?.get(0)?.stock ?: 0 > 0) {
+                        conlay21.visibility = View.VISIBLE
+                        conlay22.visibility = View.GONE
 
                     } else {
-                        discountPrice.visibility = View.GONE
+                        conlay21.visibility = View.GONE
+                        conlay22.visibility = View.VISIBLE
                     }
 
                     binding.root.setOnClickListener {
                         interaction?.onProductSelected(product)
+                    }
+
+                    binding.addToCart.setOnClickListener {
+                        interaction?.onProductAddToCart(product)
                     }
 
                 }
@@ -104,6 +125,7 @@ class CategotyProductAdapter(
 
     interface Interaction {
         fun onProductSelected(product: Product?)
+        fun onProductAddToCart(product: Product?)
     }
 
 

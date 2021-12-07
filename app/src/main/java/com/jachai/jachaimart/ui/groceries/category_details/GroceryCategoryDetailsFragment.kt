@@ -13,6 +13,7 @@ import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import android.R.attr.defaultValue
+import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.Window
@@ -34,6 +35,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setBackgroundTintList
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.jachai.jachai_driver.utils.showShortToast
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.model.response.product.Product
 
 
@@ -185,5 +188,52 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
             CategoryFragmentDirections.categoryDetailsToProductDetails()
         action.productId = product?.slug
         navController1.navigate(action)
+    }
+
+    override fun onProductAddToCart(product: Product?) {
+        product?.let { it1 ->
+
+            if (product.shop?.id?.let {
+                    JachaiApplication.mDatabase.daoAccess()
+                        .isInsertionApplicable(shopID = it)
+                } == true) {
+//
+                if (JachaiApplication.mDatabase.daoAccess()
+                        .getProductByProductID(product.id!!, product.shop.id) > 0
+                ) {
+
+                    showShortToast("Product already added")
+
+                } else {
+
+                    showShortToast("Product added")
+                }
+                viewModel.saveProduct(it1, 1, product.shop, true)
+
+            } else {
+                alertDialog(product, 1)
+            }
+
+
+        }
+//        updateBottomCart()
+    }
+
+
+    private fun alertDialog(product: Product, quantity: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(false)
+        builder.setTitle(getString(R.string.app_name_short) + " alert")
+        builder.setMessage("Do have already selected products from a different shop. if you continue, your cart and selection will be removed")
+
+        builder.setPositiveButton("Continue") { _, _ ->
+
+            viewModel.saveProduct(product, quantity, product.shop, false)
+        }
+
+        builder.setNegativeButton("Close") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 }
