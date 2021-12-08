@@ -28,7 +28,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(
     companion object {
         val TAG = BaseFragment::class.java
     }
-    private var mView: View? = null
+    protected var mView: View? = null
     protected var isViewNull: Boolean = true
     private var _binding: BINDING? = null
     private var baseActivity: BaseActivity<BINDING>? = null
