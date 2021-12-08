@@ -20,7 +20,8 @@ import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
 
 class CategoryFragment :
-    BaseFragment<CategoryFragmentBinding>(R.layout.category_fragment) {
+    BaseFragment<CategoryFragmentBinding>(R.layout.category_fragment),
+    OnPlayerSelectionSetListener{
 
     companion object {
         fun newInstance() = CategoryFragment()
@@ -172,6 +173,12 @@ class CategoryFragment :
             // Show 2 total pages.
             return tabTitleList.size
         }
+    }
+
+    override fun onPlayerSelectionSet(cartCount: Int) {
+
+        binding.cartBadge.text =
+            (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() + cartCount).toString()
     }
 
 }
