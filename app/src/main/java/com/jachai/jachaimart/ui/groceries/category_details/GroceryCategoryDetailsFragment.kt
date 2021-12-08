@@ -33,11 +33,14 @@ import android.graphics.PorterDuff
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat.setBackgroundTintList
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.model.response.product.Product
+import java.lang.ClassCastException
 
 
 class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragmentBinding>(R.layout.grocery_category_details_fragment),
@@ -47,6 +50,8 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
         private const val CATEGORY_TITLE_KEY = "FRAGMENT_TITLE"
         private const val CATEGORY_ID_KEY = "CATEGORY_ID_KEY"
         private lateinit var navController1: NavController
+
+        private lateinit var mOnPlayerSelectionSetListener: OnPlayerSelectionSetListener
 
         fun newInstance(categoryTitle: String, categoryId: String, navController: NavController): GroceryCategoryDetailsFragment {
             navController1 = navController
@@ -66,7 +71,7 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         categoryId = this.arguments?.getString(CATEGORY_ID_KEY,"")
-
+        onAttachToParentFragment(requireParentFragment());
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -209,6 +214,10 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
                     showShortToast("Product added")
                 }
                 viewModel.saveProduct(it1, 1, product.shop, true)
+                if (mOnPlayerSelectionSetListener != null)
+                {
+                    mOnPlayerSelectionSetListener.onPlayerSelectionSet(1)
+                }
 
             } else {
                 alertDialog(product, 1)
@@ -236,4 +245,16 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
         }
         builder.show()
     }
+
+    fun onAttachToParentFragment(fragment: Fragment) {
+        try {
+            mOnPlayerSelectionSetListener = fragment as OnPlayerSelectionSetListener
+        } catch (e: ClassCastException) {
+            throw ClassCastException(
+                fragment.toString().toString() + " must implement OnPlayerSelectionSetListener"
+            )
+        }
+    }
+
+
 }
