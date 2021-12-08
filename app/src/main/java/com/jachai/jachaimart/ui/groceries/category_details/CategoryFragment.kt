@@ -60,16 +60,16 @@ class CategoryFragment :
                 onBackPressed()
             }
 
-            fragmentManager?.fragments?.forEach {
+            childFragmentManager?.fragments?.forEach {
                 if (it is GroceryCategoryDetailsFragment) {
-                    fragmentManager?.beginTransaction()?.remove(it)?.commit()
+                    childFragmentManager?.beginTransaction()?.remove(it)?.commit()
                 }
             }
 
             val categoryViewPagerAdapter = SectionsPagerAdapter(
                 categoryData.categoryList?.categories!!,
                 navController,
-                requireFragmentManager()
+                childFragmentManager
             )
             viewPager.adapter = categoryViewPagerAdapter
             viewPager.offscreenPageLimit = 1
