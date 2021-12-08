@@ -21,7 +21,7 @@ import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
 class CategoryFragment :
     BaseFragment<CategoryFragmentBinding>(R.layout.category_fragment),
-    OnPlayerSelectionSetListener{
+    OnCartItemAddListener{
 
     companion object {
         fun newInstance() = CategoryFragment()
@@ -115,19 +115,19 @@ class CategoryFragment :
     }
 
     override fun subscribeObservers() {
-        viewModel.successAddToCartData.observe(viewLifecycleOwner, {
-            binding.apply {
-                if (it == true) {
-
-                    cartBadge.text =
-                        JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
-                            .toString()
-
-
-                }
-            }
-
-        })
+//        viewModel.successAddToCartData.observe(viewLifecycleOwner, {
+//            binding.apply {
+//                if (it == true) {
+//
+//                    cartBadge.text =
+//                        JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
+//                            .toString()
+//
+//
+//                }
+//            }
+//
+//        })
     }
 
     class CategoryViewPagerAdapter(
@@ -174,10 +174,8 @@ class CategoryFragment :
         }
     }
 
-    override fun onPlayerSelectionSet(cartCount: Int) {
-
-        binding.cartBadge.text =
-            (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() + cartCount).toString()
+    override fun onCartItemAdded() {
+        binding.cartBadge.text = JachaiApplication.mDatabase.daoAccess().getProductOrdersSize().toString()
     }
 
 }
