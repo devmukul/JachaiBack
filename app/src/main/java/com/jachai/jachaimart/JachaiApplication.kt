@@ -43,9 +43,7 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         Places.initialize(applicationContext, JACHAI_MAP_KEY)
-
         val appSignature = AppSignatureHelper(this)
-        Log.v("AppSignature>> ", appSignature.appSignatures.toString())
 
         instance = this
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
@@ -58,11 +56,6 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
 
         //Database
         mDatabase = AppDatabase.getAppDatabase(this)
-
-//        mStompClient = Stomp.over(
-//            Stomp.ConnectionProvider.OKHTTP,
-//            ApiConstants.JACHAI_BASE_URL_WEBSOCKET
-//        )
         placesClient = Places.createClient(this)
 
         setupLogger()

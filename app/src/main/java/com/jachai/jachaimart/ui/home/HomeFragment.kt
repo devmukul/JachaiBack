@@ -8,13 +8,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bd.com.evaly.ehealth.models.common.CurrentLocation
-import com.google.android.play.core.appupdate.AppUpdateInfo
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.tasks.Task
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentHomeBinding
 import com.jachai.jachaimart.model.response.home.CategoriesItem
@@ -36,10 +29,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     private lateinit var detailsShopRecyclerAdapter: DetailsShopRecyclerAdapter
 
     private lateinit var navController: NavController
-    private var APP_UPDATE_TYPE_SUPPORTED: Int = 0
-    private val REQUEST_UPDATE = 100
-    private val FLEXIBLE_REQUEST_UPDATE = 123
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -145,46 +134,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
         navController.navigate(action)
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//
-//    }
-//
-//    private fun checkForUpdates() {
-//        val appUpdateManager = AppUpdateManagerFactory.create(requireContext())
-//        val appUpdateInfo = appUpdateManager.appUpdateInfo
-//        appUpdateInfo.addOnSuccessListener {
-//            handleUpdate(appUpdateManager, appUpdateInfo)
-//        }
-//    }
-//
-//    private fun handleUpdate(manager: AppUpdateManager, info: Task<AppUpdateInfo>) {
-//        APP_UPDATE_TYPE_SUPPORTED =
-//            FirebaseRemoteConfig.getInstance().getLong("APP_UPDATE_TYPE_SUPPORTED").toInt()
-//        if (APP_UPDATE_TYPE_SUPPORTED == AppUpdateType.IMMEDIATE) {
-//            handleImmediateUpdate(manager, info)
-//        } else if (APP_UPDATE_TYPE_SUPPORTED == AppUpdateType.FLEXIBLE) {
-//            handleFlexibleUpdate(manager, info)
-//        }
-//    }
-//
-//    private fun handleImmediateUpdate(manager: AppUpdateManager, info: Task<AppUpdateInfo>) {
-//        //1
-//        if ((info.result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE ||
-//                    info.result.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) &&
-//                info.result.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-//            manager.startUpdateFlowForResult(info.result, AppUpdateType.IMMEDIATE, requireActivity(), REQUEST_UPDATE)
-//        }
-//    }
-//
-//    private fun handleFlexibleUpdate(manager: AppUpdateManager, info: Task<AppUpdateInfo>) {
-//        if ((info.result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE ||
-//                    info.result.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) &&
-//            info.result.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-//            manager.startUpdateFlowForResult(info.result, AppUpdateType.FLEXIBLE, requireActivity(), FLEXIBLE_REQUEST_UPDATE)
-//        }
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
+
+
 
 
 }
