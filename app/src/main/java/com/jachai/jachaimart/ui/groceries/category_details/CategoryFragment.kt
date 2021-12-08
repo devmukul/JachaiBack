@@ -3,6 +3,8 @@ package com.jachai.jachaimart.ui.groceries.category_details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -58,22 +60,26 @@ class CategoryFragment :
                 onBackPressed()
             }
 
-            val categoryViewPagerAdapter = CategoryViewPagerAdapter(
+            fragmentManager?.fragments?.forEach {
+                if (it is GroceryCategoryDetailsFragment) {
+                    fragmentManager?.beginTransaction()?.remove(it)?.commit()
+                }
+            }
+
+            val categoryViewPagerAdapter = SectionsPagerAdapter(
                 categoryData.categoryList?.categories!!,
                 navController,
-                this@CategoryFragment
+                requireFragmentManager()
             )
             viewPager.adapter = categoryViewPagerAdapter
             viewPager.offscreenPageLimit = 1
-            viewPager.clipToPadding = false
-            viewPager.clipChildren = false
-            viewPager.isSaveEnabled = false
             viewPager.setCurrentItem(selectedTabPos, true)
+            tabLayout.setupWithViewPager(viewPager)
 
-            TabLayoutMediator(tabLayout, viewPager, true, true) { tab, position ->
-                tab.text = categoryData.categoryList?.categories!![position].title
-
-            }.attach()
+//            TabLayoutMediator(tabLayout, viewPager, true, true) { tab, position ->
+//                tab.text = categoryData.categoryList?.categories!![position].title
+//
+//            }.attach()
 
             tabLayout.setScrollPosition(selectedTabPos, 0f, true, true)
 
@@ -124,7 +130,8 @@ class CategoryFragment :
     }
 
     class CategoryViewPagerAdapter(
-        private val tabTitleList: List<CategoriesItem>, private val navController: NavController,
+        private val tabTitleList: List<CategoriesItem>,
+        private val navController: NavController,
         fragmentManager: Fragment
     ) : FragmentStateAdapter(fragmentManager) {
 
@@ -139,6 +146,32 @@ class CategoryFragment :
             )
 
 
+    }
+
+    class SectionsPagerAdapter(private val tabTitleList: List<CategoriesItem>,
+                               private val navController: NavController
+                               , fm: FragmentManager
+    ) :
+        FragmentPagerAdapter(fm) {
+
+        override fun getItem(position: Int): Fragment {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            return GroceryCategoryDetailsFragment.newInstance(
+                tabTitleList[position].title!!,
+                tabTitleList[position].id!!,
+                navController
+            )
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return tabTitleList[position].title!!
+        }
+
+        override fun getCount(): Int {
+            // Show 2 total pages.
+            return tabTitleList.size
+        }
     }
 
 }
