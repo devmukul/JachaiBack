@@ -85,7 +85,7 @@ class RelatedProductAdapter(
                         conlay22.visibility = View.GONE
 
                     } else {
-                        conlay21.visibility = View.GONE
+                        conlay21.visibility = View.INVISIBLE
                         conlay22.visibility = View.VISIBLE
                     }
 
