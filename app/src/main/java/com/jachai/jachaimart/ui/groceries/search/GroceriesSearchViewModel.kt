@@ -1,5 +1,6 @@
-package com.jachai.jachaimart.ui.search
+package com.jachai.jachaimart.ui.groceries.search
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,7 @@ import com.jachai.jachaimart.model.response.search.PopularKeywordResponse
 import com.jachai.jachaimart.model.response.search.SearchKeywordResponse
 import com.jachai.jachaimart.model.response.search.SearchProductResponse
 import com.jachai.jachaimart.model.shop.SearchHistoryItem
+import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.vikas.paging3.data.DoggoImagesRepository
@@ -22,8 +24,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 @ExperimentalPagingApi
-class GroceriesSearchViewModel  constructor(val repository: DoggoImagesRepository = DoggoImagesRepository.getInstance()) :
-    ViewModel() {
+class GroceriesSearchViewModel  (application: Application) : BaseViewModel(application) {
+
+    private val repository: DoggoImagesRepository = DoggoImagesRepository.getInstance()
 
     /**
      * returning non modified PagingData<DoggoImageModel> value as opposite to remote view model

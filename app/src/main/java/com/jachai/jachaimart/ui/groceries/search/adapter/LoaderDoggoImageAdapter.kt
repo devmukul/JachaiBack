@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -53,6 +55,9 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
         var productPrice: TextView = view.findViewById(R.id.product_price)
         var productPreviousPrice: TextView = view.findViewById(R.id.product_previous_price)
         var discountPrice: TextView = view.findViewById(R.id.discount_price)
+        var conlay22: TextView = view.findViewById(R.id.conlay22)
+        var conlay21: ConstraintLayout = view.findViewById(R.id.conlay21)
+        var addToCart: CardView = view.findViewById(R.id.add_to_cart)
 
         fun bind(data: Product?,
                  interaction: Interaction?) {
@@ -94,15 +99,30 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
 
             }
 
+            if (data?.variations?.get(0)?.stock ?: 0 > 0) {
+                conlay21.visibility = View.VISIBLE
+                conlay22.visibility = View.GONE
+
+            } else {
+                conlay21.visibility = View.INVISIBLE
+                conlay22.visibility = View.VISIBLE
+            }
+
+            addToCart.setOnClickListener {
+                interaction?.onProductAddToCart(data)
+            }
             itemView.setOnClickListener {
                 interaction?.onItemSelected(data)
             }
+
+
         }
 
     }
 
     interface Interaction {
         fun onItemSelected(product: Product?)
+        fun onProductAddToCart(product: Product?)
     }
 
 }

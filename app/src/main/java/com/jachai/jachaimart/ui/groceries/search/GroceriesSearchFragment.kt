@@ -1,5 +1,6 @@
 package com.jachai.jachaimart.ui.groceries.search
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -20,6 +22,7 @@ import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentProductSearchBinding
@@ -31,7 +34,6 @@ import com.jachai.jachaimart.ui.groceries.search.adapter.PopularTagAdapter
 import com.jachai.jachaimart.ui.groceries.search.adapter.SearchHistoryAdapter
 import com.jachai.jachaimart.ui.groceries.search.adapter.SearchSuggetionAdapter
 import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
-import com.jachai.jachaimart.ui.search.GroceriesSearchViewModel
 import com.jachai.jachaimart.ui.groceries.search.adapter.LoaderDoggoImageAdapter
 import com.vikas.paging3.view.loader.adapter.LoaderStateAdapter
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +51,7 @@ class GroceriesSearchFragment :
     SearchSuggetionAdapter.Interaction, LoaderDoggoImageAdapter.Interaction,
     SearchHistoryAdapter.Interaction {
 
-    lateinit var loaderViewModel: GroceriesSearchViewModel
+    private val loaderViewModel: GroceriesSearchViewModel by viewModels()
     lateinit var adapter: LoaderDoggoImageAdapter
     lateinit var loaderStateAdapter: LoaderStateAdapter
     private lateinit var navController: NavController
@@ -89,8 +91,8 @@ class GroceriesSearchFragment :
     }
 
     private fun initMembers() {
-        loaderViewModel =
-            defaultViewModelProviderFactory.create(GroceriesSearchViewModel::class.java)
+//        loaderViewModel =
+//            defaultViewModelProviderFactory.create(GroceriesSearchViewModel::class.java)
         adapter = LoaderDoggoImageAdapter(this)
         loaderStateAdapter = LoaderStateAdapter { adapter.retry() }
     }
@@ -240,5 +242,50 @@ class GroceriesSearchFragment :
         action.productId = product?.slug
         navController.navigate(action)
 
+    }
+
+    override fun onProductAddToCart(product: Product?) {
+        product?.let { it1 ->
+
+            if (product.shop?.id?.let {
+                    JachaiApplication.mDatabase.daoAccess()
+                        .isInsertionApplicable(shopID = it)
+                } == true) {
+//
+                if (JachaiApplication.mDatabase.daoAccess()
+                        .getProductByProductID(product.id!!, product.shop.id) > 0
+                ) {
+
+                    showShortToast("Product already added")
+
+                } else {
+
+                    showShortToast("Product added")
+                }
+                loaderViewModel.saveProduct(it1, 1, product.shop, true)
+
+            } else {
+                alertDialog(product, 1)
+            }
+
+
+        }
+    }
+
+    private fun alertDialog(product: Product, quantity: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(false)
+        builder.setTitle(getString(R.string.app_name_short) + " alert")
+        builder.setMessage("Do have already selected products from a different shop. if you continue, your cart and selection will be removed")
+
+        builder.setPositiveButton("Continue") { _, _ ->
+
+            loaderViewModel.saveProduct(product, quantity, product.shop, false)
+        }
+
+        builder.setNegativeButton("Close") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 }

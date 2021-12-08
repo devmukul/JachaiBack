@@ -1,7 +1,7 @@
 package com.jachai.jachaimart.ui.groceries.category_details
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import com.jachai.jachaimart.ui.base.BaseViewModel
 
-class CategoryViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class CategoryViewModel (application: Application) : BaseViewModel(application) {
 }

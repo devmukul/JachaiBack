@@ -108,6 +108,19 @@ class CategoryFragment :
     }
 
     override fun subscribeObservers() {
+        viewModel.successAddToCartData.observe(viewLifecycleOwner, {
+            binding.apply {
+                if (it == true) {
+
+                    cartBadge.text =
+                        JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
+                            .toString()
+
+
+                }
+            }
+
+        })
     }
 
     class CategoryViewPagerAdapter(
