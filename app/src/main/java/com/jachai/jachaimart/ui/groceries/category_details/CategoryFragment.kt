@@ -152,8 +152,7 @@ class CategoryFragment :
     class SectionsPagerAdapter(private val tabTitleList: List<CategoriesItem>,
                                private val navController: NavController
                                , fm: FragmentManager
-    ) :
-        FragmentPagerAdapter(fm) {
+    ) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
