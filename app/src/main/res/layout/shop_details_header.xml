@@ -153,9 +153,9 @@
             app:borderWidth="0dp"
             app:elevation="0dp"
             app:fabCustomSize="25dp"
-            app:layout_constraintBottom_toBottomOf="@+id/fabCategory2"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/fabCategory2"
+            app:layout_constraintTop_toTopOf="parent"
             app:maxImageSize="10dp"
             app:tint="#FFD05C" />
 
