@@ -106,6 +106,11 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mView = null
+    }
+
     @SuppressLint("MissingPermission")
     override fun onMapReady(map: GoogleMap?) {
         if (map != null) {
