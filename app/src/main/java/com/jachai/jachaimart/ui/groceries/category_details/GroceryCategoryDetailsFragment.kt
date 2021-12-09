@@ -51,7 +51,7 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
         private const val CATEGORY_ID_KEY = "CATEGORY_ID_KEY"
         private lateinit var navController1: NavController
 
-        private lateinit var mOnPlayerSelectionSetListener: OnPlayerSelectionSetListener
+        private lateinit var mOnPlayerSelectionSetListener: OnCartItemAddListener
 
         fun newInstance(categoryTitle: String, categoryId: String, navController: NavController): GroceryCategoryDetailsFragment {
             navController1 = navController
@@ -120,24 +120,11 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
     }
 
     override fun subscribeObservers() {
-//        viewModel.successAddToCartData.observe(viewLifecycleOwner) {
-//            if (it == true) {
-//                binding.apply {
-//                    productAdapter.notifyDataSetChanged()
-//
-//                    cartBottom.checkout.text = "ViEW CART"
-//                    cartBottom.conLayout.visibility = View.VISIBLE
-//                    cartBottom.itemCount.text =
-//                        JachaiFoodApplication.mDatabase.daoAccess().getProductOrdersSize()
-//                            .toString()
-//                    cartBottom.totalCount.text =
-//                        JachaiFoodApplication.mDatabase.daoAccess().totalCost().toString()
-//
-//                }
-//            } else {
-//                binding.cartBottom.conLayout.visibility = View.GONE
-//            }
-//        }
+        viewModel.successAddToCartData.observe(viewLifecycleOwner) {
+            if (it == true) {
+                mOnPlayerSelectionSetListener.onCartItemAdded()
+            }
+        }
     }
 
     private fun initTabLayout(categories: List<CatWithRelatedProduct>) {
@@ -214,10 +201,6 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
                     showShortToast("Product added")
                 }
                 viewModel.saveProduct(it1, 1, product.shop, true)
-                if (mOnPlayerSelectionSetListener != null)
-                {
-                    mOnPlayerSelectionSetListener.onPlayerSelectionSet(1)
-                }
 
             } else {
                 alertDialog(product, 1)
@@ -246,9 +229,9 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
         builder.show()
     }
 
-    fun onAttachToParentFragment(fragment: Fragment) {
+    private fun onAttachToParentFragment(fragment: Fragment) {
         try {
-            mOnPlayerSelectionSetListener = fragment as OnPlayerSelectionSetListener
+            mOnPlayerSelectionSetListener = fragment as OnCartItemAddListener
         } catch (e: ClassCastException) {
             throw ClassCastException(
                 fragment.toString().toString() + " must implement OnPlayerSelectionSetListener"
