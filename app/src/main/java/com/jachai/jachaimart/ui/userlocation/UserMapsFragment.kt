@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jachai.jachai_driver.utils.showShortToast
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentUserMapsBinding
 import com.jachai.jachaimart.model.response.location.LocationDetails
@@ -55,7 +57,16 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
                     locationDetails.latitude!!,
                     locationDetails.longitude!!, locationDetails.fullAddress!!
                 )
+                val mLocationDetails = LocationDetails()
+                mLocationDetails.latitude = locationDetails.latitude
+                mLocationDetails.longitude = locationDetails.longitude
+                mLocationDetails.fullAddress = locationDetails.fullAddress
+
+                SharedPreferenceUtil.setUserLocation(locationDetails = mLocationDetails)
+
+
             }
+
         } catch (ex: Exception) {
 
         }
@@ -78,10 +89,14 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
 
             }
             confrimButton.setOnClickListener {
-                val action =UserMapsFragmentDirections.actionUserMapsFragmentToAddressDetailsFragment()
-                action.locationDetails = SharedPreferenceUtil.getUserLocation()
-                action.isFromFragment =  args.isFromFragment
-                navController.navigate(action)
+                try {
+                    val action =UserMapsFragmentDirections.actionUserMapsFragmentToAddressDetailsFragment()
+                    action.locationDetails = SharedPreferenceUtil.getUserLocation()
+                    action.isFromFragment =  args.isFromFragment
+                    navController.navigate(action)
+                }catch (ex: Exception){
+                    showShortToast("Location is not working correctly. Please try again.")
+                }
 
             }
         }
@@ -125,6 +140,18 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
 
                 if (userCurrentLocation == null) {
                     startLocationService(location)
+
+                    if (location != null) {
+                        val mLocationDetails = LocationDetails()
+                        mLocationDetails.latitude = location.latitude
+                        mLocationDetails.longitude = location.longitude
+                        mLocationDetails.fullAddress = location.address
+                        SharedPreferenceUtil.setUserLocation(locationDetails = mLocationDetails)
+                    }
+
+
+
+
                 } else {
                     startLocationService(userCurrentLocation)
                 }
