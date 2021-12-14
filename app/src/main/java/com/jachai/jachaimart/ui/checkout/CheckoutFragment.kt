@@ -225,6 +225,14 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             ToastUtils.error(message ?: getString(R.string.text_something_went_wrong))
         })
 
+        viewModel.errorPaymentResponseLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+            val action =
+                CheckoutFragmentDirections.actionCheckoutFragmentToOnGoingOrderFragment(mOrderId)
+            navController.navigate(action)
+        }
+
+
 
     }
 
