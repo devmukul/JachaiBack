@@ -32,10 +32,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
-            Log.e("Remote Message Total: ", Gson().toJson(remoteMessage))
-            Log.e("Remote Message Data: ", Gson().toJson(remoteMessage.data))
-            Log.e("Remote Message Intent:", Gson().toJson(remoteMessage.toIntent().extras))
-            Log.e("Remote Message Notif:", Gson().toJson(remoteMessage.notification))
+//            Log.e("Remote Message Data: ", Gson().toJson(remoteMessage.data))
+//            Log.e("Remote Message Intent:", Gson().toJson(remoteMessage.toIntent().extras))
+//            Log.e("Remote Message Notif:", Gson().toJson(remoteMessage.notification))
             if (remoteMessage.data.isNotEmpty()) {
                 val notificationResponse = NotificationResponse()
                 notificationResponse.title = remoteMessage.data[CommonConstants.NOTIFICATION_TITLE]

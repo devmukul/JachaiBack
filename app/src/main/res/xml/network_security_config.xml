@@ -10,4 +10,8 @@
         <domain includeSubdomains="true">jachai-rider.com</domain>
     </domain-config>
 
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">jachai.com</domain>
+    </domain-config>
+
 </network-security-config>

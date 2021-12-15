@@ -63,6 +63,8 @@ object SharedPreferenceUtil {
         }
     }
 
+    fun isJCShopAvailable() = preferences.contains(SharedPreferenceConstants.JC_SHOP_ID_KEY)
+
     fun getMobileNo() =
         preferences.getString(SharedPreferenceConstants.DRIVER_MOBILE_KEY, "")
 
