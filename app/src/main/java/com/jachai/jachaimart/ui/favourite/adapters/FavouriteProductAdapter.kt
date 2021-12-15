@@ -2,11 +2,14 @@ package com.jachai.jachaimart.ui.favourite.adapters
 
 import android.content.Context
 import android.graphics.Paint
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FavouriteProductRowBinding
 import com.jachai.jachaimart.model.response.product.Product
@@ -35,6 +38,14 @@ class FavouriteProductAdapter(
                         .into(productImage)
 
                     productTitle.text = product.name
+                    if (product?.variations?.get(0)?.stock ?: 0 > 0) {
+                        conlay21.visibility = View.VISIBLE
+                        conlay22.visibility = View.GONE
+
+                    } else {
+                        conlay21.visibility = View.INVISIBLE
+                        conlay22.visibility = View.VISIBLE
+                    }
 
                     val mPrice: Double = product.variations?.get(0)?.price?.mrp?.toDouble() ?: 0.0
                     val mDiscountedPrice: Double =
@@ -73,10 +84,71 @@ class FavouriteProductAdapter(
                     } else {
                         discountPrice.visibility = View.GONE
                     }
+                    var quantity = icCount.text.toString().toInt()
+                    ivAdd.setOnClickListener {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            conCount.visibility = View.GONE
+                        }, 5000)
+
+                        if (conCount.visibility == View.GONE || conCount.visibility == View.VISIBLE) {
+
+                            conCount.visibility = View.VISIBLE
+                            val count = icCount.text.toString().toInt()
+                            val addCount = count + 1
+                            val price = product?.variations?.get(0)?.price?.mrp?.times(addCount)
+
+//                productPrice?.text = price.toString()
+                            val finalCount =
+                                if (addCount < product?.variations?.get(0)?.stock?.toInt() ?: 0) {
+                                    addCount
+                                } else {
+//                                showShortToast("Max limit reached")
+                                    product?.variations?.get(0)?.stock?.toInt() ?: 0
+                                }
+                            quantity = finalCount
+                            icCount.text = finalCount.toString()
+
+                            interaction?.onProductAddToCartX(product, quantity)
+
+
+                        }
+
+                    }
+                    icSub.setOnClickListener {
+                        val count = icCount.text.toString().toInt()
+                        val addCount = count - 1
+                        if (addCount <= 0) {
+                            product.id?.let { it1 ->
+                                product.variations?.get(0)?.variationId?.let { it2 ->
+                                    JachaiApplication.mDatabase.daoAccess()
+                                        .deleteCartProducts(it1, it2)
+                                }
+                                conCount.visibility = View.GONE
+                            }
+
+
+                        } else {
+                            conCount.visibility = View.VISIBLE
+                            val finalCount = if (addCount <= 0) {
+                                1
+                            } else {
+                                addCount
+                            }
+                            val price = product?.variations?.get(0)?.price?.mrp?.times(finalCount)
+                            quantity = finalCount
+
+
+                            icCount.text = finalCount.toString()
+                            interaction?.onProductAddToCartX(product, quantity)
+
+                        }
+
+                    }
 
                     binding.root.setOnClickListener {
                         interaction?.onProductSelected(product)
                     }
+
 
                 }
             }
@@ -98,6 +170,7 @@ class FavouriteProductAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = list[position]
         holder.bind(context, data, interaction)
+
     }
 
     override fun getItemCount(): Int {
@@ -112,6 +185,7 @@ class FavouriteProductAdapter(
 
     interface Interaction {
         fun onProductSelected(product: Product?)
+        fun onProductAddToCartX(product: Product?, quantity: Int)
     }
 
 

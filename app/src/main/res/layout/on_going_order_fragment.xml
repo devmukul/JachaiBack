@@ -189,11 +189,11 @@
                             style="@style/heading"
                             android:layout_width="wrap_content"
                             android:layout_height="15dp"
+                            android:layout_alignParentRight="true"
                             android:text="COD"
                             android:textColor="#3A494E"
                             android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_alignParentRight="true"/>
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
 

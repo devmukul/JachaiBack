@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="128dp"
     android:layout_height="wrap_content"
+    android:layout_marginRight="10dp"
     android:background="@drawable/box_curve_white"
-    android:paddingBottom="10dp"
-    android:layout_marginRight="10dp">
-
+    android:paddingBottom="10dp">
 
 
     <ImageView
@@ -95,45 +94,58 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_white_top_color"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout13"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
 
         <ImageView
             android:id="@+id/ivAdd"
-            android:layout_width="20dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:background="@drawable/rounded_button_red"
             android:padding="2dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ic_count"
+            app:layout_constraintBottom_toBottomOf="@+id/con_count"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ic_count"
-            app:layout_constraintTop_toTopOf="@+id/ic_count"
+            app:layout_constraintStart_toEndOf="@+id/con_count"
+            app:layout_constraintTop_toTopOf="@+id/con_count"
             app:srcCompat="@drawable/ic_add" />
 
-        <ImageView
-            android:id="@+id/ic_sub"
-            android:layout_width="20dp"
-            android:layout_height="24dp"
-            android:background="@drawable/rounded_button_red"
-            android:padding="4dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/con_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_subtraction" />
-
-        <TextView
-            android:id="@+id/ic_count"
-            style="@style/title"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="1"
-            android:textColor="#CD113B"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ic_sub"
             app:layout_constraintEnd_toStartOf="@+id/ivAdd"
-            app:layout_constraintStart_toEndOf="@+id/ic_sub"
-            app:layout_constraintTop_toTopOf="@+id/ic_sub" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/ic_count"
+                style="@style/title"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="#CD113B"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ic_sub"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ic_sub"
+                app:layout_constraintTop_toTopOf="@+id/ic_sub" />
+
+            <ImageView
+                android:id="@+id/ic_sub"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/rounded_button_red"
+                android:padding="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_subtraction" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -142,10 +154,10 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:backgroundTint="#F4E3E2"
+        android:visibility="gone"
         app:cardCornerRadius="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout11"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout13"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout11">
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="224dp">
 
         <ImageView
             android:layout_width="16dp"
@@ -154,6 +166,7 @@
             app:srcCompat="@drawable/ic_add" />
 
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/discount_price"
         style="@style/small_text"
