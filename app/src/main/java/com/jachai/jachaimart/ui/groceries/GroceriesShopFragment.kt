@@ -2,8 +2,8 @@ package com.jachai.jachaimart.ui.groceries
 
 import android.app.AlertDialog
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
@@ -45,6 +46,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -74,6 +78,18 @@ class GroceriesShopFragment :
 
     private var shopID: String = ""
     private lateinit var categoryWithProductPaginAdapter: CategoryWithProductPaginAdapter
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+           viewModel.requestRegister (requireActivity(), token)
+        })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -236,9 +252,6 @@ class GroceriesShopFragment :
     override fun onResume() {
         super.onResume()
         viewModel.getAllOrder()
-//        viewModel.getCurrentOrderStatus()
-
-
     }
 
     private fun showNoShopFoundAlert() {
@@ -281,6 +294,18 @@ class GroceriesShopFragment :
                 )
 
                 SharedPreferenceUtil.saveCurrentAddress(address!!)
+
+                if(!SharedPreferenceUtil.isJCShopAvailable()){
+                    if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
+                        SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
+                            viewModel.getNearestJCShop(
+                                it1.location, false, null
+                            )
+                        }
+                    } else {
+                        viewModel.getNearestJCShop(address!!.location, false, null)
+                    }
+                }
 
             }
 
@@ -718,4 +743,6 @@ class GroceriesShopFragment :
         }
         builder.show()
     }
+
+
 }

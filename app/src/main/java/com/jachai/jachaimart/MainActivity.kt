@@ -46,8 +46,7 @@ class MainActivity : BaseActivity<ContentMainBinding>(R.layout.content_main)  {
 //    private lateinit var locationManager: JachaiLocationManager
 //    val channelId = UUID.randomUUID().toString()
 
-    private val notificationsService = RetrofitConfig.notificationsService
-    private var registerCall: Call<GenericResponse>? = null
+
 
     private var APP_UPDATE_TYPE_SUPPORTED: Int = 0
     private val REQUEST_UPDATE = 100
@@ -90,16 +89,6 @@ class MainActivity : BaseActivity<ContentMainBinding>(R.layout.content_main)  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@OnCompleteListener
-            }
-            val token = task.result
-            requestRegister (token)
-            Log.d("Jachai_FCM", "sendRegistrationTokenToServer($token)")
-        })
-
         checkForUpdates()
     }
 
@@ -123,35 +112,7 @@ class MainActivity : BaseActivity<ContentMainBinding>(R.layout.content_main)  {
 
     }
 
-    private fun requestRegister(fcmToken: String) {
-        try {
-            if (registerCall != null) {
-                return
-            }
-            val notificationRegisterRequest = NotificationRegisterRequest(this.getDeviceId(), "Android", "${Build.BRAND}_${Build.MODEL}", fcmToken)
 
-            registerCall = notificationsService.registerDevice(notificationRegisterRequest)
-
-            registerCall?.enqueue(object : Callback<GenericResponse> {
-                override fun onResponse(
-                    call: Call<GenericResponse>,
-                    response: Response<GenericResponse>
-                ) {
-                    registerCall = null
-                    JachaiLog.d(HomeViewModel.TAG, response.body().toString())
-                }
-
-                override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                    registerCall = null
-
-                }
-            })
-
-        } catch (ex: Exception) {
-            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
-        }
-
-    }
 
     private fun checkForUpdates() {
         val appUpdateManager = AppUpdateManagerFactory.create(this)

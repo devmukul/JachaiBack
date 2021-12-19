@@ -1,6 +1,8 @@
 package com.jachai.jachaimart.ui.groceries
 
+import android.app.Activity
 import android.app.Application
+import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -8,19 +10,23 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.jachai.jachai_driver.utils.JachaiLog
+import com.jachai.jachai_driver.utils.getDeviceId
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.api.paging_source.HomePagingSource
+import com.jachai.jachaimart.model.notification.NotificationRegisterRequest
 import com.jachai.jachaimart.model.request.CategoryWithProductRequest
 import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsResponse
 import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.model.response.home.CategoryResponse
 import com.jachai.jachaimart.model.response.product.FavouriteProductResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
+import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.ui.product.ProductDetailsViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.constant.ApiConstants.PAGING_PAGE_LIMIT_MIN
@@ -48,6 +54,8 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         MutableLiveData<CatWithRelatedProductsResponse?>()
     var errorResponseLiveData = MutableLiveData<String?>()
     var errorCategoryWithProductResponseLiveData = MutableLiveData<String?>()
+    private val notificationsService = RetrofitConfig.notificationsService
+    private var registerCall: Call<GenericResponse>? = null
 
 
     fun requestForBanners() {
@@ -207,6 +215,36 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         ) {
             HomePagingSource(shopId)
         }.flow.cachedIn(viewModelScope)
+
+    }
+
+    fun requestRegister(activity: Activity, fcmToken: String) {
+        try {
+            if (registerCall != null) {
+                return
+            }
+            val notificationRegisterRequest = NotificationRegisterRequest(activity.getDeviceId(), "Android", "${Build.BRAND}_${Build.MODEL}", fcmToken)
+
+            registerCall = notificationsService.registerDevice(notificationRegisterRequest)
+
+            registerCall?.enqueue(object : Callback<GenericResponse> {
+                override fun onResponse(
+                    call: Call<GenericResponse>,
+                    response: Response<GenericResponse>
+                ) {
+                    registerCall = null
+                    JachaiLog.d(HomeViewModel.TAG, response.body().toString())
+                }
+
+                override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
+                    registerCall = null
+
+                }
+            })
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+        }
 
     }
 
