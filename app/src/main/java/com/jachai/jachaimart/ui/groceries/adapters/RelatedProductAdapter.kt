@@ -170,9 +170,6 @@ class RelatedProductAdapter(
         }
 
         fun View.slideVisible(duration: Int = 5000) {
-//            val transition: Transition = Slide(Gravity.LEFT)
-//            transition.duration = duration.toLong()
-//            TransitionManager.beginDelayedTransition(this as ViewGroup,transition)
             visibility = View.VISIBLE
             animate()
                 .alpha(1f)
@@ -181,13 +178,6 @@ class RelatedProductAdapter(
 
 
         }
-/*        fun View.fadeVisibility(visibility: Int, duration: Long = 400) {
-            val transition: Transition = Fade()
-            transition.duration = duration
-            transition.addTarget(this)
-            TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
-            this.visibility = visibility
-        }*/
 
 
         enum class SlideDirection {
@@ -272,35 +262,6 @@ class RelatedProductAdapter(
             })
             startAnimation(animate)
         }
-
-        private fun View.slideGone(durationt: Int = 5000) {
-
-            val transition = Slide(Gravity.LEFT)
-            transition.apply {
-                duration = durationt.toLong()
-                addTarget(this@slideGone)
-            }
-            TransitionManager.beginDelayedTransition(this.parent as ViewGroup, transition)
-
-            isVisible = false
-
-//            animate()
-//                .alpha(1f)
-//                .setDuration(duration.toLong())
-//                .setListener(object : AnimatorListenerAdapter() {
-//                    override fun onAnimationEnd(animation: Animator?) {
-//                        visibility = View.GONE
-//                    }
-//                })
-
-//            visibility = View.VISIBLE
-//            val animate = TranslateAnimation(0f, 0f,this.width.toFloat(),0f )
-//            animate.duration = duration.toLong()
-////            animate.fillAfter = true
-//            this.startAnimation(animate)
-
-        }
-
 
     }
 

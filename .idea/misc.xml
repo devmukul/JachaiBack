@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.25885416666666666" />
         <entry key="../../../../layout/custom_preview.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/drawable-v24/box_top_white_curve.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable-v24/rounded_button_red.xml" value="0.26510416666666664" />
@@ -72,7 +73,7 @@
         <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.8747591522157996" />
         <entry key="app/src/main/res/layout/empty_cart_fragment.xml" value="0.2475847670599894" />
         <entry key="app/src/main/res/layout/favourite_fragment.xml" value="0.1308876811594203" />
-        <entry key="app/src/main/res/layout/favourite_product_row.xml" value="0.6156316916488223" />
+        <entry key="app/src/main/res/layout/favourite_product_row.xml" value="0.5480769230769231" />
         <entry key="app/src/main/res/layout/filter_and_sort_barlayout.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
         <entry key="app/src/main/res/layout/fragment_restaurant_search.xml" value="0.33" />
