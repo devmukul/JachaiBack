@@ -53,9 +53,13 @@ class CategoryWithProductAdapter(
 
         }
 
-        override fun onProductAddToCart(product: Product?) {
+        override fun onProductAddToCartX(product: Product?, quantity: Int) {
 
         }
+
+//        override fun onProductAddToCart(product: Product?) {
+//
+//        }
     }
 
 

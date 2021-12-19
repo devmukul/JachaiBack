@@ -53,9 +53,14 @@ class CategoryWithProductPaginAdapter(
 
         }
 
-        override fun onProductAddToCart(product: Product?) {
-            interaction?.onProductAddToCart(product)
+        override fun onProductAddToCartX(product: Product?, quantity: Int) {
+            interaction?.onProductAddToCartX(product, quantity)
+
         }
+
+//        override fun onProductAddToCart(product: Product?) {
+//            interaction?.onProductAddToCart(product)
+//        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -93,7 +98,8 @@ class CategoryWithProductPaginAdapter(
     interface Interaction {
         fun onCategoryViewAllSelected(catWithRelatedProduct: CatWithRelatedProduct?)
         fun onCategoryProductSelected(product: Product?)
-        fun onProductAddToCart(product: Product?)
+//        fun onProductAddToCart(product: Product?)
+        fun onProductAddToCartX(product: Product?, quantity: Int)
     }
 
 

@@ -37,6 +37,7 @@ import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductPaginAdapter
+import com.jachai.jachaimart.ui.groceries.adapters.RelatedProductAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
@@ -478,7 +479,61 @@ class GroceriesShopFragment :
         navController.navigate(action)
     }
 
-    override fun onProductAddToCart(product: Product?) {
+    override fun onProductAddToCartX(product: Product?, quantity: Int) {
+        product?.let { it1 ->
+
+            if (quantity <= 0){
+                product.id?.let { it1 ->
+                    product.variations?.get(0)?.variationId?.let { it2 ->
+                        JachaiApplication.mDatabase.daoAccess()
+                            .deleteCartProducts(it1, it2)
+                    }
+                }
+                viewModel.successAddToCartData.postValue(true)
+            }else {
+
+                if (product.shop?.id?.let {
+                        JachaiApplication.mDatabase.daoAccess()
+                            .isInsertionApplicable(shopID = it)
+                    } == true) {
+//
+
+
+                    if (JachaiApplication.mDatabase.daoAccess()
+                            .getProductByProductID(product.id!!, product.shop.id) > 0
+                    ) {
+
+                        showShortToast("Product already added")
+
+                    } else {
+
+                        showShortToast("Product added")
+                    }
+                    viewModel.saveProduct(it1, quantity, product.shop, true)
+
+                } else {
+                    alertDialog(product, quantity)
+                }
+            }
+
+
+
+        }
+
+
+        viewModel.successAddToCartData.observe(viewLifecycleOwner, {
+            binding.apply {
+                if (it == true) {
+
+
+
+                }
+            }
+
+        })
+    }
+
+    fun onProductAddToCart(product: Product?) {
         product?.let { it1 ->
 
             if (product.shop?.id?.let {
