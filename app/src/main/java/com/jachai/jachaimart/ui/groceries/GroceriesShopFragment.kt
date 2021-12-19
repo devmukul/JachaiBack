@@ -533,6 +533,8 @@ class GroceriesShopFragment :
         })
     }
 
+/*
+
     fun onProductAddToCart(product: Product?) {
         product?.let { it1 ->
 
@@ -562,6 +564,7 @@ class GroceriesShopFragment :
 //        updateBottomCart()
     }
 
+*/
 
     private fun showBottomSheetDialog(
         item: MutableList<Address>
