@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FavouriteProductRowBinding
@@ -102,7 +103,7 @@ class FavouriteProductAdapter(
                                 if (addCount < product?.variations?.get(0)?.stock?.toInt() ?: 0) {
                                     addCount
                                 } else {
-//                                showShortToast("Max limit reached")
+                                    ToastUtils.warning("Max limit reached")
                                     product?.variations?.get(0)?.stock?.toInt() ?: 0
                                 }
                             quantity = finalCount
