@@ -52,7 +52,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     var successCategoryResponseLiveData = MutableLiveData<CategoryResponse?>()
     var successCategoryWithProductResponseLiveData =
         MutableLiveData<CatWithRelatedProductsResponse?>()
-    var errorResponseLiveData = MutableLiveData<String?>()
+
     var errorCategoryWithProductResponseLiveData = MutableLiveData<String?>()
     private val notificationsService = RetrofitConfig.notificationsService
     private var registerCall: Call<GenericResponse>? = null

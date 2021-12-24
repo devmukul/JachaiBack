@@ -42,6 +42,7 @@ object ApiConstants {
 
     //Payment
     const val PAYMENT_REQUEST_BASE = "pay"
+    const val PAYMENT_METHOD_REQUEST_BASE = "payment-method"
 
 
     //banner

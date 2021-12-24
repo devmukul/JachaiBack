@@ -79,7 +79,7 @@ public class PresetRadioGroup extends LinearLayout {
                     setCheckedStateForView(mCheckedId, false);
                 }
                 mProtectFromCheckedChange = false;
-                setCheckedId(child.getId(), true);
+                setCheckedId(child,child.getId(), true);
             }
         }
 
@@ -100,14 +100,14 @@ public class PresetRadioGroup extends LinearLayout {
             mProtectFromCheckedChange = true;
             setCheckedStateForView(mCheckedId, true);
             mProtectFromCheckedChange = false;
-            setCheckedId(mCheckedId, true);
+            setCheckedId(getRootView(), mCheckedId, true);
         }
     }
 
-    private void setCheckedId(@IdRes int id, boolean isChecked) {
+    private void setCheckedId(View child, @IdRes int id, boolean isChecked) {
         mCheckedId = id;
         if (mOnCheckedChangeListener != null) {
-            mOnCheckedChangeListener.onCheckedChanged(this, mChildViewsMap.get(id), isChecked, mCheckedId);
+            mOnCheckedChangeListener.onCheckedChanged(child, mChildViewsMap.get(id), isChecked, mCheckedId);
         }
     }
 
@@ -134,7 +134,7 @@ public class PresetRadioGroup extends LinearLayout {
             setCheckedStateForView(id, true);
         }
 
-        setCheckedId(id, true);
+        setCheckedId(getRootView(), id, true);
     }
 
     private void setCheckedStateForView(int viewId, boolean checked) {
@@ -258,7 +258,7 @@ public class PresetRadioGroup extends LinearLayout {
             mProtectFromCheckedChange = false;
 
             int id = buttonView.getId();
-            setCheckedId(id, true);
+            setCheckedId(buttonView, id, true);
         }
     }
 

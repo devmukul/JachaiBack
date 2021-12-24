@@ -16,10 +16,12 @@ import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.model.request.PaymentRequest
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
+import com.jachai.jachaimart.model.response.pay.PaymentListResponse
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.response.product.Shop
 import com.jachai.jachaimart.model.response.product.VariationsItem
@@ -29,6 +31,7 @@ import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import com.jachai.jachaimart.utils.constant.CommonConstants
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,7 +46,12 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private val driverService = RetrofitConfig.driverService
     private val groceryService = RetrofitConfig.groceryService
     private val orderService = RetrofitConfig.orderService
+    private val paymentService = RetrofitConfig.paymentService
+    private var paymentMethodCall: Call<PaymentListResponse>? = null
     var successAddToCartData = MutableLiveData<Boolean?>()
+    var errorResponseLiveData =  MutableLiveData<String>()
+    var failedResponseLiveData = MutableLiveData<GenericResponse?>()
+    var successPaymentMethodListLiveData = MutableLiveData<PaymentListResponse>()
 
     private var nearestJCShopCall: Call<NearestJCShopResponse>? = null
     private var addressCall: Call<AddressResponse>? = null
@@ -522,5 +530,53 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         tProductOrder.stock = variationsItem.stock
         return tProductOrder
     }
+
+    fun getAllPaymentMethods() {
+
+        try {
+            if (paymentMethodCall != null) {
+                return
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
+                return
+            }
+            paymentMethodCall = paymentService.paymentMethodRequest()
+
+            paymentMethodCall?.enqueue(object : Callback<PaymentListResponse> {
+                override fun onResponse(
+                    call: Call<PaymentListResponse>,
+                    response: Response<PaymentListResponse>
+                ) {
+                    paymentCall = null
+
+                    when (response.code()) {
+                        HttpStatusCode.HTTP_OK -> successPaymentMethodListLiveData.postValue(response.body())
+                        else -> {
+                            val jObjError = JSONObject(response.errorBody()!!.string())
+                            failedResponseLiveData.value =
+                                CommonConstants.DEFAULT_NON_NULL_GSON.fromJson(
+                                    jObjError.toString(), GenericResponse::class.java
+                                ) ?: GenericResponse()
+                        }
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<PaymentListResponse>, t: Throwable) {
+                    paymentMethodCall = null
+                    JachaiLog.d(TAG, t.localizedMessage)
+                    errorResponseLiveData.postValue("failed")
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(TAG, ex.message!!)
+        }
+
+
+    }
+
 
 }

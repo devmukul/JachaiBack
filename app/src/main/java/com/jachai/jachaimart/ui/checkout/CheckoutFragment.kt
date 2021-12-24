@@ -3,6 +3,8 @@ package com.jachai.jachaimart.ui.checkout
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.RadioGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -15,6 +17,7 @@ import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CheckoutFragmentBinding
+import com.jachai.jachaimart.decorator.PayRadioButton
 import com.jachai.jachaimart.model.request.PaymentRequest
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.ui.base.BaseFragment
@@ -23,17 +26,20 @@ import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import es.dmoral.toasty.Toasty
 
+
 class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout_fragment) {
 
     companion object {
         fun newInstance() = CheckoutFragment()
     }
-    private lateinit var customTabsIntent:CustomTabsIntent
+
+    private lateinit var customTabsIntent: CustomTabsIntent
     private lateinit var navController: NavController
     private lateinit var checkoutAdapter: CheckoutAdapter
     private val viewModel: CheckoutViewModel by viewModels()
     private val args: CheckoutFragmentArgs by navArgs()
-    var mCheckedId = ""
+    var mCheckedId = "COD"
+    var mPayCheckedId = ""
     var mOrderId = ""
 
     private lateinit var additionalComment: String
@@ -47,12 +53,12 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
     }
 
 
-
     override fun initView() {
         viewModel.geOrderList()
+
         updateBottomCart(0.0)
         binding.apply {
-
+            onLinePayLayout.visibility = View.GONE
 
             toolbarMain.title.text = "Checkout"
             toolbarMain.back.setOnClickListener {
@@ -63,7 +69,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             editAddress.setOnClickListener {
                 val action =
                     CheckoutFragmentDirections.actionCheckoutFragmentToMyAddressListFragment()
-                action.shop =  SharedPreferenceUtil.getNearestShop()
+                action.shop = SharedPreferenceUtil.getNearestShop()
                 navController.navigate(action)
             }
 
@@ -95,16 +101,45 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             option1.value = "Cash on Delivery"
             option2.value = "Online Payment"
             option1.isChecked = true
+            var isOnlinePaySelected = false
+
 
             paymentRadio.setOnCheckedChangeListener { radiogroupn, radioButton, _, checkedId ->
                 when (checkedId) {
-                    R.id.option1 -> mCheckedId = "COD"
-                    R.id.option2 -> mCheckedId = "SSL"
+                    R.id.option1 -> {
+                        mCheckedId = "COD"
+                        isOnlinePaySelected = false
+                        onLinePayLayout.visibility = View.GONE
+                    }
+                    R.id.option2 -> {
+                        showLoader()
+                        viewModel.getAllPaymentMethods()
+                        isOnlinePaySelected = true
+                        onLinePayLayout.visibility = View.VISIBLE
+                    }
                 }
             }
+
+            onlinePaymentItems.setOnCheckedChangeListener { radioGroup, radioButton, isChecked, checkedId ->
+                if (isOnlinePaySelected) {
+                    var payRadioButton: PayRadioButton =
+                        radioGroup.rootView.findViewById<PayRadioButton>(checkedId)
+                    mCheckedId = payRadioButton.value.name
+                }
+
+            }
+
+
+
+
             textView4.setOnClickListener {
                 val builder = CustomTabsIntent.Builder()
-                builder.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.design_default_color_on_primary))
+                builder.setToolbarColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.design_default_color_on_primary
+                    )
+                )
                 customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(requireContext(), Uri.parse(CommonConstants.POLICY_URL))
             }
@@ -133,24 +168,26 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             val subtotal = dao.getProductOrderSubtotal()
 
             val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
-            val vatSd : Double = (subtotal * vatSdPercent) / 100
+            val vatSd: Double = (subtotal * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
 
-            val total = subtotal  + vatSd + discount
+            val total = subtotal + vatSd + discount
 
 
             var nearCostToFree = 0F
-            val deliveryCost = if (SharedPreferenceUtil.getNearestShop()?.isFreeDelivery== true){
+            val deliveryCost = if (SharedPreferenceUtil.getNearestShop()?.isFreeDelivery == true) {
                 0.toFloat()
-            } else{
-                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery !=0F){
-                    if (total.toDouble()>= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!! ){
+            } else {
+                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery != 0F) {
+                    if (total.toDouble() >= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!) {
                         0.toFloat()
-                    }else{
-                        nearCostToFree = SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
-                        SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+                    } else {
+                        nearCostToFree =
+                            SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
+                        SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat()
+                            ?: 0.toFloat()
                     }
-                }else {
+                } else {
                     SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
                 }
             }
@@ -166,10 +203,11 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
 
             deliveryCharge.text = String.format("%.2f", deliveryCost)
-            if (nearCostToFree>0){
+            if (nearCostToFree > 0) {
                 tvDeliveryFreeMessage.visibility = View.VISIBLE
-                tvDeliveryFreeMessage.text = String.format("Add %.2f tk more to get free delivery", nearCostToFree)
-            }else{
+                tvDeliveryFreeMessage.text =
+                    String.format("Add %.2f tk more to get free delivery", nearCostToFree)
+            } else {
                 tvDeliveryFreeMessage.visibility = View.GONE
             }
 
@@ -188,7 +226,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         viewModel.successOrderLiveData.observe(viewLifecycleOwner) {
             val jachaiUrl = "https://www.jachai.com"
             viewModel.clearCreatedOrder()
-            if (mCheckedId == "SSL") {
+            if (mCheckedId != "COD") {
                 mOrderId = it.orderId!!
                 val paymentRequest = PaymentRequest(
                     it.total!!,
@@ -232,6 +270,39 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             navController.navigate(action)
         }
 
+        viewModel.successPaymentMethodListLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+
+            if (it != null) {
+                if (!it.methods.isNullOrEmpty()) {
+                    val layoutParams: LinearLayout.LayoutParams = RadioGroup.LayoutParams(
+                        RadioGroup.LayoutParams.MATCH_PARENT,
+                        RadioGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    for ((i, item) in it.methods.withIndex()) {
+                        if (item.name == "COD" || item.title == "COD") {
+                            continue
+                        }
+                        val newRadioButton = PayRadioButton(requireContext())
+                        newRadioButton.id = i
+                        newRadioButton.setValue(item)
+                        if (i == 0) {
+                            newRadioButton.isChecked = true
+                        }
+                        binding.onlinePaymentItems.addView(newRadioButton, layoutParams)
+
+                    }
+                } else {
+                    ToastUtils.error(getString(R.string.text_something_went_wrong))
+                }
+
+
+            } else {
+                ToastUtils.error(getString(R.string.text_something_went_wrong))
+            }
+
+
+        }
 
 
     }

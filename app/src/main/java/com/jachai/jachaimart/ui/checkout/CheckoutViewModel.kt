@@ -15,6 +15,8 @@ import com.jachai.jachaimart.model.request.ProductsItem
 import com.jachai.jachaimart.model.request.ShippingLocation
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.Address
+import com.jachai.jachaimart.model.response.pay.PayMethod
+import com.jachai.jachaimart.model.response.pay.PaymentListResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
@@ -29,9 +31,8 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
     val db = JachaiApplication.mDatabase.daoAccess()
     var successProductOrderListLiveData = MutableLiveData<List<ProductOrder>>()
     var successOrderLiveData = MutableLiveData<OrderResponse>()
-    var errorResponseLiveData =  MutableLiveData<String>()
 
-    var failedResponseLiveData = MutableLiveData<GenericResponse?>()
+
 
     private val orderService = RetrofitConfig.orderService
     private var orderCall: Call<OrderResponse>? = null
@@ -104,6 +105,9 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
 
 
     }
+
+
+
 
     fun geOrderList() {
         successProductOrderListLiveData.postValue(
