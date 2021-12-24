@@ -112,8 +112,9 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                         onLinePayLayout.visibility = View.GONE
                     }
                     R.id.option2 -> {
-                        showLoader()
+
                         viewModel.getAllPaymentMethods()
+                        showLoader()
                         isOnlinePaySelected = true
                         onLinePayLayout.visibility = View.VISIBLE
                     }
@@ -279,6 +280,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                         RadioGroup.LayoutParams.MATCH_PARENT,
                         RadioGroup.LayoutParams.WRAP_CONTENT
                     )
+                    binding.onlinePaymentItems.removeAllViews()
                     for ((i, item) in it.methods.withIndex()) {
                         if (item.name == "COD" || item.title == "COD") {
                             continue
@@ -290,6 +292,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                             newRadioButton.isChecked = true
                         }
                         binding.onlinePaymentItems.addView(newRadioButton, layoutParams)
+
 
                     }
                 } else {

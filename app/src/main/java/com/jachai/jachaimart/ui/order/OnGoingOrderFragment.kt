@@ -255,6 +255,7 @@ class OnGoingOrderFragment :
                         RadioGroup.LayoutParams.MATCH_PARENT,
                         RadioGroup.LayoutParams.WRAP_CONTENT
                     )
+                    binding.onlinePaymentItems.removeAllViews()
                     for ((i, item) in it.methods.withIndex()) {
                         if (item.name == "COD" || item.title == "COD") {
                             continue

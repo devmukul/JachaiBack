@@ -547,7 +547,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                     call: Call<PaymentListResponse>,
                     response: Response<PaymentListResponse>
                 ) {
-                    paymentCall = null
+                    paymentMethodCall = null
 
                     when (response.code()) {
                         HttpStatusCode.HTTP_OK -> successPaymentMethodListLiveData.postValue(response.body())
@@ -572,6 +572,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
 
         } catch (ex: Exception) {
+            errorResponseLiveData.postValue("failed")
             JachaiLog.d(TAG, ex.message!!)
         }
 
