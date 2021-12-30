@@ -258,7 +258,7 @@ class GroceriesShopFragment :
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)
         builder.setTitle(getString(R.string.app_name_short) + " alert")
-        builder.setMessage("Sorry !! Shop is not available at your location right now. We are coming soon. Thanks")
+        builder.setMessage("Sorry !! JaChai Mart is not available at your location right now. We are coming soon. Thanks")
 
 
         builder.setNegativeButton("Close") { dialog, _ ->
@@ -493,7 +493,6 @@ class GroceriesShopFragment :
         action.categoryId = catWithRelatedProduct?.categoryId
         action.categoryList = categoryResponse
         navController.navigate(action)
-
 
     }
 

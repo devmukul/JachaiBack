@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.jachai.jachai_driver.utils.JachaiLog
+import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
@@ -49,7 +50,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private val paymentService = RetrofitConfig.paymentService
     private var paymentMethodCall: Call<PaymentListResponse>? = null
     var successAddToCartData = MutableLiveData<Boolean?>()
-    var errorResponseLiveData =  MutableLiveData<String>()
+    var errorResponseLiveData = MutableLiveData<String>()
     var failedResponseLiveData = MutableLiveData<GenericResponse?>()
     var successPaymentMethodListLiveData = MutableLiveData<PaymentListResponse>()
 
@@ -77,7 +78,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     var successPreviousOrderListLiveData = MutableLiveData<List<Order>>()
     var errorOrderDetailsLiveData = MutableLiveData<String>()
 
-    var errorPaymentResponseLiveData =  MutableLiveData<String>()
+    var errorPaymentResponseLiveData = MutableLiveData<String>()
 
 
     fun requestAllAddress() {
@@ -164,11 +165,11 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                         HttpStatusCode.HTTP_OK -> {
                             val mResponse = response.body()
                             if (mResponse != null) {
-                                if (isFromCheckout){
+                                if (isFromCheckout) {
                                     mResponse.userDeliveryAddress = address
                                     successNearestJCShop.value = mResponse
 
-                                }else {
+                                } else {
                                     if (mResponse.shops.isNotEmpty()) {
                                         SharedPreferenceUtil.setJCShopId(mResponse.shops[0].id)
                                         SharedPreferenceUtil.saveNearestShop(mResponse.shops[0])
@@ -178,8 +179,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                                         successNearestJCShopUpdate.value = false
                                     }
                                 }
-                            }else{
-                                errorNearestJCShop.value= "failed"
+                            } else {
+                                errorNearestJCShop.value = "failed"
                             }
                         }
                     }
@@ -187,7 +188,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
                 override fun onFailure(call: Call<NearestJCShopResponse>?, t: Throwable?) {
                     nearestJCShopCall = null
-                    errorNearestJCShop.value= "failed"
+                    errorNearestJCShop.value = "failed"
                     if (t != null) {
                         t.message?.let { JachaiLog.e(BaseFragment.TAG, it) }
                     }
@@ -263,7 +264,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                     deleteAddressCall = null
                     if (response.isSuccessful) {
                         deleteAddressResponseLiveData.value = response.body()
-                    }else{
+                    } else {
                         errorAddressResponseLiveData.value = "deleted failed"
                     }
                     JachaiLog.d(GroceriesShopViewModel.TAG, response.body().toString())
@@ -373,7 +374,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     var successPaymentRequestLiveData = MutableLiveData<PaymentRequestResponse>()
 
-    fun requestPayment( paymentRequest: PaymentRequest) {
+    fun requestPayment(paymentRequest: PaymentRequest) {
 
         try {
             if (paymentCall != null) {
@@ -431,48 +432,65 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 //            item.variations?.get(0)?.let {
 //                updatedProductOrder(productOrder, quantity, it)
 //            }
-        val finalProductOrder =
-            item.variations?.get(0)?.let {
-                when {
-                    item.variations[0]?.maximumOrderLimit == 0 -> {
-                        updatedProductOrder(productOrder, quantity, it, false)
-                    }
-                    quantity <= item.variations[0]?.maximumOrderLimit!! -> {
-                        updatedProductOrder(productOrder, quantity, it, false)
 
-                    }
-                    else -> {
+        try {
 
-                        val tempProductOrder = updatedProductOrder(
-                            productOrder,
-                            item.variations[0]?.maximumOrderLimit!!,
-                            it,
-                            true
-                        )
-                        JachaiApplication.mDatabase.daoAccess()
-                            .insertOrder(tempProductOrder, isFromSameShop)
-                        val mQuantity = quantity - item.variations[0]?.maximumOrderLimit!!
-                        val nextVariationsId = item.variations[0]?.regularVariationId
 
-                        val nextVariationsItem: VariationsItem? =
-                            getVariationItemById(item.variations, nextVariationsId)
+            if (!item.variations.isNullOrEmpty()) {
+                val finalProductOrder =
+                    item.variations?.get(0)?.let {
+                        when {
+                            item.variations[0]?.maximumOrderLimit == 0 -> {
+                                updatedProductOrder(productOrder, quantity, it, false)
+                            }
+                            quantity <= item.variations[0]?.maximumOrderLimit!! -> {
+                                updatedProductOrder(productOrder, quantity, it, false)
 
-                        if (nextVariationsItem != null) {
-                            updatedProductOrder(productOrder, mQuantity, nextVariationsItem, true)
-                        } else {
-                            null
+                            }
+                            else -> {
+
+                                val tempProductOrder = updatedProductOrder(
+                                    productOrder,
+                                    item.variations[0]?.maximumOrderLimit!!,
+                                    it,
+                                    true
+                                )
+                                JachaiApplication.mDatabase.daoAccess()
+                                    .insertOrder(tempProductOrder, isFromSameShop)
+                                val mQuantity = quantity - item.variations[0]?.maximumOrderLimit!!
+                                val nextVariationsId = item.variations[0]?.regularVariationId
+
+                                val nextVariationsItem: VariationsItem? =
+                                    getVariationItemById(item.variations, nextVariationsId)
+
+                                if (nextVariationsItem != null) {
+                                    updatedProductOrder(
+                                        productOrder,
+                                        mQuantity,
+                                        nextVariationsItem,
+                                        true
+                                    )
+                                } else {
+                                    null
+                                }
+
+                            }
                         }
-
                     }
-                }
+
+
+
+                successAddToCartData.postValue(
+                    finalProductOrder?.let {
+                        JachaiApplication.mDatabase.daoAccess().insertOrder(it, isFromSameShop)
+                    }
+                )
+            } else {
+                ToastUtils.error("Something Wrong !! Please try again later. Thank you.")
             }
-
-
-
-        successAddToCartData.postValue(
-            JachaiApplication.mDatabase.daoAccess().insertOrder(finalProductOrder!!, isFromSameShop)
-        )
-
+        } catch (ex: Exception) {
+            ToastUtils.error("Something Wrong !! Please try again later. Thank you.")
+        }
 
     }
 
@@ -550,7 +568,9 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                     paymentMethodCall = null
 
                     when (response.code()) {
-                        HttpStatusCode.HTTP_OK -> successPaymentMethodListLiveData.postValue(response.body())
+                        HttpStatusCode.HTTP_OK -> successPaymentMethodListLiveData.postValue(
+                            response.body()
+                        )
                         else -> {
                             val jObjError = JSONObject(response.errorBody()!!.string())
                             failedResponseLiveData.value =
