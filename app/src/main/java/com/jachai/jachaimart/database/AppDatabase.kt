@@ -26,7 +26,7 @@ import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
         Shop::class,
         SearchHistoryItem::class
     ],
-    version = 23,
+    version = 24,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

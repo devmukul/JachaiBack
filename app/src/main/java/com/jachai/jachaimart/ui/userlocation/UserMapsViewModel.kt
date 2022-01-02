@@ -33,16 +33,6 @@ class UserMapsViewModel(application: Application) : AndroidViewModel(application
 
     var successAddressDetailsResponseLiveData = MutableLiveData<BariKoiPlace>()
 
-
-
-    fun updateLocationAddress(context: Context, nowLocation: CurrentLocation) {
-
-        var address = getAddressFromLocation(context, nowLocation)
-        nowLocation.address = address
-
-        successUserAddressData.postValue(nowLocation)
-    }
-
     fun getAddressFromLatLan(context: Context, nowLocation: CurrentLocation){
         try {
             if (addressDetailsCall != null) {
@@ -94,6 +84,17 @@ class UserMapsViewModel(application: Application) : AndroidViewModel(application
 
     }
 
+
+/*
+
+    fun updateLocationAddress(context: Context, nowLocation: CurrentLocation) {
+
+        var address = getAddressFromLocation(context, nowLocation)
+        nowLocation.address = address
+
+        successUserAddressData.postValue(nowLocation)
+    }
+
     private fun getAddressFromLocation(context: Context, location: CurrentLocation): String {
         return try {
             val geocoder = Geocoder(context, Locale.getDefault())
@@ -113,5 +114,6 @@ class UserMapsViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+*/
 
 }
