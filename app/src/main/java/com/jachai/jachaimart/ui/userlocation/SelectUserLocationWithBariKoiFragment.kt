@@ -57,7 +57,7 @@ class SelectUserLocationWithBariKoiFragment :
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if (p0.toString().trim().count() >= 4) {
+                if (p0.toString().trim().count() >= 3) {
                     viewModel.findLocationAddress(p0.toString())
                 } else {
                     viewModel.findLocationAddress(null)
