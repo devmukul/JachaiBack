@@ -200,4 +200,6 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
         startActivity(intent)
     }
 
+
+
 }

@@ -76,7 +76,7 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
     override fun initView() {
 
         binding.apply {
-            toolbarMain.title.text = "Select Bari location"
+            toolbarMain.title.text = "Select location"
             toolbarMain.back.setOnClickListener {
                 navController.popBackStack()
             }
@@ -196,8 +196,8 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
         gMap.animateCamera(CameraUpdateFactory.zoomTo(15F), 1000, null)
         gMap.setOnCameraMoveListener(object : GoogleMap.OnCameraMoveListener {
             override fun onCameraMove() {
-//                val midLatLan = gMap.cameraPosition.target
-//                marker.position = midLatLan
+//              val midLatLan = gMap.cameraPosition.target
+//              marker.position = midLatLan
                 marker.isVisible = false
                 if (!binding.staticGps.isVisible) {
                     binding.staticGps.visibility = View.VISIBLE

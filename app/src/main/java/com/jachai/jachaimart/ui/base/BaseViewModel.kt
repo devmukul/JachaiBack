@@ -2,8 +2,10 @@ package com.jachai.jachaimart.ui.base
 
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import bd.com.evaly.ehealth.models.common.CurrentLocation
 import com.google.gson.Gson
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.ToastUtils
@@ -11,6 +13,7 @@ import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.model.map.AddressDetailsResponse
 import com.jachai.jachaimart.model.order.PaymentRequestResponse
 import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
@@ -27,6 +30,7 @@ import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.response.product.Shop
 import com.jachai.jachaimart.model.response.product.VariationsItem
 import com.jachai.jachaimart.ui.groceries.GroceriesShopViewModel
+import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
@@ -48,6 +52,9 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private val groceryService = RetrofitConfig.groceryService
     private val orderService = RetrofitConfig.orderService
     private val paymentService = RetrofitConfig.paymentService
+    private val mapService = RetrofitConfig.mapService
+
+    private var addressDetailsCall: Call<AddressDetailsResponse>? = null
     private var paymentMethodCall: Call<PaymentListResponse>? = null
     var successAddToCartData = MutableLiveData<Boolean?>()
     var errorResponseLiveData = MutableLiveData<String>()
@@ -60,7 +67,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private var orderCall: Call<OrderDetailsResponse>? = null
     private var orderListCall: Call<OrderHistoryResponse>? = null
 
-
+    var successUserAddressData = MutableLiveData<CurrentLocation?>()
     var successOrderDetailsLiveData = MutableLiveData<OrderDetailsResponse>()
     var errorDetailsLiveData = MutableLiveData<String>()
 
@@ -99,7 +106,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                 ) {
                     addressCall = null
                     if (response.isSuccessful) {
-                        successAddressResponseLiveData.value = response.body()
+                        successAddressResponseLiveData.postValue(response.body())
                     }
                     JachaiLog.d(GroceriesShopViewModel.TAG, response.body().toString())
 
@@ -597,6 +604,55 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         }
 
 
+    }
+
+    fun getAddressFromLatLan(context: Context, nowLocation: CurrentLocation){
+        try {
+            if (addressDetailsCall != null) {
+                return
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
+                return
+            }
+            addressDetailsCall =
+                mapService.addressSearchRequest(nowLocation.latitude, nowLocation.longitude)
+
+            addressDetailsCall?.enqueue(object : Callback<AddressDetailsResponse> {
+                override fun onResponse(
+                    call: Call<AddressDetailsResponse>,
+                    response: Response<AddressDetailsResponse>
+                ) {
+                    addressDetailsCall = null
+                    if (response.body() != null) {
+                        if (response.body()?.place != null) {
+                            nowLocation.address = response.body()?.place?.address.toString()
+                            successUserAddressData.postValue(nowLocation)
+
+                        } else {
+                            nowLocation.address = "Out of Service area"
+                            successUserAddressData.postValue(nowLocation)
+                        }
+                    } else {
+                        nowLocation.address = "Out of Service area"
+                        successUserAddressData.postValue(nowLocation)
+                    }
+
+                }
+
+                override fun onFailure(call: Call<AddressDetailsResponse>, t: Throwable) {
+                    addressDetailsCall = null
+                    nowLocation.address = "Out of Service area"
+                    successUserAddressData.postValue(nowLocation)
+                }
+
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+            nowLocation.address = "Out of Service area"
+            successUserAddressData.postValue(nowLocation)
+        }
     }
 
 

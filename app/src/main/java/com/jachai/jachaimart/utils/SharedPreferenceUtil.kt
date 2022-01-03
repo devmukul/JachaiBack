@@ -45,12 +45,12 @@ object SharedPreferenceUtil {
     }
     fun isNameAvailable() = preferences.contains(SharedPreferenceConstants.DRIVER_NAME_KEY)
 
-    fun getDriverId() =
-        preferences.getString(SharedPreferenceConstants.DRIVER_ID_KEY, "")
+    fun isFreshLogin() =
+        preferences.getBoolean(SharedPreferenceConstants.IS_FRESH_LOGIN, true)
 
-    fun setDriverId(name: String?) {
+    fun setFreshLogin(isFirst: Boolean) {
         preferences.edit {
-            putString(SharedPreferenceConstants.DRIVER_ID_KEY, name)
+            putBoolean(SharedPreferenceConstants.IS_FRESH_LOGIN, isFirst)
         }
     }
 
