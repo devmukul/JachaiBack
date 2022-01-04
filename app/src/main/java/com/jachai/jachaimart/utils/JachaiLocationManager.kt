@@ -16,8 +16,9 @@ import bd.com.evaly.ehealth.models.common.CurrentLocation
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
-import java.util.*
 import com.jachai.jachaimart.R
+import java.util.*
+
 class JachaiLocationManager(val activity: AppCompatActivity) {
 
     private val FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
@@ -68,7 +69,7 @@ class JachaiLocationManager(val activity: AppCompatActivity) {
         ) == PackageManager.PERMISSION_GRANTED
 
         if (isFineLocationPermissionGranted && isCoarseLocationPermissionGranted) {
-            JachaiLog.e("JACHAI ","AllPermission Granted")
+            JachaiLog.e("JACHAI ", "AllPermission Granted")
             tryToEnableGps()
         } else {
             requestLocationPermission.launch(permissions)
@@ -100,12 +101,15 @@ class JachaiLocationManager(val activity: AppCompatActivity) {
         try {
             fusedClient.lastLocation.addOnSuccessListener { location: Location? ->
                 if (location != null) {
-                    JachaiLog.e("JACHAI ","Lat1: ${location.latitude}, long1: ${location.longitude}")
+                    JachaiLog.e(
+                        "JACHAI ",
+                        "Lat1: ${location.latitude}, long1: ${location.longitude}"
+                    )
                     onLocationResultUpdate?.invoke(
                         CurrentLocation(
                             location.latitude,
                             location.longitude,
-                            getAddressFromLocation(location)
+                            "na"
                         )
                     )
                 } else {
@@ -132,12 +136,12 @@ class JachaiLocationManager(val activity: AppCompatActivity) {
                     fusedClient.removeLocationUpdates(this)
 
                     val location = result.lastLocation
-                    JachaiLog.e("JACHAI ","Lat2: ${location.latitude}, long2: ${location.longitude}")
+
                     onLocationResultUpdate?.invoke(
                         CurrentLocation(
                             location.latitude,
                             location.longitude,
-                            getAddressFromLocation(location)
+                            "n/a"
                         )
                     )
                 }

@@ -173,6 +173,12 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
             .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
             .build()
 
+        val JACHAI_MAP_RETROFIT: Retrofit = Retrofit.Builder()
+            .baseUrl(ApiConstants.JACHAI_BASE_URL_MAP)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
+            .build()
+
 
         fun getAppContext(): JachaiApplication {
             return instance
@@ -193,5 +199,7 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
     }
+
+
 
 }

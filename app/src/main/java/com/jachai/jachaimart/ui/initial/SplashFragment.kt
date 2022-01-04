@@ -21,7 +21,8 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
+//        initView()
+        subscribeObservers()
 
         if (SharedPreferenceUtil.isTokenAvailable()) {
             if(SharedPreferenceUtil.isNameAvailable() && SharedPreferenceUtil.isMobileAvailable())
@@ -47,6 +48,7 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
     override fun initView() {
         binding.apply {
             fetchCurrentLocation {
+
                 val mAddress = it?.address ?: "n/a"
                 val location = Location(it?.latitude, it?.longitude)
                 val cAddress = Address(
@@ -65,12 +67,7 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
     }
 
     override fun subscribeObservers() {
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        fetchCurrentLocation {
+        viewModel.successUserAddressData.observe(viewLifecycleOwner){
             val mAddress = it?.address ?: "n/a"
             val location = Location(it?.latitude, it?.longitude)
 
@@ -87,6 +84,7 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
 
             SharedPreferenceUtil.saveCurrentAddress(address)
 
+
             if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
                 SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
                     viewModel.getNearestJCShop(
@@ -96,6 +94,15 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragm
             } else {
                 viewModel.getNearestJCShop(address.location, false, null)
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        fetchCurrentLocation {
+            it?.let { it1 -> viewModel.getAddressFromLatLan(requireContext(), it1) }
+
         }
 
 

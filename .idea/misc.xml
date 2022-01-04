@@ -67,7 +67,7 @@
         <entry key="app/src/main/res/layout/counter.xml" value="0.8423279469404306" />
         <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.25" />
         <entry key="app/src/main/res/layout/custom_related_category_row.xml" value="0.3442028985507246" />
-        <entry key="app/src/main/res/layout/custom_search_result_row.xml" value="0.41441713718874434" />
+        <entry key="app/src/main/res/layout/custom_search_result_row.xml" value="0.4471109504132185" />
         <entry key="app/src/main/res/layout/custom_shop_details_row.xml" value="0.5653798256537983" />
         <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.8747591522157996" />
         <entry key="app/src/main/res/layout/drawer_layout.xml" value="0.25412293853073464" />
@@ -103,6 +103,7 @@
         <entry key="app/src/main/res/layout/rounded_button_red.xml" value="0.17481884057971014" />
         <entry key="app/src/main/res/layout/runnting_order_details_row.xml" value="0.1408514492753623" />
         <entry key="app/src/main/res/layout/select_user_location_fragment.xml" value="0.2712683629496645" />
+        <entry key="app/src/main/res/layout/select_user_location_with_bari_koi_fragment.xml" value="0.19157608695652173" />
         <entry key="app/src/main/res/layout/shop_category_item_row.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/shop_category_row.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/shop_details_header.xml" value="0.5366906474820143" />

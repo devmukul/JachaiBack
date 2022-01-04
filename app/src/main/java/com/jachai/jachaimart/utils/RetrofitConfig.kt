@@ -16,4 +16,6 @@ object RetrofitConfig {
         JachaiApplication.PAYMENT_RETROFIT.create(PaymentService::class.java)
     val notificationsService =
         JachaiApplication.NOTIFICATIONS_RETROFIT.create(NotificationsService::class.java)
+    val mapService =
+        JachaiApplication.JACHAI_MAP_RETROFIT.create(JaChaiMapService::class.java)
 }

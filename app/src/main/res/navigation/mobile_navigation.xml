@@ -303,15 +303,15 @@
             app:argType="com.jachai.jachaimart.model.response.location.LocationDetails"
             app:nullable="true" />
         <action
-            android:id="@+id/action_userMapsFragment_to_selectUserLocationFragment"
-            app:destination="@id/selectUserLocationFragment" />
-        <action
             android:id="@+id/action_userMapsFragment_to_addressDetailsFragment"
             app:destination="@id/addressDetailsFragment" />
         <argument
             android:name="isFromFragment"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_userMapsFragment_to_selectUserLocationWithBariKoiFragment"
+            app:destination="@id/selectUserLocationWithBariKoiFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectUserLocationFragment"
@@ -432,6 +432,21 @@
         <action
             android:id="@+id/action_paymentFragment_to_onGoingOrderFragment"
             app:destination="@id/onGoingOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectUserLocationWithBariKoiFragment"
+        android:name="com.jachai.jachaimart.ui.userlocation.SelectUserLocationWithBariKoiFragment"
+        android:label="Search Location"
+        tools:layout="@layout/select_user_location_fragment">
+        <argument
+            android:name="isFromFragment"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_selectUserLocationWithBariKoiFragment_to_userMapsFragment"
+            app:destination="@id/userMapsFragment" />
+
+
     </fragment>
 
 
