@@ -23,7 +23,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.jachai.jachai_driver.utils.showShortToast
-import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentUserMapsBinding
 import com.jachai.jachaimart.model.response.location.LocationDetails
@@ -83,18 +82,19 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
             }
             searchLocation.setOnClickListener {
                 val action =
-                    UserMapsFragmentDirections.actionUserMapsFragmentToSelectUserLocationFragment()
-                action.isFromFragment =  args.isFromFragment
+                    UserMapsFragmentDirections.actionUserMapsFragmentToSelectUserLocationWithBariKoiFragment()
+                action.isFromFragment = args.isFromFragment
                 navController.navigate(action)
 
             }
             confrimButton.setOnClickListener {
                 try {
-                    val action =UserMapsFragmentDirections.actionUserMapsFragmentToAddressDetailsFragment()
+                    val action =
+                        UserMapsFragmentDirections.actionUserMapsFragmentToAddressDetailsFragment()
                     action.locationDetails = SharedPreferenceUtil.getUserLocation()
-                    action.isFromFragment =  args.isFromFragment
+                    action.isFromFragment = args.isFromFragment
                     navController.navigate(action)
-                }catch (ex: Exception){
+                } catch (ex: Exception) {
                     showShortToast("Location is not working correctly. Please try again.")
                 }
 
@@ -150,8 +150,6 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
                     }
 
 
-
-
                 } else {
                     startLocationService(userCurrentLocation)
                 }
@@ -198,11 +196,11 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
         gMap.animateCamera(CameraUpdateFactory.zoomTo(15F), 1000, null)
         gMap.setOnCameraMoveListener(object : GoogleMap.OnCameraMoveListener {
             override fun onCameraMove() {
-//                val midLatLan = gMap.cameraPosition.target
-//                marker.position = midLatLan
+//              val midLatLan = gMap.cameraPosition.target
+//              marker.position = midLatLan
                 marker.isVisible = false
-                if (!binding.staticGps.isVisible){
-                    binding.staticGps.visibility  = View.VISIBLE
+                if (!binding.staticGps.isVisible) {
+                    binding.staticGps.visibility = View.VISIBLE
 
                 }
 
@@ -213,8 +211,8 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
         gMap.setOnCameraIdleListener(object : GoogleMap.OnCameraIdleListener {
             override fun onCameraIdle() {
                 marker.isVisible = true
-                binding.staticGps.visibility  = View.VISIBLE
-                binding.staticGps.visibility  = View.GONE
+                binding.staticGps.visibility = View.VISIBLE
+                binding.staticGps.visibility = View.GONE
 
                 nowLocation.latitude = marker.position.latitude
                 nowLocation.longitude = marker.position.longitude
@@ -222,7 +220,7 @@ class UserMapsFragment : BaseFragment<FragmentUserMapsBinding>(R.layout.fragment
                 val midLatLan = gMap.cameraPosition.target
                 marker.position = midLatLan
 
-                viewModel.updateLocationAddress(requireContext(), nowLocation)
+                viewModel.getAddressFromLatLan(requireContext(), nowLocation)
 
             }
         })
