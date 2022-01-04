@@ -16,7 +16,7 @@ import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 import com.jachai.user.model.response.auth.otp.OtpRequest
-import com.jachai.user.model.response.auth.signup.AuthRequest
+import com.jachai.jachaimart.model.response.auth.signup.AuthRequest
 import com.jachai.user.model.response.auth.signup.AuthResponse
 import org.json.JSONObject
 import retrofit2.Call

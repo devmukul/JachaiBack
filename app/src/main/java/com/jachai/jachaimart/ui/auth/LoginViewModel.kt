@@ -10,10 +10,16 @@ import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.GenericResponse
+import com.jachai.jachaimart.model.response.auth.BiometricLoginRequest
+import com.jachai.jachaimart.model.response.auth.signup.AuthRequest
+import com.jachai.jachaimart.model.response.biometricLoginRequest
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
+import com.jachai.jachaimart.utils.constant.CommonConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 import com.jachai.user.model.response.auth.otp.OtpRequest
+import com.jachai.user.model.response.auth.signup.AuthResponse
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +40,10 @@ class LoginViewModel (application: Application) : AndroidViewModel(application) 
 
     var successResponseLiveData = MutableLiveData<String?>()
     var errorResponseLiveData = MutableLiveData<String?>()
+
+    private var signupCall: Call<AuthResponse>? = null
+    var biometricSuccessResponseLiveData = MutableLiveData<AuthResponse?>()
+    var failedResponseLiveData = MutableLiveData<GenericResponse?>()
 
     fun registerMobileNumber(mobileNumber: String) {
         try {
@@ -88,5 +98,40 @@ class LoginViewModel (application: Application) : AndroidViewModel(application) 
         }
 
 
+    }
+
+
+    fun performBiometricRequest(signupRequest: BiometricLoginRequest) {
+        if (signupCall != null) {
+            return
+        } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+
+            return
+        }
+
+        signupCall = authService.biometricLoginRequest(signupRequest)
+
+        signupCall?.enqueue(object : Callback<AuthResponse> {
+            override fun onResponse(call: Call<AuthResponse>?, response: Response<AuthResponse>?) {
+                signupCall = null
+
+                when (response?.code()) {
+                    HttpStatusCode.HTTP_OK -> {
+                        biometricSuccessResponseLiveData.value = response.body()
+                    }
+                    else -> {
+                        val jObjError = JSONObject(response!!.errorBody()!!.string())
+                        failedResponseLiveData.value =
+                            CommonConstants.DEFAULT_NON_NULL_GSON.fromJson(
+                                jObjError.toString(), GenericResponse::class.java
+                            ) ?: GenericResponse()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<AuthResponse>?, t: Throwable?) {
+                signupCall = null
+            }
+        })
     }
 }

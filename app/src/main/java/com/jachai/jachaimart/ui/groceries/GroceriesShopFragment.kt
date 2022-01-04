@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.ui.groceries
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +10,18 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
+import androidx.biometric.BiometricPrompt
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +37,8 @@ import com.jachai.jachaimart.BuildConfig
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
+import com.jachai.jachaimart.decorator.BiometricPromptUtils
+import com.jachai.jachaimart.decorator.CryptographyManager
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
@@ -42,6 +52,10 @@ import com.jachai.jachaimart.ui.groceries.adapters.RelatedProductAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
+import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.CIPHERTEXT_WRAPPER
+import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.TAG_JACHAI
+import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.TAG_JACHAI_TOKEN
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collectLatest
@@ -51,6 +65,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.crypto.Cipher
 
 
 class GroceriesShopFragment :
@@ -78,6 +93,18 @@ class GroceriesShopFragment :
 
     private var shopID: String = ""
     private lateinit var categoryWithProductPaginAdapter: CategoryWithProductPaginAdapter
+
+    private lateinit var chipper: Cipher
+
+    private val cryptographyManager = CryptographyManager()
+
+    private val ciphertextWrapper
+        get() = cryptographyManager.getCiphertextWrapperFromSharedPrefs(
+            requireContext(),
+            TAG_JACHAI_TOKEN,
+            Context.MODE_PRIVATE,
+            CIPHERTEXT_WRAPPER
+        )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -154,6 +181,17 @@ class GroceriesShopFragment :
             val action =
                 GroceriesShopFragmentDirections.actionGroceriesShopFragmentToOrderFragment()
             navController.navigate(action)
+        }
+
+        binding.layoutView.touchId.setOnClickListener {
+            if(ciphertextWrapper !=null){
+                cryptographyManager.clearSharedPrefs(requireContext(),
+                    TAG_JACHAI_TOKEN,
+                    Context.MODE_PRIVATE)
+                binding.layoutView.switch1.isChecked = false
+            }else {
+                showBiometricPromptForEncryption()
+            }
         }
 
         binding.layoutView.logout.setOnClickListener {
@@ -273,6 +311,8 @@ class GroceriesShopFragment :
 
         binding.apply {
 
+            layoutView.switch1.isChecked = ciphertextWrapper !=null
+
             layoutView.mobileNo.text = SharedPreferenceUtil.getMobileNo()
             layoutView.name.text = SharedPreferenceUtil.getName()
 
@@ -386,6 +426,19 @@ class GroceriesShopFragment :
             dismissLoader()
             it?.let { it1 -> showShortToast(it1) }
         }
+
+        viewModel.successBiometricRegLiveData.observe( viewLifecycleOwner, {
+            val encryptedServerTokenWrapper = cryptographyManager.encryptData(it!!.secret , chipper)
+            cryptographyManager.persistCiphertextWrapperToSharedPrefs(
+                encryptedServerTokenWrapper,
+                requireContext(),
+                TAG_JACHAI_TOKEN,
+                Context.MODE_PRIVATE,
+                CIPHERTEXT_WRAPPER
+            )
+
+            binding.layoutView.switch1.isChecked = true
+        })
 
 //        viewModel.successCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {
 //            dismissLoader()
@@ -556,6 +609,8 @@ class GroceriesShopFragment :
             }
 
         })
+
+
     }
 
 /*
@@ -742,6 +797,30 @@ class GroceriesShopFragment :
             dialog.dismiss()
         }
         builder.show()
+    }
+
+    private fun showBiometricPromptForEncryption() {
+        val canAuthenticate =
+            BiometricManager.from(requireContext()).canAuthenticate(BIOMETRIC_STRONG)
+        if (canAuthenticate == BiometricManager.BIOMETRIC_SUCCESS) {
+            val secretKeyName = getString(R.string.secret_key_name)
+            val cipher = cryptographyManager.getInitializedCipherForEncryption(secretKeyName)
+            val biometricPrompt =
+                BiometricPromptUtils.createBiometricPrompt(
+                    requireActivity() as AppCompatActivity,
+                    ::encryptAndStoreServerToken
+                )
+            val promptInfo =
+                BiometricPromptUtils.createPromptInfo(requireActivity() as AppCompatActivity)
+            biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
+        }
+    }
+
+    private fun encryptAndStoreServerToken(authResult: BiometricPrompt.AuthenticationResult) {
+        authResult.cryptoObject?.cipher?.apply {
+            chipper = this
+            viewModel.requestBiometricRegister(requireActivity())
+        }
     }
 
 

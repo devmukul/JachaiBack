@@ -1,4 +1,4 @@
-package com.jachai.user.model.response.auth.signup
+package com.jachai.jachaimart.model.response.auth.signup
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
