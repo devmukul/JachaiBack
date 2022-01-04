@@ -39,7 +39,6 @@ class ProductDetailsViewModel(application: Application) : BaseViewModel(applicat
     var errorFavouriteProductResponseLiveData = MutableLiveData<String?>()
 
 
-    var errorResponseLiveData = MutableLiveData<String?>()
 
 
     fun requestForProductDetails(slug: String) {

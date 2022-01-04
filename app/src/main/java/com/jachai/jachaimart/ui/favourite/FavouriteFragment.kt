@@ -1,5 +1,6 @@
 package com.jachai.jachaimart.ui.favourite
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -7,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jachai.jachai_driver.utils.showShortToast
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FavouriteFragmentBinding
 import com.jachai.jachaimart.model.response.product.Product
@@ -86,5 +88,64 @@ class FavouriteFragment :
         }
 
     }
+
+    override fun onProductAddToCartX(product: Product?, quantity: Int) {
+        product?.let { it1 ->
+
+            if (product.shop?.id?.let {
+                    JachaiApplication.mDatabase.daoAccess()
+                        .isInsertionApplicable(shopID = it)
+                } == true) {
+//
+                if (JachaiApplication.mDatabase.daoAccess()
+                        .getProductByProductID(product.id!!, product.shop.id) > 0
+                ) {
+
+                    showShortToast("Product already added")
+
+                } else {
+
+                    showShortToast("Product added")
+                }
+                viewModel.saveProduct(it1, quantity, product.shop, true)
+
+            } else {
+                alertDialog(product, quantity)
+            }
+            favouriteProductAdapter.notifyDataSetChanged()
+
+
+        }
+
+
+        viewModel.successAddToCartData.observe(viewLifecycleOwner, {
+            binding.apply {
+                if (it == true) {
+
+
+
+                }
+            }
+
+        })
+    }
+
+    private fun alertDialog(product: Product, quantity: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setCancelable(false)
+        builder.setTitle(getString(R.string.app_name_short) + " alert")
+        builder.setMessage("Do have already selected products from a different shop. if you continue, your cart and selection will be removed")
+
+        builder.setPositiveButton("Continue") { _, _ ->
+
+            viewModel.saveProduct(product, quantity, product.shop, false)
+        }
+
+        builder.setNegativeButton("Close") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
 
 }

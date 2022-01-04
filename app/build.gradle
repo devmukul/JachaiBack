@@ -64,12 +64,14 @@ android {
             applicationIdSuffix ".debug"
             signingConfig signingConfigs.JachaiSigningConfig
             manifestPlaceholders = [appNameJachai: "@string/app_name_debug_test"]
+            resValue("bool", "FIREBASE_CRASH_ENABLED", "false")
         }
         debugLive {
             debuggable true
             applicationIdSuffix ".debug.live"
             signingConfig signingConfigs.JachaiSigningConfig
             manifestPlaceholders = [appNameJachai: "@string/app_name_debug_Live"]
+            resValue("bool", "FIREBASE_CRASH_ENABLED", "false")
         }
         releaseTest {
             debuggable true
@@ -78,6 +80,7 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.JachaiSigningConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue("bool", "FIREBASE_CRASH_ENABLED", "true")
         }
         release {
             debuggable false
@@ -85,6 +88,7 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.JachaiSigningConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue("bool", "FIREBASE_CRASH_ENABLED", "true")
         }
     }
     compileOptions {

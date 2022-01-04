@@ -39,6 +39,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#F8F8F8"
@@ -189,11 +190,11 @@
                             style="@style/heading"
                             android:layout_width="wrap_content"
                             android:layout_height="15dp"
+                            android:layout_alignParentRight="true"
                             android:text="COD"
                             android:textColor="#3A494E"
                             android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:layout_alignParentRight="true"/>
+                            android:textStyle="bold" />
 
                     </RelativeLayout>
 
@@ -489,6 +490,41 @@
                     app:layout_constraintBottom_toBottomOf="@+id/call_customer"
                     app:layout_constraintEnd_toEndOf="@+id/conlay_orders"
                     app:layout_constraintTop_toTopOf="@+id/call_customer" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/onLinePayLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/box_curve_gray"
+                    app:layout_constraintEnd_toEndOf="@+id/pay_now"
+                    app:layout_constraintStart_toStartOf="@+id/call_customer"
+                    app:layout_constraintTop_toBottomOf="@+id/call_customer">
+
+                    <com.jachai.jachaimart.radiobutton.PresetRadioGroup
+                        android:id="@+id/online_payment_items"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </com.jachai.jachaimart.radiobutton.PresetRadioGroup>
+
+                    <Button
+                        android:id="@+id/go_for_payment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="Select Payment Method"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintEnd_toEndOf="@+id/online_payment_items"
+                        app:layout_constraintStart_toStartOf="@+id/online_payment_items"
+                        app:layout_constraintTop_toBottomOf="@+id/online_payment_items" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout8"

@@ -2,33 +2,41 @@ package com.jachai.jachaimart.ui.base
 
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import bd.com.evaly.ehealth.models.common.CurrentLocation
 import com.google.gson.Gson
 import com.jachai.jachai_driver.utils.JachaiLog
+import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.model.map.AddressDetailsResponse
 import com.jachai.jachaimart.model.order.PaymentRequestResponse
 import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.model.request.PaymentRequest
+import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
+import com.jachai.jachaimart.model.response.pay.PaymentListResponse
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.response.product.Shop
 import com.jachai.jachaimart.model.response.product.VariationsItem
 import com.jachai.jachaimart.ui.groceries.GroceriesShopViewModel
+import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import com.jachai.jachaimart.utils.constant.CommonConstants
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,7 +51,15 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private val driverService = RetrofitConfig.driverService
     private val groceryService = RetrofitConfig.groceryService
     private val orderService = RetrofitConfig.orderService
+    private val paymentService = RetrofitConfig.paymentService
+    private val mapService = RetrofitConfig.mapService
+
+    private var addressDetailsCall: Call<AddressDetailsResponse>? = null
+    private var paymentMethodCall: Call<PaymentListResponse>? = null
     var successAddToCartData = MutableLiveData<Boolean?>()
+    var errorResponseLiveData = MutableLiveData<String>()
+    var failedResponseLiveData = MutableLiveData<GenericResponse?>()
+    var successPaymentMethodListLiveData = MutableLiveData<PaymentListResponse>()
 
     private var nearestJCShopCall: Call<NearestJCShopResponse>? = null
     private var addressCall: Call<AddressResponse>? = null
@@ -51,7 +67,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private var orderCall: Call<OrderDetailsResponse>? = null
     private var orderListCall: Call<OrderHistoryResponse>? = null
 
-
+    var successUserAddressData = MutableLiveData<CurrentLocation?>()
     var successOrderDetailsLiveData = MutableLiveData<OrderDetailsResponse>()
     var errorDetailsLiveData = MutableLiveData<String>()
 
@@ -69,7 +85,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     var successPreviousOrderListLiveData = MutableLiveData<List<Order>>()
     var errorOrderDetailsLiveData = MutableLiveData<String>()
 
-    var errorPaymentResponseLiveData =  MutableLiveData<String>()
+    var errorPaymentResponseLiveData = MutableLiveData<String>()
 
 
     fun requestAllAddress() {
@@ -90,7 +106,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                 ) {
                     addressCall = null
                     if (response.isSuccessful) {
-                        successAddressResponseLiveData.value = response.body()
+                        successAddressResponseLiveData.postValue(response.body())
                     }
                     JachaiLog.d(GroceriesShopViewModel.TAG, response.body().toString())
 
@@ -156,11 +172,11 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                         HttpStatusCode.HTTP_OK -> {
                             val mResponse = response.body()
                             if (mResponse != null) {
-                                if (isFromCheckout){
+                                if (isFromCheckout) {
                                     mResponse.userDeliveryAddress = address
                                     successNearestJCShop.value = mResponse
 
-                                }else {
+                                } else {
                                     if (mResponse.shops.isNotEmpty()) {
                                         SharedPreferenceUtil.setJCShopId(mResponse.shops[0].id)
                                         SharedPreferenceUtil.saveNearestShop(mResponse.shops[0])
@@ -170,8 +186,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                                         successNearestJCShopUpdate.value = false
                                     }
                                 }
-                            }else{
-                                errorNearestJCShop.value= "failed"
+                            } else {
+                                errorNearestJCShop.value = "failed"
                             }
                         }
                     }
@@ -179,7 +195,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
                 override fun onFailure(call: Call<NearestJCShopResponse>?, t: Throwable?) {
                     nearestJCShopCall = null
-                    errorNearestJCShop.value= "failed"
+                    errorNearestJCShop.value = "failed"
                     if (t != null) {
                         t.message?.let { JachaiLog.e(BaseFragment.TAG, it) }
                     }
@@ -255,7 +271,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                     deleteAddressCall = null
                     if (response.isSuccessful) {
                         deleteAddressResponseLiveData.value = response.body()
-                    }else{
+                    } else {
                         errorAddressResponseLiveData.value = "deleted failed"
                     }
                     JachaiLog.d(GroceriesShopViewModel.TAG, response.body().toString())
@@ -365,7 +381,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     var successPaymentRequestLiveData = MutableLiveData<PaymentRequestResponse>()
 
-    fun requestPayment( paymentRequest: PaymentRequest) {
+    fun requestPayment(paymentRequest: PaymentRequest) {
 
         try {
             if (paymentCall != null) {
@@ -423,48 +439,65 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 //            item.variations?.get(0)?.let {
 //                updatedProductOrder(productOrder, quantity, it)
 //            }
-        val finalProductOrder =
-            item.variations?.get(0)?.let {
-                when {
-                    item.variations[0]?.maximumOrderLimit == 0 -> {
-                        updatedProductOrder(productOrder, quantity, it, false)
-                    }
-                    quantity <= item.variations[0]?.maximumOrderLimit!! -> {
-                        updatedProductOrder(productOrder, quantity, it, false)
 
-                    }
-                    else -> {
+        try {
 
-                        val tempProductOrder = updatedProductOrder(
-                            productOrder,
-                            item.variations[0]?.maximumOrderLimit!!,
-                            it,
-                            true
-                        )
-                        JachaiApplication.mDatabase.daoAccess()
-                            .insertOrder(tempProductOrder, isFromSameShop)
-                        val mQuantity = quantity - item.variations[0]?.maximumOrderLimit!!
-                        val nextVariationsId = item.variations[0]?.regularVariationId
 
-                        val nextVariationsItem: VariationsItem? =
-                            getVariationItemById(item.variations, nextVariationsId)
+            if (!item.variations.isNullOrEmpty()) {
+                val finalProductOrder =
+                    item.variations?.get(0)?.let {
+                        when {
+                            item.variations[0]?.maximumOrderLimit == 0 -> {
+                                updatedProductOrder(productOrder, quantity, it, false)
+                            }
+                            quantity <= item.variations[0]?.maximumOrderLimit!! -> {
+                                updatedProductOrder(productOrder, quantity, it, false)
 
-                        if (nextVariationsItem != null) {
-                            updatedProductOrder(productOrder, mQuantity, nextVariationsItem, true)
-                        } else {
-                            null
+                            }
+                            else -> {
+
+                                val tempProductOrder = updatedProductOrder(
+                                    productOrder,
+                                    item.variations[0]?.maximumOrderLimit!!,
+                                    it,
+                                    true
+                                )
+                                JachaiApplication.mDatabase.daoAccess()
+                                    .insertOrder(tempProductOrder, isFromSameShop)
+                                val mQuantity = quantity - item.variations[0]?.maximumOrderLimit!!
+                                val nextVariationsId = item.variations[0]?.regularVariationId
+
+                                val nextVariationsItem: VariationsItem? =
+                                    getVariationItemById(item.variations, nextVariationsId)
+
+                                if (nextVariationsItem != null) {
+                                    updatedProductOrder(
+                                        productOrder,
+                                        mQuantity,
+                                        nextVariationsItem,
+                                        true
+                                    )
+                                } else {
+                                    null
+                                }
+
+                            }
                         }
-
                     }
-                }
+
+
+
+                successAddToCartData.postValue(
+                    finalProductOrder?.let {
+                        JachaiApplication.mDatabase.daoAccess().insertOrder(it, isFromSameShop)
+                    }
+                )
+            } else {
+                ToastUtils.error("Something Wrong !! Please try again later. Thank you.")
             }
-
-
-
-        successAddToCartData.postValue(
-            JachaiApplication.mDatabase.daoAccess().insertOrder(finalProductOrder!!, isFromSameShop)
-        )
-
+        } catch (ex: Exception) {
+            ToastUtils.error("Something Wrong !! Please try again later. Thank you.")
+        }
 
     }
 
@@ -522,5 +555,105 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         tProductOrder.stock = variationsItem.stock
         return tProductOrder
     }
+
+    fun getAllPaymentMethods() {
+
+        try {
+            if (paymentMethodCall != null) {
+                return
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
+                return
+            }
+            paymentMethodCall = paymentService.paymentMethodRequest()
+
+            paymentMethodCall?.enqueue(object : Callback<PaymentListResponse> {
+                override fun onResponse(
+                    call: Call<PaymentListResponse>,
+                    response: Response<PaymentListResponse>
+                ) {
+                    paymentMethodCall = null
+
+                    when (response.code()) {
+                        HttpStatusCode.HTTP_OK -> successPaymentMethodListLiveData.postValue(
+                            response.body()
+                        )
+                        else -> {
+                            val jObjError = JSONObject(response.errorBody()!!.string())
+                            failedResponseLiveData.value =
+                                CommonConstants.DEFAULT_NON_NULL_GSON.fromJson(
+                                    jObjError.toString(), GenericResponse::class.java
+                                ) ?: GenericResponse()
+                        }
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<PaymentListResponse>, t: Throwable) {
+                    paymentMethodCall = null
+                    JachaiLog.d(TAG, t.localizedMessage)
+                    errorResponseLiveData.postValue("failed")
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            errorResponseLiveData.postValue("failed")
+            JachaiLog.d(TAG, ex.message!!)
+        }
+
+
+    }
+
+    fun getAddressFromLatLan(context: Context, nowLocation: CurrentLocation){
+        try {
+            if (addressDetailsCall != null) {
+                return
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
+                return
+            }
+            addressDetailsCall =
+                mapService.addressSearchRequest(nowLocation.latitude, nowLocation.longitude)
+
+            addressDetailsCall?.enqueue(object : Callback<AddressDetailsResponse> {
+                override fun onResponse(
+                    call: Call<AddressDetailsResponse>,
+                    response: Response<AddressDetailsResponse>
+                ) {
+                    addressDetailsCall = null
+                    if (response.body() != null) {
+                        if (response.body()?.place != null) {
+                            nowLocation.address = response.body()?.place?.address.toString()
+                            successUserAddressData.postValue(nowLocation)
+
+                        } else {
+                            nowLocation.address = "Out of Service area"
+                            successUserAddressData.postValue(nowLocation)
+                        }
+                    } else {
+                        nowLocation.address = "Out of Service area"
+                        successUserAddressData.postValue(nowLocation)
+                    }
+
+                }
+
+                override fun onFailure(call: Call<AddressDetailsResponse>, t: Throwable) {
+                    addressDetailsCall = null
+                    nowLocation.address = "Out of Service area"
+                    successUserAddressData.postValue(nowLocation)
+                }
+
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+            nowLocation.address = "Out of Service area"
+            successUserAddressData.postValue(nowLocation)
+        }
+    }
+
 
 }

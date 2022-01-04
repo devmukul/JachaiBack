@@ -244,6 +244,59 @@ class GroceriesSearchFragment :
 
     }
 
+    override fun onProductAddToCartX(product: Product?, quantity: Int) {
+        product?.let { it1 ->
+
+            if (quantity <= 0){
+                product.id?.let { it1 ->
+                    product.variations?.get(0)?.variationId?.let { it2 ->
+                        JachaiApplication.mDatabase.daoAccess()
+                            .deleteCartProducts(it1, it2)
+                    }
+                }
+                loaderViewModel.successAddToCartData.postValue(true)
+            }else {
+
+                if (product.shop?.id?.let {
+                        JachaiApplication.mDatabase.daoAccess()
+                            .isInsertionApplicable(shopID = it)
+                    } == true) {
+//
+
+
+                    if (JachaiApplication.mDatabase.daoAccess()
+                            .getProductByProductID(product.id!!, product.shop.id) > 0
+                    ) {
+
+                        showShortToast("Product already added")
+
+                    } else {
+
+                        showShortToast("Product added")
+                    }
+                    loaderViewModel.saveProduct(it1, quantity, product.shop, true)
+
+                } else {
+                    alertDialog(product, quantity)
+                }
+            }
+
+
+
+        }
+
+
+        loaderViewModel.successAddToCartData.observe(viewLifecycleOwner, {
+            binding.apply {
+                if (it == true) {
+
+                }
+            }
+
+        })
+    }
+
+/*
     override fun onProductAddToCart(product: Product?) {
         product?.let { it1 ->
 
@@ -271,6 +324,7 @@ class GroceriesSearchFragment :
 
         }
     }
+*/
 
     private fun alertDialog(product: Product, quantity: Int) {
         val builder = AlertDialog.Builder(context)

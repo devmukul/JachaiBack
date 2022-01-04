@@ -3,7 +3,10 @@ package com.jachai.jachaimart.ui.order
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.RadioGroup
 import androidx.activity.addCallback
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -13,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.crashlytics.ktx.setCustomKeys
 import com.google.firebase.ktx.Firebase
+import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OnGoingOrderFragmentBinding
+import com.jachai.jachaimart.decorator.PayRadioButton
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.request.PaymentRequest
 import com.jachai.jachaimart.ui.base.BaseFragment
@@ -34,7 +39,7 @@ class OnGoingOrderFragment :
     private val args: OnGoingOrderFragmentArgs by navArgs()
     private val viewModel: OnGoingOrderViewModel by viewModels()
 
-
+    var mCheckedId = "SSL"
     private lateinit var orderId: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,6 +64,8 @@ class OnGoingOrderFragment :
     }
 
     override fun initView() {
+
+        binding.onLinePayLayout.visibility = View.GONE
         binding.toolbarMain.back.setOnClickListener {
             val action =
                 OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToGroceriesShopFragment()
@@ -79,14 +86,20 @@ class OnGoingOrderFragment :
             phoneCall(CommonConstants.CUSTOMER_CARE_PHONE_NO)
         }
 
+        binding.onlinePaymentItems.setOnCheckedChangeListener { radioGroup, radioButton, isChecked, checkedId ->
+            var payRadioButton: PayRadioButton =
+                radioGroup.rootView.findViewById<PayRadioButton>(checkedId)
+            mCheckedId = payRadioButton.value.name
 
-
+        }
 
 
     }
 
-    private fun updateUI(orderDetailsResponse
-                         : OrderDetailsResponse?) {
+    private fun updateUI(
+        orderDetailsResponse
+        : OrderDetailsResponse?
+    ) {
         binding.apply {
             toolbarMain.subTitle.text = orderDetailsResponse?.order?.shop?.name.toString()
             address.text = orderDetailsResponse?.order?.shippingAddress.toString()
@@ -166,15 +179,15 @@ class OnGoingOrderFragment :
 
             }
 
-            if(orderDetailsResponse?.order?.totalPaid == orderDetailsResponse?.order?.total){
+            if (orderDetailsResponse?.order?.totalPaid == orderDetailsResponse?.order?.total) {
                 paymentStatus.text = "PAID"
                 paymentStatus.setTextColor(Color.parseColor("#28a745"))
                 payNow.visibility = View.GONE
-            }else if((orderDetailsResponse?.order?.total!! -  orderDetailsResponse.order.totalPaid)<=0.0){
+            } else if ((orderDetailsResponse?.order?.total!! - orderDetailsResponse.order.totalPaid) <= 0.0) {
                 paymentStatus.text = "PARTIAL PAID"
                 paymentStatus.setTextColor(Color.parseColor("#3A494E"))
                 payNow.visibility = View.VISIBLE
-            }else{
+            } else {
                 paymentStatus.text = "UNPAID"
                 paymentStatus.setTextColor(Color.parseColor("#FF0000"))
                 payNow.visibility = View.VISIBLE
@@ -186,9 +199,24 @@ class OnGoingOrderFragment :
 
             payNow.setOnClickListener {
                 showLoader()
+                viewModel.getAllPaymentMethods()
+                onLinePayLayout.visibility = View.VISIBLE
+                onLinePayLayout.requestFocus()
+                payNow.visibility =  View.GONE
+
+            }
+            goForPayment.setOnClickListener {
+                showLoader()
                 val jacjaiUrl = "https://www.jachai.com"
                 val order = orderDetailsResponse?.order
-                val paymentRequest = PaymentRequest((order?.total!! - order.totalPaid),orderId, "SSL", "$jacjaiUrl/payment/success", "$jacjaiUrl/payment/fail", "$jacjaiUrl/payment/cancel")
+                val paymentRequest = PaymentRequest(
+                    (order?.total!! - order.totalPaid),
+                    orderId,
+                    mCheckedId,
+                    "$jacjaiUrl/payment/success",
+                    "$jacjaiUrl/payment/fail",
+                    "$jacjaiUrl/payment/cancel"
+                )
                 viewModel.requestPayment(paymentRequest)
             }
 
@@ -204,12 +232,13 @@ class OnGoingOrderFragment :
         viewModel.successPaymentRequestLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
             try {
-                val action = OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
+                val action =
+                    OnGoingOrderFragmentDirections.actionOnGoingOrderFragmentToPaymentFragment()
                 action.orderID = orderId
                 action.url = it.url
                 navController.navigate(action)
 
-            }catch (ex: Exception){
+            } catch (ex: Exception) {
                 val crashlytics = Firebase.crashlytics
                 crashlytics.setCustomKeys {
                     key("ERROR_PAYMENT", "URL-null")
@@ -217,6 +246,43 @@ class OnGoingOrderFragment :
                 }
             }
         }
+
+        viewModel.successPaymentMethodListLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
+            if (it != null) {
+                if (!it.methods.isNullOrEmpty()) {
+                    val layoutParams: LinearLayout.LayoutParams = RadioGroup.LayoutParams(
+                        RadioGroup.LayoutParams.MATCH_PARENT,
+                        RadioGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.onlinePaymentItems.removeAllViews()
+                    for ((i, item) in it.methods.withIndex()) {
+                        if (item.name == "COD" || item.title == "COD") {
+                            continue
+                        }
+                        val newRadioButton = PayRadioButton(requireContext())
+                        newRadioButton.id = i
+                        newRadioButton.setValue(item)
+                        if (i == 0) {
+                            newRadioButton.isChecked = true
+                        }
+                        binding.onlinePaymentItems.addView(newRadioButton, layoutParams)
+                    }
+                    binding.nestedScrollView.post(Runnable {
+                        binding.nestedScrollView.fullScroll(NestedScrollView.FOCUS_DOWN)
+                    })
+                } else {
+                    ToastUtils.error(getString(R.string.text_something_went_wrong))
+                }
+
+
+            } else {
+                ToastUtils.error(getString(R.string.text_something_went_wrong))
+            }
+
+
+        }
+
     }
 
 

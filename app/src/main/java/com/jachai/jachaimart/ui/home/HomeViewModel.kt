@@ -31,7 +31,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var successBannerResponseLiveData = MutableLiveData<BannerResponse?>()
     var successCategoryResponseLiveData = MutableLiveData<CategoryResponse?>()
     var successRestaurantAroundYouResponseLiveData = MutableLiveData<RestaurantNearMeResponse?>()
-    var errorResponseLiveData = MutableLiveData<String?>()
+
 
 
     fun requestForBanners() {

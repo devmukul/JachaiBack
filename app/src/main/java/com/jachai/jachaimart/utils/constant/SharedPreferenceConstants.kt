@@ -2,6 +2,7 @@ package com.jachai.jachaimart.utils.constant
 
 object SharedPreferenceConstants {
 
+    const val IS_FRESH_LOGIN = "is_fresh_login"
     const val OTP_REQUEST_TIME_KEY ="otp_request_time_key"
     const val AUTH_TOKEN_KEY = "auth_token"
     const val AUTH_TOKEN_KEY_WITHOUT_BEARER = "auth_token_without_bearer"

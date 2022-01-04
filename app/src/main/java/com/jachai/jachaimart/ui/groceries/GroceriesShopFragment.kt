@@ -3,7 +3,6 @@ package com.jachai.jachaimart.ui.groceries
 import android.app.AlertDialog
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -45,9 +44,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,6 +53,7 @@ class GroceriesShopFragment :
     CategoryAdapter.Interaction, CategoryWithProductAdapter.Interaction,
     SavedUserLocationAdapter.Interaction, CategoryWithProductPaginAdapter.Interaction {
     lateinit var savedUserLocationAdapter: SavedUserLocationAdapter
+    private lateinit var  bottomSheetDialog: BottomSheetDialog
 
     companion object {
         fun newInstance() = GroceriesShopFragment()
@@ -86,13 +83,13 @@ class GroceriesShopFragment :
                 return@OnCompleteListener
             }
             val token = task.result
-           viewModel.requestRegister (requireActivity(), token)
+            viewModel.requestRegister(requireActivity(), token)
         })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        bottomSheetDialog = BottomSheetDialog(requireContext())
         subscribeToFCM(BuildConfig.TOPIC_NOT)
 
         navController = Navigation.findNavController(view)
@@ -111,6 +108,7 @@ class GroceriesShopFragment :
                 viewModel.requestAllAddress()
             }
         }
+
 
 
         initView()
@@ -257,7 +255,7 @@ class GroceriesShopFragment :
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)
         builder.setTitle(getString(R.string.app_name_short) + " alert")
-        builder.setMessage("Sorry !! Shop is not available at your location right now. We are coming soon. Thanks")
+        builder.setMessage("Sorry !! JaChai Mart is not available at your location right now. We are coming soon. Thanks")
 
 
         builder.setNegativeButton("Close") { dialog, _ ->
@@ -276,46 +274,22 @@ class GroceriesShopFragment :
             layoutView.name.text = SharedPreferenceUtil.getName()
 
             fetchCurrentLocation {
-//                toolbarMain.title.text = "Current Location"
-                val mAddress = it?.address ?: "n/a"
-//                toolbarMain.locationAddress.text = mAddress
-                val location = Location(it?.latitude, it?.longitude)
-
-                address = Address(
-                    mAddress,
-                    "0",
-                    location = location,
-                    "Current Location",
-                    "0",
-                    mAddress,
-                    mAddress,
-                    true
-                )
-
-                SharedPreferenceUtil.saveCurrentAddress(address!!)
-
-                if(!SharedPreferenceUtil.isJCShopAvailable()){
-                    if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
-                        SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
-                            viewModel.getNearestJCShop(
-                                it1.location, false, null
-                            )
-                        }
-                    } else {
-                        viewModel.getNearestJCShop(address!!.location, false, null)
-                    }
-                }
+                it?.let { it1 -> viewModel.getAddressFromLatLan(requireContext(), it1) }
 
             }
 
-            initTopView()
+
+
+
             etSearchShops.setOnClickListener {
 
                 if (SharedPreferenceUtil.getJCShopId().isNullOrEmpty()) {
                     showNoShopFoundAlert()
                 } else {
                     val action =
-                        GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceriesSearchFragment(SharedPreferenceUtil.getJCShopId()!!)
+                        GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceriesSearchFragment(
+                            SharedPreferenceUtil.getJCShopId()!!
+                        )
                     navController.navigate(action)
                 }
             }
@@ -394,8 +368,11 @@ class GroceriesShopFragment :
 
         viewModel.successAddressResponseLiveData.observe(viewLifecycleOwner) {
             if (!SharedPreferenceUtil.isConfirmDeliveryAddress()) {
-                SharedPreferenceUtil.getCurrentAddress().let { it1 ->
-                    it1?.let { it2 -> it?.addresses?.add(it2) }
+                SharedPreferenceUtil.getCurrentAddress().let {
+                        it1 ->
+                    it1?.let { it2 ->
+                        it?.addresses?.add(it2)
+                    }
                     if (it != null) {
                         showBottomSheetDialog(it.addresses)
                     }
@@ -474,6 +451,44 @@ class GroceriesShopFragment :
 
         })
 
+        viewModel.successUserAddressData.observe(viewLifecycleOwner) {
+            val mAddress = it?.address ?: "n/a"
+            val location = Location(it?.latitude, it?.longitude)
+
+            address = Address(
+                mAddress,
+                "0",
+                location = location,
+                "Current Location",
+                "0",
+                mAddress,
+                mAddress,
+                true
+            )
+
+            SharedPreferenceUtil.saveCurrentAddress(address!!)
+
+            if (!SharedPreferenceUtil.isJCShopAvailable()) {
+                if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
+                    SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
+                        viewModel.getNearestJCShop(
+                            it1.location, false, null
+                        )
+                    }
+                } else {
+                    viewModel.getNearestJCShop(address!!.location, false, null)
+                }
+            }
+
+            if (SharedPreferenceUtil.isFreshLogin()){
+                viewModel.requestAllAddress()
+            }
+
+            initTopView()
+
+
+        }
+
 
     }
 
@@ -493,7 +508,6 @@ class GroceriesShopFragment :
         action.categoryList = categoryResponse
         navController.navigate(action)
 
-
     }
 
     override fun onCategoryProductSelected(product: Product?) {
@@ -503,7 +517,61 @@ class GroceriesShopFragment :
         navController.navigate(action)
     }
 
-    override fun onProductAddToCart(product: Product?) {
+    override fun onProductAddToCartX(product: Product?, quantity: Int) {
+        product?.let { it1 ->
+
+            if (quantity <= 0) {
+                product.id?.let { it1 ->
+                    product.variations?.get(0)?.variationId?.let { it2 ->
+                        JachaiApplication.mDatabase.daoAccess()
+                            .deleteCartProducts(it1, it2)
+                    }
+                }
+                viewModel.successAddToCartData.postValue(true)
+            } else {
+
+                if (product.shop?.id?.let {
+                        JachaiApplication.mDatabase.daoAccess()
+                            .isInsertionApplicable(shopID = it)
+                    } == true) {
+//
+
+
+                    if (JachaiApplication.mDatabase.daoAccess()
+                            .getProductByProductID(product.id!!, product.shop.id) > 0
+                    ) {
+
+                        showShortToast("Product already added")
+
+                    } else {
+
+                        showShortToast("Product added")
+                    }
+                    viewModel.saveProduct(it1, quantity, product.shop, true)
+
+                } else {
+                    alertDialog(product, quantity)
+                }
+            }
+
+
+        }
+
+
+        viewModel.successAddToCartData.observe(viewLifecycleOwner, {
+            binding.apply {
+                if (it == true) {
+
+
+                }
+            }
+
+        })
+    }
+
+/*
+
+    fun onProductAddToCart(product: Product?) {
         product?.let { it1 ->
 
             if (product.shop?.id?.let {
@@ -532,11 +600,12 @@ class GroceriesShopFragment :
 //        updateBottomCart()
     }
 
+*/
 
     private fun showBottomSheetDialog(
         item: MutableList<Address>
     ) {
-        val bottomSheetDialog = BottomSheetDialog(requireContext())
+
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_location_selecter)
 
         val rvSavedAddress = bottomSheetDialog.findViewById<RecyclerView>(R.id.rvSavedAddress)
@@ -562,7 +631,15 @@ class GroceriesShopFragment :
                 )
             adapter = savedUserLocationAdapter
         }
-        bottomSheetDialog.show()
+        if (!bottomSheetDialog.isShowing){
+            bottomSheetDialog.show()
+
+        }else{
+            bottomSheetDialog.dismiss()
+            bottomSheetDialog.show()
+        }
+
+
         addAddress?.setOnClickListener {
             bottomSheetDialog.dismiss()
             bottomSheetDialog.cancel()
@@ -608,6 +685,7 @@ class GroceriesShopFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.successAddressResponseLiveData.value = null
+        SharedPreferenceUtil.setFreshLogin(false)
     }
 
     private fun initTopView() {
@@ -662,13 +740,15 @@ class GroceriesShopFragment :
         val outFormatter = SimpleDateFormat("dd MMM yyyy h:mm a ")
         return outFormatter.format(date)
     }
+
     fun subscribeToFCM(topic: String? = null, topicList: MutableList<String> = mutableListOf()) {
         topic?.let { topicList.add(it) }
-        for(mTopic in topicList){
+        for (mTopic in topicList) {
             FirebaseMessaging.getInstance().subscribeToTopic(mTopic).addOnSuccessListener {
             }
         }
     }
+
     private fun alertDialog(product: Product, quantity: Int) {
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(false)

@@ -20,7 +20,7 @@ object ApiConstants {
     const val JACHAI_BASE_URL_CATELOGREADER = BuildConfig.BASE_URL_JACHAI_CATELOGREADER
     const val JACHAI_BASE_URL_ORDER = BuildConfig.BASE_URL_JACHAI_ORDER
     const val JACHAI_BASE_URL_DRIVER = BuildConfig.BASE_URL_JACHAI_DRIVER
-
+    const val JACHAI_BASE_URL_MAP = BuildConfig.BASE_URL_JACHAI_MAP
     const val JACHAI_BASE_URL_PAYMENT = BuildConfig.BASE_URL_JACHAI_PAYMENT
     const val JACHAI_MAP_KEY = BuildConfig.BASE_URL_JACHAI_MAPKEY
 //    const val JACHAI_BASE_URL_FARE = BuildConfig.BASE_URL_JACHAI_FARE
@@ -42,6 +42,7 @@ object ApiConstants {
 
     //Payment
     const val PAYMENT_REQUEST_BASE = "pay"
+    const val PAYMENT_METHOD_REQUEST_BASE = "payment-method"
 
 
     //banner
@@ -69,6 +70,10 @@ object ApiConstants {
     const val SEARCH_PRODUCT_BASE = "product/search"
     const val PRODUCT_BY_SLUG_BASE = "product/products-by-slugs"
     const val PRODUCT_BY_CATEGORY_BASE = "product/products-by-shop"
+
+    //map
+    const val AUTOCOMPLETE_SEARCH_REQUEST_BASE = "autocomplete"
+    const val ADDRESS_REQUEST_BASE = "geocode"
 
 
     const val CAR_REG_BASE = "car/info"

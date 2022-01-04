@@ -22,7 +22,6 @@ class AddressDetailsViewModel(application: Application) : BaseViewModel(applicat
     private var addressCall: Call<GenericResponse>? = null
 
     var successResponseLiveData = MutableLiveData<GenericResponse?>()
-    var errorResponseLiveData = MutableLiveData<String?>()
 
     fun saveLocationAddress(locationDetails: LocationDetails) {
         try {

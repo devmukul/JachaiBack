@@ -27,7 +27,6 @@ class ShopListViewModel(application: Application) : BaseViewModel(application) {
 
 
     var successShopsByCategoryResponseLiveData = MutableLiveData<ShopByCategoryResponse?>()
-    var errorResponseLiveData = MutableLiveData<String?>()
 
 
     fun requestForShopsByCategories(categoryId: String, latitude: Double?, longitude: Double?) {

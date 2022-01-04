@@ -147,10 +147,12 @@ class PaymentFragment :
             webView.loadUrl(url!!)
             webView.clearCache(true)
             webView.clearHistory()
+            webView.settings.domStorageEnabled = true
             webView.settings.loadWithOverviewMode = true
             webView.settings.useWideViewPort = true
             webView.settings.builtInZoomControls = true
             webView.settings.displayZoomControls = false
+
         }
 
         binding.toolbarMain.back.setOnClickListener {

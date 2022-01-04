@@ -34,6 +34,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -261,49 +262,28 @@
                 </com.jachai.jachaimart.radiobutton.PresetRadioGroup>
 
 
-<!--               -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/onLinePayLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/box_curve_gray"
+                    app:layout_constraintEnd_toEndOf="@+id/comment"
+                    app:layout_constraintStart_toStartOf="@+id/textView12"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/cod"-->
-<!--                        style="@style/title"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="6dp"-->
-<!--                        android:background="@drawable/rounded_border_red"-->
-<!--                        android:drawableLeft="@drawable/ic_cash_on_delivery"-->
-<!--                        android:drawablePadding="10dp"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:paddingStart="10dp"-->
-<!--                        android:paddingTop="12dp"-->
-<!--                        android:paddingEnd="10dp"-->
-<!--                        android:paddingBottom="12dp"-->
-<!--                        android:text="Cash on Delivery"-->
-<!--                        android:textColor="@color/red"-->
-<!--                        android:textStyle="bold"-->
-<!--                        app:layout_constraintEnd_toStartOf="@+id/online_payment"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/textView12"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/textView12" />-->
+                    <com.jachai.jachaimart.radiobutton.PresetRadioGroup
+                        android:id="@+id/online_payment_items"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/online_payment"-->
-<!--                        style="@style/title"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginLeft="6dp"-->
-<!--                        android:background="@drawable/rounded_border_red"-->
-<!--                        android:drawableLeft="@drawable/ic_cash_on_delivery"-->
-<!--                        android:drawablePadding="10dp"-->
-<!--                        android:gravity="center_vertical"-->
-<!--                        android:paddingStart="10dp"-->
-<!--                        android:paddingTop="12dp"-->
-<!--                        android:paddingEnd="10dp"-->
-<!--                        android:paddingBottom="12dp"-->
-<!--                        android:text="Online Payment"-->
-<!--                        android:textColor="@color/red"-->
-<!--                        android:textStyle="bold"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/cod"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/textView12" />-->
+                    </com.jachai.jachaimart.radiobutton.PresetRadioGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -317,7 +297,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                    app:layout_constraintTop_toBottomOf="@+id/onLinePayLayout">
 
                     <TextView
                         android:id="@+id/textView10"

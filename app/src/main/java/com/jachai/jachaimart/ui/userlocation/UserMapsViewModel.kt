@@ -1,16 +1,19 @@
 package com.jachai.jachaimart.ui.userlocation
 
 import android.app.Application
-import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import bd.com.evaly.ehealth.models.common.CurrentLocation
-import java.util.*
+import com.jachai.jachaimart.model.map.BariKoiPlace
+import com.jachai.jachaimart.ui.base.BaseViewModel
 
-class UserMapsViewModel(application: Application) : AndroidViewModel(application) {
-    var successUserAddressData = MutableLiveData<CurrentLocation?>()
+class UserMapsViewModel(application: Application) :
+    BaseViewModel(application) {
+
+    var successAddressDetailsResponseLiveData = MutableLiveData<BariKoiPlace>()
+
+
+
+
+/*
 
     fun updateLocationAddress(context: Context, nowLocation: CurrentLocation) {
 
@@ -39,5 +42,6 @@ class UserMapsViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+*/
 
 }
