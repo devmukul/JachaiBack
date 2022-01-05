@@ -5,15 +5,16 @@ import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Slide
-import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.ToastUtils
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopCategoryProductRowBinding
 import com.jachai.jachaimart.model.response.product.Product
@@ -32,7 +33,8 @@ class RelatedProductAdapter(
         fun bind(
             context: Context,
             product: Product?,
-            interaction: Interaction?
+            interaction: Interaction?,
+            position: Int
         ) {
             binding.apply {
                 if (product != null) {
@@ -41,6 +43,17 @@ class RelatedProductAdapter(
                         .placeholder(R.drawable.ic_place_holder)
                         .error(R.drawable.ic_place_holder)
                         .into(productImage)
+
+                    val count = JachaiApplication.mDatabase.daoAccess()
+                        .getProductOrderCount(product.id.toString())
+
+                    if (count > 0) {
+                        countView.visibility = View.VISIBLE
+                        countView.text = count.toString()
+                        icCount.text = count.toString()
+                    } else {
+                        countView.visibility = View.GONE
+                    }
 
                     productTitle.text = product.name
                     if (product.variations?.get(0)?.stock ?: 0 > 0) {
@@ -128,7 +141,14 @@ class RelatedProductAdapter(
                             quantity = finalCount
                             icCount.text = finalCount.toString()
 
-                            interaction?.onProductAddToCartX(product, quantity)
+                            interaction?.onProductAddToCartX(product, quantity, position)
+
+                            if (quantity > 0) {
+                                countView.visibility = View.VISIBLE
+                                countView.text = quantity.toString()
+                            } else {
+                                countView.visibility = View.GONE
+                            }
 
 
                         }
@@ -151,7 +171,14 @@ class RelatedProductAdapter(
 
 
                         icCount.text = finalCount.toString()
-                        interaction?.onProductAddToCartX(product, quantity)
+                        interaction?.onProductAddToCartX(product, quantity, position)
+
+                        if (quantity > 0) {
+                            countView.visibility = View.VISIBLE
+                            countView.text = quantity.toString()
+                        } else {
+                            countView.visibility = View.GONE
+                        }
 
 
                     }
@@ -278,7 +305,7 @@ class RelatedProductAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = list[position]
-        holder.bind(context, data, interaction)
+        holder.bind(context, data, interaction, position)
     }
 
     override fun getItemCount(): Int {
@@ -295,7 +322,7 @@ class RelatedProductAdapter(
         fun onProductSelected(product: Product?)
 
         //        fun onProductAddToCart(product: Product?)
-        fun onProductAddToCartX(product: Product?, quantity: Int)
+        fun onProductAddToCartX(product: Product?, quantity: Int, position: Int)
     }
 
 

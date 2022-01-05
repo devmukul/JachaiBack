@@ -78,6 +78,9 @@ interface IDaoAccess {
     @Query("SELECT quantity FROM ProductOrder WHERE product =:id")
     fun getOrderCount(id: String): Int
 
+    @Query("SELECT SUM(quantity) FROM ProductOrder WHERE product =:id")
+    fun getProductOrderCount(id: String): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavouriteProduct(fProductsItem: List<FProductsItem>)
 

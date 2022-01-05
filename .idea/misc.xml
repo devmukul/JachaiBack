@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable/background_dark_gray_dot.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/background_gray_dot.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/background_green_dot.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/drawable/background_red_dot.xml" value="0.14010416666666667" />
         <entry key="app/src/main/res/drawable/background_rgray_dot.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/bg_badge_not_available_round.xml" value="0.35260416666666666" />
         <entry key="app/src/main/res/drawable/bg_overlay_circle.xml" value="0.3385416666666667" />
@@ -19,6 +20,8 @@
         <entry key="app/src/main/res/drawable/box_curve_light_green.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/box_curve_red.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/box_top_curve.xml" value="0.2015625" />
+        <entry key="app/src/main/res/drawable/box_top_left_curve_green.xml" value="0.14010416666666667" />
+        <entry key="app/src/main/res/drawable/box_top_right_curve_red.xml" value="0.14010416666666667" />
         <entry key="app/src/main/res/drawable/box_top_white_curve.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/brd_search_home_light.xml" value="0.3515625" />
         <entry key="app/src/main/res/drawable/dynamic_no_color_box_curve.xml" value="0.2598958333333333" />
@@ -73,15 +76,17 @@
         <entry key="app/src/main/res/layout/custom_search_result_row.xml" value="0.4471109504132185" />
         <entry key="app/src/main/res/layout/custom_shop_details_row.xml" value="0.5653798256537983" />
         <entry key="app/src/main/res/layout/custom_shop_row.xml" value="0.8747591522157996" />
+        <entry key="app/src/main/res/layout/drawer_layout.xml" value="0.6309889676869281" />
         <entry key="app/src/main/res/layout/empty_cart_fragment.xml" value="0.2475847670599894" />
         <entry key="app/src/main/res/layout/favourite_fragment.xml" value="0.1308876811594203" />
         <entry key="app/src/main/res/layout/favourite_product_row.xml" value="0.5480769230769231" />
         <entry key="app/src/main/res/layout/filter_and_sort_barlayout.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1588979073097508" />
+        <entry key="app/src/main/res/layout/fragment_product_search.xml" value="0.19927536231884058" />
         <entry key="app/src/main/res/layout/fragment_restaurant_search.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_restaurent_search.xml" value="0.33061594202898553" />
         <entry key="app/src/main/res/layout/fragment_user_maps.xml" value="0.30381704932918135" />
-        <entry key="app/src/main/res/layout/groceries_shop_category_product_row.xml" value="0.47065670647922964" />
+        <entry key="app/src/main/res/layout/groceries_shop_category_product_row.xml" value="0.48397845146665347" />
         <entry key="app/src/main/res/layout/groceries_shop_category_row.xml" value="0.375424029214231" />
         <entry key="app/src/main/res/layout/groceries_shop_fragment.xml" value="0.29347826086956524" />
         <entry key="app/src/main/res/layout/grocery_category_details_fragment.xml" value="0.19375" />
@@ -90,6 +95,7 @@
         <entry key="app/src/main/res/layout/home_hotdeal_row.xml" value="0.3442028985507246" />
         <entry key="app/src/main/res/layout/ic_back.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/item_doggo_loader.xml" value="0.27848101265822783" />
+        <entry key="app/src/main/res/layout/list_item_tag.xml" value="0.19927536231884058" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/model_cuisine_title.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/my_address_list_fragment.xml" value="0.14492753623188406" />
