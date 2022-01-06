@@ -161,6 +161,7 @@
         android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/order"
         android:padding="16dp">
 
@@ -216,5 +217,20 @@
             android:layout_marginLeft="16dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/app_version"
+        style="@style/small_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="JaChai "
+        android:textColor="@color/ferry"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/logout"
+        app:layout_constraintStart_toStartOf="@+id/header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

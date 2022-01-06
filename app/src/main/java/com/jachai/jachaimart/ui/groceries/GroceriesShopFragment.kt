@@ -149,6 +149,8 @@ class GroceriesShopFragment :
         val navView: NavigationView = binding.navView
         navView.setupWithNavController(navController)
 
+        binding.layoutView.appVersion.text = "JaChai-" +BuildConfig.BUILD_TYPE +"-v"+ BuildConfig.VERSION_NAME
+
         binding.layoutView.close.setOnClickListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
