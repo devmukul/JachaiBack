@@ -286,6 +286,13 @@ class ProductDetailsFragment :
             }
 
 
+
+            val mCount = JachaiApplication.mDatabase.daoAccess()
+                .getProductOrderCount(product?.id.toString())
+            if (mCount >0){
+                icCount.text = mCount.toString()
+            }
+
             var quantity = icCount.text.toString().toInt()
             ivAdd.setOnClickListener {
                 val count = icCount.text.toString().toInt()
