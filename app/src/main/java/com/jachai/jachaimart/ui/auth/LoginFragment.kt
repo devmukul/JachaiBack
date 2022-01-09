@@ -187,7 +187,7 @@ class LoginFragment : BaseFragment<LoginFragmentBinding>(R.layout.login_fragment
                         requireActivity() as AppCompatActivity,
                         ::decryptServerTokenFromStorage
                     )
-                val promptInfo = BiometricPromptUtils.createPromptInfo(requireActivity() as AppCompatActivity)
+                val promptInfo = BiometricPromptUtils.createPromptInfoLogin(requireActivity() as AppCompatActivity)
                 biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(cipher))
             }
         }
