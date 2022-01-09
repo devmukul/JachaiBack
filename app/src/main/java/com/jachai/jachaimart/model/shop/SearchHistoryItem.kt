@@ -19,10 +19,10 @@ data class SearchHistoryItem(
     @field:SerializedName("searchKey")
     @PrimaryKey
     @ColumnInfo(defaultValue = "")
-    val key: String = "",
+    var key: String = "",
 
     @field:SerializedName("updatedAtKey")
     @ColumnInfo(name = "updated_at", defaultValue = "CURRENT_TIMESTAMP")
-    val updatedAt: Date = Date(System.currentTimeMillis())
+    var updatedAt: Date = Date(System.currentTimeMillis())
 
 ) : Parcelable

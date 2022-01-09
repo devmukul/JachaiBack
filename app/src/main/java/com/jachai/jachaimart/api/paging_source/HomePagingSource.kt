@@ -40,7 +40,6 @@ class HomePagingSource(val shopId: String?) : PagingSource<Int, CatWithRelatedPr
 
     }
 
-    @ExperimentalPagingApi
     override fun getRefreshKey(state: PagingState<Int, CatWithRelatedProduct>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)

@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/drawable-v24/box_top_white_curve.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable-v24/rounded_button_red.xml" value="0.26510416666666664" />
+        <entry key="app/src/main/res/drawable/background_custom_radio_buttons_selected_state.xml" value="0.4375" />
         <entry key="app/src/main/res/drawable/background_dark_gray_dot.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/background_gray_dot.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/drawable/background_green_dot.xml" value="0.14270833333333333" />
@@ -36,6 +37,7 @@
         <entry key="app/src/main/res/drawable/ic_location.xml" value="0.13958333333333334" />
         <entry key="app/src/main/res/drawable/ic_location_demo.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable/ic_login_page.xml" value="0.35260416666666666" />
+        <entry key="app/src/main/res/drawable/ic_marker.xml" value="0.4375" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.49923664122137407" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.13958333333333334" />
         <entry key="app/src/main/res/drawable/ic_search_circle.xml" value="0.13958333333333334" />
@@ -51,6 +53,7 @@
         <entry key="app/src/main/res/drawable/toggle_image.xml" value="0.13958333333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/address_details_fragment.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/address_fragment.xml" value="0.33" />
         <entry key="app/src/main/res/layout/address_row_item.xml" value="0.4201570680628272" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/bottom_sheet_location_selecter.xml" value="0.24979701780757624" />
@@ -88,6 +91,7 @@
         <entry key="app/src/main/res/layout/home_hotdeal_row.xml" value="0.3442028985507246" />
         <entry key="app/src/main/res/layout/ic_back.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/item_doggo_loader.xml" value="0.27848101265822783" />
+        <entry key="app/src/main/res/layout/list_item_address_edit.xml" value="0.29609375" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/model_cuisine_title.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/my_address_list_fragment.xml" value="0.14492753623188406" />

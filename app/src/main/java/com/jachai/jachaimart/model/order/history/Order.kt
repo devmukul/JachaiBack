@@ -69,7 +69,7 @@ class Order : Parcelable {
 
     @SerializedName("subTotal")
     @ColumnInfo(defaultValue = "")
-    var subTotal: Int? = null
+    var subTotal: Double? = null
 
     @SerializedName("tokenNumber")
     @ColumnInfo(defaultValue = "")

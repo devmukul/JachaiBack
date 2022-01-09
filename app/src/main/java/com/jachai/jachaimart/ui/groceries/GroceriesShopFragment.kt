@@ -180,6 +180,12 @@ class GroceriesShopFragment :
             navController.navigate(action)
         }
 
+        binding.layoutView.address.setOnClickListener {
+            val action =
+                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToAddressFragment()
+            navController.navigate(action)
+        }
+
         binding.layoutView.touchId.setOnClickListener {
             if(ciphertextWrapper !=null){
                 cryptographyManager.clearSharedPrefs(requireContext(),

@@ -231,6 +231,12 @@
             app:destination="@id/orderFragment"
             app:popUpTo="@id/groceriesShopFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_groceriesShopFragment_to_addressFragment"
+            app:destination="@id/addressFragment"
+            app:popUpTo="@id/groceriesShopFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_groceriesShopFragment_to_favouriteFragment"
             app:destination="@id/favouriteFragment"
@@ -448,6 +454,10 @@
 
 
     </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.jachai.jachaimart.ui.addresses.AddressFragment"
+        android:label="AddressFragment" />
 
 
 </navigation>

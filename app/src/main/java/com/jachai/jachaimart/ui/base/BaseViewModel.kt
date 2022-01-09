@@ -251,7 +251,6 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     fun getDiscountPrice() = JachaiApplication.mDatabase.daoAccess().geDiscountPrice()
 
-
     fun deleteAddress(addressID: String) {
         try {
             if (deleteAddressCall != null) {
@@ -291,7 +290,6 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
             JachaiLog.d(GroceriesShopViewModel.TAG, ex.message!!)
         }
     }
-
 
     fun getAllOrder() {
         try {
@@ -419,7 +417,6 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
 
     }
-
 
     fun saveProduct(item: Product, quantity: Int, shopItem: Shop?, isFromSameShop: Boolean) {
         val productOrder = ProductOrder()
