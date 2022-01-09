@@ -53,8 +53,8 @@ class CategoryWithProductPaginAdapter(
 
         }
 
-        override fun onProductAddToCartX(product: Product?, quantity: Int) {
-            interaction?.onProductAddToCartX(product, quantity)
+        override fun onProductAddToCartX(product: Product?, quantity: Int, position: Int) {
+            interaction?.onProductAddToCartX(product, quantity, position)
 
         }
 
@@ -99,7 +99,7 @@ class CategoryWithProductPaginAdapter(
         fun onCategoryViewAllSelected(catWithRelatedProduct: CatWithRelatedProduct?)
         fun onCategoryProductSelected(product: Product?)
 //        fun onProductAddToCart(product: Product?)
-        fun onProductAddToCartX(product: Product?, quantity: Int)
+        fun onProductAddToCartX(product: Product?, quantity: Int, position: Int)
     }
 
 

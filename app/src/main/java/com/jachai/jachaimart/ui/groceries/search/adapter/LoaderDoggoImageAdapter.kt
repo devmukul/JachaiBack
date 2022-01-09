@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.ToastUtils
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.groceries.adapters.RelatedProductAdapter
@@ -64,6 +65,7 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
         var productPreviousPrice: TextView = view.findViewById(R.id.product_previous_price)
         var discountPrice: TextView = view.findViewById(R.id.discount_price)
         var conlay22: TextView = view.findViewById(R.id.conlay22)
+        var countView: TextView = view.findViewById(R.id.countView)
         var conlay21: ConstraintLayout = view.findViewById(R.id.conlay21)
         var conCount: ConstraintLayout = view.findViewById(R.id.con_count)
 
@@ -86,6 +88,17 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
                     .into(productImage)
 
                 productTitle.text = data.name
+
+                val count = JachaiApplication.mDatabase.daoAccess()
+                    .getProductOrderCount(data.id.toString())
+
+                if (count > 0) {
+                    countView.visibility = View.VISIBLE
+                    countView.text = count.toString()
+                    icCount.text = count.toString()
+                } else {
+                    countView.visibility = View.GONE
+                }
 
                 val mPrice = data.variations?.get(0)?.price?.mrp?.toDouble() ?: 0.0
                 val mDiscountedPrice = data.variations?.get(0)?.price?.discountedPrice?.toDouble()
@@ -168,6 +181,12 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
                     icCount.text = finalCount.toString()
 
                     interaction?.onProductAddToCartX(data, quantity)
+                    if (quantity > 0) {
+                        countView.visibility = View.VISIBLE
+                        countView.text = quantity.toString()
+                    } else {
+                        countView.visibility = View.GONE
+                    }
 
 
                 }
@@ -194,6 +213,12 @@ class LoaderDoggoImageAdapter(private val interaction: Interaction?) :
 
                 icCount.text = finalCount.toString()
                 interaction?.onProductAddToCartX(data, quantity)
+                if (quantity > 0) {
+                    countView.visibility = View.VISIBLE
+                    countView.text = quantity.toString()
+                } else {
+                    countView.visibility = View.GONE
+                }
 
 
             }

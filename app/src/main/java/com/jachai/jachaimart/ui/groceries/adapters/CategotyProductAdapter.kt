@@ -14,6 +14,7 @@ import android.view.animation.TranslateAnimation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jachai.jachai_driver.utils.ToastUtils
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CategoryProductRowBinding
 import com.jachai.jachaimart.model.response.product.Product
@@ -42,6 +43,16 @@ class CategotyProductAdapter(
                         .into(productImage)
 
                     productTitle.text = product.name
+                    val count = JachaiApplication.mDatabase.daoAccess()
+                        .getProductOrderCount(product.id.toString())
+
+                    if (count > 0) {
+                        countView.visibility = View.VISIBLE
+                        countView.text = count.toString()
+                        icCount.text = count.toString()
+                    } else {
+                        countView.visibility = View.GONE
+                    }
 
                     val mPrice: Double = product.variations?.get(0)?.price?.mrp?.toDouble() ?: 0.0
                     val mDiscountedPrice: Double =
@@ -124,7 +135,12 @@ class CategotyProductAdapter(
                             icCount.text = finalCount.toString()
 
                             interaction?.onProductAddToCartX(product, quantity)
-
+                            if (quantity > 0) {
+                                countView.visibility = View.VISIBLE
+                                countView.text = quantity.toString()
+                            } else {
+                                countView.visibility = View.GONE
+                            }
 
                         }
 
@@ -147,7 +163,12 @@ class CategotyProductAdapter(
 
                         icCount.text = finalCount.toString()
                         interaction?.onProductAddToCartX(product, quantity)
-
+                        if (quantity > 0) {
+                            countView.visibility = View.VISIBLE
+                            countView.text = quantity.toString()
+                        } else {
+                            countView.visibility = View.GONE
+                        }
 
                     }
 
@@ -288,7 +309,8 @@ class CategotyProductAdapter(
 
     interface Interaction {
         fun onProductSelected(product: Product?)
-//        fun onProductAddToCart(product: Product?)
+
+        //        fun onProductAddToCart(product: Product?)
         fun onProductAddToCartX(product: Product?, quantity: Int)
     }
 

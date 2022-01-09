@@ -35,6 +35,7 @@ import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.BuildConfig
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.database.AppDatabase
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
 import com.jachai.jachaimart.decorator.BiometricPromptUtils
 import com.jachai.jachaimart.decorator.CryptographyManager
@@ -68,7 +69,7 @@ class GroceriesShopFragment :
     CategoryAdapter.Interaction, CategoryWithProductAdapter.Interaction,
     SavedUserLocationAdapter.Interaction, CategoryWithProductPaginAdapter.Interaction {
     lateinit var savedUserLocationAdapter: SavedUserLocationAdapter
-    private lateinit var  bottomSheetDialog: BottomSheetDialog
+    private lateinit var bottomSheetDialog: BottomSheetDialog
 
     companion object {
         fun newInstance() = GroceriesShopFragment()
@@ -117,12 +118,17 @@ class GroceriesShopFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomSheetDialog = BottomSheetDialog(requireContext())
+        val orderQty =
+            AppDatabase.getAppDatabase(requireContext()).daoAccess().getProductOrdersSize()
         subscribeToFCM(BuildConfig.TOPIC_NOT)
 
         navController = Navigation.findNavController(view)
 
-        if (isViewNull) {
-            GlobalScope.async {
+
+
+        if (orderQty == 0 || isViewNull) {
+
+            lifecycleScope.launch {
                 initRecyclerViews()
                 if (SharedPreferenceUtil.getJCShopId() == null) {
                     showNoShopFoundAlert()
@@ -134,6 +140,14 @@ class GroceriesShopFragment :
                 viewModel.requestAllFavouriteProduct()
                 viewModel.requestAllAddress()
             }
+
+        }else{
+            try {
+                categoryWithProductPaginAdapter.notifyDataSetChanged()
+            }catch (ex: Exception){
+                JachaiLog.e(TAG, ex.localizedMessage)
+            }
+
         }
 
 
@@ -163,6 +177,8 @@ class GroceriesShopFragment :
 
         val navView: NavigationView = binding.navView
         navView.setupWithNavController(navController)
+
+        binding.layoutView.appVersion.text = "JaChai-" +BuildConfig.BUILD_TYPE +"-v"+ BuildConfig.VERSION_NAME
 
         binding.layoutView.close.setOnClickListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -267,21 +283,24 @@ class GroceriesShopFragment :
                     CategoryAdapter(requireContext(), emptyList(), this@GroceriesShopFragment)
                 adapter = categoryAdapter
             }
-//            rvCategories.apply {
-//                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-//                categoryWithProductAdapter =
-//                    CategoryWithProductAdapter(
-//                        requireContext(),
-//                        emptyList(),
-//                        this@GroceriesShopFragment
-//                    )
-//                adapter = categoryWithProductAdapter
-//            }
+/*
+
+            rvCategories.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                categoryWithProductAdapter =
+                    CategoryWithProductAdapter(
+                        requireContext(),
+                        emptyList(),
+                        this@GroceriesShopFragment
+                    )
+                adapter = categoryWithProductAdapter
+            }
+*/
             categoryWithProductPaginAdapter =
                 CategoryWithProductPaginAdapter(requireContext(), this@GroceriesShopFragment)
 
             rvCategories.apply {
-                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 adapter = categoryWithProductPaginAdapter
             }
 
@@ -427,8 +446,7 @@ class GroceriesShopFragment :
 
         viewModel.successAddressResponseLiveData.observe(viewLifecycleOwner) {
             if (!SharedPreferenceUtil.isConfirmDeliveryAddress()) {
-                SharedPreferenceUtil.getCurrentAddress().let {
-                        it1 ->
+                SharedPreferenceUtil.getCurrentAddress().let { it1 ->
                     it1?.let { it2 ->
                         it?.addresses?.add(it2)
                     }
@@ -539,7 +557,7 @@ class GroceriesShopFragment :
                 }
             }
 
-            if (SharedPreferenceUtil.isFreshLogin()){
+            if (SharedPreferenceUtil.isFreshLogin()) {
                 viewModel.requestAllAddress()
             }
 
@@ -576,7 +594,7 @@ class GroceriesShopFragment :
         navController.navigate(action)
     }
 
-    override fun onProductAddToCartX(product: Product?, quantity: Int) {
+    override fun onProductAddToCartX(product: Product?, quantity: Int, position: Int) {
         product?.let { it1 ->
 
             if (quantity <= 0) {
@@ -626,8 +644,6 @@ class GroceriesShopFragment :
             }
 
         })
-
-
     }
 
 /*
@@ -692,10 +708,10 @@ class GroceriesShopFragment :
                 )
             adapter = savedUserLocationAdapter
         }
-        if (!bottomSheetDialog.isShowing){
+        if (!bottomSheetDialog.isShowing) {
             bottomSheetDialog.show()
 
-        }else{
+        } else {
             bottomSheetDialog.dismiss()
             bottomSheetDialog.show()
         }
