@@ -1,6 +1,5 @@
 package com.jachai.jachaimart.ui.auth
 
-import android.app.AlertDialog
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
@@ -23,7 +22,7 @@ import com.jachai.jachaimart.databinding.VerifyCodeFragmentBinding
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.ui.auth.LoginViewModel.Companion.OTP_EXPIRED_MESSAGE
-import com.jachai.user.model.response.auth.signup.AuthRequest
+import com.jachai.jachaimart.model.response.auth.signup.AuthRequest
 
 class VerifyCodeFragment : BaseFragment<VerifyCodeFragmentBinding>(R.layout.verify_code_fragment),
     MySMSBroadcastReceiver.OTPReceiveListener {

@@ -63,4 +63,12 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="add_to_cart">Add to cart</string>
+
+
+    <string name="prompt_info_title">Fingerprint login</string>
+    <string name="prompt_info_subtitle">Use your fingerprint for faster, easier access to app.</string>
+    <string name="prompt_info_description">Confirm fingerprint to continue</string>
+    <string name="prompt_info_use_app_password">Cancel</string>
+
+    <string name="secret_key_name">biometric_sample_encryption_key</string>
 </resources>

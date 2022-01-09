@@ -43,6 +43,10 @@
         <action
             android:id="@+id/login_to_verifyCode"
             app:destination="@id/verifyCodeFragment" />
+
+        <action
+            android:id="@+id/login_to_groceriesShop"
+            app:destination="@id/groceriesShopFragment" />
     </fragment>
     <fragment
         android:id="@+id/verifyCodeFragment"

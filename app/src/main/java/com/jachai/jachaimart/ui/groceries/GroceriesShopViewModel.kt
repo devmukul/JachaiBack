@@ -2,6 +2,7 @@ package com.jachai.jachaimart.ui.groceries
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,10 +17,13 @@ import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.api.paging_source.HomePagingSource
+import com.jachai.jachaimart.decorator.CryptographyManager
 import com.jachai.jachaimart.model.notification.NotificationRegisterRequest
 import com.jachai.jachaimart.model.request.CategoryWithProductRequest
 import com.jachai.jachaimart.model.request.FProductsItem
 import com.jachai.jachaimart.model.response.GenericResponse
+import com.jachai.jachaimart.model.response.auth.BiometricRegisterRequest
+import com.jachai.jachaimart.model.response.auth.BiometricRegistrationResponse
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProductsResponse
 import com.jachai.jachaimart.model.response.home.CategoriesItem
@@ -30,6 +34,7 @@ import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.ui.product.ProductDetailsViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.constant.ApiConstants.PAGING_PAGE_LIMIT_MIN
+import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,7 +60,16 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
     var errorCategoryWithProductResponseLiveData = MutableLiveData<String?>()
     private val notificationsService = RetrofitConfig.notificationsService
+    private val authService = RetrofitConfig.authService
     private var registerCall: Call<GenericResponse>? = null
+
+    private var registerBiometricCall: Call<BiometricRegistrationResponse>? = null
+
+    var successBiometricRegLiveData =
+        MutableLiveData<BiometricRegistrationResponse?>()
+
+
+
 
 
     fun requestForBanners() {
@@ -238,6 +252,37 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
                 override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
                     registerCall = null
+
+                }
+            })
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+        }
+
+    }
+
+
+    fun requestBiometricRegister(activity: Activity) {
+        try {
+            if (registerBiometricCall != null) {
+                return
+            }
+            val notificationRegisterRequest = BiometricRegisterRequest(activity.getDeviceId())
+
+            registerBiometricCall = authService.registerBiometricRequest(notificationRegisterRequest)
+
+            registerBiometricCall?.enqueue(object : Callback<BiometricRegistrationResponse> {
+                override fun onResponse(
+                    call: Call<BiometricRegistrationResponse>,
+                    response: Response<BiometricRegistrationResponse>
+                ) {
+                    registerBiometricCall = null
+                    successBiometricRegLiveData.postValue(response.body())
+                }
+
+                override fun onFailure(call: Call<BiometricRegistrationResponse>, t: Throwable) {
+                    registerBiometricCall = null
 
                 }
             })
