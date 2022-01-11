@@ -1,41 +1,25 @@
 package com.jachai.jachaimart.ui.groceries.category_details
 
-import android.R.attr
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmadhamwi.tabsync.TabbedListMediator
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceryCategoryDetailsFragmentBinding
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.ui.base.BaseFragment
-import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
-import android.R.attr.defaultValue
 import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.view.Window
-import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import com.bumptech.glide.Glide
-import com.google.android.gms.common.util.SharedPreferencesUtils
-import com.jachai.jachaimart.ui.groceries.GroceriesShopFragmentDirections
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryDetailsProductAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.google.android.material.tabs.TabLayout
 
-import android.graphics.PorterDuff
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat.setBackgroundTintList
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.google.android.material.chip.Chip
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
@@ -110,8 +94,8 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
         binding.apply {
             initRecycler(emptyList())
 
-            SharedPreferenceUtil.getJCShopId()?.let { viewModel.getCategoryDetailsDetails(it, categoryId!!) }
-            viewModel.getCategoryDetailsDetails(SharedPreferenceUtil.getJCShopId()!!, categoryId!!)
+            SharedPreferenceUtil.getJCHubId()?.let { viewModel.getCategoryDetailsDetails(it, categoryId!!) }
+            viewModel.getCategoryDetailsDetails(SharedPreferenceUtil.getJCHubId()!!, categoryId!!)
         }
     }
 
@@ -196,15 +180,15 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
                 viewModel.successAddToCartData.postValue(true)
             }else {
 
-                if (product.shop?.id?.let {
+                if (product.hub?.id?.let {
                         JachaiApplication.mDatabase.daoAccess()
-                            .isInsertionApplicable(shopID = it)
+                            .isInsertionApplicableByHubId(hubId = it)
                     } == true) {
 //
 
 
                     if (JachaiApplication.mDatabase.daoAccess()
-                            .getProductByProductID(product.id!!, product.shop.id) > 0
+                            .getProductByProductIDByHub(product.id!!, product.hub.id) > 0
                     ) {
 
                         showShortToast("Product already added")
@@ -213,7 +197,7 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
 
                         showShortToast("Product added")
                     }
-                    viewModel.saveProduct(it1, quantity, product.shop, true)
+                    viewModel.saveProductByHub(it1, quantity, product.hub, true)
 
                 } else {
                     alertDialog(product, quantity)
@@ -278,7 +262,7 @@ class GroceryCategoryDetailsFragment : BaseFragment<GroceryCategoryDetailsFragme
 
         builder.setPositiveButton("Continue") { _, _ ->
 
-            viewModel.saveProduct(product, quantity, product.shop, false)
+            viewModel.saveProductByHub(product, quantity, product.hub, false)
         }
 
         builder.setNegativeButton("Close") { dialog, which ->

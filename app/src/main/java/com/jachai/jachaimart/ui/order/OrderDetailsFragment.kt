@@ -48,7 +48,7 @@ class OrderDetailsFragment :
         }
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            orderDetailsAdapter = OrderDetailsAdapter(requireContext(), emptyList())
+            orderDetailsAdapter = OrderDetailsAdapter(requireContext(), emptyList(), true)
             adapter = orderDetailsAdapter
         }
         binding.callCustomer.setOnClickListener {

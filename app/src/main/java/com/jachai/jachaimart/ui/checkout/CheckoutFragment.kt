@@ -68,8 +68,10 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
             editAddress.setOnClickListener {
                 val action =
-                    CheckoutFragmentDirections.actionCheckoutFragmentToMyAddressListFragment()
-                action.shop = SharedPreferenceUtil.getNearestShop()
+                    CheckoutFragmentDirections.actionCheckoutFragmentToMyAddressListFragment(
+                        SharedPreferenceUtil.getNearestHub()
+                    )
+
                 navController.navigate(action)
             }
 
@@ -168,7 +170,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
             val subtotal = dao.getProductOrderSubtotal()
 
-            val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
+            val vatSdPercent = SharedPreferenceUtil.getNearestHub()?.vat?.toFloat() ?: 0.toFloat()
             val vatSd: Double = (subtotal * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
 
@@ -176,20 +178,20 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
 
 
             var nearCostToFree = 0F
-            val deliveryCost = if (SharedPreferenceUtil.getNearestShop()?.isFreeDelivery == true) {
+            val deliveryCost = if (SharedPreferenceUtil.getNearestHub()?.isFreeDelivery == true) {
                 0.toFloat()
             } else {
-                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery != 0F) {
-                    if (total.toDouble() >= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!) {
+                if (SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery != 0F) {
+                    if (total.toDouble() >= SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery!!) {
                         0.toFloat()
                     } else {
                         nearCostToFree =
-                            SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
-                        SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat()
+                            SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
+                        SharedPreferenceUtil.getNearestHub()?.deliveryCharge?.toFloat()
                             ?: 0.toFloat()
                     }
                 } else {
-                    SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+                    SharedPreferenceUtil.getNearestHub()?.deliveryCharge?.toFloat() ?: 0.toFloat()
                 }
             }
 

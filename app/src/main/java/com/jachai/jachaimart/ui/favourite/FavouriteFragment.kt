@@ -92,13 +92,13 @@ class FavouriteFragment :
     override fun onProductAddToCartX(product: Product?, quantity: Int) {
         product?.let { it1 ->
 
-            if (product.shop?.id?.let {
+            if (product.hub?.id?.let {
                     JachaiApplication.mDatabase.daoAccess()
-                        .isInsertionApplicable(shopID = it)
+                        .isInsertionApplicableByHubId(hubId = it)
                 } == true) {
 //
                 if (JachaiApplication.mDatabase.daoAccess()
-                        .getProductByProductID(product.id!!, product.shop.id) > 0
+                        .getProductByProductIDByHub(product.id!!, product.hub.id) > 0
                 ) {
 
                     showShortToast("Product already added")
@@ -107,7 +107,7 @@ class FavouriteFragment :
 
                     showShortToast("Product added")
                 }
-                viewModel.saveProduct(it1, quantity, product.shop, true)
+                viewModel.saveProductByHub(it1, quantity, product.hub, true)
 
             } else {
                 alertDialog(product, quantity)
@@ -138,7 +138,7 @@ class FavouriteFragment :
 
         builder.setPositiveButton("Continue") { _, _ ->
 
-            viewModel.saveProduct(product, quantity, product.shop, false)
+            viewModel.saveProductByHub(product, quantity, product.hub, false)
         }
 
         builder.setNegativeButton("Close") { dialog, which ->

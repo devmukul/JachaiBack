@@ -76,7 +76,7 @@ class AddressDetailsFragment :
 
             if (args.isFromFragment){
                 val action =
-                    AddressDetailsFragmentDirections.actionAddressDetailsFragmentToMyAddressListFragment()
+                    AddressDetailsFragmentDirections.actionAddressDetailsFragmentToMyAddressListFragment(null)
                 navController.navigate(action)
             }else{
                 val action =

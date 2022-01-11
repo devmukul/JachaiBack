@@ -38,7 +38,9 @@ object ApiConstants {
     //orders
     const val ORDER_REQUEST_BASE = "order"
     const val ORDER_DETAILS_BASE = "order/details-by-user"
+    const val ORDER_DETAILS_V2_BASE = "order/details-by-user/v2"
     const val ORDER_LIST_BASE = "order/my-orders"
+    const val ORDER_LIST_V2_BASE = "order/my-orders/v2"
 
     //Payment
     const val PAYMENT_REQUEST_BASE = "pay"
@@ -56,6 +58,14 @@ object ApiConstants {
 
     const val SHOP_CATEGORIES_BASE = "shop/categories"
     const val SHOP_CATEGORIES_DETAILS_BASE = "product/products-by-shop-and-category"
+
+    //Hub
+    const val HUB_NEAREST_BASE = "hub/nearest"
+    const val HUB_CATEGORIES_BASE = "hub/categories"
+    const val CATEGORY_WITH_PRODUCTS_HUB_BASE = "product/products-by-hub-and-category"
+    const val PRODUCT_BY_CATEGORY_HUB_BASE = "product/products-by-hub"
+    const val ORDER_REQUEST_HUB_BASE = "order/hub"
+
 
     //address
     const val SAVE_ADDRESS_BASE = "address"

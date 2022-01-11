@@ -4,6 +4,7 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.model.response.address.Address
+import com.jachai.jachaimart.model.response.grocery.Hub
 import com.jachai.jachaimart.model.response.grocery.Shop
 import com.jachai.jachaimart.model.response.location.LocationDetails
 import com.jachai.jachaimart.utils.constant.CommonConstants
@@ -63,7 +64,17 @@ object SharedPreferenceUtil {
         }
     }
 
+    fun getJCHubId() =
+        preferences.getString(SharedPreferenceConstants.JC_Hub_ID_KEY, null)
+
+    fun setJCHubId(name: String?) {
+        preferences.edit {
+            putString(SharedPreferenceConstants.JC_Hub_ID_KEY, name)
+        }
+    }
+
     fun isJCShopAvailable() = preferences.contains(SharedPreferenceConstants.JC_SHOP_ID_KEY)
+    fun isJCHubAvailable() = preferences.contains(SharedPreferenceConstants.JC_Hub_ID_KEY)
 
     fun getMobileNo() =
         preferences.getString(SharedPreferenceConstants.DRIVER_MOBILE_KEY, "")
@@ -148,22 +159,40 @@ object SharedPreferenceUtil {
     fun getNotes() =
         preferences.getString(SharedPreferenceConstants.SAVE_NOTE_KEY, "n/a")
 
-    fun saveNearestShop(shop: Shop) {
+//    fun saveNearestShop(shop: Shop) {
+//        preferences.edit {
+//            val data = Gson().toJson(shop)
+//            putString(SharedPreferenceConstants.SAVE_SHOP_KEY, data)
+//        }
+//    }
+//
+//    fun getNearestShop(): Shop? {
+//        val data = preferences.getString(SharedPreferenceConstants.SAVE_SHOP_KEY, null)
+//
+//        return if (data != null) {
+//            Gson().fromJson(data, Shop::class.java)
+//        } else {
+//            null
+//        }
+//    }
+
+    fun saveNearestHub(hub: Hub) {
         preferences.edit {
-            val data = Gson().toJson(shop)
-            putString(SharedPreferenceConstants.SAVE_SHOP_KEY, data)
+            val data = Gson().toJson(hub)
+            putString(SharedPreferenceConstants.SAVE_HUB_KEY, data)
         }
     }
 
-    fun getNearestShop(): Shop? {
-        val data = preferences.getString(SharedPreferenceConstants.SAVE_SHOP_KEY, null)
+    fun getNearestHub(): Hub? {
+        val data = preferences.getString(SharedPreferenceConstants.SAVE_HUB_KEY, null)
 
         return if (data != null) {
-            Gson().fromJson(data, Shop::class.java)
+            Gson().fromJson(data, Hub::class.java)
         } else {
             null
         }
     }
+
 
     fun clearAllPreferences() = preferences.edit {
         clear()

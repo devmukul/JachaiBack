@@ -66,7 +66,7 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
                 getApplication<JachaiApplication>().showShortToast(R.string.networkError)
                 return
             }
-            orderCall = orderService.orderRequest(orderRequest)
+            orderCall = orderService.orderRequestForHub(orderRequest)
             JachaiLog.d(TAG, Gson().toJson(orderRequest).toString())
 
             orderCall?.enqueue(object : Callback<OrderResponse> {

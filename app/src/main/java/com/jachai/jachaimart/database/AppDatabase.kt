@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.order.base_order.BaseOrder
 import com.jachai.jachaimart.model.order.history.DeliveryMan
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.ShippingLocation
@@ -24,9 +25,11 @@ import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
         DeliveryMan::class,
         ShippingLocation::class,
         Shop::class,
-        SearchHistoryItem::class
+        SearchHistoryItem::class,
+        BaseOrder::class
+
     ],
-    version = 25,
+    version = 28,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

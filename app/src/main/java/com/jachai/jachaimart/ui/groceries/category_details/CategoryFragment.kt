@@ -10,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CategoryFragmentBinding
@@ -99,12 +98,12 @@ class CategoryFragment :
 
             search.setOnClickListener {
 
-                if (SharedPreferenceUtil.getJCShopId().isNullOrEmpty()) {
+                if (SharedPreferenceUtil.getJCHubId().isNullOrEmpty()) {
                     navController.popBackStack()
                 } else {
                     val action =
                         CategoryFragmentDirections.actionCategoryFragmentToGroceriesSearchFragment(
-                            SharedPreferenceUtil.getJCShopId()!!
+                            SharedPreferenceUtil.getJCHubId()!!
                         )
                     navController.navigate(action)
                 }

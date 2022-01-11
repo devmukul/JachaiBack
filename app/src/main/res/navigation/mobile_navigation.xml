@@ -392,14 +392,14 @@
             android:id="@+id/action_myAddressListFragment_to_checkoutFragment"
             app:destination="@id/checkoutFragment" />
         <argument
-            android:name="shop"
-            app:argType="com.jachai.jachaimart.model.response.grocery.Shop"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:name="hub"
+            app:argType="com.jachai.jachaimart.model.response.grocery.Hub"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.jachai.jachaimart.ui.order.OrderFragment"
+        tools:layout="@layout/order_fragment"
         android:label="OrderFragment" >
         <action
             android:id="@+id/action_orderFragment_to_orderDetailsFragment"
@@ -412,6 +412,9 @@
             app:destination="@id/groceriesShopFragment"
             app:popUpTo="@id/groceriesShopFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_orderFragment_to_multiOrderPackFragment"
+            app:destination="@id/multiOrderPackFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
@@ -438,6 +441,9 @@
         <action
             android:id="@+id/action_paymentFragment_to_onGoingOrderFragment"
             app:destination="@id/onGoingOrderFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_multiOrderPackFragment"
+            app:destination="@id/multiOrderPackFragment"/>
     </fragment>
     <fragment
         android:id="@+id/selectUserLocationWithBariKoiFragment"
@@ -453,6 +459,24 @@
             app:destination="@id/userMapsFragment" />
 
 
+    </fragment>
+    <fragment
+        android:id="@+id/multiOrderPackFragment"
+        android:name="com.jachai.jachaimart.ui.order.MultiOrderPackFragment"
+        android:label="multi_order_pack_fragment"
+        tools:layout="@layout/multi_order_pack_fragment" >
+        <argument
+            android:name="orderID"
+            app:argType="string"
+            android:defaultValue="na" />
+        <action
+            android:id="@+id/action_multiOrderPackFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+        <action
+            android:id="@+id/action_multiOrderPackFragment_to_orderFragment"
+            app:destination="@id/orderFragment"
+            app:popUpTo="@id/orderFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/addressFragment"

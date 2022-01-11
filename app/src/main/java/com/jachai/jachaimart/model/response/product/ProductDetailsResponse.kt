@@ -2,6 +2,7 @@ package com.jachai.jachaimart.model.response.product
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.jachai.jachaimart.model.response.grocery.Hub
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -20,11 +21,17 @@ data class ProductDetailsResponse(
 @Parcelize
 data class Product(
 
-    @field:SerializedName("shop")
-    val shop: Shop? = null,
+//    @field:SerializedName("shop")
+//    val shop: Shop? = null,
+
+    @field:SerializedName("hub")
+    val hub: Hub? = null,
 
     @field:SerializedName("campaignId")
     val campaignId: String? = null,
+
+    @field:SerializedName("hubId")
+    val hubId: String? = null,
 
     @field:SerializedName("rating")
     val rating: Int? = null,

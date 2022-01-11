@@ -1,8 +1,10 @@
 package com.jachai.jachaimart.api.service
 
 import com.jachai.jachaimart.model.order.OrderResponse
+import com.jachai.jachaimart.model.order.base_order.BaseOrderResponse
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
+import com.jachai.jachaimart.model.order.multi_order.BaseOrderDetailsResponse
 import com.jachai.jachaimart.model.request.FProductsItem
 import com.jachai.jachaimart.model.request.OrderRequest
 import com.jachai.jachaimart.model.response.GenericResponse
@@ -16,8 +18,14 @@ interface OrderService {
     @POST(ApiConstants.ORDER_REQUEST_BASE)
     fun orderRequest(@Body orderRequest: OrderRequest): Call<OrderResponse>
 
+    @POST(ApiConstants.ORDER_REQUEST_HUB_BASE)
+    fun orderRequestForHub(@Body orderRequest: OrderRequest): Call<OrderResponse>
+
     @GET(ApiConstants.ORDER_DETAILS_BASE)
     fun orderDetailsRequest(@Query("orderId") orderID: String): Call<OrderDetailsResponse>
+
+    @GET(ApiConstants.ORDER_DETAILS_V2_BASE)
+    fun orderDetailsRequestV2(@Query("BaseOrderId") baseOrderID: String): Call<BaseOrderDetailsResponse>
 
     //favourite product
     @GET(ApiConstants.FAVOURITE_PRODUCT_BASE)
@@ -37,6 +45,15 @@ interface OrderService {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): Call<OrderHistoryResponse>
+
+    //orders v2
+    @GET(ApiConstants.ORDER_LIST_V2_BASE)
+    fun getMyAllOrderV2(
+        @Query("startFrom") startFrom: String,
+        @Query("endAt") endAt: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Call<BaseOrderResponse>
 
 
 }

@@ -90,7 +90,7 @@ class MyAddressListFragment :
         viewModel.successNearestJCShop.observe(viewLifecycleOwner) {
             if (!it?.shops.isNullOrEmpty()) {
 //                JachaiLog.e(TAG, it?.shops?.get(0)?.id.toString())
-                if (SharedPreferenceUtil.getJCShopId()?.equals(it?.shops?.get(0)?.id) == true) {
+                if (SharedPreferenceUtil.getJCHubId()?.equals(it?.shops?.get(0)?.id) == true) {
                     SharedPreferenceUtil.saveDeliveryAddress(address = it?.userDeliveryAddress!!)
                     goToCheckout()
 

@@ -23,5 +23,7 @@ data class NearestJCShopResponse(
     val totalElements: Int,
     @SerializedName("totalPages")
     val totalPages: Int,
+    @SerializedName("hub")
+    var hub: Hub? = null,
     var userDeliveryAddress: Address? = null
 )

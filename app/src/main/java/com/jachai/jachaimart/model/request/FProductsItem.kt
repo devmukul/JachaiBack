@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
@@ -13,6 +12,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "FavouriteProduct")
 data class FProductsItem(
+
     @field:SerializedName("slug")
     @PrimaryKey
     @ColumnInfo(defaultValue = "")

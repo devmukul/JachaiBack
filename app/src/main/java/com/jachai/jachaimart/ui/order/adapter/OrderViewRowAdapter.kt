@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OrderRowBinding
+import com.jachai.jachaimart.model.order.base_order.BaseOrder
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import java.text.SimpleDateFormat
@@ -14,7 +15,7 @@ import java.util.*
 
 class OrderViewRowAdapter(
     private val context: Context,
-    private var list: List<Order?>,
+    private var list: List<BaseOrder?>,
     private var isOnGoingOrder: Boolean,
     private var interaction: Interaction
 ) : RecyclerView.Adapter<OrderViewRowAdapter.ViewHolder>() {
@@ -22,12 +23,12 @@ class OrderViewRowAdapter(
         private var binding: OrderRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(view: Context, order: Order?, isOnGoingOrder: Boolean) {
+        fun bind(view: Context, order: BaseOrder?, isOnGoingOrder: Boolean) {
 
             binding.apply {
                 if (order != null) {
-                    orderId.text = order.orderId
-                    shopName.text = order.shop?.name ?: "Shop "
+                    orderId.text = order.baseOrderId
+                    shopName.text = "JaChai Mart"
                     orderTime.text = order.createdAt?.let { getDateFormatter(it) }
 
 
@@ -90,7 +91,7 @@ class OrderViewRowAdapter(
         return list.size
     }
 
-    fun setList(it: List<Order?>?) {
+    fun setList(it: List<BaseOrder?>?) {
         if (it != null) {
             this.list = it
         }
@@ -98,7 +99,7 @@ class OrderViewRowAdapter(
 
 
     interface Interaction {
-        fun onOrderSelected(order: Order?, isOnGoingOrder: Boolean)
+        fun onOrderSelected(order: BaseOrder?, isOnGoingOrder: Boolean)
     }
 
 
