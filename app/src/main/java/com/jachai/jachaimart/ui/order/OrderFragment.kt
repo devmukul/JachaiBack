@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OrderFragmentBinding
-import com.jachai.jachaimart.model.order.history.Order
+import com.jachai.jachaimart.model.order.base_order.BaseOrder
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.order.adapter.OrderViewRowAdapter
 
@@ -53,12 +53,12 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
                 adapter = orderViewOnGoingAdapter
             }
 
-            rvOrderCompleted.apply {
-                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                orderViewOnCompletedAdapter =
-                    OrderViewRowAdapter(requireContext(), emptyList(), false, this@OrderFragment)
-                adapter = orderViewOnCompletedAdapter
-            }
+//            rvOrderCompleted.apply {
+//                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+//                orderViewOnCompletedAdapter =
+//                    OrderViewRowAdapter(requireContext(), emptyList(), false, this@OrderFragment)
+//                adapter = orderViewOnCompletedAdapter
+//            }
         }
 
 
@@ -73,10 +73,10 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
             orderViewOnGoingAdapter.notifyDataSetChanged()
         }
 
-        viewModel.successPreviousOrderListLiveData.observe(viewLifecycleOwner) {
-            orderViewOnCompletedAdapter.setList(it)
-            orderViewOnCompletedAdapter.notifyDataSetChanged()
-        }
+//        viewModel.successPreviousOrderListLiveData.observe(viewLifecycleOwner) {
+//            orderViewOnCompletedAdapter.setList(it)
+//            orderViewOnCompletedAdapter.notifyDataSetChanged()
+//        }
         viewModel.errorOrderDetailsLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
         }
@@ -84,15 +84,19 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
 
     }
 
-    override fun onOrderSelected(order: Order?, isOnGoingOrder: Boolean) {
+    override fun onOrderSelected(order: BaseOrder?, isOnGoingOrder: Boolean) {
         if (order != null) {
             if (isOnGoingOrder) {
-                val action = OrderFragmentDirections.actionOrderFragmentToOnGoingOrderFragment(order.orderId)
+//                val action = OrderFragmentDirections.actionOrderFragmentToOnGoingOrderFragment(order.orderId)
+//                navController.navigate(action)
+                val action = OrderFragmentDirections.actionOrderFragmentToMultiOrderPackFragment()
+                action.orderID = order.baseOrderId
                 navController.navigate(action)
+
             } else {
-                val action =
-                    OrderFragmentDirections.actionOrderFragmentToOrderDetailsFragment(order.orderId)
-                navController.navigate(action)
+//                val action =
+//                    OrderFragmentDirections.actionOrderFragmentToOrderDetailsFragment(order.orderId)
+//                navController.navigate(action)
             }
         } else {
             showShortToast("Order id is is missing or something wrong")

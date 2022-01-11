@@ -18,7 +18,7 @@ data class OrderRequest(
 	var shippingAddress: String? = null,
 
 	@field:SerializedName("type")
-	val type: String? = CommonConstants.DEFAULT_TYPE,
+	val type: String? = CommonConstants.JC_MART_TYPE,
 
 	@field:SerializedName("products")
 	var products: List<ProductsItem?>? = null

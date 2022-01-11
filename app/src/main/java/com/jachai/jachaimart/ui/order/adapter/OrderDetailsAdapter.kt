@@ -1,6 +1,7 @@
 package com.jachai.jachaimart.ui.order.adapter
 
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +11,13 @@ import com.jachai.jachaimart.model.order.details.Product
 
 class OrderDetailsAdapter(
     private val context: Context,
-    private var list: List<Product?>
+    private var list: List<Product?>,
+    private var orderStatus: Boolean
 ) : RecyclerView.Adapter<OrderDetailsAdapter.ViewHolder>() {
     class ViewHolder(
         private var binding: CheckoutOrderRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(context: Context, data: Product?) {
+        fun bind(context: Context, data: Product?, orderStatus: Boolean) {
             binding.itemQty.text = "${data?.quantity}x"
             val quantity = data?.quantity?.toInt()
             val price = data?.variation?.price?.mrp?.toDouble()
@@ -28,6 +30,15 @@ class OrderDetailsAdapter(
             }else{
                 binding.discount.visibility = View.GONE
             }
+            if (!orderStatus){
+                binding.apply {
+                    itemQty.paintFlags = itemQty.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    itemCost.paintFlags = itemCost.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    itemName.paintFlags = itemName.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                }
+            }
+
+
         }
 
     }
@@ -40,7 +51,7 @@ class OrderDetailsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = list[position]
-        holder.bind(context, data)
+        holder.bind(context, data, orderStatus)
     }
 
     override fun getItemCount(): Int {
@@ -50,7 +61,11 @@ class OrderDetailsAdapter(
     fun setList(it: List<Product?>?) {
         if (it != null) {
             this.list = it
+
         }
+    }
+    fun  setOrderStatus(orderStatus: Boolean){
+        this.orderStatus = orderStatus
     }
 
 }
