@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.response.home.CategoriesItem
-
 class CategoryAdapter(
     private val context: Context,
     private var list: List<CategoriesItem?>,

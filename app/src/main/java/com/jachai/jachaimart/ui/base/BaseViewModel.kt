@@ -16,14 +16,15 @@ import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.map.AddressDetailsResponse
 import com.jachai.jachaimart.model.order.PaymentRequestResponse
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.order.base_order.BaseOrder
+import com.jachai.jachaimart.model.order.base_order.BaseOrderResponse
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
-import com.jachai.jachaimart.model.order.history.Order
-import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.model.request.PaymentRequest
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
+import com.jachai.jachaimart.model.response.grocery.Hub
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
 import com.jachai.jachaimart.model.response.pay.PaymentListResponse
 import com.jachai.jachaimart.model.response.product.Product
@@ -34,7 +35,6 @@ import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
-import com.jachai.jachaimart.utils.constant.ApiConstants
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import org.json.JSONObject
 import retrofit2.Call
@@ -65,7 +65,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private var addressCall: Call<AddressResponse>? = null
     private var deleteAddressCall: Call<AddressResponse>? = null
     private var orderCall: Call<OrderDetailsResponse>? = null
-    private var orderListCall: Call<OrderHistoryResponse>? = null
+    private var orderListCall: Call<BaseOrderResponse>? = null
 
     var successUserAddressData = MutableLiveData<CurrentLocation?>()
     var successOrderDetailsLiveData = MutableLiveData<OrderDetailsResponse>()
@@ -80,9 +80,9 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     var errorNearestJCShop = MutableLiveData<String?>()
     var errorAddressResponseLiveData = MutableLiveData<String?>()
 
-    var successOrderHistoryDetailsLiveData = MutableLiveData<OrderHistoryResponse>()
-    var successOnGoingOrderListLiveData = MutableLiveData<List<Order>>()
-    var successPreviousOrderListLiveData = MutableLiveData<List<Order>>()
+    var successOrderHistoryDetailsLiveData = MutableLiveData<BaseOrderResponse>()
+    var successOnGoingOrderListLiveData = MutableLiveData<List<BaseOrder>>()
+    var successPreviousOrderListLiveData = MutableLiveData<List<BaseOrder>>()
     var errorOrderDetailsLiveData = MutableLiveData<String>()
 
     var errorPaymentResponseLiveData = MutableLiveData<String>()
@@ -137,15 +137,28 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                 return
             }
 
+//            nearestJCShopCall = location.let {
+//                it.latitude?.let { it1 ->
+//                    it.longitude?.let { it2 ->
+//                        groceryService.getNearestJCShopAroundMe(
+//                            CommonConstants.JC_MART_TYPE,
+//                            it1,
+//                            it2,
+//                            0,
+//                            1
+//
+//                        )
+//                    }
+//                }
+//            }
+
             nearestJCShopCall = location.let {
                 it.latitude?.let { it1 ->
                     it.longitude?.let { it2 ->
-                        groceryService.getNearestJCShopAroundMe(
+                        groceryService.getNearestHUBAroundMe(
                             CommonConstants.JC_MART_TYPE,
                             it1,
-                            it2,
-                            0,
-                            1
+                            it2
 
                         )
                     }
@@ -177,14 +190,24 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                                     successNearestJCShop.value = mResponse
 
                                 } else {
-                                    if (mResponse.shops.isNotEmpty()) {
-                                        SharedPreferenceUtil.setJCShopId(mResponse.shops[0].id)
-                                        SharedPreferenceUtil.saveNearestShop(mResponse.shops[0])
+
+                                    if (mResponse.hub != null) {
+                                        SharedPreferenceUtil.setJCHubId(mResponse.hub?.id)
+                                        SharedPreferenceUtil.saveNearestHub(mResponse.hub!!)
                                         successNearestJCShopUpdate.value = true
                                     } else {
-                                        SharedPreferenceUtil.setJCShopId(null)
+                                        SharedPreferenceUtil.setJCHubId(null)
                                         successNearestJCShopUpdate.value = false
                                     }
+
+//                                    if (mResponse.shops.isNotEmpty()) {
+//                                        SharedPreferenceUtil.setJCShopId(mResponse.shops[0].id)
+//                                        SharedPreferenceUtil.saveNearestShop(mResponse.shops[0])
+//                                        successNearestJCShopUpdate.value = true
+//                                    } else {
+//                                        SharedPreferenceUtil.setJCShopId(null)
+//                                        successNearestJCShopUpdate.value = false
+//                                    }
                                 }
                             } else {
                                 errorNearestJCShop.value = "failed"
@@ -302,18 +325,18 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                 return
             }
 
-            orderListCall = orderService.getMyAllOrder(
+            orderListCall = orderService.getMyAllOrderV2(
                 "2021-10-01",
-                "2022-12-01",
+                "2022-12-31",
                 0,
-                100
+                10000
 
             )
 
-            orderListCall?.enqueue(object : Callback<OrderHistoryResponse> {
+            orderListCall?.enqueue(object : Callback<BaseOrderResponse> {
                 override fun onResponse(
-                    call: Call<OrderHistoryResponse>,
-                    response: Response<OrderHistoryResponse>
+                    call: Call<BaseOrderResponse>,
+                    response: Response<BaseOrderResponse>
                 ) {
                     JachaiLog.d(TAG, response.body().toString())
                     orderListCall = null
@@ -327,7 +350,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
                 }
 
-                override fun onFailure(call: Call<OrderHistoryResponse>, t: Throwable) {
+                override fun onFailure(call: Call<BaseOrderResponse>, t: Throwable) {
                     orderListCall = null
                     JachaiLog.d(TAG, t.localizedMessage)
                     errorOrderDetailsLiveData.postValue("Failed")
@@ -341,31 +364,29 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    private fun postData(orderHistoryResponse: OrderHistoryResponse?) {
-        val orders = orderHistoryResponse?.orders
-        val onGoingOrder = mutableListOf<Order>()
-        val completedOrder = mutableListOf<Order>()
+    private fun postData(baseOrderResponse: BaseOrderResponse?) {
+        val orders = baseOrderResponse?.orders
+        val onGoingOrder = mutableListOf<BaseOrder>()
+        val completedOrder = mutableListOf<BaseOrder>()
         if (orders != null) {
 
             JachaiApplication.mDatabase
                 .daoAccess().clearLiveOrderTable()
             for (i in orders.indices) {
-                if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
-                    ||
-                    orders[i].status.equals(ApiConstants.ORDER_DELIVERED)
-                    ||
-                    orders[i].status.equals(ApiConstants.ORDER_REVIEWED)
-                    ||
-                    orders[i].status.equals(ApiConstants.ORDER_CANCELLED)
-                ) {
-                    completedOrder.add(orders[i])
-                } else {
-                    onGoingOrder.add(orders[i])
-                    JachaiApplication.mDatabase
-                        .daoAccess()
-                        .insertOngoingOrder(orders[i])
+//                if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
+//                    ||
+//                    orders[i].status.equals(ApiConstants.ORDER_DELIVERED)
+//                    ||
+//                    orders[i].status.equals(ApiConstants.ORDER_REVIEWED)
+//                    ||
+//                    orders[i].status.equals(ApiConstants.ORDER_CANCELLED)
+//                ) {
+//                    completedOrder.add(orders[i])
+//                } else {
+                onGoingOrder.add(orders[i])
+                JachaiApplication.mDatabase.daoAccess().insertBaseOrder(orders[i])
 
-                }
+//                }
 
             }
 
@@ -427,9 +448,9 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         productOrder.productName = item.name
 //        productOrder.quantity = quantity.toInt()
         productOrder.shopId = shopItem?.id!!
-        productOrder.shopName = shopItem.name
-        productOrder.shopSubtitle = "na"
-        productOrder.shopImage = shopItem.logo
+//        productOrder.shopName = shopItem.name
+//        productOrder.shopSubtitle = "na"
+//        productOrder.shopImage = shopItem.logo
         productOrder.image = item.productImage
         productOrder.isChecked = false
         productOrder.isPopular = false
@@ -490,6 +511,86 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                 successAddToCartData.postValue(
                     finalProductOrder?.let {
                         JachaiApplication.mDatabase.daoAccess().insertOrder(it, isFromSameShop)
+                    }
+                )
+            } else {
+                ToastUtils.error("Something Wrong !! Please try again later. Thank you.")
+            }
+        } catch (ex: Exception) {
+            ToastUtils.error("Something Wrong !! Please try again later. Thank you.")
+        }
+
+    }
+
+    fun saveProductByHub(item: Product, quantity: Int, hub: Hub?, isFromSameHub: Boolean) {
+        val productOrder = ProductOrder()
+        productOrder.product = item.id.toString()
+        productOrder.productName = item.name
+//        productOrder.quantity = quantity.toInt()
+        productOrder.hubId = hub?.id!!
+        productOrder.hubName = hub.name
+        productOrder.shopSubtitle = "na"
+        productOrder.hubImage = hub.logo
+        productOrder.image = item.productImage
+        productOrder.isChecked = false
+        productOrder.isPopular = false
+
+
+//        var finalProductOrder =
+//            item.variations?.get(0)?.let {
+//                updatedProductOrder(productOrder, quantity, it)
+//            }
+
+        try {
+
+
+            if (!item.variations.isNullOrEmpty()) {
+                val finalProductOrder =
+                    item.variations?.get(0)?.let {
+                        when {
+                            item.variations[0]?.maximumOrderLimit == 0 -> {
+                                updatedProductOrder(productOrder, quantity, it, false)
+                            }
+                            quantity <= item.variations[0]?.maximumOrderLimit!! -> {
+                                updatedProductOrder(productOrder, quantity, it, false)
+
+                            }
+                            else -> {
+
+                                val tempProductOrder = updatedProductOrder(
+                                    productOrder,
+                                    item.variations[0]?.maximumOrderLimit!!,
+                                    it,
+                                    true
+                                )
+                                JachaiApplication.mDatabase.daoAccess()
+                                    .insertOrder(tempProductOrder, isFromSameHub)
+                                val mQuantity = quantity - item.variations[0]?.maximumOrderLimit!!
+                                val nextVariationsId = item.variations[0]?.regularVariationId
+
+                                val nextVariationsItem: VariationsItem? =
+                                    getVariationItemById(item.variations, nextVariationsId)
+
+                                if (nextVariationsItem != null) {
+                                    updatedProductOrder(
+                                        productOrder,
+                                        mQuantity,
+                                        nextVariationsItem,
+                                        true
+                                    )
+                                } else {
+                                    null
+                                }
+
+                            }
+                        }
+                    }
+
+
+
+                successAddToCartData.postValue(
+                    finalProductOrder?.let {
+                        JachaiApplication.mDatabase.daoAccess().insertOrder(it, isFromSameHub)
                     }
                 )
             } else {
@@ -606,7 +707,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     }
 
-    fun getAddressFromLatLan(context: Context, nowLocation: CurrentLocation){
+    fun getAddressFromLatLan(context: Context, nowLocation: CurrentLocation) {
         try {
             if (addressDetailsCall != null) {
                 return

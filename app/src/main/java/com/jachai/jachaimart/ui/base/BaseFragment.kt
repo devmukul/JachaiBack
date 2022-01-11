@@ -79,7 +79,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding>(
     override fun onDestroyView() {
 
         super.onDestroyView()
-//        _binding = null
+        _binding = null
     }
 
     protected fun <VIEW_MODEL : ViewModel> bindViewModel(viewModel: VIEW_MODEL) {

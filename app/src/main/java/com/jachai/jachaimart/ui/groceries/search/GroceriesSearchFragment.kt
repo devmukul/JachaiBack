@@ -257,15 +257,15 @@ class GroceriesSearchFragment :
                 loaderViewModel.successAddToCartData.postValue(true)
             }else {
 
-                if (product.shop?.id?.let {
+                if (product.hub?.id?.let {
                         JachaiApplication.mDatabase.daoAccess()
-                            .isInsertionApplicable(shopID = it)
+                            .isInsertionApplicableByHubId(hubId = it)
                     } == true) {
 //
 
 
                     if (JachaiApplication.mDatabase.daoAccess()
-                            .getProductByProductID(product.id!!, product.shop.id) > 0
+                            .getProductByProductIDByHub(product.id!!, product.hub.id) > 0
                     ) {
 
                         showShortToast("Product already added")
@@ -274,7 +274,7 @@ class GroceriesSearchFragment :
 
                         showShortToast("Product added")
                     }
-                    loaderViewModel.saveProduct(it1, quantity, product.shop, true)
+                    loaderViewModel.saveProductByHub(it1, quantity, product.hub, true)
 
                 } else {
                     alertDialog(product, quantity)
@@ -334,7 +334,7 @@ class GroceriesSearchFragment :
 
         builder.setPositiveButton("Continue") { _, _ ->
 
-            loaderViewModel.saveProduct(product, quantity, product.shop, false)
+            loaderViewModel.saveProductByHub(product, quantity, product.hub, false)
         }
 
         builder.setNegativeButton("Close") { dialog, which ->

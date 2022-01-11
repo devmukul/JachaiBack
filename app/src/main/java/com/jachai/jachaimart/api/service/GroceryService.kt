@@ -71,7 +71,8 @@ interface GroceryService {
     @GET(ApiConstants.SEARCH_PRODUCT_BASE)
     fun searchProducts(
         @Query("key") key: String,
-        @Query("shopId") shopId: String,
+        @Query("shopId") shopId: String = "",
+        @Query("hubId") hubId: String = "",
         @Query("type") type: String = "JC_MART",
         @Query("page") page: Int = 0,
         @Query("limit") limit: Int = 20
@@ -91,6 +92,33 @@ interface GroceryService {
 
     @POST(ApiConstants.PRODUCT_BY_SLUG_BASE)
     fun getProductBySlugs(@Body fProductRequest: FProductRequest): Call<ProductBySlugResponse>
+
+
+    //HUB
+    @GET(ApiConstants.HUB_NEAREST_BASE)
+    fun getNearestHUBAroundMe(
+        @Query("type") type: String,
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double
+    ): Call<NearestJCShopResponse>
+
+    @GET(ApiConstants.HUB_CATEGORIES_BASE)
+    fun getHubCategories(@Query("id") hubId: String): Call<CategoryResponse>
+
+    @GET(ApiConstants.PRODUCT_BY_CATEGORY_HUB_BASE)
+    suspend fun getProductsByCategoryHub(
+        @Query("hubId") type: String?,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Response<CatWithRelatedProductsResponse>
+
+    @GET(ApiConstants.CATEGORY_WITH_PRODUCTS_HUB_BASE)
+    fun getHubCategoriesDetails(
+        @Query("hubId") shopId: String,
+        @Query("categoryId") categoryId: String
+    ): Call<CategoryDetailsResponse>
+
+
 
 
 }

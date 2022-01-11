@@ -62,7 +62,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
     }
 
-    fun requestForShopCategories(shopId: String) {
+    fun requestForShopCategories(hubId: String) {
         isRefresh.postValue(true)
         try {
             if (categoryCall != null) {
@@ -72,7 +72,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
                 return
             }
 
-            categoryCall = groceryService.getShopCategories(shopId)
+            categoryCall = groceryService.getHubCategories(hubId)
 
             categoryCall?.enqueue(object : Callback<CategoryResponse> {
                 override fun onResponse(
@@ -206,14 +206,15 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         }
     }
 
-    fun requestForShopCategoryWithRelatedProduct(shopId: String?): Flow<PagingData<CatWithRelatedProduct>> {
+    fun requestForShopCategoryWithRelatedProduct(hubId: String?): Flow<PagingData<CatWithRelatedProduct>> {
         return Pager(
             PagingConfig(
                 pageSize = PAGING_PAGE_LIMIT_MIN,
                 initialLoadSize = PAGING_PAGE_LIMIT_MIN
             )
         ) {
-            HomePagingSource(shopId)
+//            HomePagingSource(shopId)
+            HomePagingSource(hubId = hubId)
         }.flow.cachedIn(viewModelScope)
 
     }

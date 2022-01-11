@@ -3,6 +3,7 @@ package com.jachai.jachaimart.database
 import androidx.annotation.Keep
 import androidx.room.*
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.order.base_order.BaseOrder
 import com.jachai.jachaimart.model.order.history.DeliveryMan
 import com.jachai.jachaimart.model.order.history.Order
 import com.jachai.jachaimart.model.order.history.ShippingLocation
@@ -42,8 +43,15 @@ interface IDaoAccess {
     @Query("SELECT count(*) FROM ProductOrder WHERE shopId = :shopID")
     fun getProductByShopID(shopID: String): Int
 
+    @Query("SELECT count(*) FROM ProductOrder WHERE hubId = :hubId")
+    fun getProductByHubID(hubId: String): Int
+
     @Query("SELECT count(*) FROM ProductOrder WHERE product = :productId AND shopId = :shopID")
     fun getProductByProductID(productId: String, shopID: String): Int
+
+    @Query("SELECT count(*) FROM ProductOrder WHERE product = :productId AND hubId = :hubId")
+    fun getProductByProductIDByHub(productId: String, hubId: String): Int
+
 
 
     @Query("SELECT count(*) FROM ProductOrder")
@@ -58,6 +66,17 @@ interface IDaoAccess {
             true
         }
         return isSameShopID
+    }
+
+    @Transaction
+    fun isInsertionApplicableByHubId(hubId: String): Boolean {
+        var isSameHubID = false
+        isSameHubID = if (getProductOrdersSize() > 0) {
+            getProductByHubID(hubId) > 0
+        } else {
+            true
+        }
+        return isSameHubID
     }
 
     @Query("SELECT SUM(price * quantity) FROM ProductOrder")
@@ -117,6 +136,9 @@ interface IDaoAccess {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrder(order: Order)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertBaseOrder(baseOrder: BaseOrder)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertDeliveryMain(deliveryMan: DeliveryMan)

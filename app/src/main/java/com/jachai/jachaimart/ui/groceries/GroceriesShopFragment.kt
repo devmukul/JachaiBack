@@ -71,7 +71,8 @@ class GroceriesShopFragment :
 
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
 
-    private var shopID: String = ""
+//    private var shopID: String = ""
+    private var hubID: String = ""
     private lateinit var categoryWithProductPaginAdapter: CategoryWithProductPaginAdapter
 
 
@@ -101,12 +102,14 @@ class GroceriesShopFragment :
 
             lifecycleScope.launch {
                 initRecyclerViews()
-                if (SharedPreferenceUtil.getJCShopId() == null) {
+                if (SharedPreferenceUtil.getJCHubId() == null) {
                     showNoShopFoundAlert()
                 } else {
-                    shopID = SharedPreferenceUtil.getJCShopId().toString()
-                    viewModel.requestForShopCategories(shopID)
-                    loadCatWithProducts(shopID)
+//                    shopID = SharedPreferenceUtil.getJCShopId().toString()
+                    hubID = SharedPreferenceUtil.getJCHubId().toString()
+//                    viewModel.requestForShopCategories(shopID)
+                    viewModel.requestForShopCategories(hubID)
+                    loadCatWithProducts(hubID)
                 }
                 viewModel.requestAllFavouriteProduct()
                 viewModel.requestAllAddress()
@@ -176,16 +179,16 @@ class GroceriesShopFragment :
         }
 
         binding.refresh.setOnRefreshListener {
-            viewModel.requestForShopCategories(shopID)
-            loadCatWithProducts(shopID)
+            viewModel.requestForShopCategories(hubID)
+            loadCatWithProducts(hubId = hubID)
         }
 
 
     }
 
-    private fun loadCatWithProducts(shopID: String) {
+    private fun loadCatWithProducts(hubId: String) {
         lifecycleScope.launch {
-            viewModel.requestForShopCategoryWithRelatedProduct(shopID).collectLatest {
+            viewModel.requestForShopCategoryWithRelatedProduct(hubId).collectLatest {
                 categoryWithProductPaginAdapter.submitData(it)
             }
             categoryWithProductPaginAdapter.loadStateFlow.collectLatest { loadStates ->
@@ -300,12 +303,12 @@ class GroceriesShopFragment :
 
             etSearchShops.setOnClickListener {
 
-                if (SharedPreferenceUtil.getJCShopId().isNullOrEmpty()) {
+                if (SharedPreferenceUtil.getJCHubId().isNullOrEmpty()) {
                     showNoShopFoundAlert()
                 } else {
                     val action =
                         GroceriesShopFragmentDirections.actionGroceriesShopFragmentToGroceriesSearchFragment(
-                            SharedPreferenceUtil.getJCShopId()!!
+                            SharedPreferenceUtil.getJCHubId()!!
                         )
                     navController.navigate(action)
                 }
@@ -399,23 +402,23 @@ class GroceriesShopFragment :
         viewModel.successNearestJCShopUpdate.observe(viewLifecycleOwner) {
             if (it == true) {
                 viewModel.successCategoryResponseLiveData.value = null
-                if (SharedPreferenceUtil.getJCShopId() == null) {
+                if (SharedPreferenceUtil.getJCHubId() == null) {
                     showNoShopFoundAlert()
                     initRecyclerViews()
                 } else {
-                    shopID = SharedPreferenceUtil.getJCShopId().toString()
-                    viewModel.requestForShopCategories(shopID)
-                    loadCatWithProducts(shopID)
+                    hubID = SharedPreferenceUtil.getJCHubId().toString()
+                    viewModel.requestForShopCategories(hubID)
+                    loadCatWithProducts(hubID)
                 }
             } else {
-                if (SharedPreferenceUtil.getJCShopId() == null) {
+                if (SharedPreferenceUtil.getJCHubId() == null) {
 
                     showNoShopFoundAlert()
                     initRecyclerViews()
                 } else {
-                    shopID = SharedPreferenceUtil.getJCShopId().toString()
-                    viewModel.requestForShopCategories(shopID)
-                    loadCatWithProducts(shopID)
+                    hubID = SharedPreferenceUtil.getJCHubId().toString()
+                    viewModel.requestForShopCategories(hubID)
+                    loadCatWithProducts(hubID)
                 }
             }
             initView()
@@ -484,7 +487,7 @@ class GroceriesShopFragment :
 
             SharedPreferenceUtil.saveCurrentAddress(address!!)
 
-            if (!SharedPreferenceUtil.isJCShopAvailable()) {
+            if (!SharedPreferenceUtil.isJCHubAvailable()) {
                 if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
                     SharedPreferenceUtil.getDeliveryAddress()?.let { it1 ->
                         viewModel.getNearestJCShop(
@@ -546,15 +549,15 @@ class GroceriesShopFragment :
                 viewModel.successAddToCartData.postValue(true)
             } else {
 
-                if (product.shop?.id?.let {
+                if (product.hub?.id?.let {
                         JachaiApplication.mDatabase.daoAccess()
-                            .isInsertionApplicable(shopID = it)
+                            .isInsertionApplicableByHubId(hubId = it)
                     } == true) {
 //
 
 
                     if (JachaiApplication.mDatabase.daoAccess()
-                            .getProductByProductID(product.id!!, product.shop.id) > 0
+                            .getProductByProductIDByHub(product.id!!, product.hub.id) > 0
                     ) {
 
                         showShortToast("Product already added")
@@ -563,7 +566,7 @@ class GroceriesShopFragment :
 
                         showShortToast("Product added")
                     }
-                    viewModel.saveProduct(it1, quantity, product.shop, true)
+                    viewModel.saveProductByHub(it1, quantity, product.hub, true)
 
                 } else {
                     alertDialog(product, quantity)
@@ -773,7 +776,7 @@ class GroceriesShopFragment :
 
         builder.setPositiveButton("Continue") { _, _ ->
 
-            viewModel.saveProduct(product, quantity, product.shop, false)
+            viewModel.saveProductByHub(product, quantity, product.hub, false)
         }
 
         builder.setNegativeButton("Close") { dialog, which ->

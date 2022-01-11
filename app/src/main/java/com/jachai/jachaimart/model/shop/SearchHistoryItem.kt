@@ -19,7 +19,7 @@ data class SearchHistoryItem(
     @field:SerializedName("searchKey")
     @PrimaryKey
     @ColumnInfo(defaultValue = "")
-    val key: String = "",
+    val key: String,
 
     @field:SerializedName("updatedAtKey")
     @ColumnInfo(name = "updated_at", defaultValue = "CURRENT_TIMESTAMP")

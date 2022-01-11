@@ -8,12 +8,12 @@ import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.ui.base.BaseFragment.Companion.TAG
 import com.jachai.jachaimart.utils.RetrofitConfig
 
-class HomePagingSource(val shopId: String?) : PagingSource<Int, CatWithRelatedProduct>() {
+class HomePagingSource(val hubId: String?) : PagingSource<Int, CatWithRelatedProduct>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CatWithRelatedProduct> {
         try {
             val nextPageNumber = params.key ?: 0
-            val response = RetrofitConfig.groceryService.getProductsByCategoryShop(
-                shopId,
+            val response = RetrofitConfig.groceryService.getProductsByCategoryHub(
+                hubId,
                 nextPageNumber,
                 params.loadSize
             )
@@ -40,7 +40,7 @@ class HomePagingSource(val shopId: String?) : PagingSource<Int, CatWithRelatedPr
 
     }
 
-    @ExperimentalPagingApi
+
     override fun getRefreshKey(state: PagingState<Int, CatWithRelatedProduct>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)

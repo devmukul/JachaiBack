@@ -32,6 +32,16 @@ class ProductOrder {
     @ColumnInfo(defaultValue = "")
     var shopId: String = ""
 
+
+    @ColumnInfo(defaultValue = "")
+    var hubId: String = ""
+
+    @ColumnInfo(defaultValue = "")
+    var hubName: String = ""
+
+    @ColumnInfo(defaultValue = "")
+    var hubImage: String = ""
+
     @ColumnInfo(defaultValue = "")
     var shopName: String? = null
 

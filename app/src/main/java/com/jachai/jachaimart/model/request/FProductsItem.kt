@@ -16,5 +16,5 @@ data class FProductsItem(
     @field:SerializedName("slug")
     @PrimaryKey
     @ColumnInfo(defaultValue = "")
-    val productId: String = ""
+    val productId: String
 ) : Parcelable

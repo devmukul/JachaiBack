@@ -97,11 +97,11 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     override fun subscribeObservers() {
         viewModel.successShopDetailsLiveData.observe(viewLifecycleOwner) {
             binding.apply {
-                restraurantName.text = it.shopName
+                restraurantName.text = it.hubName
                 restraurantSubtitle.text = it.shopSubtitle
 
                 Glide.with(requireContext())
-                    .load(it.shopImage)
+                    .load(it.hubImage)
                     .placeholder(R.drawable.ic_place_holder)
                     .error(R.drawable.ic_place_holder)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
@@ -173,7 +173,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             val dao = JachaiApplication.mDatabase.daoAccess()
 
             val subtotal = dao.getProductOrderSubtotal()
-            val vatSdPercent = SharedPreferenceUtil.getNearestShop()?.vat?.toFloat() ?: 0.toFloat()
+            val vatSdPercent = SharedPreferenceUtil.getNearestHub()?.vat?.toFloat() ?: 0.toFloat()
             val vatSd : Double = (subtotal * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
 
@@ -181,18 +181,18 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
 
             var nearCostToFree = 0F
-            val deliveryCost = if (SharedPreferenceUtil.getNearestShop()?.isFreeDelivery== true){
+            val deliveryCost = if (SharedPreferenceUtil.getNearestHub()?.isFreeDelivery== true){
                 0.toFloat()
             } else{
-                if (SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery !=0F){
-                    if (total.toDouble()>= SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!! ){
+                if (SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery !=0F){
+                    if (total.toDouble()>= SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery!! ){
                         0.toFloat()
                     }else{
-                        nearCostToFree = SharedPreferenceUtil.getNearestShop()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
-                        SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+                        nearCostToFree = SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
+                        SharedPreferenceUtil.getNearestHub()?.deliveryCharge?.toFloat() ?: 0.toFloat()
                     }
                 }else {
-                    SharedPreferenceUtil.getNearestShop()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+                    SharedPreferenceUtil.getNearestHub()?.deliveryCharge?.toFloat() ?: 0.toFloat()
                 }
             }
 

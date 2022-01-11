@@ -22,14 +22,14 @@ class GroceryCategoryDetailsViewModel (application: Application) : BaseViewModel
     var successResponseLiveData = MutableLiveData<CategoryDetailsResponse?>()
 //    var successAddToCartData = MutableLiveData<Boolean?>()
 
-    fun getCategoryDetailsDetails(shopId: String, categoryId: String) {
+    fun getCategoryDetailsDetails(hubId: String, categoryId: String) {
         if (categoryDetailsCall != null) {
             return
         } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
             return
         }
 
-        categoryDetailsCall = groceryService.getShopCategoriesDetails(shopId, categoryId)
+        categoryDetailsCall = groceryService.getHubCategoriesDetails(hubId, categoryId)
 
         categoryDetailsCall?.enqueue(object : Callback<CategoryDetailsResponse> {
             override fun onResponse(

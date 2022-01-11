@@ -9,6 +9,8 @@ data class CatWithRelatedProduct(
     val category: String,
     @SerializedName("categoryImage")
     val categoryImage: String,
+    @SerializedName("categorySlug")
+    val categorySlug: String,
     @SerializedName("categoryId")
     val categoryId: String,
     @SerializedName("products")
