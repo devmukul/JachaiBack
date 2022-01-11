@@ -10,6 +10,7 @@ import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.model.order.OrderResponse
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.order.multi_order.MultiOrderResponse
 import com.jachai.jachaimart.model.request.OrderRequest
 import com.jachai.jachaimart.model.request.ProductsItem
 import com.jachai.jachaimart.model.request.ShippingLocation
@@ -30,12 +31,12 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
 
     val db = JachaiApplication.mDatabase.daoAccess()
     var successProductOrderListLiveData = MutableLiveData<List<ProductOrder>>()
-    var successOrderLiveData = MutableLiveData<OrderResponse>()
+    var successOrderLiveData = MutableLiveData<MultiOrderResponse>()
 
 
 
     private val orderService = RetrofitConfig.orderService
-    private var orderCall: Call<OrderResponse>? = null
+    private var orderCall: Call<MultiOrderResponse>? = null
 
     fun placeOrder(additionalComment: String, deliveryAddress: Address) {
         var productOrderList: List<ProductOrder> = db.getProductOrders()
@@ -69,10 +70,10 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
             orderCall = orderService.orderRequestForHub(orderRequest)
             JachaiLog.d(TAG, Gson().toJson(orderRequest).toString())
 
-            orderCall?.enqueue(object : Callback<OrderResponse> {
+            orderCall?.enqueue(object : Callback<MultiOrderResponse> {
                 override fun onResponse(
-                    call: Call<OrderResponse>,
-                    response: Response<OrderResponse>
+                    call: Call<MultiOrderResponse>,
+                    response: Response<MultiOrderResponse>
                 ) {
                     orderCall = null
 
@@ -91,7 +92,7 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
 
                 }
 
-                override fun onFailure(call: Call<OrderResponse>, t: Throwable) {
+                override fun onFailure(call: Call<MultiOrderResponse>, t: Throwable) {
                     orderCall = null
                     JachaiLog.d(TAG, t.localizedMessage)
                     errorResponseLiveData.postValue("failed")

@@ -5,6 +5,7 @@ import com.jachai.jachaimart.model.order.base_order.BaseOrderResponse
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.order.history.OrderHistoryResponse
 import com.jachai.jachaimart.model.order.multi_order.BaseOrderDetailsResponse
+import com.jachai.jachaimart.model.order.multi_order.MultiOrderResponse
 import com.jachai.jachaimart.model.request.FProductsItem
 import com.jachai.jachaimart.model.request.OrderRequest
 import com.jachai.jachaimart.model.response.GenericResponse
@@ -19,7 +20,7 @@ interface OrderService {
     fun orderRequest(@Body orderRequest: OrderRequest): Call<OrderResponse>
 
     @POST(ApiConstants.ORDER_REQUEST_HUB_BASE)
-    fun orderRequestForHub(@Body orderRequest: OrderRequest): Call<OrderResponse>
+    fun orderRequestForHub(@Body orderRequest: OrderRequest): Call<MultiOrderResponse>
 
     @GET(ApiConstants.ORDER_DETAILS_BASE)
     fun orderDetailsRequest(@Query("orderId") orderID: String): Call<OrderDetailsResponse>

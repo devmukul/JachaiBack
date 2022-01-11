@@ -23,6 +23,7 @@ import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.jachai.jachaimart.utils.constant.ApiConstants
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import es.dmoral.toasty.Toasty
 
@@ -227,23 +228,40 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         }
 
         viewModel.successOrderLiveData.observe(viewLifecycleOwner) {
-            val jachaiUrl = "https://www.jachai.com"
-            viewModel.clearCreatedOrder()
-            if (mCheckedId != "COD") {
-                mOrderId = it.orderId!!
-                val paymentRequest = PaymentRequest(
-                    it.total!!,
-                    it.orderId,
-                    mCheckedId,
-                    "$jachaiUrl/payment/success",
-                    "$jachaiUrl/payment/fail",
-                    "$jachaiUrl/payment/cancel"
-                )
-                viewModel.requestPayment(paymentRequest)
+            if (!it.order.isNullOrEmpty()) {
+                var tGrandTotal = 0.0
+                for (item in it.order) {
+                    if (item.status.equals(ApiConstants.ORDER_CANCELLED)) {
+                        continue
+                    }
+                    tGrandTotal += item.total
+                }
+
+
+                val jachaiUrl = "https://www.jachai.com"
+                viewModel.clearCreatedOrder()
+                if (mCheckedId != "COD") {
+                    mOrderId = it.order[0].baseOrderId
+                    val paymentRequest = PaymentRequest(
+                        tGrandTotal,
+                        it.order[0].baseOrderId,
+                        mCheckedId,
+                        "$jachaiUrl/payment/success",
+                        "$jachaiUrl/payment/fail",
+                        "$jachaiUrl/payment/cancel"
+                    )
+                    viewModel.requestPayment(paymentRequest)
+                } else {
+                    dismissLoader()
+                    val action =
+                        CheckoutFragmentDirections.actionCheckoutFragmentToMultiOrderPackFragment()
+                    action.orderID = it.order[0].baseOrderId
+                    navController.navigate(action)
+                }
             } else {
                 dismissLoader()
                 val action =
-                    CheckoutFragmentDirections.actionCheckoutFragmentToOnGoingOrderFragment(it.orderId.toString())
+                    CheckoutFragmentDirections.actionCheckoutFragmentToNavHome()
                 navController.navigate(action)
             }
         }
