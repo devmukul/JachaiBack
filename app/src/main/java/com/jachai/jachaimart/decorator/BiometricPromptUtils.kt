@@ -39,7 +39,7 @@ object BiometricPromptUtils {
     fun createPromptInfo(activity: AppCompatActivity): BiometricPrompt.PromptInfo =
         BiometricPrompt.PromptInfo.Builder().apply {
             setTitle(activity.getString(R.string.prompt_info_title))
-            setSubtitle("Use your previously saved fingerprint to verify your identity instead of sending OTP to mobile.")
+            setSubtitle("Set up your mobile device for fingerprint log in.")
             setDescription(activity.getString(R.string.prompt_info_description))
             setConfirmationRequired(false)
             setNegativeButtonText(activity.getString(R.string.prompt_info_use_app_password))
