@@ -25,6 +25,6 @@ object SharedPreferenceConstants {
 
 
     const val TAG_JACHAI = "jachai_preference_v4"
-    const val TAG_JACHAI_TOKEN = "jachai_preference_token_v2"
+    const val TAG_JACHAI_TOKEN = "jachai_preference_token_v4"
     const val CIPHERTEXT_WRAPPER = "ciphertext_wrapper"
 }
