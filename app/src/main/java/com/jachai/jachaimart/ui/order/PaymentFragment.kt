@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.*
 import androidx.activity.addCallback
@@ -16,6 +17,7 @@ import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.PaymentFragmentBinding
 import com.jachai.jachaimart.ui.base.BaseFragment
 import es.dmoral.toasty.Toasty
+import timber.log.Timber
 
 class PaymentFragment :
     BaseFragment<PaymentFragmentBinding>(R.layout.payment_fragment) {

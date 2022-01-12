@@ -71,7 +71,6 @@ interface GroceryService {
     @GET(ApiConstants.SEARCH_PRODUCT_BASE)
     fun searchProducts(
         @Query("key") key: String,
-        @Query("shopId") shopId: String = "",
         @Query("hubId") hubId: String = "",
         @Query("type") type: String = "JC_MART",
         @Query("page") page: Int = 0,

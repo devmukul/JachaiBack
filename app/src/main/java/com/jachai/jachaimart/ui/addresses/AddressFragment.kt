@@ -18,6 +18,7 @@ import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
+import com.jachai.jachaimart.utils.SharedPreferenceUtil
 
 class AddressFragment : BaseFragment<AddressFragmentBinding>(R.layout.address_fragment),
     UserLocationListAdapter.Interaction {
@@ -72,6 +73,19 @@ class AddressFragment : BaseFragment<AddressFragmentBinding>(R.layout.address_fr
 
         viewModel.deleteAddressResponseLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
+            val savedAddress = SharedPreferenceUtil.getDeliveryAddress()
+
+            var  isFound= false
+
+            for (address in it!!.addresses){
+                if(savedAddress!= null && (savedAddress!!.id == address.id)) {
+                    isFound = true
+                    break
+                }
+            }
+
+            if (!isFound)
+                SharedPreferenceUtil.removeDeliveryAddress()
             addressListAdapter.setList(it!!.addresses)
             addressListAdapter.notifyDataSetChanged()
         }
