@@ -491,6 +491,13 @@ class GroceriesShopFragment :
             binding.apply {
                 if (it > 0) {
                     orderBottom.root.visibility = View.VISIBLE
+
+                    val paddingDp = 52;
+                    var density = requireContext().resources.displayMetrics.density
+                    val paddingPixel: Int = (paddingDp * density).toInt()
+                    mainLay.setPadding(0,0,0,paddingPixel)
+
+
                     val order = JachaiApplication.mDatabase.daoAccess().getLastBaseOrder()
                     JachaiLog.e(TAG, order.toString())
                     orderBottom.inProgressText.text = "$it orders in progress"
@@ -499,6 +506,7 @@ class GroceriesShopFragment :
                         order.createdAt?.let { it1 -> getDateFormatter(it1) }
 
                     orderBottom.shopName.text = order.hubName
+
                 } else {
                     orderBottom.root.visibility = View.GONE
                 }
