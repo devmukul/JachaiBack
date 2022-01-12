@@ -26,7 +26,7 @@ class DoggoImagePagingSource(val doggoApiService: GroceryService, val key: Strin
         //for first case it will be null, then we can pass some default value, in our case it's 1
         val page = params.key ?: DEFAULT_PAGE_INDEX
         return try {
-            val response = doggoApiService.searchProducts(key = key, shopId = shopId, page = page, limit= params.loadSize).execute()
+            val response = doggoApiService.searchProducts(key = key, hubId = shopId, page = page, limit= params.loadSize).execute()
 
             val data = response.body()
             val products = data!!.products
