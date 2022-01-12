@@ -2,6 +2,7 @@ package com.jachai.jachaimart.ui.order
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -33,6 +34,11 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
         navController = Navigation.findNavController(view)
         initView()
         subscribeObservers()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            val action = OrderFragmentDirections.actionOrderFragmentToGroceriesShopFragment()
+            navController.navigate(action)
+        }
     }
 
     override fun initView() {
@@ -53,12 +59,12 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
                 adapter = orderViewOnGoingAdapter
             }
 
-//            rvOrderCompleted.apply {
-//                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-//                orderViewOnCompletedAdapter =
-//                    OrderViewRowAdapter(requireContext(), emptyList(), false, this@OrderFragment)
-//                adapter = orderViewOnCompletedAdapter
-//            }
+            rvOrderCompleted.apply {
+                layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                orderViewOnCompletedAdapter =
+                    OrderViewRowAdapter(requireContext(), emptyList(), false, this@OrderFragment)
+                adapter = orderViewOnCompletedAdapter
+            }
         }
 
 
@@ -73,10 +79,10 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
             orderViewOnGoingAdapter.notifyDataSetChanged()
         }
 
-//        viewModel.successPreviousOrderListLiveData.observe(viewLifecycleOwner) {
-//            orderViewOnCompletedAdapter.setList(it)
-//            orderViewOnCompletedAdapter.notifyDataSetChanged()
-//        }
+        viewModel.successPreviousOrderListLiveData.observe(viewLifecycleOwner) {
+            orderViewOnCompletedAdapter.setList(it)
+            orderViewOnCompletedAdapter.notifyDataSetChanged()
+        }
         viewModel.errorOrderDetailsLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
         }
