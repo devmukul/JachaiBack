@@ -100,6 +100,9 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
                 navController.navigate(action)
 
             } else {
+                val action = OrderFragmentDirections.actionOrderFragmentToMultiOrderPackFragment()
+                action.orderID = order.baseOrderId
+                navController.navigate(action)
 //                val action =
 //                    OrderFragmentDirections.actionOrderFragmentToOrderDetailsFragment(order.orderId)
 //                navController.navigate(action)
