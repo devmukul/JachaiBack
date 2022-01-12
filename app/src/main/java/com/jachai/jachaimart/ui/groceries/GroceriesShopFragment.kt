@@ -12,15 +12,12 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import androidx.biometric.BiometricPrompt
-import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,12 +48,8 @@ import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductPaginAdapt
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
-import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.CIPHERTEXT_WRAPPER
-import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.TAG_JACHAI
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.TAG_JACHAI_TOKEN
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -88,7 +81,7 @@ class GroceriesShopFragment :
 
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
 
-//    private var shopID: String = ""
+    //    private var shopID: String = ""
     private var hubID: String = ""
     private lateinit var categoryWithProductPaginAdapter: CategoryWithProductPaginAdapter
 
@@ -127,30 +120,36 @@ class GroceriesShopFragment :
 
 
 
-        if (orderQty == 0 || isViewNull) {
+        if (!SharedPreferenceUtil.isFreshLogin()) {
+            if (orderQty == 0 || isViewNull) {
 
-            lifecycleScope.launch {
-                initRecyclerViews()
-                if (SharedPreferenceUtil.getJCHubId() == null) {
-                    showNoShopFoundAlert()
-                } else {
+                lifecycleScope.launch {
+                    initRecyclerViews()
+                    if (SharedPreferenceUtil.getJCHubId() == null) {
+                        showNoShopFoundAlert()
+                    } else {
 //                    shopID = SharedPreferenceUtil.getJCShopId().toString()
-                    hubID = SharedPreferenceUtil.getJCHubId().toString()
+                        hubID = SharedPreferenceUtil.getJCHubId().toString()
 //                    viewModel.requestForShopCategories(shopID)
-                    viewModel.requestForShopCategories(hubID)
-                    loadCatWithProducts(hubID)
+                        viewModel.requestForShopCategories(hubID)
+                        loadCatWithProducts(hubID)
+                    }
+                    viewModel.requestAllFavouriteProduct()
+                    viewModel.requestAllAddress()
                 }
-                viewModel.requestAllFavouriteProduct()
-                viewModel.requestAllAddress()
-            }
 
+            } else {
+                try {
+                    categoryWithProductPaginAdapter.notifyDataSetChanged()
+                } catch (ex: Exception) {
+                    JachaiLog.e(TAG, ex.localizedMessage)
+                }
+
+            }
         }else{
-            try {
-                categoryWithProductPaginAdapter.notifyDataSetChanged()
-            }catch (ex: Exception){
-                JachaiLog.e(TAG, ex.localizedMessage)
-            }
-
+            initRecyclerViews()
+            viewModel.requestAllFavouriteProduct()
+            viewModel.requestAllAddress()
         }
 
 
@@ -181,7 +180,8 @@ class GroceriesShopFragment :
         val navView: NavigationView = binding.navView
         navView.setupWithNavController(navController)
 
-        binding.layoutView.appVersion.text = "JaChai-" +BuildConfig.BUILD_TYPE +"-v"+ BuildConfig.VERSION_NAME
+        binding.layoutView.appVersion.text =
+            "JaChai-" + BuildConfig.BUILD_TYPE + "-v" + BuildConfig.VERSION_NAME
 
         binding.layoutView.close.setOnClickListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -206,12 +206,14 @@ class GroceriesShopFragment :
         }
 
         binding.layoutView.touchId.setOnClickListener {
-            if(ciphertextWrapper !=null){
-                cryptographyManager.clearSharedPrefs(requireContext(),
+            if (ciphertextWrapper != null) {
+                cryptographyManager.clearSharedPrefs(
+                    requireContext(),
                     TAG_JACHAI_TOKEN,
-                    Context.MODE_PRIVATE)
+                    Context.MODE_PRIVATE
+                )
                 binding.layoutView.switch1.isChecked = false
-            }else {
+            } else {
                 showBiometricPromptForEncryption()
             }
         }
@@ -336,7 +338,7 @@ class GroceriesShopFragment :
 
         binding.apply {
 
-            layoutView.switch1.isChecked = ciphertextWrapper !=null
+            layoutView.switch1.isChecked = ciphertextWrapper != null
 
             layoutView.mobileNo.text = SharedPreferenceUtil.getMobileNo()
             layoutView.name.text = SharedPreferenceUtil.getName()
@@ -428,8 +430,8 @@ class GroceriesShopFragment :
             it?.let { it1 -> showShortToast(it1) }
         }
 
-        viewModel.successBiometricRegLiveData.observe( viewLifecycleOwner, {
-            val encryptedServerTokenWrapper = cryptographyManager.encryptData(it!!.secret , chipper)
+        viewModel.successBiometricRegLiveData.observe(viewLifecycleOwner, {
+            val encryptedServerTokenWrapper = cryptographyManager.encryptData(it!!.secret, chipper)
             cryptographyManager.persistCiphertextWrapperToSharedPrefs(
                 encryptedServerTokenWrapper,
                 requireContext(),
@@ -471,6 +473,7 @@ class GroceriesShopFragment :
                     viewModel.requestForShopCategories(hubID)
                     loadCatWithProducts(hubID)
                 }
+                initView()
             } else {
                 if (SharedPreferenceUtil.getJCHubId() == null) {
 
@@ -480,9 +483,10 @@ class GroceriesShopFragment :
                     hubID = SharedPreferenceUtil.getJCHubId().toString()
                     viewModel.requestForShopCategories(hubID)
                     loadCatWithProducts(hubID)
+                    initView()
                 }
             }
-            initView()
+
 
 
         }
@@ -495,7 +499,7 @@ class GroceriesShopFragment :
                     val paddingDp = 52;
                     var density = requireContext().resources.displayMetrics.density
                     val paddingPixel: Int = (paddingDp * density).toInt()
-                    mainLay.setPadding(0,0,0,paddingPixel)
+                    mainLay.setPadding(0, 0, 0, paddingPixel)
 
 
                     val order = JachaiApplication.mDatabase.daoAccess().getLastBaseOrder()
