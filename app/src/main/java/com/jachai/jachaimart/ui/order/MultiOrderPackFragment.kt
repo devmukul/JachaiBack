@@ -105,7 +105,6 @@ class MultiOrderPackFragment :
 
     }
 
-
     override fun subscribeObservers() {
         viewModel.successMultiOrderDetailsLiveData.observe(viewLifecycleOwner) {
             updateUI(it)
@@ -222,6 +221,7 @@ class MultiOrderPackFragment :
             payNow.visibility = View.GONE
             onLinePayLayout.visibility = View.GONE
             paymentStatusView.visibility = View.GONE
+            payNow.visibility = View.GONE
         }
     }
 
