@@ -35,6 +35,9 @@ interface IDaoAccess {
     @Query("DELETE FROM `Order`")
     fun clearLiveOrderTable()
 
+    @Query("DELETE FROM `BaseOrders`")
+    fun clearLiveBaseOrderTable()
+
 
     @Query("SELECT * FROM ProductOrder")
     fun getProductOrders(): List<ProductOrder>

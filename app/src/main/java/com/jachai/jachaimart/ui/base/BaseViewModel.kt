@@ -370,7 +370,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         if (orders != null) {
 
             JachaiApplication.mDatabase
-                .daoAccess().clearLiveOrderTable()
+                .daoAccess().clearLiveBaseOrderTable()
             for (i in orders.indices) {
                 if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
                     ||
