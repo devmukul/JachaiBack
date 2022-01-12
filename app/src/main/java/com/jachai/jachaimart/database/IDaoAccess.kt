@@ -149,7 +149,7 @@ interface IDaoAccess {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertShippingLocation(shippingLocation: ShippingLocation)
 
-    @Query("SELECT COUNT(*) FROM `ORDER`")
+    @Query("SELECT COUNT(*) FROM `BaseOrders`")
     fun getOnGoingOrderCount(): Int
 
     @Transaction
@@ -165,6 +165,9 @@ interface IDaoAccess {
 
     @Query("SELECT * FROM `Order` LIMIT 1")
     fun getLastOrder(): Order
+
+    @Query("SELECT * FROM `BaseOrders` LIMIT 1")
+    fun getLastBaseOrder(): BaseOrder
 
     @Query("SELECT * FROM Shop WHERE orderId= :orderId")
     fun getLastOrderShop(orderId: String): Shop

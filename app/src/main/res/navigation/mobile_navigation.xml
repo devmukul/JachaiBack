@@ -450,7 +450,9 @@
             app:destination="@id/onGoingOrderFragment" />
         <action
             android:id="@+id/action_paymentFragment_to_multiOrderPackFragment"
-            app:destination="@id/multiOrderPackFragment"/>
+            app:destination="@id/multiOrderPackFragment"
+            app:popUpTo="@id/multiOrderPackFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/selectUserLocationWithBariKoiFragment"

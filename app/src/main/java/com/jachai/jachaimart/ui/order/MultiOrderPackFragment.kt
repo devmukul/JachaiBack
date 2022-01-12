@@ -1,10 +1,12 @@
 package com.jachai.jachaimart.ui.order
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.RadioGroup
+import androidx.activity.addCallback
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -48,7 +50,17 @@ class MultiOrderPackFragment :
         orderId = args.orderID
         initView()
         subscribeObservers()
-    }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            val action =
+                MultiOrderPackFragmentDirections.actionMultiOrderPackFragmentToOrderFragment()
+            navController.navigate(action)
+        }
+
+
+
+
+        }
 
     override fun onResume() {
         super.onResume()
@@ -92,6 +104,7 @@ class MultiOrderPackFragment :
         }
 
     }
+
 
     override fun subscribeObservers() {
         viewModel.successMultiOrderDetailsLiveData.observe(viewLifecycleOwner) {
@@ -168,23 +181,7 @@ class MultiOrderPackFragment :
                 paymentType.text = orders[0].paymentMethod
 
                 deliverManName.text = orders[0].deliveryMan?.name
-                when {
-                    orders[0].totalPaid == orders[0].total -> {
-                        paymentStatus.text = "PAID"
-                        paymentStatus.setTextColor(Color.parseColor("#28a745"))
-                        payNow.visibility = View.GONE
-                    }
-                    (orders[0].total!! - orders[0].totalPaid) <= 0.0 -> {
-                        paymentStatus.text = "PARTIAL PAID"
-                        paymentStatus.setTextColor(Color.parseColor("#3A494E"))
-                        payNow.visibility = View.VISIBLE
-                    }
-                    else -> {
-                        paymentStatus.text = "UNPAID"
-                        paymentStatus.setTextColor(Color.parseColor("#FF0000"))
-                        payNow.visibility = View.VISIBLE
-                    }
-                }
+
                 if (orders[0].orderNote.isNullOrEmpty() || orders[0].orderNote.isNullOrBlank()) {
                     comment.visibility = View.GONE
                     additionalItem.visibility = View.GONE
@@ -253,7 +250,23 @@ class MultiOrderPackFragment :
             deliveryCharge.text = tDeliveryCharge.toString()
             totalDiscount.text = "-${tDiscount}"
             vat.text = tVat.toString()
-
+            when {
+                orders[0].totalPaid == tGrandTotal -> {
+                    paymentStatus.text = "PAID"
+                    paymentStatus.setTextColor(Color.parseColor("#28a745"))
+                    payNow.visibility = View.GONE
+                }
+                (orders[0].totalPaid - tGrandTotal) < 0.0 -> {
+                    paymentStatus.text = "PARTIAL PAID"
+                    paymentStatus.setTextColor(Color.parseColor("#3A494E"))
+                    payNow.visibility = View.VISIBLE
+                }
+                else -> {
+                    paymentStatus.text = "UNPAID"
+                    paymentStatus.setTextColor(Color.parseColor("#FF0000"))
+                    payNow.visibility = View.VISIBLE
+                }
+            }
 
             goForPayment.setOnClickListener {
                 showLoader()

@@ -491,14 +491,14 @@ class GroceriesShopFragment :
             binding.apply {
                 if (it > 0) {
                     orderBottom.root.visibility = View.VISIBLE
-                    val order = JachaiApplication.mDatabase.daoAccess().getLastOnGoingOrder()
+                    val order = JachaiApplication.mDatabase.daoAccess().getLastBaseOrder()
                     JachaiLog.e(TAG, order.toString())
                     orderBottom.inProgressText.text = "$it orders in progress"
 
                     orderBottom.orderTime.text =
                         order.createdAt?.let { it1 -> getDateFormatter(it1) }
 
-                    orderBottom.shopName.text = order.shop?.name
+                    orderBottom.shopName.text = order.hubName
                 } else {
                     orderBottom.root.visibility = View.GONE
                 }

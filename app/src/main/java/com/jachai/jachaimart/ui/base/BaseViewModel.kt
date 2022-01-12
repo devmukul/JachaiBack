@@ -35,6 +35,7 @@ import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.jachai.jachaimart.utils.constant.ApiConstants
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import org.json.JSONObject
 import retrofit2.Call
@@ -371,20 +372,20 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
             JachaiApplication.mDatabase
                 .daoAccess().clearLiveOrderTable()
             for (i in orders.indices) {
-//                if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
-//                    ||
-//                    orders[i].status.equals(ApiConstants.ORDER_DELIVERED)
-//                    ||
-//                    orders[i].status.equals(ApiConstants.ORDER_REVIEWED)
-//                    ||
-//                    orders[i].status.equals(ApiConstants.ORDER_CANCELLED)
-//                ) {
-//                    completedOrder.add(orders[i])
-//                } else {
+                if (orders[i].status.equals(ApiConstants.ORDER_COMPLETED)
+                    ||
+                    orders[i].status.equals(ApiConstants.ORDER_DELIVERED)
+                    ||
+                    orders[i].status.equals(ApiConstants.ORDER_REVIEWED)
+                    ||
+                    orders[i].status.equals(ApiConstants.ORDER_CANCELLED)
+                ) {
+                    completedOrder.add(orders[i])
+                } else {
                 onGoingOrder.add(orders[i])
                 JachaiApplication.mDatabase.daoAccess().insertBaseOrder(orders[i])
 
-//                }
+                }
 
             }
 
