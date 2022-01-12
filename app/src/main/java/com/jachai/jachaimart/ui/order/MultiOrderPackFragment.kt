@@ -221,7 +221,6 @@ class MultiOrderPackFragment :
             payNow.visibility = View.GONE
             onLinePayLayout.visibility = View.GONE
             paymentStatusView.visibility = View.GONE
-            payNow.visibility = View.GONE
         }
     }
 
@@ -256,11 +255,11 @@ class MultiOrderPackFragment :
                     paymentStatus.setTextColor(Color.parseColor("#28a745"))
                     payNow.visibility = View.GONE
                 }
-                (orders[0].totalPaid - tGrandTotal) < 0.0 -> {
-                    paymentStatus.text = "PARTIAL PAID"
-                    paymentStatus.setTextColor(Color.parseColor("#3A494E"))
-                    payNow.visibility = View.VISIBLE
-                }
+//                (orders[0].totalPaid - tGrandTotal) <= 0.0 -> {
+//                    paymentStatus.text = "PARTIAL PAID"
+//                    paymentStatus.setTextColor(Color.parseColor("#3A494E"))
+//                    payNow.visibility = View.VISIBLE
+//                }
                 else -> {
                     paymentStatus.text = "UNPAID"
                     paymentStatus.setTextColor(Color.parseColor("#FF0000"))
