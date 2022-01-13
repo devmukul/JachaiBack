@@ -68,9 +68,18 @@ object SharedPreferenceUtil {
         preferences.getString(SharedPreferenceConstants.JC_Hub_ID_KEY, null)
 
     fun setJCHubId(name: String?) {
-        preferences.edit {
-            putString(SharedPreferenceConstants.JC_Hub_ID_KEY, name)
+        if (name == null){
+            removeJCHubId()
+            removeNearestHub()
+        }else{
+            preferences.edit {
+                putString(SharedPreferenceConstants.JC_Hub_ID_KEY, name)
+            }
         }
+    }
+
+    fun removeJCHubId() {
+        preferences.edit().remove(SharedPreferenceConstants.JC_Hub_ID_KEY).commit()
     }
 
     fun isJCShopAvailable() = preferences.contains(SharedPreferenceConstants.JC_SHOP_ID_KEY)
@@ -195,6 +204,10 @@ object SharedPreferenceUtil {
         } else {
             null
         }
+    }
+
+    fun removeNearestHub() {
+        preferences.edit().remove(SharedPreferenceConstants.SAVE_HUB_KEY).commit()
     }
 
 
