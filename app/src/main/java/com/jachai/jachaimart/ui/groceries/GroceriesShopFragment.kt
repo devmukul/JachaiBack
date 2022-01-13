@@ -83,7 +83,7 @@ class GroceriesShopFragment :
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
 
     //    private var shopID: String = ""
-    private var hubID: String = ""
+//    private var hubID: String = ""
     private lateinit var categoryWithProductPaginAdapter: CategoryWithProductPaginAdapter
 
     private lateinit var chipper: Cipher
@@ -138,7 +138,7 @@ class GroceriesShopFragment :
                         showNoShopFoundAlert()
                     } else {
 //                    shopID = SharedPreferenceUtil.getJCShopId().toString()
-                        hubID = SharedPreferenceUtil.getJCHubId().toString()
+                        val hubID = SharedPreferenceUtil.getJCHubId().toString()
 //                    viewModel.requestForShopCategories(shopID)
                         viewModel.requestForShopCategories(hubID)
                         loadCatWithProducts(hubID)
@@ -155,7 +155,7 @@ class GroceriesShopFragment :
                 }
 
             }
-        }else{
+        } else {
             initRecyclerViews()
             viewModel.requestAllFavouriteProduct()
             viewModel.requestAllAddress()
@@ -236,8 +236,13 @@ class GroceriesShopFragment :
         }
 
         binding.refresh.setOnRefreshListener {
-            viewModel.requestForShopCategories(hubID)
-            loadCatWithProducts(hubId = hubID)
+            val hubID = SharedPreferenceUtil.getJCHubId()
+            if (hubID == null) {
+                showNoShopFoundAlert()
+            } else {
+                viewModel.requestForShopCategories(hubID)
+                loadCatWithProducts(hubId = hubID)
+            }
         }
 
 
@@ -487,28 +492,28 @@ class GroceriesShopFragment :
         viewModel.successNearestJCShopUpdate.observe(viewLifecycleOwner) {
             if (it == true) {
                 viewModel.successCategoryResponseLiveData.value = null
-                if (SharedPreferenceUtil.getJCHubId() == null) {
+                val hubID = SharedPreferenceUtil.getJCHubId()
+                if (hubID == null) {
                     showNoShopFoundAlert()
                     initRecyclerViews()
                 } else {
-                    hubID = SharedPreferenceUtil.getJCHubId().toString()
+
                     viewModel.requestForShopCategories(hubID)
                     loadCatWithProducts(hubID)
                 }
                 initView()
             } else {
-                if (SharedPreferenceUtil.getJCHubId() == null) {
+                val hubID = SharedPreferenceUtil.getJCHubId()
+                if (hubID == null) {
 
                     showNoShopFoundAlert()
                     initRecyclerViews()
                 } else {
-                    hubID = SharedPreferenceUtil.getJCHubId().toString()
                     viewModel.requestForShopCategories(hubID)
                     loadCatWithProducts(hubID)
                     initView()
                 }
             }
-
 
 
         }
