@@ -14,6 +14,8 @@ import com.jachai.jachaimart.databinding.OrderFragmentBinding
 import com.jachai.jachaimart.model.order.base_order.BaseOrder
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.order.adapter.OrderViewRowAdapter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment),
     OrderViewRowAdapter.Interaction {
@@ -75,12 +77,12 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
         viewModel.successOnGoingOrderListLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
 
-            orderViewOnGoingAdapter.setList(it)
+            orderViewOnGoingAdapter.setList( it.sortedByDescending { getDateFormatter(it.createdAt)  })
             orderViewOnGoingAdapter.notifyDataSetChanged()
         }
 
         viewModel.successPreviousOrderListLiveData.observe(viewLifecycleOwner) {
-            orderViewOnCompletedAdapter.setList(it)
+            orderViewOnCompletedAdapter.setList(it.sortedByDescending { getDateFormatter(it.createdAt)  })
             orderViewOnCompletedAdapter.notifyDataSetChanged()
         }
         viewModel.errorOrderDetailsLiveData.observe(viewLifecycleOwner) {
@@ -88,6 +90,14 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
         }
 
 
+    }
+
+    private fun getDateFormatter(date: String): String {
+        val inputFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        inputFormatter.timeZone = TimeZone.getTimeZone("UTC")
+        val date = inputFormatter.parse(date)
+        val outFormatter = SimpleDateFormat("dd MMM yyyy h:mm a ")
+        return outFormatter.format(date)
     }
 
     override fun onOrderSelected(order: BaseOrder?, isOnGoingOrder: Boolean) {
