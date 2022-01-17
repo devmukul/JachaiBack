@@ -45,6 +45,21 @@ interface CryptographyManager {
         prefKey: String
     ): CiphertextWrapper?
 
+    fun getMobileFromSharedPrefs(
+        context: Context,
+        filename: String,
+        mode: Int,
+        prefKey: String
+    ): String?
+
+    fun setMobile(
+        value: String,
+        context: Context,
+        filename: String,
+        mode: Int,
+        prefKey: String
+    )
+
     fun clearSharedPrefs(
         context: Context,
         filename: String,
@@ -145,6 +160,26 @@ private class CryptographyManagerImpl : CryptographyManager {
     ): CiphertextWrapper? {
         val json = context.getSharedPreferences(filename, mode).getString(prefKey, null)
         return Gson().fromJson(json, CiphertextWrapper::class.java)
+    }
+
+    override fun getMobileFromSharedPrefs(
+        context: Context,
+        filename: String,
+        mode: Int,
+        prefKey: String
+    ): String? {
+        val json = context.getSharedPreferences(filename, mode).getString(prefKey, null)
+        return json
+    }
+
+    override fun setMobile(
+        value: String,
+        context: Context,
+        filename: String,
+        mode: Int,
+        prefKey: String
+    ) {
+        context.getSharedPreferences(filename, mode).edit().putString(prefKey, value).apply()
     }
 
 

@@ -48,6 +48,7 @@ import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductPaginAdapt
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.CIPHERTEXT_MOBILE
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.CIPHERTEXT_WRAPPER
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.TAG_JACHAI_TOKEN
 import kotlinx.coroutines.flow.collectLatest
@@ -88,6 +89,14 @@ class GroceriesShopFragment :
     private lateinit var chipper: Cipher
 
     private val cryptographyManager = CryptographyManager()
+
+    private val cipherMobile
+        get() = cryptographyManager.getMobileFromSharedPrefs(
+            requireContext(),
+            TAG_JACHAI_TOKEN,
+            Context.MODE_PRIVATE,
+            CIPHERTEXT_MOBILE
+        )
 
     private val ciphertextWrapper
         get() = cryptographyManager.getCiphertextWrapperFromSharedPrefs(
@@ -343,6 +352,14 @@ class GroceriesShopFragment :
 
         binding.apply {
 
+            if(SharedPreferenceUtil.getMobileNo() != cipherMobile){
+                cryptographyManager.clearSharedPrefs(requireContext(),
+                    TAG_JACHAI_TOKEN,
+                    Context.MODE_PRIVATE)
+                layoutView.switch1.isChecked = false
+            }
+
+
             layoutView.switch1.isChecked = ciphertextWrapper != null
 
             layoutView.mobileNo.text = SharedPreferenceUtil.getMobileNo()
@@ -444,6 +461,11 @@ class GroceriesShopFragment :
                 Context.MODE_PRIVATE,
                 CIPHERTEXT_WRAPPER
             )
+            cryptographyManager.setMobile(SharedPreferenceUtil.getMobileNo()!!,
+                requireContext(),
+                TAG_JACHAI_TOKEN,
+                Context.MODE_PRIVATE,
+                CIPHERTEXT_MOBILE)
 
             binding.layoutView.switch1.isChecked = true
         })
