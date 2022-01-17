@@ -267,7 +267,7 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         }
 
         viewModel.failedResponseLiveData.observe(viewLifecycleOwner) {
-            Toasty.error(requireContext(), it?.message!!).show()
+            it?.message?.let { it1 -> Toasty.error(requireContext(), it1).show() }
             dismissLoader()
         }
 
