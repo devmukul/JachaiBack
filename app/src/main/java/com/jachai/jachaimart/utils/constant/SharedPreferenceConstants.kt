@@ -24,8 +24,8 @@ object SharedPreferenceConstants {
     const val JC_IS_CONFIRM_KEY = "is_delivery_address_confirm"
 
 
-    const val TAG_JACHAI = "jachai_preference_v4"
-    const val TAG_JACHAI_TOKEN = "jachai_preference_token_v4"
+    const val TAG_JACHAI = "jachai_preference_v5"
+    const val TAG_JACHAI_TOKEN = "jachai_preference_token_v5"
     const val CIPHERTEXT_WRAPPER = "ciphertext_wrapper"
 
     const val CIPHERTEXT_MOBILE = "ciphertext_mobile"

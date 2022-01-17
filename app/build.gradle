@@ -74,7 +74,7 @@ android {
             resValue("bool", "FIREBASE_CRASH_ENABLED", "false")
         }
         releaseTest {
-            debuggable true
+            debuggable false
             manifestPlaceholders = [appNameJachai: "@string/app_name_test"]
             applicationIdSuffix ".release.test"
             minifyEnabled false
@@ -83,7 +83,7 @@ android {
             resValue("bool", "FIREBASE_CRASH_ENABLED", "true")
         }
         release {
-            debuggable true
+            debuggable false
             manifestPlaceholders = [appNameJachai: "@string/app_name_live"]
             minifyEnabled false
             signingConfig signingConfigs.JachaiSigningConfig
