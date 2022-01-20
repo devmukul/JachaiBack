@@ -211,7 +211,9 @@ object SharedPreferenceUtil {
     }
 
 
-    fun clearAllPreferences() = preferences.all.clear()
+    fun clearAllPreferences() {
+        preferences.edit().clear().apply()
+    }
 
 
 
