@@ -11,13 +11,13 @@ data class Address(
     @SerializedName("location")
     var location: Location,
     @SerializedName("name")
-    var name: String,
+    var name: String = "Others",
     @SerializedName("placeId")
     var placeId: String,
     @SerializedName("primaryAddress")
-    var primaryAddress: String,
+    var primaryAddress: String = "",
     @SerializedName("secondaryAddress")
-    var secondaryAddress: String,
+    var secondaryAddress: String = "",
 
     var isSelected : Boolean= false
 )

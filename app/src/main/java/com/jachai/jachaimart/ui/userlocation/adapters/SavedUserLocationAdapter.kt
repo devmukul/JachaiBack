@@ -27,9 +27,13 @@ class SavedUserLocationAdapter(
 
         fun bind(context: Context, data: Address) {
 
-            title.text = data.name.toString()
-            mAddress.text = data.fullAddress.toString()
-            radioButton.isChecked = data.isSelected
+            try {
+                title.text = data.name
+                mAddress.text = data.fullAddress.toString()
+                radioButton.isChecked = data.isSelected
+            }catch (exp: Exception){
+
+            }
 
 
         }
