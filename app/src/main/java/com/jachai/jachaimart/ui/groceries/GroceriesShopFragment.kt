@@ -157,6 +157,15 @@ class GroceriesShopFragment :
             }
         } else {
             initRecyclerViews()
+            if (SharedPreferenceUtil.getJCHubId() == null) {
+                showNoShopFoundAlert()
+            } else {
+//                    shopID = SharedPreferenceUtil.getJCShopId().toString()
+                val hubID = SharedPreferenceUtil.getJCHubId().toString()
+//                    viewModel.requestForShopCategories(shopID)
+                viewModel.requestForShopCategories(hubID)
+                loadCatWithProducts(hubID)
+            }
             viewModel.requestAllFavouriteProduct()
             viewModel.requestAllAddress()
         }
