@@ -134,9 +134,10 @@ class GroceriesShopFragment :
 
                 lifecycleScope.launch {
                     initRecyclerViews()
-                    if (SharedPreferenceUtil.getJCHubId() == null) {
-                        showNoShopFoundAlert()
-                    } else {
+//                    if (SharedPreferenceUtil.getJCHubId() == null ) {
+//                        showNoShopFoundAlert()
+//                    }
+                    if (SharedPreferenceUtil.getJCHubId() != null) {
 //                    shopID = SharedPreferenceUtil.getJCShopId().toString()
                         val hubID = SharedPreferenceUtil.getJCHubId().toString()
 //                    viewModel.requestForShopCategories(shopID)
@@ -157,9 +158,7 @@ class GroceriesShopFragment :
             }
         } else {
             initRecyclerViews()
-            if (SharedPreferenceUtil.getJCHubId() == null) {
-                showNoShopFoundAlert()
-            } else {
+            if (SharedPreferenceUtil.getJCHubId() != null) {
 //                    shopID = SharedPreferenceUtil.getJCShopId().toString()
                 val hubID = SharedPreferenceUtil.getJCHubId().toString()
 //                    viewModel.requestForShopCategories(shopID)
@@ -361,10 +360,12 @@ class GroceriesShopFragment :
 
         binding.apply {
 
-            if(SharedPreferenceUtil.getMobileNo() != cipherMobile){
-                cryptographyManager.clearSharedPrefs(requireContext(),
+            if (SharedPreferenceUtil.getMobileNo() != cipherMobile) {
+                cryptographyManager.clearSharedPrefs(
+                    requireContext(),
                     TAG_JACHAI_TOKEN,
-                    Context.MODE_PRIVATE)
+                    Context.MODE_PRIVATE
+                )
                 layoutView.switch1.isChecked = false
             }
 
@@ -470,11 +471,13 @@ class GroceriesShopFragment :
                 Context.MODE_PRIVATE,
                 CIPHERTEXT_WRAPPER
             )
-            cryptographyManager.setMobile(SharedPreferenceUtil.getMobileNo()!!,
+            cryptographyManager.setMobile(
+                SharedPreferenceUtil.getMobileNo()!!,
                 requireContext(),
                 TAG_JACHAI_TOKEN,
                 Context.MODE_PRIVATE,
-                CIPHERTEXT_MOBILE)
+                CIPHERTEXT_MOBILE
+            )
 
             binding.layoutView.switch1.isChecked = true
         })
