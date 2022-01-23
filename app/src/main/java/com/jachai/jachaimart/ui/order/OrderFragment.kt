@@ -1,5 +1,6 @@
 package com.jachai.jachaimart.ui.order
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -8,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.OrderFragmentBinding
@@ -15,6 +17,8 @@ import com.jachai.jachaimart.model.order.base_order.BaseOrder
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.order.adapter.OrderViewRowAdapter
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment),
@@ -92,12 +96,12 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
 
     }
 
-    private fun getDateFormatter(date: String): String {
+    private fun getDateFormatter(date: String): Long {
         val inputFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         inputFormatter.timeZone = TimeZone.getTimeZone("UTC")
         val date = inputFormatter.parse(date)
-        val outFormatter = SimpleDateFormat("dd MMM yyyy h:mm a ")
-        return outFormatter.format(date)
+        return date.time
+
     }
 
     override fun onOrderSelected(order: BaseOrder?, isOnGoingOrder: Boolean) {
