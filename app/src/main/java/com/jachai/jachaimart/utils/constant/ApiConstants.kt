@@ -31,9 +31,9 @@ object ApiConstants {
     const val APP_VERSION = BuildConfig.VERSION_NAME
     const val DEVICE_TYPE = "ANDROID"
 
-    const val APP_VERSION_TYPE = "app_version"
+    const val APP_VERSION_TYPE = "appVersion"
     const val DEVICE_TYPE_TYPE = "deviceType"
-    const val DEVICE_NAME_TYPE = "device_name"
+    const val DEVICE_NAME_TYPE = "deviceName"
     const val DEVICE_ID_TYPE = "deviceId"
 
 
