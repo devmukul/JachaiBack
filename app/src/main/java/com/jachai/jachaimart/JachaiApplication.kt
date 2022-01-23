@@ -3,13 +3,13 @@ package com.jachai.jachaimart
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.util.Log
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import androidx.multidex.MultiDexApplication
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.jachai.jachai_driver.utils.getDeviceId
 import com.jachai.jachaimart.database.AppDatabase
 import com.jachai.jachaimart.manager.smshelper.AppSignatureHelper
 import com.jachai.jachaimart.utils.HttpLogger
@@ -124,7 +124,23 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
                         .header(
                             ApiConstants.USER_AGENT_HEADER,
                             ApiConstants.USER_AGENT_MOBILE_ANDROID
+                        ).header(
+                            ApiConstants.DEVICE_NAME_TYPE,
+                            "${Build.BRAND}_${Build.MODEL}"
                         )
+                        .header(
+                            ApiConstants.DEVICE_TYPE_TYPE,
+                            ApiConstants.DEVICE_TYPE
+                        )
+                        .header(
+                            ApiConstants.DEVICE_ID_TYPE,
+                            getAppContext().getDeviceId()
+                        )
+                        .header(
+                            ApiConstants.APP_VERSION_TYPE,
+                            ApiConstants.APP_VERSION
+                        )
+
                         .build()
                 )
             }
@@ -199,7 +215,6 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
     }
-
 
 
 }

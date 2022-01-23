@@ -1,5 +1,7 @@
 package com.jachai.jachaimart.utils.constant
 
+import android.os.Build
+import android.os.Build.*
 import com.jachai.jachaimart.BuildConfig
 
 
@@ -25,6 +27,14 @@ object ApiConstants {
     const val JACHAI_MAP_KEY = BuildConfig.BASE_URL_JACHAI_MAPKEY
 //    const val JACHAI_BASE_URL_FARE = BuildConfig.BASE_URL_JACHAI_FARE
     const val JACHAI_BASE_URL_NOTIFICATIONS = BuildConfig.BASE_URL_JACHAI_NOTIFICATIONS
+
+    const val APP_VERSION = BuildConfig.VERSION_NAME
+    const val DEVICE_TYPE = "ANDROID"
+
+    const val APP_VERSION_TYPE = "app_version"
+    const val DEVICE_TYPE_TYPE = "deviceType"
+    const val DEVICE_NAME_TYPE = "device_name"
+    const val DEVICE_ID_TYPE = "deviceId"
 
 
     const val LOGIN_BASE = "user/login"
