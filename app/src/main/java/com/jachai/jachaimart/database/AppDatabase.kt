@@ -29,7 +29,7 @@ import com.jachai.jachaimart.utils.constant.CommonConstants.DATABASE_NAME
         BaseOrder::class
 
     ],
-    version = 30,
+    version = 32,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
