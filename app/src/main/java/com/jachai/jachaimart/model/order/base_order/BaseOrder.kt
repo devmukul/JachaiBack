@@ -42,15 +42,15 @@ data class BaseOrder(
 
     @SerializedName("subTotal")
     @ColumnInfo(defaultValue = "")
-    var subTotal: Int = 0,
+    var subTotal: Double = 0.0,
 
 
     @SerializedName("total")
     @ColumnInfo(defaultValue = "")
-    var total: Int = 0,
+    var total: Double = 0.0,
 
 
     @SerializedName("totalPaid")
     @ColumnInfo(defaultValue = "")
-    var totalPaid: Int = 0
+    var totalPaid: Double = 0.0
 ) : Parcelable
