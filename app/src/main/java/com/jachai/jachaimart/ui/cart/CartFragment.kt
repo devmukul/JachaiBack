@@ -115,7 +115,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
 
             if (it.isEmpty()) {
-                navController.popBackStack()
+                goToShop()
             } else {
                 cartAdapter.setList(it)
                 cartAdapter.notifyDataSetChanged()
