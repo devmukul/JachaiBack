@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:background="#F8F8F8">
+        android:background="#F8F8F8"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/header_view_all"
+            style="@style/sub_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:background="#FFFFFF"
+            android:padding="12dp"
+            android:text="view all"
+            android:textStyle="bold"
+            app:drawableEndCompat="@drawable/ic_chevron_right_black"
+            app:layout_constraintBottom_toBottomOf="@+id/header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/header"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/header"
             style="@style/sub_heading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:background="#FFFFFF"
-            android:drawableRight="@drawable/ic_chevron_right_black"
             android:padding="12dp"
-            android:text="Monthly Bazar"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/header_view_all"
             app:layout_constraintStart_toEndOf="@+id/header_color"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="16dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/header_image"
+            tools:text="Monthly Bazar"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_items"
@@ -48,6 +63,16 @@
             app:layout_constraintBottom_toBottomOf="@+id/header"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/header" />
+
+        <ImageView
+            android:id="@+id/header_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/header_view_all"
+            app:layout_constraintStart_toStartOf="@+id/header"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/sample1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

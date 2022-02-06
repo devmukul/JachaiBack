@@ -2,11 +2,15 @@ package com.jachai.jachaimart.ui.groceries.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.GroceriesShopCategoryRowBinding
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
 import com.jachai.jachaimart.model.response.product.Product
@@ -30,6 +34,28 @@ class CategoryWithProductPaginAdapter(
                 header.setOnClickListener {
                     interaction?.onCategoryViewAllSelected(data)
                 }
+                headerViewAll.setOnClickListener {
+                    interaction?.onCategoryViewAllSelected(data)
+                }
+                try {
+                    if (data?.bannerImage.isNullOrEmpty() || data?.bannerImage.isNullOrBlank()) {
+                        headerImage.visibility = View.GONE
+                    } else {
+                        headerImage.visibility = View.VISIBLE
+                        Glide.with(context)
+                            .load(data?.bannerImage)
+                            .placeholder(R.drawable.ic_place_holder)
+                            .error(R.drawable.ic_place_holder)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                            .into(headerImage)
+                    }
+                } catch (ex: Exception) {
+                    headerImage.visibility = View.GONE
+                }
+
+
+
+
                 rvItems.apply {
                     layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
 
@@ -83,25 +109,30 @@ class CategoryWithProductPaginAdapter(
 
 
     object DataDifferentiate : DiffUtil.ItemCallback<CatWithRelatedProduct>() {
-        override fun areItemsTheSame(oldItem: CatWithRelatedProduct, newItem: CatWithRelatedProduct): Boolean {
+        override fun areItemsTheSame(
+            oldItem: CatWithRelatedProduct,
+            newItem: CatWithRelatedProduct
+        ): Boolean {
             return oldItem.categoryId == newItem.categoryId
         }
 
-        override fun areContentsTheSame(oldItem: CatWithRelatedProduct, newItem: CatWithRelatedProduct): Boolean {
+        override fun areContentsTheSame(
+            oldItem: CatWithRelatedProduct,
+            newItem: CatWithRelatedProduct
+        ): Boolean {
             return oldItem.categoryId == newItem.categoryId
         }
 
     }
-
 
 
     interface Interaction {
         fun onCategoryViewAllSelected(catWithRelatedProduct: CatWithRelatedProduct?)
         fun onCategoryProductSelected(product: Product?)
-//        fun onProductAddToCart(product: Product?)
+
+        //        fun onProductAddToCart(product: Product?)
         fun onProductAddToCartX(product: Product?, quantity: Int, position: Int)
     }
-
 
 
 }
