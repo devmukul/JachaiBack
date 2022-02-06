@@ -36,7 +36,8 @@ class SubOrderDetailsAdapter(
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                     orderDetailsAdapter =
-                        order?.products?.let { OrderDetailsAdapter(context, it, true) }!!
+                        OrderDetailsAdapter(context, order?.products, true)
+
                     adapter = orderDetailsAdapter
                 }
 
@@ -118,7 +119,8 @@ class SubOrderDetailsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            SubOrderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            SubOrderItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

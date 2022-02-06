@@ -11,7 +11,7 @@ import com.jachai.jachaimart.model.order.details.Product
 
 class OrderDetailsAdapter(
     private val context: Context,
-    private var list: List<Product?>,
+    private var list: List<Product?>? = emptyList(),
     private var orderStatus: Boolean
 ) : RecyclerView.Adapter<OrderDetailsAdapter.ViewHolder>() {
     class ViewHolder(
@@ -50,12 +50,12 @@ class OrderDetailsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = list[position]
+        val data = list?.get(position)
         holder.bind(context, data, orderStatus)
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return list?.size ?: 0
     }
 
     fun setList(it: List<Product?>?) {
