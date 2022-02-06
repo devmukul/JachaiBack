@@ -65,6 +65,7 @@ class MultiOrderPackFragment :
     override fun onResume() {
         super.onResume()
         viewModel.getMultiOrderDetails(orderId)
+        showLoader()
     }
 
     override fun initView() {
@@ -107,7 +108,12 @@ class MultiOrderPackFragment :
 
     override fun subscribeObservers() {
         viewModel.successMultiOrderDetailsLiveData.observe(viewLifecycleOwner) {
+            dismissLoader()
             updateUI(it)
+        }
+        viewModel.errorMultiOrderDetailsLiveData.observe(viewLifecycleOwner){
+            dismissLoader()
+            ToastUtils.error(getString(R.string.text_something_went_wrong))
         }
 
         viewModel.successPaymentMethodListLiveData.observe(viewLifecycleOwner) {

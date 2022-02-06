@@ -109,13 +109,13 @@ class OrderFragment : BaseFragment<OrderFragmentBinding>(R.layout.order_fragment
             if (isOnGoingOrder) {
 //                val action = OrderFragmentDirections.actionOrderFragmentToOnGoingOrderFragment(order.orderId)
 //                navController.navigate(action)
-                val action = OrderFragmentDirections.actionOrderFragmentToMultiOrderPackFragment()
-                action.orderID = order.baseOrderId
+                val action = OrderFragmentDirections.actionOrderFragmentToMultiOrderPackFragment(order.baseOrderId)
+//                action.orderID = order.baseOrderId
                 navController.navigate(action)
 
             } else {
-                val action = OrderFragmentDirections.actionOrderFragmentToMultiOrderPackFragment()
-                action.orderID = order.baseOrderId
+                val action = OrderFragmentDirections.actionOrderFragmentToMultiOrderPackFragment(order.baseOrderId)
+//                action.orderID = order.baseOrderId
                 navController.navigate(action)
 //                val action =
 //                    OrderFragmentDirections.actionOrderFragmentToOrderDetailsFragment(order.orderId)

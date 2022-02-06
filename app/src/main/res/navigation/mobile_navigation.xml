@@ -476,8 +476,7 @@
         tools:layout="@layout/multi_order_pack_fragment" >
         <argument
             android:name="orderID"
-            app:argType="string"
-            android:defaultValue="na" />
+            app:argType="string"/>
         <action
             android:id="@+id/action_multiOrderPackFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />

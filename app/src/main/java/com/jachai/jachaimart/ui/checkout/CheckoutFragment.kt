@@ -254,8 +254,8 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
                 } else {
                     dismissLoader()
                     val action =
-                        CheckoutFragmentDirections.actionCheckoutFragmentToMultiOrderPackFragment()
-                    action.orderID = it.order[0].baseOrderId
+                        CheckoutFragmentDirections.actionCheckoutFragmentToMultiOrderPackFragment(it.order[0].baseOrderId)
+//                    action.orderID = it.order[0].baseOrderId
                     navController.navigate(action)
                 }
             } else {

@@ -20,6 +20,7 @@ import com.bumptech.glide.request.FutureTarget
 import com.google.gson.Gson
 import com.jachai.jachaimart.MainActivity
 import com.jachai.jachaimart.R
+import com.jachai.jachaimart.ui.order.MultiOrderPackFragmentArgs
 import com.jachai.jachaimart.ui.order.OnGoingOrderFragmentArgs
 import com.jachai.jachaimart.ui.order.OrderDetailsFragment
 import com.jachai.jachaimart.ui.order.OrderDetailsFragmentArgs
@@ -79,8 +80,8 @@ fun getPendingIntent(context: Context, response: NotificationResponse): PendingI
     val pendingIntent = NavDeepLinkBuilder(context)
         .setComponentName(MainActivity::class.java)
         .setGraph(R.navigation.mobile_navigation)
-        .setDestination(R.id.onGoingOrderFragment)
-        .setArguments(OnGoingOrderFragmentArgs.Builder(response.typeId!!).build().toBundle())
+        .setDestination(R.id.multiOrderPackFragment)
+        .setArguments(MultiOrderPackFragmentArgs.Builder(response.typeId!!).build().toBundle())
         .createPendingIntent()
 //    val intent = Intent(context, MainActivity::class.java)
 //    intent.putExtra(CommonConstants.NOTIFICATION_DATA, Gson().toJson(response))

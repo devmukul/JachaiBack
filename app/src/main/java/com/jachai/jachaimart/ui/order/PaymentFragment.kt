@@ -56,8 +56,8 @@ class PaymentFragment :
                     .setNegativeButton("No", null)
                     .setPositiveButton("Yes") { arg0, arg1 ->
                         val action =
-                            PaymentFragmentDirections.actionPaymentFragmentToMultiOrderPackFragment()
-                        action.orderID = orderId
+                            PaymentFragmentDirections.actionPaymentFragmentToMultiOrderPackFragment(orderId)
+//                        action.orderID = orderId
                         Toasty.error(requireContext(), "Payment Canceled!!").show()
                         navController.navigate(action)
                     }.create().show()
@@ -107,8 +107,8 @@ class PaymentFragment :
 //                            orderId
 //                        )
                     val action =
-                        PaymentFragmentDirections.actionPaymentFragmentToMultiOrderPackFragment()
-                    action.orderID = orderId
+                        PaymentFragmentDirections.actionPaymentFragmentToMultiOrderPackFragment(orderId)
+//                    action.orderID = orderId
                     return if (url.contains("payment/cancel")) {
                         Toasty.error(requireContext(), "Payment Canceled!!").show()
                         navController.navigate(action)
