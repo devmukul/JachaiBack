@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jachai.jachaimart.R
@@ -26,8 +25,13 @@ class UserLocationListAdapter(
 
         fun bind(context: Context, data: Address) {
 
-            title.text = data.name.toString()
-            mAddress.text = data.fullAddress.toString()
+            try {
+                title.text = data.name.toString()
+                mAddress.text = data.fullAddress.toString()
+            } catch (ex: Exception) {
+                mAddress.text = "something wrong"
+            }
+
         }
 
 
