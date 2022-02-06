@@ -85,7 +85,7 @@
         <entry key="app/src/main/res/layout/fragment_restaurent_search.xml" value="0.33061594202898553" />
         <entry key="app/src/main/res/layout/fragment_user_maps.xml" value="0.30381704932918135" />
         <entry key="app/src/main/res/layout/groceries_shop_category_product_row.xml" value="0.47065670647922964" />
-        <entry key="app/src/main/res/layout/groceries_shop_category_row.xml" value="0.375424029214231" />
+        <entry key="app/src/main/res/layout/groceries_shop_category_row.xml" value="0.14447191272908635" />
         <entry key="app/src/main/res/layout/groceries_shop_fragment.xml" value="0.29347826086956524" />
         <entry key="app/src/main/res/layout/grocery_category_details_fragment.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/home_campaign_image_row.xml" value="0.3442028985507246" />
@@ -96,7 +96,8 @@
         <entry key="app/src/main/res/layout/list_item_address_edit.xml" value="0.29609375" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/model_cuisine_title.xml" value="0.33645833333333336" />
-        <entry key="app/src/main/res/layout/my_address_list_fragment.xml" value="0.14492753623188406" />
+        <entry key="app/src/main/res/layout/multi_order_pack_fragment.xml" value="0.2861083984375" />
+        <entry key="app/src/main/res/layout/my_address_list_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/name_update_fragment.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/on_going_order_fragment.xml" value="0.3308695905841097" />
         <entry key="app/src/main/res/layout/order_botttom.xml" value="0.5218855218855218" />
