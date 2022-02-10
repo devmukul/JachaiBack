@@ -43,7 +43,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 return
             }
 
-            bannerCall = foodService.getAllHomeBanners(CommonConstants.DEFAULT_TYPE)
+            bannerCall = foodService.getAllHomeBanners(CommonConstants.JC_FOOD_TYPE)
 
             bannerCall?.enqueue(object : Callback<BannerResponse> {
                 override fun onResponse(
@@ -81,7 +81,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 return
             }
 
-            categoryCall = foodService.getAllCategories(CommonConstants.DEFAULT_TYPE)
+            categoryCall = foodService.getAllCategories(CommonConstants.JC_FOOD_TYPE)
 
             categoryCall?.enqueue(object : Callback<CategoryResponse> {
                 override fun onResponse(
@@ -121,7 +121,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
 
             restaurantAroundYouCall = foodService.getRestaurantAroundMe(
-                CommonConstants.DEFAULT_TYPE,
+                CommonConstants.JC_FOOD_TYPE,
                 latitude = latitude.toString(),
                 longitude = longitude.toString(),
                 0,

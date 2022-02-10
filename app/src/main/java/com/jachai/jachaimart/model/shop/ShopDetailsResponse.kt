@@ -8,7 +8,7 @@ data class ShopDetailsResponse(
     @SerializedName("message")
     @Expose
     var message: String,
-    @SerializedName("products")
+    @SerializedName("productCategories")
     @Expose
     var products: List<Product>,
     @SerializedName("statusCode")

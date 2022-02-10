@@ -29,6 +29,7 @@ import com.jachai.jachaimart.model.shop.Product
 import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.shop.adapter.CategoryAdapter
+import com.jachai.jachaimart.utils.constant.CommonConstants
 import kotlin.math.ceil
 
 
@@ -139,7 +140,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
             resName.text = shopItem.name
             subtitle.text = shopItem.description
 
-            cartBottom.checkout.setOnClickListener {
+            cartBottom.conLayout.setOnClickListener {
                 val action = ShopFragmentDirections.actionShopFragmentToCartFragment()
                 findNavController().navigate(action)
 
@@ -274,7 +275,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         }
         productName?.text = item.name
 
-        productPrice?.text = item.variations[0].price.mrp.toString()
+        productPrice?.text = item.variations?.get(0)?.price?.mrp.toString()
         var quantity = 1
         val add = bottomSheetDialog.findViewById<ImageView>(R.id.ivAdd)
         val sub = bottomSheetDialog.findViewById<ImageView>(R.id.ic_sub)
@@ -286,7 +287,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
         add?.setOnClickListener {
             val count = productCount?.text.toString().toInt()
             val addCount = count + 1
-            val price = item.variations[0].price.mrp * addCount
+            val price = item.variations?.get(0)?.price?.mrp?.times(addCount)
             quantity = addCount
             productCount?.text = addCount.toString()
             productPrice?.text = price.toString()
@@ -302,7 +303,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
             } else {
                 addCount
             }
-            val price = item.variations[0].price.mrp * finalCount
+            val price = item.variations?.get(0)?.price?.mrp?.times(finalCount)
             quantity = finalCount
             productCount?.text = finalCount.toString()
             productPrice?.text = price.toString()
@@ -314,7 +315,7 @@ class ShopFragment : BaseFragment<ShopFragmentBinding>(R.layout.shop_fragment),
 
         addToCart?.setOnClickListener {
             JachaiLog.d("SHOP", quantity.toString())
-            viewModel.saveProduct(item, quantity, shopItem, isFromSameShop)
+            viewModel.saveProduct(CommonConstants.JC_FOOD_TYPE,item, quantity, shopItem, isFromSameShop)
             bottomSheetDialog.dismiss()
         }
 

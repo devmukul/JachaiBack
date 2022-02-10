@@ -50,7 +50,8 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
         binding.apply {
             toolbarMain.back.setOnClickListener {
-                goToShop()
+//                goToShop()
+                navController.popBackStack()
             }
 
 
@@ -97,15 +98,30 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     override fun subscribeObservers() {
         viewModel.successShopDetailsLiveData.observe(viewLifecycleOwner) {
             binding.apply {
-                restraurantName.text = it.hubName
-                restraurantSubtitle.text = it.shopSubtitle
+                when {
+                    it.orderModule.equals(CommonConstants.JC_FOOD_TYPE) -> {
+                        restraurantName.text = it.shopName
+                        restraurantSubtitle.text = it.shopSubtitle
 
-                Glide.with(requireContext())
-                    .load(it.hubImage)
-                    .placeholder(R.drawable.ic_place_holder)
-                    .error(R.drawable.ic_place_holder)
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .into(image)
+                        Glide.with(requireContext())
+                            .load(it.shopImage)
+                            .placeholder(R.drawable.ic_place_holder)
+                            .error(R.drawable.ic_place_holder)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                            .into(image)
+                    }
+                    it.orderModule.equals(CommonConstants.JC_MART_TYPE) -> {
+                        restraurantName.text = it.hubName
+                        restraurantSubtitle.text = it.shopSubtitle
+
+                        Glide.with(requireContext())
+                            .load(it.hubImage)
+                            .placeholder(R.drawable.ic_place_holder)
+                            .error(R.drawable.ic_place_holder)
+                            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                            .into(image)
+                    }
+                }
             }
 
 

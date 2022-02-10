@@ -42,7 +42,7 @@ class FoodItemAdapter(
             view.findViewById<TextView>(R.id.head).text = item.name
             view.findViewById<TextView>(R.id.subhead).text = item.name
             view.findViewById<TextView>(R.id.cost).text =
-                item.variations.get(0).price.mrp.toString()
+                item.variations?.get(0)?.price?.mrp.toString()
             val countView = view.findViewById<TextView>(R.id.count)
             val count = JachaiApplication.mDatabase.daoAccess().getOrderCount(item.id)
 

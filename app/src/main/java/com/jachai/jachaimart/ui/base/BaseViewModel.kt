@@ -26,10 +26,12 @@ import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.grocery.Hub
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
+import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.response.pay.PaymentListResponse
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.response.product.Shop
 import com.jachai.jachaimart.model.response.product.VariationsItem
+import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.ui.groceries.GroceriesShopViewModel
 import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
@@ -440,15 +442,16 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     }
 
-    fun saveProduct(item: Product, quantity: Int, shopItem: Shop?, isFromSameShop: Boolean) {
+    fun saveProduct(orderModule: String,item: ProductX, quantity: Int, shopItem: ShopsItem?, isFromSameShop: Boolean) {
         val productOrder = ProductOrder()
+        productOrder.orderModule = orderModule
         productOrder.product = item.id.toString()
         productOrder.productName = item.name
 //        productOrder.quantity = quantity.toInt()
         productOrder.shopId = shopItem?.id!!
-//        productOrder.shopName = shopItem.name
-//        productOrder.shopSubtitle = "na"
-//        productOrder.shopImage = shopItem.logo
+        productOrder.shopName = shopItem.name
+        productOrder.shopSubtitle = "na"
+        productOrder.shopImage = shopItem.logo
         productOrder.image = item.productImage
         productOrder.isChecked = false
         productOrder.isPopular = false
@@ -522,6 +525,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     fun saveProductByHub(item: Product, quantity: Int, hub: Hub?, isFromSameHub: Boolean) {
         val productOrder = ProductOrder()
+        productOrder.orderModule = CommonConstants.JC_MART_TYPE
         productOrder.product = item.id.toString()
         productOrder.productName = item.name
 //        productOrder.quantity = quantity.toInt()

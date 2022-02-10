@@ -842,7 +842,7 @@ class GroceriesShopFragment :
     }
 
     override fun onAddressSelectedListener(data: List<Address>, position: Int) {
-        JachaiLog.e(TAG, data[position].fullAddress)
+//        JachaiLog.e(TAG, data[position].fullAddress)
 
         for (i in data.indices) {
             data[i].isSelected = i == position

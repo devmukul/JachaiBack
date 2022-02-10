@@ -15,7 +15,7 @@
             app:destination="@id/loginFragment" />
         <action
             android:id="@+id/splash_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/navigation" />
         <action
             android:id="@+id/action_splashFragment2_to_groceriesShopFragment"
             app:destination="@id/groceriesShopFragment" />
@@ -61,7 +61,7 @@
             app:destination="@id/nameUpdateFragment" />
         <action
             android:id="@+id/verifyCode_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/navigation" />
         <action
             android:id="@+id/verifyCode_to_groceriesShop"
             app:destination="@id/groceriesShopFragment" />
@@ -76,61 +76,12 @@
         tools:layout="@layout/name_update_fragment">
         <action
             android:id="@+id/nameUpdate_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/navigation" />
         <action
             android:id="@+id/nameUpdate_to_groceriesShop"
             app:destination="@id/groceriesShopFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.jachai.jachaimart.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_nav_home_to_shopListFragment"
-            app:destination="@id/shopListFragment">
-            <argument
-                android:name="categoryId"
-                android:defaultValue="na" />
-            <argument
-                android:name="categoryName"
-                android:defaultValue="na" />
-        </action>
-        <action
-            android:id="@+id/action_nav_home_to_shopFragment"
-            app:destination="@id/shopFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/shopFragment"
-        android:name="com.jachai.jachaimart.ui.shop.ShopFragment"
-        android:label="shop_fragment"
-        tools:layout="@layout/shop_fragment">
-        <argument
-            android:name="shopItem"
-            app:argType="com.jachai.jachaimart.model.response.home.ShopsItem" />
-        <action
-            android:id="@+id/action_shopFragment_to_cartFragment"
-            app:destination="@id/cartFragment" />
 
-    </fragment>
-
-    <fragment
-        android:id="@+id/shopListFragment"
-        android:name="com.jachai.jachaimart.ui.shop.shop_list.ShopListFragment"
-        android:label="ShopListFragment"
-        tools:layout="@layout/shop_list_fragment">
-        <argument
-            android:name="categoryId"
-            android:defaultValue="na"
-            app:argType="string" />
-        <argument
-            android:name="categoryName"
-            android:defaultValue="na"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_shopListFragment_to_shopFragment"
-            app:destination="@id/shopFragment" />
-    </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.jachai.jachaimart.ui.cart.CartFragment"
@@ -175,7 +126,7 @@
             app:destination="@id/multiOrderPackFragment" />
         <action
             android:id="@+id/action_checkoutFragment_to_nav_home"
-            app:destination="@id/nav_home"
+            app:destination="@id/navigation"
             app:launchSingleTop="true" />
     </fragment>
     <fragment
@@ -490,6 +441,60 @@
         android:id="@+id/addressFragment"
         android:name="com.jachai.jachaimart.ui.addresses.AddressFragment"
         android:label="AddressFragment" />
+    <navigation
+        android:id="@+id/navigation"
+        android:label="nav_food"
+        app:startDestination="@id/nav_home">
+        <fragment
+            android:id="@+id/shopFragment"
+            android:name="com.jachai.jachaimart.ui.shop.ShopFragment"
+            android:label="shop_fragment"
+            tools:layout="@layout/shop_fragment">
+            <argument
+                android:name="shopItem"
+                app:argType="com.jachai.jachaimart.model.response.home.ShopsItem" />
+            <action
+                android:id="@+id/action_shopFragment_to_cartFragment"
+                app:destination="@id/cartFragment" />
+
+        </fragment>
+        <fragment
+            android:id="@+id/nav_home"
+            android:name="com.jachai.jachaimart.ui.home.HomeFragment"
+            android:label="@string/menu_home"
+            tools:layout="@layout/fragment_home">
+            <action
+                android:id="@+id/action_nav_home_to_shopListFragment"
+                app:destination="@id/shopListFragment">
+                <argument
+                    android:name="categoryId"
+                    android:defaultValue="na" />
+                <argument
+                    android:name="categoryName"
+                    android:defaultValue="na" />
+            </action>
+            <action
+                android:id="@+id/action_nav_home_to_shopFragment"
+                app:destination="@id/shopFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/shopListFragment"
+            android:name="com.jachai.jachaimart.ui.shop.shop_list.ShopListFragment"
+            android:label="ShopListFragment"
+            tools:layout="@layout/shop_list_fragment">
+            <argument
+                android:name="categoryId"
+                android:defaultValue="na"
+                app:argType="string" />
+            <argument
+                android:name="categoryName"
+                android:defaultValue="na"
+                app:argType="string" />
+            <action
+                android:id="@+id/action_shopListFragment_to_shopFragment"
+                app:destination="@id/shopFragment" />
+        </fragment>
+    </navigation>
 
 
 </navigation>

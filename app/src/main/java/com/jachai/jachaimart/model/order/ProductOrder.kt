@@ -3,13 +3,16 @@ package com.jachai.jachaimart.model.order
 import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.jachai.jachaimart.utils.constant.CommonConstants
 
 @Keep
 @Entity(tableName = "ProductOrder", primaryKeys = ["product", "variationId"])
 class ProductOrder {
+
+    var orderModule: String = CommonConstants.DEFAULT_TYPE
+
 
     @SerializedName("product")
     @Expose

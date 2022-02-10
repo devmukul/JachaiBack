@@ -9,17 +9,18 @@ import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.model.shop.ShopDetailsResponse
+import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ShopViewModel(application: Application) : AndroidViewModel(application) {
+class ShopViewModel(application: Application) :  BaseViewModel(application) {
     private var shopDetailsCall: Call<ShopDetailsResponse>? = null
     private val foodService = RetrofitConfig.foodService
     var successResponseLiveData = MutableLiveData<ShopDetailsResponse?>()
-    var successAddToCartData = MutableLiveData<Boolean?>()
+//    var successAddToCartData = MutableLiveData<Boolean?>()
 
     fun getShopDetails(shopId: String) {
         if (shopDetailsCall != null) {
@@ -45,6 +46,7 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
             }
         })
     }
+/*
 
     fun saveProduct(item: ProductX, quantity: Int, shopItem: ShopsItem, isFromSameShop: Boolean) {
         val productOrder = ProductOrder()
@@ -75,6 +77,7 @@ class ShopViewModel(application: Application) : AndroidViewModel(application) {
 
 
     }
+*/
 
     fun checkCartStatus() {
         if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() > 0) {

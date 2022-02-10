@@ -83,3 +83,4 @@ data class ShopsItem(
 ) : Parcelable
 
 
+

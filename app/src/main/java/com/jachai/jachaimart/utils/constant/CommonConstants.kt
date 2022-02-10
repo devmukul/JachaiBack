@@ -6,10 +6,16 @@ import com.google.gson.GsonBuilder
 object CommonConstants {
 
     const val CUSTOMER_CARE_PHONE_NO = "+8801955529893"
-    const val DEFAULT_TYPE = "JC_FOOD"
+
+    const val JC_FOOD_TYPE = "JC_FOOD"
     const val JC_MART_TYPE = "JC_MART"
+
+    const val DEFAULT_TYPE = JC_MART_TYPE
+
     const val DATABASE_NAME = "JACHAI_CUSTOMER.db"
-    const val POLICY_URL = "https://www.jachai.com/jachai-policy"
+
+
+    const val POLICY_URL = "https://jachai.com/privacy-policy"
     val DEFAULT_GSON = GsonBuilder().serializeNulls().create()!!
     val HIDE_NON_EXPOSED_GSON = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()!!
     val DEFAULT_NON_NULL_GSON = Gson()
