@@ -17,6 +17,7 @@ import com.jachai.jachaimart.ui.home.adapters.BannerAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.home.adapters.DetailsShopRecyclerAdapter
 import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
+import com.jachai.jachaimart.utils.constant.CommonConstants
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     CategoryAdapter.Interaction, ShopRecyclerAdapter.Interaction {
@@ -39,7 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
     }
 
     override fun initView() {
-        viewModel.requestForBanners()
+        viewModel.requestForBanners(CommonConstants.JC_FOOD_TYPE)
         viewModel.requestForCategories()
 
         fetchCurrentLocation { location: CurrentLocation? ->

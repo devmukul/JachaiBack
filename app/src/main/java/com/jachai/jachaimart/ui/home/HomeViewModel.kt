@@ -24,52 +24,17 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     private val foodService = RetrofitConfig.foodService
 
-    private var bannerCall: Call<BannerResponse>? = null
+//    private var bannerCall: Call<BannerResponse>? = null
     private var categoryCall: Call<CategoryResponse>? = null
     private var restaurantAroundYouCall: Call<RestaurantNearMeResponse>? = null
 
-    var successBannerResponseLiveData = MutableLiveData<BannerResponse?>()
+//    var successBannerResponseLiveData = MutableLiveData<BannerResponse?>()
     var successCategoryResponseLiveData = MutableLiveData<CategoryResponse?>()
     var successRestaurantAroundYouResponseLiveData = MutableLiveData<RestaurantNearMeResponse?>()
 
 
 
-    fun requestForBanners() {
-        try {
-            if (bannerCall != null) {
-                return
-            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
-                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
-                return
-            }
 
-            bannerCall = foodService.getAllHomeBanners(CommonConstants.JC_FOOD_TYPE)
-
-            bannerCall?.enqueue(object : Callback<BannerResponse> {
-                override fun onResponse(
-                    call: Call<BannerResponse>,
-                    response: Response<BannerResponse>
-                ) {
-                    bannerCall = null
-                    successBannerResponseLiveData.postValue(response.body())
-                    JachaiLog.d(HomeViewModel.TAG, response.body().toString())
-
-                }
-
-                override fun onFailure(call: Call<BannerResponse>, t: Throwable) {
-                    bannerCall = null
-                    errorResponseLiveData.value = "failed"
-                    JachaiLog.d(HomeViewModel.TAG, errorResponseLiveData.value.toString())
-
-                }
-            })
-
-
-        } catch (ex: Exception) {
-            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
-        }
-
-    }
 
 
     fun requestForCategories() {

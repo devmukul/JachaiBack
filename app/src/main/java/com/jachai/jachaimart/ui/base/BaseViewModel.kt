@@ -26,6 +26,7 @@ import com.jachai.jachaimart.model.response.address.AddressResponse
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.grocery.Hub
 import com.jachai.jachaimart.model.response.grocery.NearestJCShopResponse
+import com.jachai.jachaimart.model.response.home.BannerResponse
 import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.model.response.pay.PaymentListResponse
 import com.jachai.jachaimart.model.response.product.Product
@@ -57,12 +58,15 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private val paymentService = RetrofitConfig.paymentService
     private val mapService = RetrofitConfig.mapService
 
+    private var bannerCall: Call<BannerResponse>? = null
     private var addressDetailsCall: Call<AddressDetailsResponse>? = null
     private var paymentMethodCall: Call<PaymentListResponse>? = null
+
     var successAddToCartData = MutableLiveData<Boolean?>()
     var errorResponseLiveData = MutableLiveData<String>()
     var failedResponseLiveData = MutableLiveData<GenericResponse?>()
     var successPaymentMethodListLiveData = MutableLiveData<PaymentListResponse>()
+    var successBannerResponseLiveData = MutableLiveData<BannerResponse?>()
 
     private var nearestJCShopCall: Call<NearestJCShopResponse>? = null
     private var addressCall: Call<AddressResponse>? = null
@@ -756,6 +760,43 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
             nowLocation.address = "Out of Service area"
             successUserAddressData.postValue(nowLocation)
         }
+    }
+
+    fun requestForBanners(serviceType: String) {
+        try {
+            if (bannerCall != null) {
+                return
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
+                return
+            }
+
+            bannerCall = groceryService.getAllHomeBanners(serviceType)
+
+            bannerCall?.enqueue(object : Callback<BannerResponse> {
+                override fun onResponse(
+                    call: Call<BannerResponse>,
+                    response: Response<BannerResponse>
+                ) {
+                    bannerCall = null
+                    successBannerResponseLiveData.postValue(response.body())
+                    JachaiLog.d(HomeViewModel.TAG, response.body().toString())
+
+                }
+
+                override fun onFailure(call: Call<BannerResponse>, t: Throwable) {
+                    bannerCall = null
+                    errorResponseLiveData.value = "failed"
+                    JachaiLog.d(HomeViewModel.TAG, errorResponseLiveData.value.toString())
+
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+        }
+
     }
 
 

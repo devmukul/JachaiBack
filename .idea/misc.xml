@@ -78,6 +78,7 @@
         <entry key="app/src/main/res/layout/checkout_botttom.xml" value="0.1" />
         <entry key="app/src/main/res/layout/checkout_fragment.xml" value="0.3034410844629823" />
         <entry key="app/src/main/res/layout/checkout_order_row.xml" value="0.47181881227196076" />
+        <entry key="app/src/main/res/layout/common_banner_row.xml" value="0.11854103343465046" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/counter.xml" value="0.8423279469404306" />
         <entry key="app/src/main/res/layout/custom_related_category.xml" value="0.25" />
@@ -123,6 +124,7 @@
         <entry key="app/src/main/res/layout/search_bar_main.xml" value="0.13722826086956522" />
         <entry key="app/src/main/res/layout/select_user_location_fragment.xml" value="0.2712683629496645" />
         <entry key="app/src/main/res/layout/select_user_location_with_bari_koi_fragment.xml" value="0.19157608695652173" />
+        <entry key="app/src/main/res/layout/service_row.xml" value="0.3096646942800789" />
         <entry key="app/src/main/res/layout/shop_category_item_row.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/shop_category_row.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/shop_details_header.xml" value="0.5366906474820143" />
@@ -130,7 +132,7 @@
         <entry key="app/src/main/res/layout/shop_header.xml" value="0.33645833333333336" />
         <entry key="app/src/main/res/layout/shop_list_fragment.xml" value="0.14447191272908635" />
         <entry key="app/src/main/res/layout/splash_fragment.xml" value="0.14447191272908635" />
-        <entry key="app/src/main/res/layout/test.xml" value="0.27002195362850345" />
+        <entry key="app/src/main/res/layout/test.xml" value="0.2490974729241877" />
         <entry key="app/src/main/res/layout/toolbar_app.xml" value="0.12974989152083405" />
         <entry key="app/src/main/res/layout/toolbar_cart.xml" value="0.6463157894736842" />
         <entry key="app/src/main/res/layout/toolbar_common.xml" value="0.49079754601226994" />

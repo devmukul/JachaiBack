@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
@@ -27,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.jachai.jachai_driver.utils.JachaiLog
+import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachai_driver.utils.showLongToast
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.BuildConfig
@@ -36,6 +39,7 @@ import com.jachai.jachaimart.database.AppDatabase
 import com.jachai.jachaimart.databinding.GroceriesShopFragmentBinding
 import com.jachai.jachaimart.decorator.BiometricPromptUtils
 import com.jachai.jachaimart.decorator.CryptographyManager
+import com.jachai.jachaimart.model.request.JCService
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.model.response.category.CatWithRelatedProduct
@@ -45,14 +49,18 @@ import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductPaginAdapter
+import com.jachai.jachaimart.ui.home.adapters.BannerAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
+import com.jachai.jachaimart.ui.home.adapters.ServiceAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
+import com.jachai.jachaimart.utils.constant.CommonConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.CIPHERTEXT_MOBILE
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.CIPHERTEXT_WRAPPER
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants.TAG_JACHAI_TOKEN
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.crypto.Cipher
@@ -61,7 +69,8 @@ import javax.crypto.Cipher
 class GroceriesShopFragment :
     BaseFragment<GroceriesShopFragmentBinding>(R.layout.groceries_shop_fragment),
     CategoryAdapter.Interaction, CategoryWithProductAdapter.Interaction,
-    SavedUserLocationAdapter.Interaction, CategoryWithProductPaginAdapter.Interaction {
+    SavedUserLocationAdapter.Interaction, CategoryWithProductPaginAdapter.Interaction,
+    ServiceAdapter.Interaction {
     lateinit var savedUserLocationAdapter: SavedUserLocationAdapter
     private lateinit var bottomSheetDialog: BottomSheetDialog
 
@@ -73,6 +82,8 @@ class GroceriesShopFragment :
     private var address: Address? = null
 
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var serviceAdapter: ServiceAdapter
+    private lateinit var bannerAdapter: BannerAdapter
 
     //    private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
     private lateinit var navController: NavController
@@ -126,7 +137,8 @@ class GroceriesShopFragment :
         subscribeToFCM(BuildConfig.TOPIC_NOT)
 
         navController = Navigation.findNavController(view)
-
+        viewModel.getAllServices()
+        viewModel.requestForBanners(CommonConstants.JC_MART_TYPE)
 
 
         if (!SharedPreferenceUtil.isFreshLogin()) {
@@ -304,6 +316,13 @@ class GroceriesShopFragment :
     private fun initRecyclerViews() {
 
         binding.apply {
+            rvServices.apply {
+                layoutManager = GridLayoutManager(context, 2)
+                serviceAdapter =
+                    ServiceAdapter(requireContext(), emptyList(), this@GroceriesShopFragment)
+                adapter = serviceAdapter
+            }
+
             rvCategories1.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 categoryAdapter =
@@ -432,11 +451,27 @@ class GroceriesShopFragment :
     }
 
     override fun subscribeObservers() {
+        viewModel.successServiceListData.observe(viewLifecycleOwner) {
+            serviceAdapter.setList(it)
+            serviceAdapter.notifyDataSetChanged()
+        }
+        viewModel.successBannerResponseLiveData.observe(viewLifecycleOwner) { it ->
+            try {
+                val imageList = ArrayList<CarouselItem>()
+                it?.banners?.forEach {
+                    imageList.add(CarouselItem(it?.bannerImage))
+                }
+                binding.imageSlider.addData(imageList)
+            } catch (exp: Exception) {
+                exp.printStackTrace()
+            }
+
+
+        }
+
         viewModel.successCategoryResponseLiveData.observe(viewLifecycleOwner) {
 
             if (it != null) {
-
-
                 if (it.categories?.isEmpty() == false) {
 //                    initRecyclerViews()
                     categoryResponse = it
@@ -462,7 +497,7 @@ class GroceriesShopFragment :
             it?.let { it1 -> showShortToast(it1) }
         }
 
-        viewModel.successBiometricRegLiveData.observe(viewLifecycleOwner, {
+        viewModel.successBiometricRegLiveData.observe(viewLifecycleOwner) {
             val encryptedServerTokenWrapper = cryptographyManager.encryptData(it!!.secret, chipper)
             cryptographyManager.persistCiphertextWrapperToSharedPrefs(
                 encryptedServerTokenWrapper,
@@ -480,7 +515,7 @@ class GroceriesShopFragment :
             )
 
             binding.layoutView.switch1.isChecked = true
-        })
+        }
 
 //        viewModel.successCategoryWithProductResponseLiveData.observe(viewLifecycleOwner) {
 //            dismissLoader()
@@ -919,6 +954,11 @@ class GroceriesShopFragment :
             chipper = this
             viewModel.requestBiometricRegister(requireActivity())
         }
+    }
+
+    override fun onServiceSelected(position: Int, item: JCService?) {
+        ToastUtils.normal("Coming Soon...")
+
     }
 
 

@@ -60,6 +60,11 @@
         <item name="fontFamily">@font/uni_neue_regular</item>
         <item name="android:textSize">13sp</item>
     </style>
+    <style name="textSmall">
+        <item name="android:textSize">10sp</item>
+        <item name="fontFamily">@font/uni_neue_regular</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="android:fontFamily">@font/uni_neue_regular</item>
