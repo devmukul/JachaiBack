@@ -2,7 +2,6 @@ package com.jachai.jachaimart.ui.groceries
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -17,10 +16,10 @@ import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.api.paging_source.HomePagingSource
-import com.jachai.jachaimart.decorator.CryptographyManager
 import com.jachai.jachaimart.model.notification.NotificationRegisterRequest
 import com.jachai.jachaimart.model.request.CategoryWithProductRequest
 import com.jachai.jachaimart.model.request.FProductsItem
+import com.jachai.jachaimart.model.request.JCService
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.auth.BiometricRegisterRequest
 import com.jachai.jachaimart.model.response.auth.BiometricRegistrationResponse
@@ -34,7 +33,6 @@ import com.jachai.jachaimart.ui.home.HomeViewModel
 import com.jachai.jachaimart.ui.product.ProductDetailsViewModel
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.constant.ApiConstants.PAGING_PAGE_LIMIT_MIN
-import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,6 +53,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     private val groceryService = RetrofitConfig.groceryService
     private var favouriteProductCall: Call<FavouriteProductResponse>? = null
     var successCategoryResponseLiveData = MutableLiveData<CategoryResponse?>()
+    var successServiceListData = MutableLiveData<List<JCService>>()
     var successCategoryWithProductResponseLiveData =
         MutableLiveData<CatWithRelatedProductsResponse?>()
 
@@ -68,13 +67,6 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
     var successBiometricRegLiveData =
         MutableLiveData<BiometricRegistrationResponse?>()
 
-
-
-
-
-    fun requestForBanners() {
-
-    }
 
     fun requestForShopCategories(hubId: String) {
         isRefresh.postValue(true)
@@ -215,7 +207,7 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
 
     fun getCurrentOrderStatus() {
         val db = JachaiApplication.mDatabase.daoAccess()
-        if (db.getOnGoingOrderCount() >0){
+        if (db.getOnGoingOrderCount() > 0) {
             successOnGoingOrderFound.postValue(db.getOnGoingOrderCount())
         }
     }
@@ -238,7 +230,12 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
             if (registerCall != null) {
                 return
             }
-            val notificationRegisterRequest = NotificationRegisterRequest(activity.getDeviceId(), "Android", "${Build.BRAND}_${Build.MODEL}", fcmToken)
+            val notificationRegisterRequest = NotificationRegisterRequest(
+                activity.getDeviceId(),
+                "Android",
+                "${Build.BRAND}_${Build.MODEL}",
+                fcmToken
+            )
 
             registerCall = notificationsService.registerDevice(notificationRegisterRequest)
 
@@ -271,7 +268,8 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
             }
             val notificationRegisterRequest = BiometricRegisterRequest(activity.getDeviceId())
 
-            registerBiometricCall = authService.registerBiometricRequest(notificationRegisterRequest)
+            registerBiometricCall =
+                authService.registerBiometricRequest(notificationRegisterRequest)
 
             registerBiometricCall?.enqueue(object : Callback<BiometricRegistrationResponse> {
                 override fun onResponse(
@@ -291,6 +289,38 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         } catch (ex: Exception) {
             JachaiLog.d(HomeViewModel.TAG, ex.message!!)
         }
+
+    }
+
+    fun getAllServices() {
+        val serviceList = mutableListOf<JCService>()
+        val jcFoodService = JCService(
+            "Food",
+            "JC_FOOD",
+            R.drawable.ic_jc_food
+        )
+        val jcELearningService = JCService(
+            "E-Learning",
+            "JC_LEARNING",
+            R.drawable.ic_jc_mart
+        )
+        val jcCourierService = JCService(
+            "Courier",
+            "JC_COURIER",
+            R.drawable.ic_jc_food
+        )
+        val jcMedicineService = JCService(
+            "Medicine",
+            "JC_MEDICINE",
+            R.drawable.ic_jc_food
+        )
+//        var jcBookingService = JCService("JC FOOD", "JC_FOOD", "https://staging-jachai-service.s3-ap-southeast-1.amazonaws.com/static_image/2021-11-18T00:45:25.132_def.jpeg")
+        serviceList.add(jcFoodService)
+        serviceList.add(jcELearningService)
+        serviceList.add(jcCourierService)
+        serviceList.add(jcMedicineService)
+        successServiceListData.postValue(serviceList)
+
 
     }
 
