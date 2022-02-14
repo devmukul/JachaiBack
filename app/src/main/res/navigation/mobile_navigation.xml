@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_splashFragment2_to_favouriteFragment"
             app:destination="@id/favouriteFragment" />
+        <action
+            android:id="@+id/action_splashFragment2_to_landingFragment"
+            app:destination="@id/landingFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -495,6 +498,11 @@
                 app:destination="@id/shopFragment" />
         </fragment>
     </navigation>
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.jachai.jachaimart.ui.landing.LandingFragment"
+        android:label="landing_fragment"
+        tools:layout="@layout/landing_fragment" />
 
 
 </navigation>
