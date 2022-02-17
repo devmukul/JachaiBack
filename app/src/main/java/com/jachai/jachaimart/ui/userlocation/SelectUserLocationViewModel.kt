@@ -12,7 +12,7 @@ import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.jachai.jachai_driver.utils.JachaiLog
-import com.jachai.jachaimart.JachaiApplication.Companion.placesClient
+//import com.jachai.jachaimart.JachaiApplication.Companion.placesClient
 import com.jachai.jachaimart.model.response.location.LocationDetails
 
 class SelectUserLocationViewModel : ViewModel() {
@@ -35,7 +35,8 @@ class SelectUserLocationViewModel : ViewModel() {
                     .setSessionToken(token)
                     .setQuery(query)
                     .build()
-            placesClient.findAutocompletePredictions(request)
+
+/*            placesClient.findAutocompletePredictions(request)
                 .addOnSuccessListener { response: FindAutocompletePredictionsResponse ->
 
 
@@ -45,6 +46,7 @@ class SelectUserLocationViewModel : ViewModel() {
                         JachaiLog.e(TAG, "Place not found: " + exception.statusCode)
                     }
                 }
+*/
 
         } else {
             successResponseLiveData.postValue(emptyList())
@@ -64,7 +66,7 @@ class SelectUserLocationViewModel : ViewModel() {
 
         val request = FetchPlaceRequest.newInstance(placeId, placeFields)
 
-        placesClient.fetchPlace(request)
+  /*      placesClient.fetchPlace(request)
             .addOnSuccessListener { response: FetchPlaceResponse ->
 
                 mPlace = response.place
@@ -90,6 +92,6 @@ class SelectUserLocationViewModel : ViewModel() {
                     val statusCode = exception.statusCode
                 }
 
-            }
+            }*/
     }
 }
