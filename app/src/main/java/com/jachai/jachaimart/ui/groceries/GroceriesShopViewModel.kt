@@ -297,28 +297,34 @@ class GroceriesShopViewModel(application: Application) : BaseViewModel(applicati
         val jcFoodService = JCService(
             "Food",
             "JC_FOOD",
-            R.drawable.ic_jc_food
+            R.drawable.ic_food
         )
         val jcELearningService = JCService(
             "E-Learning",
             "JC_LEARNING",
-            R.drawable.ic_jc_mart
+            R.drawable.ic_e_learning
         )
         val jcCourierService = JCService(
             "Courier",
             "JC_COURIER",
-            R.drawable.ic_jc_food
+            R.drawable.courier
         )
         val jcMedicineService = JCService(
             "Medicine",
             "JC_MEDICINE",
-            R.drawable.ic_jc_food
+            R.drawable.ic_medicine
+        )
+        val jcFashionService = JCService(
+            "Fashion",
+            "JC_FASHION",
+            R.drawable.ic_fashion
         )
 //        var jcBookingService = JCService("JC FOOD", "JC_FOOD", "https://staging-jachai-service.s3-ap-southeast-1.amazonaws.com/static_image/2021-11-18T00:45:25.132_def.jpeg")
         serviceList.add(jcFoodService)
         serviceList.add(jcELearningService)
         serviceList.add(jcCourierService)
         serviceList.add(jcMedicineService)
+        serviceList.add(jcFashionService)
         successServiceListData.postValue(serviceList)
 
 

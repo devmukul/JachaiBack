@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -49,7 +48,6 @@ import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductAdapter
 import com.jachai.jachaimart.ui.groceries.adapters.CategoryWithProductPaginAdapter
-import com.jachai.jachaimart.ui.home.adapters.BannerAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.home.adapters.ServiceAdapter
 import com.jachai.jachaimart.ui.userlocation.adapters.SavedUserLocationAdapter
@@ -83,7 +81,6 @@ class GroceriesShopFragment :
 
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var serviceAdapter: ServiceAdapter
-    private lateinit var bannerAdapter: BannerAdapter
 
     //    private lateinit var categoryWithProductAdapter: CategoryWithProductAdapter
     private lateinit var navController: NavController
@@ -137,7 +134,7 @@ class GroceriesShopFragment :
         subscribeToFCM(BuildConfig.TOPIC_NOT)
 
         navController = Navigation.findNavController(view)
-        viewModel.getAllServices()
+
         viewModel.requestForBanners(CommonConstants.JC_MART_TYPE)
 
 
@@ -316,12 +313,14 @@ class GroceriesShopFragment :
     private fun initRecyclerViews() {
 
         binding.apply {
+
             rvServices.apply {
-                layoutManager = GridLayoutManager(context, 2)
+                layoutManager = GridLayoutManager(context, 5)
                 serviceAdapter =
                     ServiceAdapter(requireContext(), emptyList(), this@GroceriesShopFragment)
                 adapter = serviceAdapter
             }
+            viewModel.getAllServices()
 
             rvCategories1.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -458,6 +457,7 @@ class GroceriesShopFragment :
         viewModel.successBannerResponseLiveData.observe(viewLifecycleOwner) { it ->
             try {
                 val imageList = ArrayList<CarouselItem>()
+                imageList.clear()
                 it?.banners?.forEach {
                     imageList.add(CarouselItem(it?.bannerImage))
                 }
@@ -603,19 +603,16 @@ class GroceriesShopFragment :
                 binding.refresh.isRefreshing = it
             }
         }
-        viewModel.successAddToCartData.observe(viewLifecycleOwner, {
+        viewModel.successAddToCartData.observe(viewLifecycleOwner) {
             binding.apply {
                 if (it == true) {
-
                     toolbarMain.cartBadge.text =
                         JachaiApplication.mDatabase.daoAccess().getProductOrdersSize()
                             .toString()
-
-
                 }
             }
 
-        })
+        }
 
         viewModel.successUserAddressData.observe(viewLifecycleOwner) {
             val mAddress = it?.address ?: "n/a"
@@ -957,8 +954,24 @@ class GroceriesShopFragment :
     }
 
     override fun onServiceSelected(position: Int, item: JCService?) {
-        ToastUtils.normal("Coming Soon...")
+        if (item != null) {
+            if (item.serviceId == "JC_FOOD") {
+                val action =
+                    GroceriesShopFragmentDirections.actionGroceriesShopFragmentToNavHome()
+                navController.navigate(action)
+            } else {
+                val action =
+                    GroceriesShopFragmentDirections.actionGroceriesShopFragmentToSericeNotFoundFragment()
+                action.type = item.serviceId
+                navController.navigate(action)
+            }
 
+
+        } else {
+            val action =
+                GroceriesShopFragmentDirections.actionGroceriesShopFragmentToSericeNotFoundFragment()
+            navController.navigate(action)
+        }
     }
 
 

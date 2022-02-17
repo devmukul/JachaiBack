@@ -97,14 +97,13 @@
                             style="?attr/actionButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:clipToPadding="false"
-
-                            android:focusable="true"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginRight="10dp">
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="10dp"
+                            android:clipToPadding="false"
+                            android:focusable="true">
 
                             <ImageView
                                 android:layout_width="25dp"

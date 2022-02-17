@@ -27,6 +27,7 @@ class ServiceAdapter(
         val view =
             LayoutInflater.from(context)
                 .inflate(R.layout.service_row, parent, false)
+
         return ViewHolder(view)
     }
 
