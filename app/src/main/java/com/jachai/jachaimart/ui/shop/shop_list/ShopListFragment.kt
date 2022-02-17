@@ -37,17 +37,8 @@ class ShopListFragment : BaseFragment<ShopListFragmentBinding>(R.layout.shop_lis
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        categoryId = if (args.categoryId == "na") {
-            "615fbce9898aca7d612f991f"
-        } else {
-            args.categoryId
-        }
-
-        categoryName = if (args.categoryName == "na") {
-            "Name"
-        } else {
-            args.categoryName
-        }
+        categoryId = args.categoryId
+        categoryName = args.categoryName?: " "
 
         initView()
         subscribeObservers()
@@ -64,8 +55,12 @@ class ShopListFragment : BaseFragment<ShopListFragmentBinding>(R.layout.shop_lis
         }
 
         binding.apply {
+            include3.topTitle.text = categoryName
+            include3.back.setOnClickListener {
+                navController.popBackStack()
+            }
 
-            title.text = "Restaurants Delivering Your Food"
+            title.text = " "
             rvShops.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 detailsShopRecyclerAdapter =
@@ -79,8 +74,10 @@ class ShopListFragment : BaseFragment<ShopListFragmentBinding>(R.layout.shop_lis
 
     override fun subscribeObservers() {
         viewModel.successShopsByCategoryResponseLiveData.observe(viewLifecycleOwner) {
+            val count = it?.shops?.size ?: 0
+
             binding.title.text =
-                "${it?.shops?.size.toString()} Restaurants Delivering $categoryName"
+                "$count Restaurants Delivering $categoryName"
             detailsShopRecyclerAdapter.setList(it?.shops)
             detailsShopRecyclerAdapter.notifyDataSetChanged()
 
