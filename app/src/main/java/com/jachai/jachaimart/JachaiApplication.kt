@@ -16,7 +16,6 @@ import com.jachai.jachaimart.utils.HttpLogger
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.ApiConstants
-import com.jachai.jachaimart.utils.constant.ApiConstants.JACHAI_MAP_KEY
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 import com.orhanobut.logger.AndroidLogAdapter
@@ -42,7 +41,7 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
         super.onCreate()
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        Places.initialize(applicationContext, JACHAI_MAP_KEY)
+//        Places.initialize(applicationContext, JACHAI_MAP_KEY)
         val appSignature = AppSignatureHelper(this)
 
         instance = this
@@ -56,7 +55,7 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
 
         //Database
         mDatabase = AppDatabase.getAppDatabase(this)
-        placesClient = Places.createClient(this)
+//        placesClient = Places.createClient(this)
 
         setupLogger()
 
@@ -94,9 +93,9 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
 
         lateinit var mDatabase: AppDatabase
             private set
-
-        lateinit var placesClient: PlacesClient
-            private set
+//
+//        lateinit var placesClient: PlacesClient
+//            private set
 
 
         var compositeDisposable: CompositeDisposable? = null
