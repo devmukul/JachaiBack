@@ -50,8 +50,8 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
         binding.apply {
             toolbarMain.back.setOnClickListener {
-//                goToShop()
-                navController.popBackStack()
+                goToShop()
+//                navController.popBackStack()
             }
 
 
