@@ -8,8 +8,10 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import bd.com.evaly.ehealth.models.common.CurrentLocation
+import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.FragmentHomeBinding
+import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.home.CategoriesItem
 import com.jachai.jachaimart.model.response.home.ShopsItem
 import com.jachai.jachaimart.ui.base.BaseFragment
@@ -17,6 +19,7 @@ import com.jachai.jachaimart.ui.home.adapters.BannerAdapter
 import com.jachai.jachaimart.ui.home.adapters.CategoryAdapter
 import com.jachai.jachaimart.ui.home.adapters.DetailsShopRecyclerAdapter
 import com.jachai.jachaimart.ui.home.adapters.ShopRecyclerAdapter
+import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.CommonConstants
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
@@ -39,22 +42,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        updateCartData()
+    }
+
+    private fun updateCartData() {
+        binding.cartBadge.text =
+            JachaiApplication.mDatabase.daoAccess().getProductOrdersSize().toString()
+    }
+
     override fun initView() {
         viewModel.requestForBanners(CommonConstants.JC_FOOD_TYPE)
         viewModel.requestForCategories()
-
-        fetchCurrentLocation { location: CurrentLocation? ->
-            if (location != null) {
-                viewModel.requestForRestaurantAroundYou(
-                    location.latitude,
-                    location.longitude
-
-                )
-            }
-        }
-
+        loadShopByLocation()
 
         binding.apply {
+            back.setOnClickListener {
+                navController.popBackStack()
+
+            }
+            frameLay.setOnClickListener {
+                val action =
+                    if (JachaiApplication.mDatabase.daoAccess().getProductOrdersSize() == 0) {
+                        HomeFragmentDirections.actionNavHomeToEmptyCartFragment()
+                    } else {
+                        HomeFragmentDirections.actionNavHomeToCartFragment()
+                    }
+                navController.navigate(action)
+
+            }
+
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
                 bannerAdapter =
@@ -94,6 +112,49 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
     }
 
+    private fun loadShopByLocation() {
+        if (SharedPreferenceUtil.isConfirmDeliveryAddress()) {
+            SharedPreferenceUtil.getDeliveryAddress().let { it1 ->
+                if (it1 != null) {
+                    loadRestaurantFromDeliveryLocation(it1)
+                } else {
+                    loadRestaurantFromCurrentLocation()
+                }
+            }
+        } else {
+            val address = SharedPreferenceUtil.getCurrentAddress()
+            if (address != null) {
+                loadRestaurantFromDeliveryLocation(address)
+            } else {
+                loadRestaurantFromCurrentLocation()
+            }
+        }
+
+    }
+
+    private fun loadRestaurantFromCurrentLocation() {
+        fetchCurrentLocation { location: CurrentLocation? ->
+            if (location != null) {
+                viewModel.requestForRestaurantAroundYou(
+                    location.latitude,
+                    location.longitude
+
+                )
+                showLoader()
+            }
+        }
+    }
+
+    fun loadRestaurantFromDeliveryLocation(address: Address) {
+        viewModel.requestForRestaurantAroundYou(
+            address.location.latitude,
+            address.location.longitude
+
+        )
+        showLoader()
+
+    }
+
     override fun subscribeObservers() {
 
         viewModel.successBannerResponseLiveData.observe(viewLifecycleOwner) {
@@ -107,20 +168,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
         }
 
         viewModel.successRestaurantAroundYouResponseLiveData.observe(viewLifecycleOwner) {
-            shopRecyclerAdapter.setList(it?.shops)
-            shopRecyclerAdapter.notifyDataSetChanged()
-
+            dismissLoader()
             val count = if (it?.shops?.size == null) {
                 0
             } else {
                 it.shops.size
             }
+            if (count == 0) {
+                val action =
+                    HomeFragmentDirections.actionNavHomeToSericeNotFoundFragment()
+                action.type = CommonConstants.JC_FOOD_TYPE
+                navController.navigate(action)
+
+            }
+            shopRecyclerAdapter.setList(it?.shops)
+            shopRecyclerAdapter.notifyDataSetChanged()
+
+
+
             binding.title.text = "$count Restaurants around you"
             detailsShopRecyclerAdapter.setList(it?.shops)
             detailsShopRecyclerAdapter.notifyDataSetChanged()
-
         }
     }
+
 
     override fun onCategoryItemSelected(position: Int, item: CategoriesItem?) {
 
@@ -140,8 +211,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home),
 
 
     }
-
-
 
 
 }

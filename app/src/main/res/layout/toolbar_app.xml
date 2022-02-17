@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -39,10 +40,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_back_with_icon"
+                    android:src="@drawable/ic_back"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -56,7 +58,7 @@
 
                     <TextView
                         android:id="@+id/top_title"
-                        style="@style/sub_heading"
+                        style="@style/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -67,11 +69,16 @@
                         android:layout_marginEnd="0dp"
                         android:layout_marginBottom="0dp"
                         android:layout_toStartOf="@+id/search"
-                        android:gravity="center_vertical" />
+                        android:gravity="center_vertical"
+                        android:textColor="#3A494E"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="@string/app_name" />
 
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/search"
                         style="@style/textSearch"
+                        android:visibility="invisible"
                         android:layout_width="wrap_content"
                         android:layout_height="34dp"
                         android:layout_alignParentTop="true"
