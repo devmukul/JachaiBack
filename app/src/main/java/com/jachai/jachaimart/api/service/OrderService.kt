@@ -8,9 +8,11 @@ import com.jachai.jachaimart.model.order.multi_order.BaseOrderDetailsResponse
 import com.jachai.jachaimart.model.order.multi_order.MultiOrderResponse
 import com.jachai.jachaimart.model.request.FProductsItem
 import com.jachai.jachaimart.model.request.OrderRequest
+import com.jachai.jachaimart.model.request.PromoValidItem
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.product.FavouriteProductResponse
 import com.jachai.jachaimart.model.response.promo.PromoResponse
+import com.jachai.jachaimart.model.response.promo.PromoValidationResponse
 import com.jachai.jachaimart.utils.constant.ApiConstants
 import retrofit2.Call
 import retrofit2.http.*
@@ -59,8 +61,12 @@ interface OrderService {
 
     //promo
     @GET(ApiConstants.REQUEST_ALL_PROMO_BASE)
-    fun getMyAllPromo(
-    ): Call<PromoResponse>
+    fun getMyAllPromo(): Call<PromoResponse>
+
+    @POST(ApiConstants.REQUEST_ALL_PROMO_BASE)
+    fun requestPromoValidation(@Body promoValidItem: PromoValidItem): Call<PromoValidationResponse>
+
+
 
 
 }

@@ -20,6 +20,7 @@ import com.jachai.jachaimart.model.order.base_order.BaseOrder
 import com.jachai.jachaimart.model.order.base_order.BaseOrderResponse
 import com.jachai.jachaimart.model.order.details.OrderDetailsResponse
 import com.jachai.jachaimart.model.request.PaymentRequest
+import com.jachai.jachaimart.model.request.PromoValidItem
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.AddressResponse
@@ -32,9 +33,11 @@ import com.jachai.jachaimart.model.response.pay.PaymentListResponse
 import com.jachai.jachaimart.model.response.product.Product
 import com.jachai.jachaimart.model.response.product.Shop
 import com.jachai.jachaimart.model.response.product.VariationsItem
+import com.jachai.jachaimart.model.response.promo.PromoValidationResponse
 import com.jachai.jachaimart.model.shop.ProductX
 import com.jachai.jachaimart.ui.groceries.GroceriesShopViewModel
 import com.jachai.jachaimart.ui.home.HomeViewModel
+import com.jachai.jachaimart.ui.product.ProductDetailsViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
@@ -61,12 +64,15 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     private var bannerCall: Call<BannerResponse>? = null
     private var addressDetailsCall: Call<AddressDetailsResponse>? = null
     private var paymentMethodCall: Call<PaymentListResponse>? = null
+    private var promoValidationCall: Call<PromoValidationResponse>? = null
 
     var successAddToCartData = MutableLiveData<Boolean?>()
     var errorResponseLiveData = MutableLiveData<String>()
     var failedResponseLiveData = MutableLiveData<GenericResponse?>()
     var successPaymentMethodListLiveData = MutableLiveData<PaymentListResponse>()
     var successBannerResponseLiveData = MutableLiveData<BannerResponse?>()
+    var successPromoCodesValidResponseLiveData = MutableLiveData<PromoValidationResponse?>()
+    var errorPromoCodesInvalidResponseLiveData = MutableLiveData<String?>()
 
     private var nearestJCShopCall: Call<NearestJCShopResponse>? = null
     private var addressCall: Call<AddressResponse>? = null
@@ -796,6 +802,72 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         } catch (ex: Exception) {
             JachaiLog.d(HomeViewModel.TAG, ex.message!!)
         }
+
+    }
+
+    //promo validation
+
+    fun requestForValidatedPromo(promoCode: String) {
+        try {
+            if (promoValidationCall != null) {
+                return
+            } else if (!getApplication<JachaiApplication>().isConnectionAvailable()) {
+                getApplication<JachaiApplication>().showShortToast(R.string.networkError)
+                return
+            }
+
+            val orderAmount = JachaiApplication.mDatabase.daoAccess().getProductOrderSubtotal()
+
+            val promoValidItem = PromoValidItem(orderAmount, promoCode, null)
+
+
+            promoValidationCall = orderService.requestPromoValidation(promoValidItem)
+
+            promoValidationCall?.enqueue(object : Callback<PromoValidationResponse> {
+                override fun onResponse(
+                    call: Call<PromoValidationResponse>,
+                    response: Response<PromoValidationResponse>
+                ) {
+                    promoValidationCall = null
+
+                    when (response?.code()) {
+                        HttpStatusCode.HTTP_OK -> {
+                            if(response.body()?.statusCode == 200) {
+                                val promoValidationResponse: PromoValidationResponse = response.body()!!
+                                promoValidationResponse.promoCode = promoCode
+                                successPromoCodesValidResponseLiveData.postValue(response.body())
+                            }
+                            else
+                                errorPromoCodesInvalidResponseLiveData.value = response.body()?.message
+                        }
+                        else -> {
+                            val jObjError = JSONObject(response!!.errorBody()!!.string())
+                            val response = CommonConstants.DEFAULT_NON_NULL_GSON.fromJson(
+                                jObjError.toString(), GenericResponse::class.java
+                            ) ?: GenericResponse()
+                            errorPromoCodesInvalidResponseLiveData.value = response.message
+
+                        }
+                    }
+
+                }
+
+                override fun onFailure(call: Call<PromoValidationResponse>, t: Throwable) {
+                    promoValidationCall = null
+                    errorPromoCodesInvalidResponseLiveData.value = "Sorry something wrong"
+                    JachaiLog.d(ProductDetailsViewModel.TAG, t.localizedMessage)
+
+                }
+            })
+
+
+        } catch (ex: Exception) {
+            JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+            errorPromoCodesInvalidResponseLiveData.value = "Sorry something wrong"
+
+
+        }
+
 
     }
 
