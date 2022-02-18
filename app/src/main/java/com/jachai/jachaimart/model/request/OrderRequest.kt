@@ -11,6 +11,9 @@ data class OrderRequest(
 	@field:SerializedName("orderNote")
 	var orderNote: String? = null,
 
+	@field:SerializedName("promoCode")
+	var promoCode: String? = null,
+
 	@field:SerializedName("shippingLocation")
 	var shippingLocation: ShippingLocation? = null,
 

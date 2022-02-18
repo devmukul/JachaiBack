@@ -8,7 +8,6 @@ import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
-import com.jachai.jachaimart.model.order.OrderResponse
 import com.jachai.jachaimart.model.order.ProductOrder
 import com.jachai.jachaimart.model.order.multi_order.MultiOrderResponse
 import com.jachai.jachaimart.model.request.OrderRequest
@@ -16,11 +15,11 @@ import com.jachai.jachaimart.model.request.ProductsItem
 import com.jachai.jachaimart.model.request.ShippingLocation
 import com.jachai.jachaimart.model.response.GenericResponse
 import com.jachai.jachaimart.model.response.address.Address
-import com.jachai.jachaimart.model.response.pay.PayMethod
-import com.jachai.jachaimart.model.response.pay.PaymentListResponse
+import com.jachai.jachaimart.model.response.promo.PromoValidationResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.utils.HttpStatusCode
 import com.jachai.jachaimart.utils.RetrofitConfig
+import com.jachai.jachaimart.utils.SharedPreferenceUtil
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import org.json.JSONObject
 import retrofit2.Call
@@ -34,7 +33,6 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
     var successOrderLiveData = MutableLiveData<MultiOrderResponse>()
 
 
-
     private val orderService = RetrofitConfig.orderService
     private var orderCall: Call<MultiOrderResponse>? = null
 
@@ -43,6 +41,16 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
 
         var orderRequest = OrderRequest()
         val products = mutableListOf<ProductsItem>()
+
+        try {
+            if (SharedPreferenceUtil.getAppliedPromo() != null) {
+                val promo: PromoValidationResponse = SharedPreferenceUtil.getAppliedPromo()!!
+                orderRequest.promoCode = promo.promoCode
+            }
+        } catch (ex: Exception) {
+            orderRequest.promoCode = null
+        }
+
 
         for (item in productOrderList) {
             val productsItem = ProductsItem()
@@ -108,8 +116,6 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
     }
 
 
-
-
     fun geOrderList() {
         successProductOrderListLiveData.postValue(
             JachaiApplication.mDatabase.daoAccess().getProductOrders()
@@ -117,6 +123,7 @@ class CheckoutViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun clearCreatedOrder() {
+        SharedPreferenceUtil.removeAppliedPromo()
         JachaiApplication.mDatabase.daoAccess().clearOrderTable()
 
     }
