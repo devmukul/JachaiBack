@@ -3,6 +3,8 @@ package com.jachai.jachaimart.ui.promos
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +21,13 @@ class PromosFragment : BaseFragment<PromosFragmentBinding>(R.layout.promos_fragm
     companion object {
         fun newInstance() = PromosFragment()
     }
-
+    private lateinit var navController: NavController
     private val viewModel: PromosViewModel by viewModels()
     private lateinit var promoCodeAdapter: PromoCodeAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
         initView()
         subscribeObservers()
 
@@ -32,9 +35,14 @@ class PromosFragment : BaseFragment<PromosFragmentBinding>(R.layout.promos_fragm
     }
 
     override fun initView() {
+
         viewModel.getAllPromos()
         showLoader()
         binding.apply {
+            toolbarMain.title.text = "Promos"
+            toolbarMain.back.setOnClickListener {
+                navController.popBackStack()
+            }
             rvPromos.apply {
                 layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
                 promoCodeAdapter =
@@ -73,8 +81,9 @@ class PromosFragment : BaseFragment<PromosFragmentBinding>(R.layout.promos_fragm
 
                 binding.errorMessage.visibility = View.GONE
                 SharedPreferenceUtil.savePromoApplied(it1)
-                findNavController().popBackStack()
                 ToastUtils.normal("PROMO APPLIED")
+                navController.popBackStack()
+
             }
 
         }
