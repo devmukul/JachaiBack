@@ -175,7 +175,7 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvdiscount" />
+                    app:layout_constraintTop_toBottomOf="@+id/add_voucher" />
 
                 <EditText
                     android:id="@+id/comment"
@@ -366,7 +366,6 @@
                     android:layout_marginTop="8dp"
                     android:padding="2dp"
                     android:text="Discount"
-
                     android:textColor="#636262"
                     android:textSize="12sp"
                     android:textStyle="normal"
@@ -385,6 +384,24 @@
                     app:layout_constraintBottom_toBottomOf="@+id/total_discount"
                     app:layout_constraintEnd_toStartOf="@+id/total_discount"
                     app:layout_constraintTop_toTopOf="@+id/total_discount" />
+
+                <TextView
+                    android:id="@+id/add_voucher"
+                    style="@style/heading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="8dp"
+                    android:includeFontPadding="true"
+                    android:padding="4dp"
+                    android:text="@string/select_a_promo_code"
+                    android:textColor="#CD113B"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/total_discount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvdiscount"
+                    app:drawableLeftCompat="@drawable/ic_promo_jc" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

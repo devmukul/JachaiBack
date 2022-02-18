@@ -75,4 +75,5 @@
     <string name="current_location">Current Location</string>
     <string name="jachai_bold"><font color="#CD113B">JA</font>CHAI</string>
     <string name="services">SERVICES</string>
+    <string name="select_a_promo_code">Select a promo code</string>
 </resources>

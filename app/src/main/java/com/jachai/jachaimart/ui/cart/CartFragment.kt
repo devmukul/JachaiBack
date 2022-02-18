@@ -33,6 +33,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
     private lateinit var cartAdapter: CartAdapter
     private lateinit var navController: NavController
     private lateinit var customTabsIntent:CustomTabsIntent
+    private var finalGrandTotal: Double = 0.0
 
 
     private val viewModel: CartViewModel by viewModels()
@@ -82,6 +83,12 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
                 builder.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.design_default_color_on_primary))
                 customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(requireContext(), Uri.parse(CommonConstants.POLICY_URL))
+            }
+            addVoucher.setOnClickListener {
+                val action =
+                    CartFragmentDirections.actionCartFragmentToPromosFragment()
+
+                navController.navigate(action)
             }
 
         }
