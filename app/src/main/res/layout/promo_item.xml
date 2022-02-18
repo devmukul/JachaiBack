@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp"
+    android:background="@drawable/box_curve_blue"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/txt_promo"
+        style="@style/sub_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Promo Code :"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/promo_code"
+        style="@style/heading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="16dp"
+        android:text="Test1000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_promo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_promo"
+        app:layout_constraintTop_toTopOf="@+id/txt_promo" />
+
+    <TextView
+        android:id="@+id/promoValue"
+        style="@style/heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TK 42.0 OFF"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="@+id/minimum_order_amount"
+        app:layout_constraintEnd_toEndOf="@+id/promo_code"
+        app:layout_constraintStart_toEndOf="@+id/minimum_order_amount"
+        app:layout_constraintTop_toTopOf="@+id/minimum_order_amount" />
+
+    <TextView
+        android:id="@+id/minimum_order_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:text="TK200 minimum"
+        app:layout_constraintEnd_toStartOf="@+id/promoValue"
+        app:layout_constraintStart_toStartOf="@+id/txt_promo"
+        app:layout_constraintTop_toBottomOf="@+id/txt_promo" />
+
+    <TextView
+        android:id="@+id/valid_until"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/promoValue"
+        app:layout_constraintStart_toStartOf="@+id/minimum_order_amount"
+        app:layout_constraintTop_toBottomOf="@+id/minimum_order_amount" />
+</androidx.constraintlayout.widget.ConstraintLayout>

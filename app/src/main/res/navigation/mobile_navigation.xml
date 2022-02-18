@@ -93,6 +93,9 @@
             app:destination="@id/groceriesShopFragment"
             app:popUpTo="@id/groceriesShopFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_cartFragment_to_promosFragment"
+            app:destination="@id/promosFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkoutFragment"
@@ -528,6 +531,11 @@
             app:argType="string"
             android:defaultValue="JC_FOOD" />
     </fragment>
+    <fragment
+        tools:layout="@layout/promos_fragment"
+        android:id="@+id/promosFragment"
+        android:name="com.jachai.jachaimart.ui.promos.PromosFragment"
+        android:label="Promos " />
 
 
 </navigation>

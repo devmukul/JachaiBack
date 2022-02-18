@@ -119,6 +119,9 @@ object ApiConstants {
     const val ORDER_REVIEWED = "REVIEWED"
     const val ORDER_CANCELLED = "CANCELLED"
 
+    //promos
+    const val REQUEST_ALL_PROMO_BASE = "promo"
+
 
     //paging
     const val PAGE_LIMIT = "100"
