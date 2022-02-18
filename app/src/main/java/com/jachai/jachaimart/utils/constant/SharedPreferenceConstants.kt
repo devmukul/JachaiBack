@@ -23,6 +23,8 @@ object SharedPreferenceConstants {
     const val SAVE_HUB_KEY = "save_hub"
     const val JC_IS_CONFIRM_KEY = "is_delivery_address_confirm"
 
+    const val APPLIED_PROMO = "promo_applied"
+
 
     const val TAG_JACHAI = "jachai_preference_v5"
     const val TAG_JACHAI_TOKEN = "jachai_preference_token_v5"

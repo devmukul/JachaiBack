@@ -2,13 +2,11 @@ package com.jachai.jachaimart.ui.promos
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.jachai.jachai_driver.utils.JachaiLog
 import com.jachai.jachai_driver.utils.isConnectionAvailable
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
-import com.jachai.jachaimart.model.response.product.ProductBySlugResponse
 import com.jachai.jachaimart.model.response.promo.PromoResponse
 import com.jachai.jachaimart.ui.base.BaseViewModel
 import com.jachai.jachaimart.ui.home.HomeViewModel
@@ -18,13 +16,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PromosViewModel (application: Application) : BaseViewModel(application) {
+class PromosViewModel(application: Application) : BaseViewModel(application) {
     private val orderService = RetrofitConfig.orderService
     private var promoCall: Call<PromoResponse>? = null
 
     var successPromoCodesResponseLiveData = MutableLiveData<PromoResponse?>()
     var errorPromoCodesResponseLiveData = MutableLiveData<String?>()
-
 
 
     fun getAllPromos() {
@@ -47,14 +44,14 @@ class PromosViewModel (application: Application) : BaseViewModel(application) {
                         successPromoCodesResponseLiveData.postValue(response.body())
                         JachaiLog.d(ProductDetailsViewModel.TAG, response.body().toString())
                     } else {
-                        errorPromoCodesResponseLiveData.value = "failed"
+                        errorPromoCodesResponseLiveData.value = "Sorry something wrong!!"
                     }
 
                 }
 
                 override fun onFailure(call: Call<PromoResponse>, t: Throwable) {
                     promoCall = null
-                    errorPromoCodesResponseLiveData.value = "failed"
+                    errorPromoCodesResponseLiveData.value = "Sorry something wrong!!"
                     JachaiLog.d(ProductDetailsViewModel.TAG, t.localizedMessage)
 
                 }
@@ -63,8 +60,10 @@ class PromosViewModel (application: Application) : BaseViewModel(application) {
 
         } catch (ex: Exception) {
             JachaiLog.d(HomeViewModel.TAG, ex.message!!)
+            errorPromoCodesResponseLiveData.value = "Sorry something wrong!!"
         }
 
     }
+
 
 }

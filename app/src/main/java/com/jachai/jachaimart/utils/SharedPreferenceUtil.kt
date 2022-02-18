@@ -7,6 +7,7 @@ import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.grocery.Hub
 import com.jachai.jachaimart.model.response.grocery.Shop
 import com.jachai.jachaimart.model.response.location.LocationDetails
+import com.jachai.jachaimart.model.response.promo.PromoValidationResponse
 import com.jachai.jachaimart.utils.constant.CommonConstants
 import com.jachai.jachaimart.utils.constant.SharedPreferenceConstants
 
@@ -44,6 +45,7 @@ object SharedPreferenceUtil {
             putString(SharedPreferenceConstants.DRIVER_NAME_KEY, name)
         }
     }
+
     fun isNameAvailable() = preferences.contains(SharedPreferenceConstants.DRIVER_NAME_KEY)
 
     fun isFreshLogin() =
@@ -68,10 +70,10 @@ object SharedPreferenceUtil {
         preferences.getString(SharedPreferenceConstants.JC_Hub_ID_KEY, null)
 
     fun setJCHubId(name: String?) {
-        if (name == null){
+        if (name == null) {
             removeJCHubId()
             removeNearestHub()
-        }else{
+        } else {
             preferences.edit {
                 putString(SharedPreferenceConstants.JC_Hub_ID_KEY, name)
             }
@@ -132,7 +134,7 @@ object SharedPreferenceUtil {
     }
 
 
-    fun getDeliveryAddress(): Address?{
+    fun getDeliveryAddress(): Address? {
         val data = preferences.getString(SharedPreferenceConstants.USER_ADDRESS_KEY, null)
         return if (data != null) {
             Gson().fromJson(data, Address::class.java)
@@ -215,6 +217,27 @@ object SharedPreferenceUtil {
         preferences.edit().clear().apply()
     }
 
+    //promos
+    fun savePromoApplied(promoValidationResponse: PromoValidationResponse) {
+        preferences.edit {
+            val data = Gson().toJson(promoValidationResponse)
+            putString(SharedPreferenceConstants.APPLIED_PROMO, data)
+        }
+    }
+
+    fun getAppliedPromo(): PromoValidationResponse? {
+        val data = preferences.getString(SharedPreferenceConstants.APPLIED_PROMO, null)
+
+        return if (data != null) {
+            Gson().fromJson(data, PromoValidationResponse::class.java)
+        } else {
+            null
+        }
+    }
+
+    fun removeAppliedPromo() {
+        preferences.edit().remove(SharedPreferenceConstants.APPLIED_PROMO).apply()
+    }
 
 
 }

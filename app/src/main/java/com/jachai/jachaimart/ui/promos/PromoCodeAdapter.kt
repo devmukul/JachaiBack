@@ -32,12 +32,15 @@ class PromoCodeAdapter(
                         if (promo.promoValue.flat != null && promo.promoValue.flat != 0) {
                             "৳${promo.promoValue.flat} OFF"
                         } else {
-                            "${promo.promoValue.flat}% OFF"
+                            "${promo.promoValue.percentage}% OFF"
                         }
                     val minimumPurchase = promo.minimumAmountPurchase ?: 0
                     minimumOrderAmount.text = "৳$minimumPurchase minimum"
                     val valid = promo.endAt?.let { getDateFormatter(it) }
                     validUntil.text = "until $valid"
+                    root.setOnClickListener {
+                        interaction?.onPromoCodeSelected(promo)
+                    }
 
 
                 }

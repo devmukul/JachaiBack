@@ -79,22 +79,36 @@
                             android:background="@drawable/edittext_bottom_border"
                             android:fontFamily="@font/uni_neue_bold"
                             android:hint="Promo Code"
-                            android:textSize="18sp" />
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/error_message"
+                        style="@style/small_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:textColor="@color/red_roses"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/promoLayout"
+                        app:layout_constraintStart_toStartOf="@+id/promoLayout"
+                        app:layout_constraintTop_toBottomOf="@+id/promoLayout" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btApply"
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:background="@drawable/rounded_button_red"
                         android:backgroundTint="@color/red_roses"
                         android:text="Apply"
                         android:textColor="@color/white"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/promoLayout" />
+                        app:layout_constraintTop_toBottomOf="@+id/error_message" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
