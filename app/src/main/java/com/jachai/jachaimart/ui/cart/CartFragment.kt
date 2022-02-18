@@ -35,7 +35,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
     private lateinit var cartAdapter: CartAdapter
     private lateinit var navController: NavController
-    private lateinit var customTabsIntent:CustomTabsIntent
+    private lateinit var customTabsIntent: CustomTabsIntent
     private var finalGrandTotal: Double = 0.0
 
 
@@ -49,7 +49,6 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
         initView()
         subscribeObservers()
     }
-
 
 
     override fun initView() {
@@ -70,6 +69,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
 
             toolbarMain.clearCart.setOnClickListener {
                 JachaiApplication.mDatabase.daoAccess().clearOrderTable()
+                SharedPreferenceUtil.removeAppliedPromo()
                 goToShop()
             }
 
@@ -85,7 +85,12 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             }
             textView4.setOnClickListener {
                 val builder = CustomTabsIntent.Builder()
-                builder.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.design_default_color_on_primary))
+                builder.setToolbarColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.design_default_color_on_primary
+                    )
+                )
                 customTabsIntent = builder.build()
                 customTabsIntent.launchUrl(requireContext(), Uri.parse(CommonConstants.POLICY_URL))
             }
@@ -202,37 +207,46 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             val dao = JachaiApplication.mDatabase.daoAccess()
 
             var promoDiscount = 0.0
-            if (SharedPreferenceUtil.getAppliedPromo() != null){
-                val promo : PromoValidationResponse = SharedPreferenceUtil.getAppliedPromo()!!
-                binding.addVoucher.text = "PROMO APPLIED : ${promo.promoCode}"
-                promoDiscount = (promo.discountAmount?: 0.0) as Double
-                tPromoDiscount.text = "-$promoDiscount"
-            }else{
+            try {
+                if (SharedPreferenceUtil.getAppliedPromo() != null) {
+                    val promo: PromoValidationResponse = SharedPreferenceUtil.getAppliedPromo()!!
+                    binding.addVoucher.text = "PROMO APPLIED : ${promo.promoCode}"
+                    promoDiscount = (promo.discountAmount ?: 0.0) as Double
+                    tPromoDiscount.text = String.format("-%.2f", promoDiscount)
+                } else {
+                    binding.addVoucher.text = getString(R.string.select_a_promo_code)
+                    promoDiscount = 0.00
+                    tPromoDiscount.text = String.format("%.2f", promoDiscount)
+                }
+            } catch (ex: Exception) {
                 binding.addVoucher.text = getString(R.string.select_a_promo_code)
-                promoDiscount =  0.00
+                promoDiscount = 0.00
                 tPromoDiscount.text = String.format("%.2f", promoDiscount)
             }
 
+
             val subtotal = dao.getProductOrderSubtotal()
             val vatSdPercent = SharedPreferenceUtil.getNearestHub()?.vat?.toFloat() ?: 0.toFloat()
-            val vatSd : Double = (subtotal * vatSdPercent) / 100
+            val vatSd: Double = (subtotal * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
 
-            val total = subtotal  + vatSd + discount - promoDiscount
+            val total = subtotal + vatSd + discount - promoDiscount
 
 
             var nearCostToFree = 0F
-            val deliveryCost = if (SharedPreferenceUtil.getNearestHub()?.isFreeDelivery== true){
+            val deliveryCost = if (SharedPreferenceUtil.getNearestHub()?.isFreeDelivery == true) {
                 0.toFloat()
-            } else{
-                if (SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery !=0F){
-                    if (total.toDouble()>= SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery!! ){
+            } else {
+                if (SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery != 0F) {
+                    if (total.toDouble() >= SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery!!) {
                         0.toFloat()
-                    }else{
-                        nearCostToFree = SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
-                        SharedPreferenceUtil.getNearestHub()?.deliveryCharge?.toFloat() ?: 0.toFloat()
+                    } else {
+                        nearCostToFree =
+                            SharedPreferenceUtil.getNearestHub()?.minimumAmountForFreeDelivery!!.toFloat() - total.toFloat()
+                        SharedPreferenceUtil.getNearestHub()?.deliveryCharge?.toFloat()
+                            ?: 0.toFloat()
                     }
-                }else {
+                } else {
                     SharedPreferenceUtil.getNearestHub()?.deliveryCharge?.toFloat() ?: 0.toFloat()
                 }
             }
@@ -246,12 +260,13 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             vat.text = String.format("%.2f", vatSd)
 
             deliveryCharge.text = String.format("%.2f", deliveryCost)
-            if (nearCostToFree>0){
+            if (nearCostToFree > 0) {
                 tvDeliveryFreeMessage.visibility = View.VISIBLE
-                val deliveryFreeMessage = String.format("Add %.2f tk more to get free delivery", nearCostToFree)
+                val deliveryFreeMessage =
+                    String.format("Add %.2f tk more to get free delivery", nearCostToFree)
                 tvDeliveryFreeMessage.text = deliveryFreeMessage
                 showShortToast(deliveryFreeMessage)
-            }else{
+            } else {
                 tvDeliveryFreeMessage.visibility = View.GONE
             }
 

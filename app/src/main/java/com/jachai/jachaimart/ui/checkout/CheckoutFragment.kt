@@ -20,6 +20,7 @@ import com.jachai.jachaimart.databinding.CheckoutFragmentBinding
 import com.jachai.jachaimart.decorator.PayRadioButton
 import com.jachai.jachaimart.model.request.PaymentRequest
 import com.jachai.jachaimart.model.response.address.Address
+import com.jachai.jachaimart.model.response.promo.PromoValidationResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.checkout.adapter.CheckoutAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
@@ -169,13 +170,30 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
         binding.apply {
             val dao = JachaiApplication.mDatabase.daoAccess()
 
+            var promoDiscount = 0.0
+            try {
+                if (SharedPreferenceUtil.getAppliedPromo() != null){
+                    val promo : PromoValidationResponse = SharedPreferenceUtil.getAppliedPromo()!!
+                    promoDiscount = (promo.discountAmount?: 0.0) as Double
+                    tPromoDiscount.text = String.format("-%.2f", promoDiscount)
+                }else{
+                    promoDiscount =  0.00
+                    tPromoDiscount.text = String.format("%.2f", promoDiscount)
+                }
+            }catch (exp: Exception){
+                promoDiscount =  0.00
+                tPromoDiscount.text = String.format("%.2f", promoDiscount)
+            }
+
+
+
             val subtotal = dao.getProductOrderSubtotal()
 
             val vatSdPercent = SharedPreferenceUtil.getNearestHub()?.vat?.toFloat() ?: 0.toFloat()
             val vatSd: Double = (subtotal * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
 
-            val total = subtotal + vatSd + discount
+            val total = subtotal + vatSd + discount - promoDiscount
 
 
             var nearCostToFree = 0F
@@ -279,10 +297,10 @@ class CheckoutFragment : BaseFragment<CheckoutFragmentBinding>(R.layout.checkout
             navController.navigate(action)
         }
 
-        viewModel.errorResponseLiveData.observe(viewLifecycleOwner, { message ->
+        viewModel.errorResponseLiveData.observe(viewLifecycleOwner) { message ->
             dismissLoader()
             ToastUtils.error(message ?: getString(R.string.text_something_went_wrong))
-        })
+        }
 
         viewModel.errorPaymentResponseLiveData.observe(viewLifecycleOwner) {
             dismissLoader()
