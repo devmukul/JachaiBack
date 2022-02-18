@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.jachai.jachai_driver.utils.ToastUtils
 import com.jachai.jachai_driver.utils.showShortToast
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.CartFragmentBinding
 import com.jachai.jachaimart.model.order.ProductOrder
+import com.jachai.jachaimart.model.response.promo.Promo
+import com.jachai.jachaimart.model.response.promo.PromoValidationResponse
 import com.jachai.jachaimart.ui.base.BaseFragment
 import com.jachai.jachaimart.ui.cart.adapter.CartAdapter
 import com.jachai.jachaimart.utils.SharedPreferenceUtil
@@ -46,6 +49,8 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
         initView()
         subscribeObservers()
     }
+
+
 
     override fun initView() {
 
@@ -157,6 +162,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             item?.stock?.toInt() ?: 0
         }
         qty = finalCount
+        SharedPreferenceUtil.removeAppliedPromo()
 
 
 
@@ -170,7 +176,7 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
         val qty = (item?.quantity?.toInt() ?: 0) - 1
         item?.quantity = qty
         viewModel.updateQuantity(item)
-
+        SharedPreferenceUtil.removeAppliedPromo()
 
     }
 
@@ -195,12 +201,24 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
         binding.apply {
             val dao = JachaiApplication.mDatabase.daoAccess()
 
+            var promoDiscount = 0.0
+            if (SharedPreferenceUtil.getAppliedPromo() != null){
+                val promo : PromoValidationResponse = SharedPreferenceUtil.getAppliedPromo()!!
+                binding.addVoucher.text = "PROMO APPLIED : ${promo.promoCode}"
+                promoDiscount = (promo.discountAmount?: 0.0) as Double
+                tPromoDiscount.text = "-$promoDiscount"
+            }else{
+                binding.addVoucher.text = getString(R.string.select_a_promo_code)
+                promoDiscount =  0.00
+                tPromoDiscount.text = String.format("%.2f", promoDiscount)
+            }
+
             val subtotal = dao.getProductOrderSubtotal()
             val vatSdPercent = SharedPreferenceUtil.getNearestHub()?.vat?.toFloat() ?: 0.toFloat()
             val vatSd : Double = (subtotal * vatSdPercent) / 100
             val discount = viewModel.getDiscountPrice()
 
-            val total = subtotal  + vatSd + discount
+            val total = subtotal  + vatSd + discount - promoDiscount
 
 
             var nearCostToFree = 0F
@@ -236,6 +254,8 @@ class CartFragment : BaseFragment<CartFragmentBinding>(R.layout.cart_fragment),
             }else{
                 tvDeliveryFreeMessage.visibility = View.GONE
             }
+
+
             updateBottomCart(grandTotal)
 
 

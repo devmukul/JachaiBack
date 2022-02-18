@@ -385,6 +385,48 @@
                     app:layout_constraintEnd_toStartOf="@+id/total_discount"
                     app:layout_constraintTop_toTopOf="@+id/total_discount" />
 
+
+
+                <TextView
+                    android:id="@+id/t_promo_discount"
+                    style="@style/sub_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="0.00"
+                    android:textColor="#CD113B"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPromodiscount"
+                    app:layout_constraintEnd_toEndOf="@+id/delivery_charge"
+                    app:layout_constraintTop_toTopOf="@+id/tvPromodiscount" />
+
+                <TextView
+                    android:id="@+id/tvPromodiscount"
+                    style="@style/sub_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="2dp"
+                    android:text="Promo Discount"
+                    android:textColor="#636262"
+                    android:textSize="12sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="@+id/tvsub"
+                    app:layout_constraintTop_toBottomOf="@+id/tvdiscount" />
+
+                <TextView
+                    style="@style/sub_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="1dp"
+                    android:padding="2dp"
+                    android:text="৳"
+                    android:textColor="#CD113B"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/t_promo_discount"
+                    app:layout_constraintEnd_toStartOf="@+id/t_promo_discount"
+                    app:layout_constraintTop_toTopOf="@+id/t_promo_discount" />
+
                 <TextView
                     android:id="@+id/add_voucher"
                     style="@style/heading"
@@ -400,7 +442,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/total_discount"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvdiscount"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPromodiscount"
                     app:drawableLeftCompat="@drawable/ic_promo_jc" />
 
 
