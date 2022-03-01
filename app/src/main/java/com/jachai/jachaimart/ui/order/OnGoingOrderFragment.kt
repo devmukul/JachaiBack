@@ -87,10 +87,9 @@ class OnGoingOrderFragment :
         }
 
         binding.onlinePaymentItems.setOnCheckedChangeListener { radioGroup, radioButton, isChecked, checkedId ->
-            var payRadioButton: PayRadioButton =
+            val payRadioButton: PayRadioButton =
                 radioGroup.rootView.findViewById<PayRadioButton>(checkedId)
             mCheckedId = payRadioButton.value.name
-
         }
 
 

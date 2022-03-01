@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/TourLayoutViewPager"
+    android:background="@color/white"
+    android:gravity="center">
+
+
+    <TextView
+        android:id="@+id/title_view"
+        style="@style/TourTitleTextView"
+        android:text="Explore Classes to Learn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_above="@+id/desc_view"/>
+
+    <TextView
+        android:id="@+id/desc_view"
+        style="@style/TourDescriptionTextView"
+        android:text="We have amazing videos that can help you understanding the concepts much easily."
+        android:layout_alignParentBottom="true"/>
+
+
+    <ImageView
+        style="@style/TourPageImageViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/title_view"
+        android:layout_marginHorizontal="40dp"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/learning_tour_image" />
+
+</RelativeLayout>

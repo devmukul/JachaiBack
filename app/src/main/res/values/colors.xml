@@ -19,4 +19,6 @@
     <color name="failed">#dc3545</color>
     <color name="processing">#FF000000</color>
 
+    <color name="ic_launcher_background">#FFFFFF</color>
+
 </resources>

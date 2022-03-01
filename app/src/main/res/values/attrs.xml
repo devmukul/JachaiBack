@@ -6,4 +6,16 @@
         <attr name="title_rb_one_field" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="PresetRadioGroup">
+        <attr name="presetRadioCheckedId" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="PresetValueButton">
+        <attr name="presetButtonValueText" format="string"/>
+        <attr name="presetButtonUnitText" format="string"/>
+        <attr name="presetButtonValueTextColor" format="color"/>
+        <attr name="presetButtonPressedTextColor" format="color"/>
+        <attr name="presetButtonUnitTextColor" format="color"/>
+    </declare-styleable>
+
 </resources>

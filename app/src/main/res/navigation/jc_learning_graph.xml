@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/jc_learning_graph"
+    app:startDestination="@id/tourFragment">
+
+    <fragment
+        android:id="@+id/tourFragment"
+        android:name="com.jachai.jachaimart.elearning.ui.initial.TourFragment"
+        android:label="TourFragment"
+        tools:layout="@layout/fragment_elaerning_tour">
+        <action
+            android:id="@+id/action_tourFragment_to_selectProgramFragment"
+            app:destination="@id/selectProgramFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectProgramFragment"
+        android:name="com.jachai.jachaimart.elearning.ui.onboard.SelectProgramFragment"
+        android:label="SelectProgramFragment"
+        tools:layout="@layout/program_list_fragment">
+        <action
+            android:id="@+id/action_selectProgramFragment_to_selectClassFragment"
+            app:destination="@id/selectClassFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectClassFragment"
+        android:name="com.jachai.jachaimart.elearning.ui.onboard.SelectClassFragment"
+        android:label="SelectClassFragment"
+        tools:layout="@layout/program_list_fragment">
+        <argument
+            android:name="programId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_selectClassFragment_to_selectDiciplineFragment"
+            app:destination="@id/selectDiciplineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectDiciplineFragment"
+        android:name="com.jachai.jachaimart.elearning.ui.onboard.SelectDiciplineFragment"
+        android:label="SelectDiciplineFragment"
+        tools:layout="@layout/program_list_fragment" >
+        <argument
+            android:name="programId"
+            app:argType="string" />
+
+        <argument
+            android:name="curriculumId"
+            app:argType="string" />
+    </fragment>
+</navigation>

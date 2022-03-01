@@ -28,6 +28,8 @@ object ApiConstants {
 //    const val JACHAI_BASE_URL_FARE = BuildConfig.BASE_URL_JACHAI_FARE
     const val JACHAI_BASE_URL_NOTIFICATIONS = BuildConfig.BASE_URL_JACHAI_NOTIFICATIONS
 
+    const val JACHAI_BASE_URL_LEARNING = BuildConfig.BASE_URL_JACHAI_ELEARNING
+
     const val APP_VERSION = BuildConfig.VERSION_NAME
     const val DEVICE_TYPE = "ANDROID"
 

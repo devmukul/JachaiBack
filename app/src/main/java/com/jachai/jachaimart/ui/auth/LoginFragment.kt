@@ -64,18 +64,19 @@ class LoginFragment : BaseFragment<LoginFragmentBinding>(R.layout.login_fragment
         subscribeObservers()
        // phoneSelection()
 
-        viewModel.successResponseLiveData.observe(viewLifecycleOwner, { _ ->
+        viewModel.successResponseLiveData.observe(viewLifecycleOwner) { _ ->
             //onSignUpSuccess()
             dismissLoader()
-            var bundle = bundleOf(
-                "mobile_number" to binding.mobileNumber.text.toString())
+            val bundle = bundleOf(
+                "mobile_number" to binding.mobileNumber.text.toString()
+            )
             view.findNavController()
                 .navigate(R.id.login_to_verifyCode, bundle)
-        })
-        viewModel.errorResponseLiveData.observe(viewLifecycleOwner, { message ->
+        }
+        viewModel.errorResponseLiveData.observe(viewLifecycleOwner) { message ->
             dismissLoader()
             ToastUtils.error(message ?: getString(R.string.text_something_went_wrong))
-        })
+        }
 
         viewModel.biometricSuccessResponseLiveData.observe(viewLifecycleOwner) {
             dismissLoader()

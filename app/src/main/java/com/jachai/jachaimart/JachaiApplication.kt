@@ -194,6 +194,12 @@ class JachaiApplication : MultiDexApplication(), LifecycleObserver {
             .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
             .build()
 
+        val JACHAI_LEARNIN_RETROFIT: Retrofit = Retrofit.Builder()
+            .baseUrl(ApiConstants.JACHAI_BASE_URL_LEARNING)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(CommonConstants.DEFAULT_NON_NULL_GSON))
+            .build()
+
 
         fun getAppContext(): JachaiApplication {
             return instance

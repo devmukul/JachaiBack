@@ -2,12 +2,16 @@ package com.jachai.jachaimart.utils
 
 import com.jachai.jachaimart.JachaiApplication
 import com.jachai.jachaimart.api.service.*
+import com.jachai.jachaimart.elearning.service.ElearningService
 
 
 object RetrofitConfig {
-    val foodService = JachaiApplication.CATELOGREADER_RETROFIT.create(FoodService::class.java)
-    val authService = JachaiApplication.AUTH_RETROFIT.create(AuthService::class.java)
-    val orderService = JachaiApplication.ORDER_RETROFIT.create(OrderService::class.java)
+    val foodService =
+        JachaiApplication.CATELOGREADER_RETROFIT.create(FoodService::class.java)
+    val authService =
+        JachaiApplication.AUTH_RETROFIT.create(AuthService::class.java)
+    val orderService =
+        JachaiApplication.ORDER_RETROFIT.create(OrderService::class.java)
     val groceryService =
         JachaiApplication.CATELOGREADER_RETROFIT.create(GroceryService::class.java)
     val driverService =
@@ -18,4 +22,6 @@ object RetrofitConfig {
         JachaiApplication.NOTIFICATIONS_RETROFIT.create(NotificationsService::class.java)
     val mapService =
         JachaiApplication.JACHAI_MAP_RETROFIT.create(JaChaiMapService::class.java)
+    val eLearningService =
+        JachaiApplication.JACHAI_LEARNIN_RETROFIT.create(ElearningService::class.java)
 }

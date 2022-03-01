@@ -6,6 +6,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.jachai.jachaimart.R
 import com.jachai.jachaimart.databinding.SplashFragmentBinding
+import com.jachai.jachaimart.elearning.ui.initial.TourFragment
+import com.jachai.jachaimart.elearning.ui.initial.TourViewModel
 import com.jachai.jachaimart.model.response.address.Address
 import com.jachai.jachaimart.model.response.address.Location
 import com.jachai.jachaimart.ui.base.BaseFragment
@@ -14,10 +16,10 @@ import com.jachai.jachaimart.utils.SharedPreferenceUtil
 class SplashFragment : BaseFragment<SplashFragmentBinding>(R.layout.splash_fragment) {
 
     companion object {
-        fun newInstance() = SplashFragment()
+        fun newInstance() = TourFragment()
     }
 
-    private val viewModel: SplashViewModel by viewModels()
+    private val viewModel: TourViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -76,4 +76,7 @@
     <string name="jachai_bold"><font color="#CD113B">JA</font>CHAI</string>
     <string name="services">SERVICES</string>
     <string name="select_a_promo_code">Select a promo code</string>
+    <string name="welcome_user">Welcome, User</string>
+    <string name="wellcome">\"Welcome, \"</string>
+    <string name="type_class">Class</string>
 </resources>
