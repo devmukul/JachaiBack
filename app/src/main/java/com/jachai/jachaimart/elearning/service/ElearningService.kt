@@ -25,4 +25,7 @@ interface ElearningService {
     @GET("discipline/all")
     fun getAllDicipline(@Query("programId") programId: String, @Query("curriculumId") curriculumId: String ): Call<DiciplineListResponse>
 
+    @GET("course")
+    fun getAllCourse(@Query("programId") programId: String, @Query("curriculumId") curriculumId: String, @Query("disciplineId") disciplineId: String ): Call<DiciplineListResponse>
+
 }
